@@ -1,6 +1,6 @@
 1. npm i dotenv (to install package read .env file)
 
-2. create file .env inside "src folder" with contetn below:
+2. create file .env inside "src folder" with content below:
 DATABASE_USER="postgres"
 DATABASE_HOST="localhost"
 DATABASE_NAME="Car_Agency_Management" //database name (see on your server)
