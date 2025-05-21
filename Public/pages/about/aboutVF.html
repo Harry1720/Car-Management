@@ -5,39 +5,29 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="aboutVF.css">
-
+    
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../assets/css/user_pages/aboutVF.css" />
+    <link rel="stylesheet" href="../../assets/css/components/navigation.css" />
+    <link rel="stylesheet" href="../../assets/css/components/footer.css" />
 
-    <title>About Us - Đại lý Vinh Mặp</title>
-    <link rel="icon" href="../Images/tab_logo.png" type="image/x-icon">
+    <title>Về chúng tôi</title>
+    <link rel="icon" href="../../assets/images/tab_logo.png" type="image/x-icon">
 
 </head>
 
+    <script src="/Public/components/navigation/navbar.js"></script>
+    <script src="/Public/components/footer/footer.js"></script>
+
 <body>
-    <nav class="nav-container">
-        <a href="../Home/index.html">
-            <img class="logo" src="../Images/vinlogo.png" alt="vinlogo Logo" />
-        </a>
-        <ul>
-            <li><a href="/Public/AboutUs/aboutVF.html">Về chúng tôi</a></li>
-            <li><a href="../Sanpham/banhang.html">Sản phẩm</a></li>
-            <li><a href="/Public/ChargeStation/ChargingStation1.html">Trạm sạc</a></li>
-            <li><a href="../Uudai/uudai.html">Ưu đãi</a></li>
-            <li><a href="/Public/ChinhSach/ChinhSach1.html">Chính sách</a></li>
-        </ul>
-        <div class="icons">
-            <a href="../Login/login.html" style="text-decoration: none; color: inherit;">
-                <i class="bx bx-user-circle"></i>
-            </a>
-        </div>
-    </nav>
+    <script>createNavbar();</script>
 
-    <video style="width: 84%; margin-left: 110px;" src="https://storage.googleapis.com/vinfast-data-01/The%20company%20behind%20VinFast%20electric%20cars.mp4" muted autoplay loop></video>
+    <video src="https://storage.googleapis.com/vinfast-data-01/The%20company%20behind%20VinFast%20electric%20cars.mp4" muted autoplay loop></video>
 
-    <div style=" margin-left: 50px; margin-right: 50px;">
+    <div style=" margin: 0 50px">
         <div>
             <div style="margin-left: 70px">
                 <h3 style="margin-top:40px">Giới thiệu về<br/></h3>
@@ -45,7 +35,7 @@
                 <p>VinFast là công ty thành viên thuộc tập đoàn Vingroup, một trong những Tập đoàn Kinh tế tư nhân đa ngành lớn nhất Châu Á. <br/> Với triết lý “Đặt khách hàng làm trọng tâm”, VinFast không ngừng sáng tạo để tạo ra các sản phẩm đẳng cấp và
                     trải nghiệm xuất sắc cho mọi người.</p>
             </div>
-            <img style="width: 80%;margin-left: 300px;;" src="/Public/Images/About_Us_VF9NeptuneGray.png" alt="Giới thiệu về VinFast - hãng xe điện đầu tiên tại Việt Nam">
+            <img style="width: 80%;margin-left: 300px;;" src="/Public/assets/images/About_Us_VF9NeptuneGray.png" alt="Giới thiệu về VinFast - hãng xe điện đầu tiên tại Việt Nam">
 
         </div>
 
@@ -72,7 +62,7 @@
         </div>
 
         <div style="margin-top: 40px;">
-            <h2 style="text-align:center ;">Dấu chân toàn cầu </h2>
+            <h2>Dấu chân toàn cầu </h2>
             <p style="text-align:center ;">VinFast đã nhanh chóng thiết lập sự hiện diện toàn cầu, thu hút những tài năng tốt nhất từ khắp nơi trên thế giới và <br> hợp tác với một số thương hiệu mang tính biểu tượng nhất trong ngành Ô tô.</p>
             <div class="row">
                 <div class="col">
@@ -85,7 +75,7 @@
         </div>
 
         <div style="margin-top: 60px;">
-            <h2 style="text-align: center;">Lịch sử thương hiệu</h2>
+            <h2>Lịch sử thương hiệu</h2>
             <div class="row row-cols-4">
                 <div class="col">
                     <img src="https://storage.googleapis.com/vinfast-data-01/vinfast-ipo_1694854769.png" alt="VinFast chính thức niêm yết trên Nasdaq Global Select Market" />
@@ -276,113 +266,139 @@
                 </div>
             </div>
         </div>
-        <h2 style="text-align: center;">Giải thưởng</h2>
-        <h4 style="margin-top: 20px">Giải thưởng 2022<br><br></h4>
-        <div class="row">
-            <div class="col">
-                <p style="text-align: center;">VinFast tiếp tục được vinh danh “Xe được yêu thích nhất phân khúc” cho cả 4 dòng xe gồm Fadil, Lux A2.0, Lux SA2.0, VF e34 tại bình chọn "Xe của năm 2022" bởi cộng đồng OTOFUN và OTOSAIGON.</p>
-                <img style="width: 80%; margin-left: 50px;" src="https://storage.googleapis.com/vinfast-data-01/giai-thuong_1664353512.png" alt="VinFast tiếp tục được vinh danh “Xe được yêu thích nhất phân khúc” cho cả 4 dòng xe gồm Fadil, Lux A2.0, Lux SA2.0, VF e34 tại bình chọn &quot;Xe của năm 2022&quot; bởi cộng đồng OTOFUN và OTOSAIGON.">
+    </div> 
 
-            </div>
-            <div class="col">
-                <p style="text-align: center;">VinFast được trao kỷ lục "Đoàn caravan xe điện nhiều nhất Việt Nam" do Hội Kỷ lục giao chứng nhận.<br><br></p>
-                <img style="width: 80%; margin-left: 50px;" src="https://storage.googleapis.com/vinfast-data-01/ky-luc_1664353543.png" alt="VinFast được trao kỷ lục" />
-
-            </div>
-        </div>
-
-        <h4 style="margin-top: 20px">Giải thưởng 2021<br><br></h4>
-        <div class="row">
-            <div class="col">
-                <p style="text-align: center;">VinFast Lux A2.0 được bình chọn là Ô tô của năm phân khúc sedan cỡ D-E trong khuôn khổ lễ trao giải Car Awards 2021 do VnExpress-Xe tổ chức.</p>
-                <img style="width: 80%; margin-left: 50px;" src="https://storage.googleapis.com/vinfast-data-01/giai-thuong-car_1664353562.png" alt="VinFast Lux A2.0 được bình chọn là Ô tô của năm phân khúc sedan cỡ D-E trong khuôn khổ lễ trao giải Car Awards 2021 do VnExpress-Xe tổ chức."
-                />
-
-            </div>
-            <div class="col">
-                <p style="text-align: center;">VinFast là hãng xe được đánh giá cao nhất về chất lượng dịch vụ trong lễ trao giải Car Awards 2021 do VnExpress-Xe tổ chức. <br><br></p>
-                <img style="width: 80%; margin-left: 50px;" src="https://storage.googleapis.com/vinfast-data-01/car-awards-2021_1664353577.png" alt="VinFast là hãng xe được đánh giá cao nhất về chất lượng dịch vụ trong lễ trao giải Car Awards 2021 do VnExpress-Xe tổ chức."
-                />
-            </div>
-
-            <div class="col">
-                <p style="text-align: center;">VinFast chiến thắng giải xe được yêu thích nhất phân khúc tại Chương trình “Bình chọn xe của năm 2021” bởi 2 cộng đồng OTOFUN và OTOSAIGON.</p>
-
-                <img style="width: 80%; margin-left: 50px;" src="https://storage.googleapis.com/vinfast-data-01/xe-cua-nam-2021_1664353590.png" alt="VinFast chiến thắng giải xe được yêu thích nhất phân khúc tại Chương trình “Bình chọn xe của năm 2021” bởi 2 cộng đồng OTOFUN và OTOSAIGON."
-                />
-            </div>
-        </div>
-
-        <h4 style="margin-top: 20px">Giải thưởng 2020<br><br></h4>
-        <div class="row">
-            <div class="col">
-                <p style="text-align: center;">Các mẫu xe Fadil, Lux A2.0, Lux SA2.0 dẫn đầu doanh số bán xe tại các phân khúc tham gia. <br><br></p>
-                <img style="width: 80%; margin-left: 50px;" src="https://storage.googleapis.com/vinfast-data-01/best-sale-2020_1664353617.png" alt="Các mẫu xe Fadil, Lux A2.0, Lux SA2.0 dẫn đầu doanh số bán xe tại các phân khúc tham gia." />
-
-            </div>
-            <div class="col">
-                <p style="text-align: center;">VinFast được ASEAN NCAP vinh danh “Hãng xe mới có cam kết cao về an toàn” Grand Prix Award 2020.</p>
-                <img style="width: 80%; margin-left: 50px;" src="https://storage.googleapis.com/vinfast-data-01/asean-ncap_1664353604.png">
-            </div>
-        </div>
-
-        <h4 class="slide-title" style="margin-top: 20px">Giải thưởng 2019<br><br></h4>
-        <div class="row">
-            <div class="col">
-                <p style="text-align: center;">VinFast Lux A2.0 và VinFast Lux SA2.0 đạt chuẩn an toàn 5 sao ASEAN NCAP.</p>
-                <img style="width: 80%; margin-left: 70px;" src="https://storage.googleapis.com/vinfast-data-01/vinfast-lux-a20_1664353629.png" alt="VinFast Lux A2.0 và VinFast Lux SA2.0 đạt chuẩn an toàn 5 sao ASEAN NCAP." />
-            </div>
-            <div class="col">
-                <p style="text-align: center;">VinFast Fadil đạt chuẩn an toàn 4 sao ASEAN NCAP.</p>
-                <img style="width: 80%; margin-left: 80px;" src="https://storage.googleapis.com/vinfast-data-01/vinfast-fadil_1664353641.png" alt="VinFast Fadil đạt chuẩn an toàn 4 sao ASEAN NCAP." />
-
-            </div>
-        </div>
-
-        <h4 class="slide-title" style="margin-top: 20px">Giải thưởng 2018<br><br></h4>
-        <div class="row">
-            <div class="col">
-                <p style="text-align: center;"><br><br><br><br><br><br><br>VinFast được Auto Best trao giải thưởng “A star is born”.</p>
-            </div>
-            <div class="col">
-                <img style="width: 80%;" src="https://storage.googleapis.com/vinfast-data-01/giai-thuong-auto-best-2018_1664353654.png" alt="VinFast được Auto Best trao giải thưởng “A star is born”." />
-            </div>
-
-        </div>
-    </div>
-
-    <footer>
-        <div class="content ">
-            <div class="top ">
-                <div class="logo-details ">
-                    <img class="logo " src="../Images/vinlogo.png " alt="VinFast Logo ">
-                </div>
-                <div class="media-icons ">
-                    <a href="https://www.facebook.com/VinFastAuto.Official"><i class="fab fa-facebook-f "></i></a>
-                    <a href="https://www.linkedin.com/company/vinfast/?originalSubdomain=vn "><i class="fab fa-linkedin-in "></i></a>
+    <section class="awards-section">
+        <div class="container">
+            <h2 class="section-title">Giải thưởng</h2>
+            
+            <!-- Năm 2022 -->
+            <div class="award-year">
+                <h4 class="year-title">Giải thưởng 2022</h4>
+                <div class="award-cards">
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="https://storage.googleapis.com/vinfast-data-01/giai-thuong_1664353512.png" alt="VinFast tiếp tục được vinh danh 'Xe được yêu thích nhất phân khúc'">
+                        </div>
+                        <div class="award-content">
+                            <h5>Xe được yêu thích nhất phân khúc</h5>
+                            <p>VinFast tiếp tục được vinh danh "Xe được yêu thích nhất phân khúc" cho cả 4 dòng xe gồm Fadil, Lux A2.0, Lux SA2.0, VF e34 tại bình chọn "Xe của năm 2022" bởi cộng đồng OTOFUN và OTOSAIGON.</p>
+                        </div>
+                    </div>
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="https://storage.googleapis.com/vinfast-data-01/ky-luc_1664353543.png" alt="VinFast được trao kỷ lục">
+                        </div>
+                        <div class="award-content">
+                            <h5>Kỷ lục Guinness Việt Nam</h5>
+                            <p>VinFast được trao kỷ lục "Đoàn caravan xe điện nhiều nhất Việt Nam" do Hội Kỷ lục Việt Nam chứng nhận.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="link-boxes ">
-                <ul class="box ">
-                    <li class="link_name ">Đại lý VinFast</li>
-                    <li><a href="../Home/index.html ">Trang chủ</a></li>
-                    <li><a href="../Sanpham/banhang.html ">Sản phẩm</a></li>
-                    <li><a href="/Public/ChargeStation/ChargingStation1.html">Trạm sạc</a></li>
-                    <li><a href="../Uudai/uudai.html ">Ưu đãi</a></li>
-                    <li><a href="/Public/ChinhSach/ChinhSach1.html">Chính sách</a></li>
-                </ul>
-                <ul class="box1 ">
-                    <p>VinFast Auto Ltd. </p>
-                    <p>Địa chỉ: Vinhomes Central Park, quận Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam </p>
-                    <p>Số điện thoại: 1900 23 23 89</p>
-                </ul>
+            
+            <!-- Năm 2021 -->
+            <div class="award-year">
+                <h4 class="year-title">Giải thưởng 2021</h4>
+                <div class="award-cards">
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="https://storage.googleapis.com/vinfast-data-01/giai-thuong-car_1664353562.png" alt="VinFast Lux A2.0 được bình chọn là Ô tô của năm">
+                        </div>
+                        <div class="award-content">
+                            <h5>Ô tô của năm</h5>
+                            <p>VinFast Lux A2.0 được bình chọn là Ô tô của năm phân khúc sedan cỡ D-E trong khuôn khổ lễ trao giải Car Awards 2021 do VnExpress-Xe tổ chức.</p>
+                        </div>
+                    </div>
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="https://storage.googleapis.com/vinfast-data-01/car-awards-2021_1664353577.png" alt="VinFast là hãng xe được đánh giá cao nhất về chất lượng dịch vụ">
+                        </div>
+                        <div class="award-content">
+                            <h5>Hãng xe có chất lượng dịch vụ tốt nhất</h5>
+                            <p>VinFast là hãng xe được đánh giá cao nhất về chất lượng dịch vụ trong lễ trao giải Car Awards 2021 do VnExpress-Xe tổ chức.</p>
+                        </div>
+                    </div>
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="https://storage.googleapis.com/vinfast-data-01/xe-cua-nam-2021_1664353590.png" alt="VinFast chiến thắng giải xe được yêu thích nhất phân khúc">
+                        </div>
+                        <div class="award-content">
+                            <h5>Xe được yêu thích nhất</h5>
+                            <p>VinFast chiến thắng giải xe được yêu thích nhất phân khúc tại Chương trình "Bình chọn xe của năm 2021" bởi 2 cộng đồng OTOFUN và OTOSAIGON.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Năm 2020 -->
+            <div class="award-year">
+                <h4 class="year-title">Giải thưởng 2020</h4>
+                <div class="award-cards">
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="https://storage.googleapis.com/vinfast-data-01/best-sale-2020_1664353617.png" alt="Các mẫu xe Fadil, Lux A2.0, Lux SA2.0 dẫn đầu doanh số bán xe">
+                        </div>
+                        <div class="award-content">
+                            <h5>Dẫn đầu doanh số</h5>
+                            <p>Các mẫu xe Fadil, Lux A2.0, Lux SA2.0 dẫn đầu doanh số bán xe tại các phân khúc tham gia.</p>
+                        </div>
+                    </div>
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="https://storage.googleapis.com/vinfast-data-01/asean-ncap_1664353604.png" alt="VinFast được ASEAN NCAP vinh danh">
+                        </div>
+                        <div class="award-content">
+                            <h5>Grand Prix Award 2020</h5>
+                            <p>VinFast được ASEAN NCAP vinh danh "Hãng xe mới có cam kết cao về an toàn" Grand Prix Award 2020.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Năm 2019 -->
+            <div class="award-year">
+                <h4 class="year-title">Giải thưởng 2019</h4>
+                <div class="award-cards">
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="https://storage.googleapis.com/vinfast-data-01/vinfast-lux-a20_1664353629.png" alt="VinFast Lux A2.0 và VinFast Lux SA2.0 đạt chuẩn an toàn 5 sao">
+                        </div>
+                        <div class="award-content">
+                            <h5>An toàn 5 sao ASEAN NCAP</h5>
+                            <p>VinFast Lux A2.0 và VinFast Lux SA2.0 đạt chuẩn an toàn 5 sao ASEAN NCAP.</p>
+                        </div>
+                    </div>
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="https://storage.googleapis.com/vinfast-data-01/vinfast-fadil_1664353641.png" alt="VinFast Fadil đạt chuẩn an toàn 4 sao ASEAN NCAP">
+                        </div>
+                        <div class="award-content">
+                            <h5>An toàn 4 sao ASEAN NCAP</h5>
+                            <p>VinFast Fadil đạt chuẩn an toàn 4 sao ASEAN NCAP.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Năm 2018 -->
+            <div class="award-year">
+                <h4 class="year-title">Giải thưởng 2018</h4>
+                <div class="award-cards special-award">
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="https://storage.googleapis.com/vinfast-data-01/giai-thuong-auto-best-2018_1664353654.png" alt="VinFast được Auto Best trao giải thưởng 'A star is born'">
+                        </div>
+                        <div class="award-content">
+                            <h5>"A star is born"</h5>
+                            <p>VinFast được Auto Best trao giải thưởng "A star is born".</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="bottom-details ">
-            <div class="bottom_text ">
-                <span class="copyright_text ">Copyright VinFast Auto Ltd. © 2024</span>
-            </div>
-        </div>
-    </footer>
+    </section>
+
+    <script>createFooter();</script>
 
 </body>
