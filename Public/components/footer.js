@@ -14,11 +14,11 @@ function createFooter() {
                 <div class="link-boxes">
                     <ul class="box">
                         <li class="link_name">Đại lý VinFast</li>
-                        <li><a href="/Public/pages/home/index.html">Trang chủ</a></li>
-                        <li><a href="/Public/pages/products/banhang.html">Sản phẩm</a></li>
-                        <li><a href="/Public/pages/charging/ChargingStation1.html">Trạm sạc</a></li>
-                        <li><a href="/Public/pages/promotion/uudai.html">Ưu đãi</a></li>
-                        <li><a href="/Public/pages/policy/ChinhSach1.html">Chính sách</a></li>
+                        <li><a href="/Public/pages/user/index.html">Trang chủ</a></li>
+                        <li><a href="/Public/pages/user/banhang.html">Sản phẩm</a></li>
+                        <li><a href="/Public/pages/user/ChargingStation1.html">Trạm sạc</a></li>
+                        <li><a href="/Public/pages/user/uudai.html">Ưu đãi</a></li>
+                        <li><a href="/Public/pages/user/ChinhSach1.html">Chính sách</a></li>
                     </ul>
                     <ul class="box1">
                         <p>VinFast Auto Ltd.</p>

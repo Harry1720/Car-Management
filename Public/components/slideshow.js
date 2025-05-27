@@ -23,18 +23,8 @@ function createSlideShow() {
             <span class="dot" onclick="currentSlide(3)"></span>
         </div>
         <!-- Popup Modals -->
-        <div id="modal1" class="modal" 
-            style= "
-                margin: 100px 40px; 
-                width: 95%;
-                "
-        >
-            <div class="modal-content"
-                style="
-                    background-color: rgb(255,255,255,0.8);
-                    padding: 20px;
-                "
-            >
+        <div id="modal1" class="modal">
+            <div class="modal-content">
                 <span class="close" onclick="closeModal('modal1')">&times;</span>
                 <h2 class="modal-title">Nhận ngay 01 vé VIP Sky Tour</h2>
                 <p class="modal-text">- Quý khách khi đặt cọc xe Vinfast VF Wild sẽ nhận ngay 01 vé VIP xem show Sky Tour của Sơn Tùng-MTP.</p>
@@ -59,18 +49,8 @@ function createSlideShow() {
                 <p class="modal-text-notice">- Mỗi khách hàng chỉ được tham gia một (01) lần, chương trình áp dụng đến khi hết vé.</p>
             </div>
         </div>
-        <div id="modal3" class="modal"
-            style= "
-                margin: 100px 40px; 
-                width: 95%;
-            "
-        >
-            <div class="modal-content"
-                style="
-                    background-color: rgb(255,255,255,0.8);
-                    padding: 20px;
-                "
-            >
+        <div id="modal3" class="modal">
+            <div class="modal-content">
                 <span class="close" onclick="closeModal('modal3')">&times;</span>
                 <h2 class="modal-title">Giảm ngay 10% tiền phí trước bạ</h2>
                 <p class="modal-text">- Vinfast luôn đồng hành cùng các gia đình trẻ tại Việt Nam, với mong muốn tiếp cận đến mọi gia đình, Vinfast trợ giá 10% tiền phí trước bạ cho những cặp đôi kết hôn vào năm 2024.</p>
@@ -151,7 +131,7 @@ function closeModal(modalId) {
 }
 
 window.onclick = function(event) {
-    if (event.target.classList && event.target.classList.contains('modal-popup')) {
+    if (event.target.classList.contains('modal')) {
         event.target.style.display = "none";
     }
-};
+}

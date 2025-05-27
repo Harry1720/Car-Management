@@ -123,3 +123,13 @@ img {
 .modal-text-notice, .modal-title{
     color: red;
 }
+
+.modal{
+    margin: 100px 40px; 
+    width: 95%;
+}
+
+.modal-content{
+    background-color: rgb(255,255,255,0.8);
+    padding: 20px;
+}

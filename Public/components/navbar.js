@@ -12,18 +12,18 @@ function createNavbar(activePage) {
     
     document.write(`
         <nav class="nav-container">
-            <a href="/Public/pages/home/index.html">
+            <a href="/Public/pages/user/index.html">
                 <img class="logo" src="/Public/assets/images/vinlogo.png" alt="VinFast Logo" />
             </a>
             <ul>
-                <li><a href="/Public/pages/about/aboutVF.html" class="${activePage === 'about' ? 'active' : ''}">Về chúng tôi</a></li>
-                <li><a href="/Public/pages/products/banhang.html" class="${activePage === 'products' ? 'active' : ''}">Sản phẩm</a></li>
-                <li><a href="/Public/pages/charging/ChargingStation1.html" class="${activePage === 'charging' ? 'active' : ''}">Trạm sạc</a></li>
-                <li><a href="/Public/pages/promotion/uudai.html" class="${activePage === 'promotion' ? 'active' : ''}">Ưu đãi</a></li>
-                <li><a href="/Public/pages/policy/ChinhSach1.html" class="${activePage === 'policy' ? 'active' : ''}">Chính sách</a></li>
+                <li><a href="/Public/pages/user/aboutVF.html" class="${activePage === 'about' ? 'active' : ''}">Về chúng tôi</a></li>
+                <li><a href="/Public/pages/user/banhang.html" class="${activePage === 'products' ? 'active' : ''}">Sản phẩm</a></li>
+                <li><a href="/Public/pages/user/ChargingStation1.html" class="${activePage === 'charging' ? 'active' : ''}">Trạm sạc</a></li>
+                <li><a href="/Public/pages/user/uudai.html" class="${activePage === 'promotion' ? 'active' : ''}">Ưu đãi</a></li>
+                <li><a href="/Public/pages/user/ChinhSach1.html" class="${activePage === 'policy' ? 'active' : ''}">Chính sách</a></li>
             </ul>
             <div class="icons">
-                <a href="/Public/pages/login/login.html" style="text-decoration: none; color: inherit;">
+                <a href="/Public/pages/user/login.html" style="text-decoration: none; color: inherit;">
                     <i class="bx bx-user-circle"></i>
                 </a>
             </div>
