@@ -4,63 +4,20 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <title>Dashboard Quản Lý - Đại lý Vin Mặp</title>
-    <link rel="icon" href="/Public/Images/tab_logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="Dashboard.css">
+    <title>Dashboard Quản Lý</title>
+    <link rel="icon" href="../../assets/images/tab_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../assets/css/admin_pages/Dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/components/navbar_admin.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"></link>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-</head>
-
-<body>
-    <div class="navbar navbar-expand">
-        <a href="../../Home/index.html">
-            <img src="https://vinfastauto.com/themes/porto/img/new-home-page/VinFast-logo.svg" alt="VINFAST" class="logo" style="margin-left: 20px; width: 200px; margin-right: 100px;">
-        </a>
-
-        <ul class="main-menu">
-            <li>
-                <a href="/Public/LoginSuccess/Dashboard/Dashboard.html">
-                    <ion-icon name="home-outline"></ion-icon> Trang chủ</a>
-            </li>
-            <li>
-                <a href="../quanlyttkh/quanlyttkh.html">
-                    <ion-icon name="people-outline"></ion-icon> Quản lý thông tin khách hàng</a>
-            </li>
-            <li>
-                <a href="/Public/LoginSuccess/QLNhanSu/QLNhanSu.html">
-                    <ion-icon name="man-outline"></ion-icon> Quản lý nhân sự</a>
-            </li>
-            <li class="submenu">
-                <a href="#">
-                    <ion-icon name="server-outline"></ion-icon> Thông tin doanh thu</a>
-                <ul>
-                    <li>
-                        <a href="/Public/LoginSuccess/QLGD/qlgd.html">
-                            <ion-icon name="receipt-outline"></ion-icon> Thông tin giao dịch</a>
-                    </li>
-                    <li>
-                        <a href="/Public/LoginSuccess/ketoan/ketoan.html">
-                            <ion-icon name="stats-chart-outline"></ion-icon> Thống kê doanh thu</a>
-                    </li>
-                </ul>
-
-            </li>
-
-            <li class="submenu">
-                <a href="/Public/LoginSuccess/DSXe/DSXe.html">
-                    <ion-icon name="car-sport-outline"></ion-icon>Thông tin về xe</a>
-            </li>
-
-            <li>
-                <a href="/Public/Home/index.html">
-                    <ion-icon name="log-out-outline"></ion-icon> Đăng xuất</a>
-            </li>
-        </ul>
-    </div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+</head>
+    <script src="/Public/components/navbar_admin.js"></script>
+<body>
+    <script>createNavbarAdmin();</script>
 
     <!-- <div class="header">
         <span>❮</span>
@@ -186,5 +143,5 @@ borderWidth: 2,
     </script> -->
 
 </body>
-<script src="Dashboard.js"></script>
+<script src="../../assets/js/admin/Dashboard.js"></script>
 </html>

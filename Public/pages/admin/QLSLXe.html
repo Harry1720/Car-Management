@@ -1,81 +1,29 @@
 <!DOCTYPE html>
-
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/Public/Images/tab_logo.png" type="image/x-icon">
-    <title>Quản lí số lượng xe - Đại lý Vin Mặp</title>
-    <link rel="stylesheet" href="QLSLXe.css">
+    <link rel="icon" href="../../assets/images/tab_logo.png" type="image/x-icon">
+    <title>Quản lí số lượng xe</title>
+    <link rel="stylesheet" href="../../assets/css/admin_pages/QLSLXe.css">
+    <link rel="stylesheet" href="../../assets/css/components/navbar_admin.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"></link>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- <link rel="stylesheet" href="../menu/menu.css"> -->
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>
         function alertFeature() {
             alert('Tính năng đang được được phát triển');
         }
     </script>
 </head>
-
+    <script src="/Public/components/navbar_admin.js"></script>
+    <script src="../../assets/js/admin/QLSLXe.js"></script>
 <body>
+    <script>createNavbarAdmin();</script>
 
-    <div class="navbar navbar-expand">
-        <img src="https://vinfastauto.com/themes/porto/img/new-home-page/VinFast-logo.svg" alt="VINFAST" class="logo" style="margin-left: 20px; width: 200px; margin-right: 100px;">
-        <ul class="main-menu">
-            <li>
-                <a href="../menu/menu.html">
-                    <ion-icon name="home-outline"></ion-icon> Trang chủ</a>
-            </li>
-            <li>
-                <a href="../quanlyttkh/quanlyttkh.html">
-                    <ion-icon name="people-outline"></ion-icon> Quản lý thông tin khách hàng</a>
-            </li>
-            <li>
-                <a href="/Public/LoginSuccess/QLNhanSu/QLNhanSu.html">
-                    <ion-icon name="man-outline"></ion-icon> Quản lý nhân sự</a>
-            </li>
-            <li class="submenu">
-                <a href="#">
-                    <ion-icon name="server-outline"></ion-icon> Thông tin doanh thu</a>
-                <ul>
-                    <li>
-                        <a href="/Public/LoginSuccess/DSXe/DSXe.html">
-                            <ion-icon name="receipt-outline"></ion-icon> Thông tin giao dịch</a>
-                    </li>
-                    <li>
-                        <a href="/Public/LoginSuccess/QLSLXe/QLSLXe.html">
-                            <ion-icon name="stats-chart-outline"></ion-icon> Thống kê doanh thu</a>
-                    </li>
-                </ul>
-
-            </li>
-
-            <li class="submenu">
-                <a href="#">
-                    <ion-icon name="car-sport-outline"></ion-icon>Thông tin về xe</a>
-                <ul>
-                    <li>
-                        <a href="/Public/LoginSuccess/DSXe/DSXe.html">
-                            <ion-icon name="receipt-outline"></ion-icon> Danh sách xe</a>
-                    </li>
-                    <li>
-                        <a href="/Public/LoginSuccess/QLSLXe/QLSLXe.html">
-                            <ion-icon name="stats-chart-outline"></ion-icon> Quản lý số lượng xe</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li>
-                <a href="../Login/login.html">
-                    <ion-icon name="log-out-outline"></ion-icon> Đăng xuất</a>
-            </li>
-        </ul>
-    </div>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
     <h1 id="heading"><b>Quản lí số lượng xe</b></h1>
 
@@ -178,9 +126,11 @@
 
         </tbody>
     </table>
+    <div class="footer" style="background-color: #EEEEEE; text-align: center; padding: 10px; color: #757575;">
+        Copyright © HapiHapi 2024
+    </div>
 
 
-    <script src="QLSLXe.js"></script>
 </body>
 
 </html>
