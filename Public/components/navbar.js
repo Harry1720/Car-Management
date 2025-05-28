@@ -3,7 +3,7 @@ function createNavbar(activePage) {
     if (!activePage) {
         const currentUrl = window.location.pathname;
         if (currentUrl.includes('/about/')) activePage = 'about';
-        else if (currentUrl.includes('/products/')) activePage = 'products';
+        else if (currentUrl.includes('/banhang/')) activePage = 'products';
         else if (currentUrl.includes('/charging/')) activePage = 'charging';
         else if (currentUrl.includes('/promotion/')) activePage = 'promotion';
         else if (currentUrl.includes('/policy/')) activePage = 'policy';

@@ -11,8 +11,9 @@
     padding-left: 20px;
     height: 80px;
     color: white;
-    background-color: #6f6f6f;
+    background-color: #4e9ea9;
     z-index: 1000;
+    box-sizing: border-box;
 }
 
 .nav-container ul {

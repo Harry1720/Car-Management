@@ -1,8 +1,295 @@
-
+// Car models data
+const carModels = {
+    "vf3": {
+        id: "VINVF3YL",
+        name: "VinFast 3",
+        version: "VF3 - Tiêu chuẩn",
+        specs: {
+            power: "32 kW",
+            acceleration: "5,3 giây",
+            range: "~210 km"
+        },
+        price: "198.000.000 VNĐ",
+        deposit: "20.000.000 VNĐ",
+        defaultImage: "../../../../images/car-pics/vf3/vf3yl.png",
+        colors: [
+            {
+                name: "Vàng",
+                color: "yellow",
+                image: "../Images/car-pics/vf3/vf3yl.png"
+            },
+            {
+                name: "Xanh dương",
+                color: "rgb(0, 145, 255)",
+                image: "../Images/car-pics/vf3/vf3b.png"
+            },
+            {
+                name: "Hồng",
+                color: "pink",
+                image: "../Images/car-pics/vf3/vf3pk.png"
+            },
+            {
+                name: "Đỏ",
+                color: "red",
+                image: "../Images/car-pics/vf3/vf3r.png"
+            },
+            {
+                name: "Trắng",
+                color: "white",
+                image: "../Images/car-pics/vf3/vf3wh.png"
+            }
+        ]
+    },
+    "vf5": {
+        id: "VINVF5B",
+        name: "VinFast 5",
+        version: "VF5 - Tiêu chuẩn",
+        specs: {
+            power: "100 kW",
+            acceleration: "~4 giây",
+            range: "~326,4 km"
+        },
+        price: "458.000.000 VNĐ",
+        deposit: "45.000.000 VNĐ",
+        defaultImage: "../Images/car-pics/vf5/vf5b.png",
+        colors: [
+            {
+                name: "Xanh dương",
+                color: "rgb(0, 145, 255)",
+                image: "../Images/car-pics/vf5/vf5b.png"
+            },
+            {
+                name: "Đen",
+                color: "rgb(0, 0, 0)",
+                image: "../Images/car-pics/vf5/vf5bl.png"
+            },
+            {
+                name: "Đỏ",
+                color: "red",
+                image: "../Images/car-pics/vf5/vf5r.png"
+            },
+            {
+                name: "Trắng",
+                color: "rgb(255, 255, 255)",
+                image: "../Images/car-pics/vf5/vf5wh.png"
+            }
+        ]
+    },
+    "vf6": {
+        id: "VINVF6G",
+        name: "VinFast 6",
+        version: "VF6 - Tiêu chuẩn",
+        specs: {
+            power: "150 kW",
+            acceleration: "~3 giây",
+            range: "~399 km"
+        },
+        price: "675.000.000 VNĐ",
+        deposit: "67.000.000 VNĐ",
+        defaultImage: "../Images/car-pics/vf6/vf6b.png",
+        colors: [
+            {
+                name: "Xanh dương",
+                color: "rgb(0, 145, 255)",
+                image: "../Images/car-pics/vf6/vf6b.png"
+            },
+            {
+                name: "Đen",
+                color: "rgb(0, 0, 0)",
+                image: "../Images/car-pics/vf6/vf6bl.png"
+            },
+            {
+                name: "Xanh lá",
+                color: "green",
+                image: "../Images/car-pics/vf6/vf6g.png"
+            },
+            {
+                name: "Đỏ",
+                color: "red",
+                image: "../Images/car-pics/vf6/vf6r.png"
+            },
+            {
+                name: "Trắng",
+                color: "rgb(255, 255, 255)",
+                image: "../Images/car-pics/vf6/vf6wh.png"
+            }
+        ]
+    },
+    "vf7": {
+        id: "VINVF7B",
+        name: "VinFast 7",
+        version: "VF7 - Tiêu chuẩn",
+        specs: {
+            power: "200 kW",
+            acceleration: "~3 giây",
+            range: "~450 km"
+        },
+        price: "850.000.000 VNĐ",
+        deposit: "85.000.000 VNĐ",
+        defaultImage: "../Images/car-pics/vf7/vf7bl.png",
+        colors: [
+            {
+                name: "Đen",
+                color: "black",
+                image: "../Images/car-pics/vf7/vf7bl.png"
+            },
+            {
+                name: "Xanh dương",
+                color: "rgb(0, 145, 255)",
+                image: "../Images/car-pics/vf7/vf7b.png"
+            },
+            {
+                name: "Đỏ",
+                color: "red",
+                image: "../Images/car-pics/vf7/vf7r.png"
+            },
+            {
+                name: "Xanh lá",
+                color: "green",
+                image: "../Images/car-pics/vf7/vf7g.png"
+            },
+            {
+                name: "Trắng",
+                color: "rgb(255, 255, 255)",
+                image: "../Images/car-pics/vf7/vf7wh.png"
+            }
+        ]
+    },
+    "vf8": {
+        id: "VINVF8B",
+        name: "VinFast 8",
+        version: "VF8 - Tiêu chuẩn",
+        specs: {
+            power: "260 kW",
+            acceleration: "~2.9 giây",
+            range: "~471 km"
+        },
+        price: "1.089.000.000 VNĐ",
+        deposit: "100.000.000 VNĐ",
+        defaultImage: "../Images/car-pics/vf8/vf8b.png",
+        colors: [
+            {
+                name: "Xanh dương",
+                color: "rgb(0, 145, 255)",
+                image: "../Images/car-pics/vf8/vf8b.png"
+            },
+            {
+                name: "Đỏ",
+                color: "red",
+                image: "../Images/car-pics/vf8/vf8r.png"
+            },
+            {
+                name: "Xám",
+                color: "rgb(224, 224, 224)",
+                image: "../Images/car-pics/vf8/vf8g.png"
+            },
+            {
+                name: "Đen",
+                color: "black",
+                image: "../Images/car-pics/vf8/vf8bl.png"
+            },
+            {
+                name: "Xanh lá",
+                color: "green",
+                image: "../Images/car-pics/vf8/vf8gr.png"
+            }
+        ]
+    },
+    "vf9": {
+        id: "VINVF9BL",
+        name: "VinFast 9",
+        version: "VF9 - Tiêu chuẩn",
+        specs: {
+            power: "300 kW",
+            acceleration: "~2.5 giây",
+            range: "~580 km"
+        },
+        price: "1.491.000.000 VNĐ",
+        deposit: "150.000.000 VNĐ",
+        defaultImage: "../Images/car-pics/vf9/vf9r.png",
+        colors: [
+            {
+                name: "Đỏ",
+                color: "red",
+                image: "../Images/car-pics/vf9/vf9r.png"
+            },
+            {
+                name: "Trắng",
+                color: "rgb(255, 255, 255)",
+                image: "../Images/car-pics/vf9/vf9wh.png"
+            },
+            {
+                name: "Đen",
+                color: "black",
+                image: "../Images/car-pics/vf9/vf9bl.png"
+            },
+            {
+                name: "Xanh dương",
+                color: "rgb(0, 145, 255)",
+                image: "../Images/car-pics/vf9/vf9b.png"
+            }
+        ]
+    },
+    "vfe34": {
+        id: "VINE34WH",
+        name: "VinFast e34",
+        version: "VF e34 - Tiêu chuẩn",
+        specs: {
+            power: "100 kW",
+            acceleration: "~4 giây",
+            range: "~326,4 km"
+        },
+        price: "690.000.000 VNĐ",
+        deposit: "69.000.000 VNĐ",
+        defaultImage: "../Images/car-pics/vfe34/vfe34wh.png",
+        colors: [
+            {
+                name: "Trắng",
+                color: "white",
+                image: "../Images/car-pics/vfe34/vfe34wh.png"
+            },
+            {
+                name: "Đen",
+                color: "black",
+                image: "../Images/car-pics/vfe34/vfe34bl.png"
+            },
+            {
+                name: "Xanh dương",
+                color: "rgb(0, 145, 255)",
+                image: "../Images/car-pics/vfe34/vfe34b.png"
+            },
+            {
+                name: "Đỏ",
+                color: "rgb(255, 0, 0)",
+                image: "../Images/car-pics/vfe34/vfe34r.png"
+            }
+        ]
+    },
+    "vfwild": {
+        id: "VINVFWG",
+        name: "VinFast Wild",
+        version: "VF Wild - Tiêu chuẩn",
+        specs: {
+            power: "300 kW",
+            acceleration: "---",
+            range: "---"
+        },
+        price: "1.190.000.000 VNĐ",
+        deposit: "120.000.000 VNĐ",
+        defaultImage: "../Images/vfwild.jpg",
+        colors: [
+            {
+                name: "Bạc",
+                color: "silver",
+                image: "../Images/vfwild.jpg"
+            }
+        ]
+    }
+};
 
 
   // Call the function after the DOM is loaded (ensure this script runs after the button is loaded):
-//window.addEventListener("DOMContentLoaded", extractId);
+window.addEventListener("DOMContentLoaded", extractId);
  
 
 function postDatabase() {
@@ -39,7 +326,7 @@ function postDatabase() {
         .then(res => res.json()) //parse data send from BE to JSON format - the line that receives the data (JSON object) 
         .then(loginRespond => {
 
-z        });  
+        });  
         // loginRespond -> data after being parsed by JSON 
   
 }
@@ -348,3 +635,207 @@ document.addEventListener('DOMContentLoaded', function() {
     // Kiểm tra trạng thái ban đầu
     checkAllCheckboxes();
 });
+
+// add
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const carModel = urlParams.get('model') || 'vf3';  // Default to VF3 if no model specified
+    
+    // Load car data
+    loadCarData(carModel);
+    
+    // Setup navigation
+    setupNavigation();
+    
+    // Setup form validation
+    setupFormValidation();
+    
+    // Setup color swatches
+    setupColorSwatches();
+});
+
+function loadCarData(carModel) {
+    const car = carModels[carModel];
+    
+    if (!car) {
+        console.error('Car model not found:', carModel);
+        return;
+    }
+    
+    // Set page title
+    document.title = `${car.name} - Điền thông tin & Đặt cọc xe`;
+    
+    // Set car title
+    document.getElementById('car-title').textContent = car.name;
+    
+    // Set car image
+    const carImage = document.getElementById('car-image');
+    carImage.src = car.defaultImage;
+    carImage.alt = car.name;
+    
+    // Set version label
+    document.getElementById('version-label').textContent = car.version;
+    
+    // Set specs
+    document.getElementById('power-spec').textContent = car.specs.power;
+    document.getElementById('acceleration-spec').textContent = car.specs.acceleration;
+    document.getElementById('range-spec').textContent = car.specs.range;
+    
+    // Set car model ID
+    document.getElementById('model_car_id').value = car.id;
+    
+    // Set order details
+    document.getElementById('order-version').textContent = car.version;
+    document.getElementById('order-price').textContent = car.price;
+    document.getElementById('deposit-amount').textContent = car.deposit;
+    
+    // Generate color options for color picker
+    const colorOptions = document.getElementById('color-options');
+    colorOptions.innerHTML = '';
+    car.colors.forEach(colorOption => {
+        const colorDiv = document.createElement('div');
+        colorDiv.setAttribute('data-img', colorOption.image);
+        colorDiv.style.background = colorOption.color;
+        colorDiv.style.border = 'black solid';
+        colorDiv.style.borderRadius = '10px';
+        colorDiv.style.width = '50px';
+        colorDiv.style.height = '50px';
+        colorOptions.appendChild(colorDiv);
+    });
+
+    // Generate color swatches
+    const swatchesContainer = document.getElementById('swatches-container');
+    swatchesContainer.innerHTML = '';
+    car.colors.forEach(colorOption => {
+        const swatch = document.createElement('div');
+        swatch.className = 'color-swatch';
+        swatch.style.backgroundColor = colorOption.color;
+        swatchesContainer.appendChild(swatch);
+    });
+
+    // Setup event listener for color selection
+    setupColorSelection();
+}
+
+function setupColorSelection() {
+    const thumb = document.querySelector(".thumb");
+    const listColor = document.querySelectorAll(".list-color div");
+
+    listColor.forEach(element => {
+        element.addEventListener("click", function() {
+            const imgSrc = element.getAttribute("data-img");
+            thumb.src = imgSrc;
+            console.log(`Image changed to: ${imgSrc}`);
+        });
+    });
+}
+
+function setupNavigation() {
+    const links = document.querySelectorAll('.navbar a');
+    const contents = document.querySelectorAll('.content');
+
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Hide all contents
+            contents.forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // Remove active class from all links
+            links.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Show selected content and add active class to clicked link
+            const contentId = this.getAttribute('data-content');
+            document.getElementById(contentId).style.display = 'block';
+            this.classList.add('active');
+        });
+    });
+
+    // Show first content by default
+    if (links.length > 0) {
+        links[0].click();
+    }
+
+    // Step navigation buttons
+    document.getElementById('next-step-1').addEventListener('click', function() {
+        links[1].click();
+    });
+
+    document.getElementById('next-step-2').addEventListener('click', function() {
+        if (validateStepTwo()) {
+            links[2].click();
+        } else {
+            alert('Vui lòng điền đầy đủ thông tin.');
+        }
+    });
+
+    // Enable the "Next step" button when a color is selected
+    const swatches = document.querySelectorAll('.color-swatch');
+    swatches.forEach(swatch => {
+        swatch.addEventListener('click', function() {
+            removeSelectedClass();
+            this.classList.add('selected');
+            document.getElementById('next-step-1').disabled = false;
+        });
+    });
+
+    function removeSelectedClass() {
+        swatches.forEach(swatch => {
+            swatch.classList.remove('selected');
+        });
+    }
+}
+
+function setupColorSwatches() {
+    const swatches = document.querySelectorAll('.color-swatch');
+    const listColorItems = document.querySelectorAll('.list-color div');
+    
+    swatches.forEach((swatch, index) => {
+        swatch.addEventListener('click', function() {
+            // Trigger click on corresponding color in the left panel
+            if (listColorItems[index]) {
+                listColorItems[index].click();
+            }
+        });
+    });
+}
+
+function validateStepTwo() {
+    const lastName = document.getElementById('CustomerName').value.trim();
+    const identityCard = document.getElementById('IdentityCard').value.trim();
+    const phone = document.getElementById('NumberPhone').value.trim();
+    const email = document.getElementById('Email').value.trim();
+    const address = document.getElementById('Address').value.trim();
+
+    // Check if all required fields are filled
+    if (lastName === '' || identityCard === '' || phone === '' || email === '' || address === '') {
+        return false;
+    }
+    return true;
+}
+
+function setupFormValidation() {
+    // Form submission handling
+    document.getElementById('submit-deposit').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const agree1 = document.getElementById('Agree1').checked;
+        const agree2 = document.getElementById('Agree2').checked;
+        const agree3 = document.getElementById('Agree3').checked;
+
+        if (!agree1 || !agree2 || !agree3) {
+            alert('Vui lòng đồng ý với các điều khoản và điều kiện.');
+            return;
+        }
+
+        // Simulate successful payment
+        alert('Đặt cọc thành công! Cảm ơn quý khách đã lựa chọn VinFast.');
+        
+        // Redirect to product page after successful payment
+        window.location.href = '/Public/Sanpham/banhang.html';
+    });
+}

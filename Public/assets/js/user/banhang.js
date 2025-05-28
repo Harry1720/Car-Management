@@ -1,19 +1,14 @@
 // script.js
 
 const cars = [
-    { name: "VinFast Wild", image: "/Public/assets/images/car-pics/vfwild.jpg", origin: "Việt Nam", year: "2024", hw: "664HP", value: "$50 000", link: "../Desposit/Deposit_VFwild.html" },
-    { name: "VinFast VF 9", image: "/Public/assets/images/car-pics/vf9/vf9r.png", origin: "Việt Nam", year: "2024", hw: "402HP", value: "$81 000", link: "../Desposit/Deposit_VF9.html" },
-    { name: "Vinfast VF 8", image: "/Public/assets/images/car-pics/vf8/vf8wh.png", origin: "Việt Nam", year: "2024", hw: "402HP", value: "$47 200", link: "../Desposit/Deposit_VF8.html" },
-    { name: "Vinfast VF 7", image: "/Public/assets/images/car-pics/vf7/vf7b.png", origin: "Việt Nam", year: "2024", hw: "349HP", value: "$37 000", link: "../Desposit/Deposit_VF7.html" },
-    { name: "VinFast VF 6", image: "/Public/assets/images/car-pics/vf6/vf6r.png", origin: "Việt Nam", year: "2024", hw: "201HP", value: "$35 000", link: "../Desposit/Deposit_VF6.html" },
-    { name: "VinFast VF 5", image: "/Public/assets/images/car-pics/vf5/vf5bl.png", origin: "Việt Nam", year: "2024", hw: "134HP", value: "$30 000", link: "../Desposit/Deposit_VF5.html" },
-    { name: "VinFast VF 3", image: "/Public/assets/images/car-pics/vf3/vf3yl.png", origin: "Việt Nam", year: "2024", hw: "43HP", value: "$16 000", link: "../Desposit/Deposit_VF3.html" },
-    { name: "VinFast VF e34", image: "/Public/assets/images/car-pics/vfe34/vfe34b.png", origin: "Việt Nam", year: "2024", hw: "147HP", value: "$26 000", link: "../Desposit/Deposit_VFe34.html" },
-    { name: "VinFast Wild", image: "/Public/assets/images/car-pics/vfwild.jpg", origin: "Việt Nam", year: "2024", hw: "664HP", value: "$50 000", link: "../Desposit/Deposit_VFwild.html" },
-    { name: "VinFast Wild", image: "/Public/assets/images/car-pics/vfwild.jpg", origin: "Việt Nam", year: "2024", hw: "664HP", value: "$50 000", link: "../Desposit/Deposit_VFwild.html" },
-    { name: "VinFast Wild", image: "/Public/assets/images/car-pics/vfwild.jpg", origin: "Việt Nam", year: "2024", hw: "664HP", value: "$50 000", link: "../Desposit/Deposit_VFwild.html" },
-    { name: "VinFast Wild", image: "/Public/assets/images/car-pics/vfwild.jpg", origin: "Việt Nam", year: "2024", hw: "664HP", value: "$50 000", link: "../Desposit/Deposit_VFwild.html" },
-    { name: "VinFast Wild", image: "/Public/assets/images/car-pics/vfwild.jpg", origin: "Việt Nam", year: "2024", hw: "664HP", value: "$50 000", link: "../Desposit/Deposit_VFwild.html" },
+    { name: "VinFast VF3", image: "/Public/assets/images/car-pics/vf3/vf3yl.png", origin: "Việt Nam", year: "2023", hw: "32kW", value: "$8 500", link: "../user/Deposit.html?model=vf3" },
+    { name: "VinFast VF5", image: "/Public/assets/images/car-pics/vf5/vf5b.png", origin: "Việt Nam", year: "2023", hw: "100kW", value: "$20 000", link: "../user/Deposit.html?model=vf5" },
+    { name: "VinFast VF6", image: "/Public/assets/images/car-pics/vf6/vf6b.png", origin: "Việt Nam", year: "2023", hw: "150kW", value: "$29 000", link: "../user/Deposit.html?model=vf6" },
+    { name: "VinFast VF7", image: "/Public/assets/images/car-pics/vf7/vf7bl.png", origin: "Việt Nam", year: "2023", hw: "200kW", value: "$36 000", link: "../user/Deposit.html?model=vf7" },
+    { name: "VinFast VF8", image: "/Public/assets/images/car-pics/vf8/vf8b.png", origin: "Việt Nam", year: "2023", hw: "260kW", value: "$47 000", link: "../user/Deposit.html?model=vf8" },
+    { name: "VinFast VF9", image: "/Public/assets/images/car-pics/vf9/vf9r.png", origin: "Việt Nam", year: "2023", hw: "300kW", value: "$64 000", link: "../user/Deposit.html?model=vf9" },
+    { name: "VinFast VFe34", image: "/Public/assets/images/car-pics/vfe34/vfe34wh.png", origin: "Việt Nam", year: "2022", hw: "100kW", value: "$30 000", link: "../user/Deposit.html?model=vfe34" },
+    { name: "VinFast Wild", image: "/Public/assets/images/car-pics/vfwild.jpg", origin: "Việt Nam", year: "2024", hw: "664HP", value: "$50 000", link: "../user/Deposit.html?model=vfwild" },
 ];
 
 const carsPerPage = 9; // Hiển thị 9 xe một trang (3 hàng, mỗi hàng 3 xe)
