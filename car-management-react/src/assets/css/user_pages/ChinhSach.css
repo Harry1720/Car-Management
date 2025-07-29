@@ -1,0 +1,143 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+.page-title{
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #1E90FF;
+    margin-bottom: 10px;
+    position: relative;
+}
+.page-title::after {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 4px;
+    background-color: #1E90FF;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.policy-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.policy-tabs {
+    display: flex;
+    background: #f0f8ff;
+    border-bottom: 1px solid #e0e0e0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.policy-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.policy-tab {
+    padding: 16px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #555;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.policy-tab.active {
+    color: #1E90FF;
+    border-bottom-color: #1E90FF;
+}
+
+.policy-tab:hover:not(.active) {
+    background-color: rgba(30, 144, 255, 0.05);
+    color: #1E90FF;
+}
+
+.policy-content {
+    display: none;
+    padding: 30px;
+}
+
+.policy-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.policy-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.policy-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.policy-card h3 {
+    color: #1E90FF;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.policy-card h4 {
+    color: #333;
+    margin: 20px 0 10px;
+    font-size: 1.1rem;
+}
+
+.policy-summary {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.policy-details ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.policy-details li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 5px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+p.page-desc {
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin-top: 20px;
+}

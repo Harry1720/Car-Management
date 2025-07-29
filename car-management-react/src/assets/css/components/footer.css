@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+footer {
+    font-family: "Poppins", sans-serif;
+    display: block;
+    position: static;
+    background: #4e9ea9;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+footer .content {
+    max-width: 1250px;
+    margin: auto;
+    padding: 30px 40px 40px 40px;
+}
+
+footer .content .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.content .top .logo-details {
+    color: #000000;
+    font-size: 30px;
+}
+
+.content .top .media-icons {
+    display: flex;
+}
+
+.content .top .media-icons a {
+    height: 40px;
+    width: 40px;
+    margin: 0 8px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 17px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+}
+
+.top .media-icons a:nth-child(1) {
+    background: #4267B2;
+}
+
+.top .media-icons a:nth-child(1):hover,
+.top .media-icons a:nth-child(2):hover {
+    background: #fff;
+}
+
+.top .media-icons a:nth-child(2) {
+    background: #1DA1F2;
+}
+
+/* Make icons white */
+.media-icons a i {
+    color: #fff !important;
+    font-size: 20px;
+    line-height: 40px;
+}
+
+.media-icons a i:hover {
+    color: #000000 !important;
+}
+footer .content .link-boxes {
+    width: 100%;
+    display: flex;
+}
+
+footer .content .link-boxes .box {
+    width: calc(100% / 5 - 10px);
+}
+
+footer .content .link-boxes .box1 {
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.content .link-boxes .box .link_name {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* white lines under "Đại lý Vinfast" */
+.link-boxes .box .link_name::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 150px;
+    background: #fff;
+}
+
+.content .link-boxes .box li {
+    margin: 6px 0;
+    list-style: none;
+}
+
+.content .link-boxes .box li a {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: all 0.4s ease
+}
+
+.content .link-boxes .box li a:hover {
+    opacity: 1;
+}
+
+footer .bottom-details {
+    width: 100%;
+    background: #ffffff;
+}
+
+footer .bottom-details .bottom_text {
+    max-width: 1250px;
+    margin: auto;
+    padding: 20px 40px;
+}
+
+.bottom-details .bottom_text span{
+    font-size: 14px;
+    font-weight: 300;
+    color: #000000;
+}
+
+.logo-details img {
+    height: 60px;
+    width: 200px;
+}
+
+.box1 p{
+    text-align: right;
+}
