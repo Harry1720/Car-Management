@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+/* Container chính */
+.promotion-container {
+    max-width: 1200px;
+    margin: 120px auto 60px;
+    padding: 0 20px;
+    min-width: calc(100vw - 15px);;
+    overflow: hidden;
+}
+
+/* Tiêu đề chính */
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 4px;
+    background-color: #ffffff;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.section-description {
+    text-align: center;
+    color: #d9d9d9;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+}
+
+/* Grid khuyến mãi */
+.promotions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+    gap: 30px;
+}
+
+/* Card khuyến mãi */
+.promotion-card {
+    background-color: #1c1b1b;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 40px;
+}
+
+.promotion-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Phần ảnh của card */
+.promotion-image {
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+.promotion-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.promotion-card:hover .promotion-image img {
+    transform: scale(1.05);
+}
+
+/* Phần nội dung của card */
+.promotion-content {
+    padding: 20px;
+}
+
+.promotion-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.promotion-content p {
+    color: #d9d9d9;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+/* Tính năng của ưu đãi */
+.promotion-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.promotion-features span {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.promotion-features i {
+    color: #ffffff;
+    margin-right: 8px;
+}
