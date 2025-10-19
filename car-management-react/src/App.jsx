@@ -8,7 +8,7 @@ import About from './pages/user/About';
 // import BanHang from './pages/user/BanHang';
 // import Deposit from './pages/user/Deposit';
 import Promotion from './pages/user/Promotion';
-// import ChinhSach from './pages/user/ChinhSach';
+import Policy from './pages/user/Policy';
 // import Login from './pages/user/Login';
 import Charging from './pages/user/ChargingStation';
 
@@ -28,8 +28,8 @@ function App() {
         {/* <Route path="/products" element={<BanHang />} />
         <Route path="/deposit" element={<Deposit />} /> */}
         <Route path="/promotions" element={<Promotion />} />
-        {/* <Route path="/policy" element={<ChinhSach />} />
-        <Route path="/login" element={<Login />} /> */}
+        <Route path="/policy" element={<Policy />} />
+        {/* <Route path="/login" element={<Login />} /> */}
         
         {/* Admin routes */}
         {/* <Route path="/admin/dashboard" element={<Dashboard />} />

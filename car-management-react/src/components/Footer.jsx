@@ -22,13 +22,13 @@ const Footer = () => {
               <li><a href="#">Sản phẩm</a></li>
               <li><a href="/charging">Trạm sạc</a></li>
               <li><a href="/promotions">Ưu đãi</a></li>
-              <li><a href="#">Chính sách</a></li>
+              <li><a href="/policy">Chính sách</a></li>
             </ul>
 
             <ul className={styles.box1}>
               <p>VinFast Auto Ltd.</p>
               <p>Địa chỉ: Vinhomes Central Park, quận Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam</p>
-              <p>Số điện thoại: 1900 23 23 89</p>
+              <p>Điện thoại: 1900 23 23 89</p>
             </ul>
           </div>
         </div>

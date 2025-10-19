@@ -19,7 +19,7 @@ body {
     max-width: 1200px;
     margin: 120px auto 60px;
     padding: 0 20px;
-    min-width: calc(100vw - 15px);;
+    min-width: calc(100vw - 250px);;
     overflow: hidden;
 }
 
@@ -36,10 +36,10 @@ body {
 .section-title::after {
     content: '';
     position: absolute;
-    width: 80px;
+    width: 190px;
     height: 4px;
     background-color: #ffffff;
-    bottom: -15px;
+    bottom: -5px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -47,7 +47,7 @@ body {
 .section-description {
     text-align: center;
     color: #d9d9d9;
-    margin-bottom: 40px;
+    margin-bottom: 80px;
     font-size: 1.1rem;
     margin-top: 20px;
 }

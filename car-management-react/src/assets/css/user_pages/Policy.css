@@ -1,8 +1,8 @@
-body {
+/* body {
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.6;
     color: #333;
-}
+} */
 .page-title{
     text-align: center;
     font-size: 2.5rem;
@@ -22,7 +22,7 @@ body {
     transform: translateX(-50%);
 }
 
-.policy-container {
+.policy_page-container {
     max-width: 1200px;
     margin: 30px auto;
     background: #fff;
@@ -31,7 +31,7 @@ body {
     overflow: hidden;
 }
 
-.policy-tabs {
+.policy_page-container .policy-tabs {
     display: flex;
     background: #f0f8ff;
     border-bottom: 1px solid #e0e0e0;
@@ -41,11 +41,11 @@ body {
     justify-content: center;
 }
 
-.policy-tabs::-webkit-scrollbar {
+.policy_page-container .policy-tabs::-webkit-scrollbar {
     display: none;
 }
 
-.policy-tab {
+.policy_page-container .policy-tabs .policy-tab {
     padding: 16px 24px;
     font-size: 15px;
     font-weight: 600;
@@ -58,27 +58,27 @@ body {
     transition: all 0.3s ease;
 }
 
-.policy-tab.active {
+.policy_page-container .policy-tab.active {
     color: #1E90FF;
     border-bottom-color: #1E90FF;
 }
 
-.policy-tab:hover:not(.active) {
+.policy_page-container .policy-tab:hover:not(.active) {
     background-color: rgba(30, 144, 255, 0.05);
     color: #1E90FF;
 }
 
-.policy-content {
+.policy_page-container .policy-content {
     display: none;
     padding: 30px;
 }
 
-.policy-content.active {
+.policy_page-container .policy-content.active {
     display: block;
     animation: fadeIn 0.5s ease;
 }
 
-.policy-card {
+.policy_page-container .policy-card {
     background: #fff;
     border-radius: 8px;
     padding: 25px;
@@ -87,35 +87,35 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.policy-card:hover {
+.policy_page-container .policy-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 
-.policy-card h3 {
+.policy_page-container .policy-card h3 {
     color: #1E90FF;
     margin-bottom: 15px;
     font-size: 1.4rem;
 }
 
-.policy-card h4 {
+.policy_page-container .policy-card h4 {
     color: #333;
     margin: 20px 0 10px;
     font-size: 1.1rem;
 }
 
-.policy-summary {
+.policy_page-container .policy-summary {
     margin-bottom: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid #f0f0f0;
 }
 
-.policy-details ul {
+.policy_page-container .policy-details ul {
     padding-left: 20px;
     margin-bottom: 20px;
 }
 
-.policy-details li {
+.policy_page-container .policy-details li {
     margin-bottom: 10px;
     position: relative;
     padding-left: 5px;
@@ -132,7 +132,7 @@ body {
     }
 }
 
-p.page-desc {
+.policy_page-container p.page-desc {
     font-size: 1.1rem;
     max-width: 800px;
     margin: 0 auto;
