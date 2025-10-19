@@ -2,6 +2,7 @@ import styles from '../../assets/css/user_pages/Promotion.module.css';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useEffect } from "react";
+import Slideshow from '../../components/Slideshow';
 
 const Promotion = () => {
     useEffect(() => {
@@ -11,6 +12,7 @@ const Promotion = () => {
     return (
         <>
             <Navbar activePage="promotions" />
+            <Slideshow/>
             <div className={styles["promotion-container"]}>
                 <h1 className={styles["section-title"]}>Ưu đãi đặc biệt</h1>
                 <p className={styles["section-description"]}>

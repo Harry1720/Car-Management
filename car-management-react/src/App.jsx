@@ -10,6 +10,7 @@ import About from './pages/user/About';
 import Promotion from './pages/user/Promotion';
 // import ChinhSach from './pages/user/ChinhSach';
 // import Login from './pages/user/Login';
+import Charging from './pages/user/ChargingStation';
 
 // // Admin pages
 // import Dashboard from './pages/admin/Dashboard';
@@ -23,6 +24,7 @@ function App() {
         {/* User routes */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About/>} />
+        <Route path="/charging" element={<Charging />} />
         {/* <Route path="/products" element={<BanHang />} />
         <Route path="/deposit" element={<Deposit />} /> */}
         <Route path="/promotions" element={<Promotion />} />

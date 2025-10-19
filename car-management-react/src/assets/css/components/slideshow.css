@@ -2,19 +2,17 @@
     display: flex;
     width: 100%;
     justify-content: center;
-    margin: 80px auto;
+    margin: 11vh auto;
 }
-
-img {
-    vertical-align: middle;
-}
-
 
 /* Ẩn các hình ảnh theo mặc định */
 .mySlides {
     display: none;
 }
-
+.slideshow-container {
+    position: relative;
+    width: 100%;
+}
 /* Style cho các nút "Previous" và "Next" */
 .prev,
 .next {
@@ -24,8 +22,7 @@ img {
     width: 40px;
     height: 40px;
     padding: 8px;
-    margin-top: -22px;
-    color: rgba(115, 107, 107, 0.781);
+    color: rgba(255, 255, 255, 0.781);
     font-weight: bold;
     font-size: 18px;
     transition: 0.6s ease;
@@ -33,20 +30,42 @@ img {
     user-select: none;
     text-align: center;
     line-height: 24px;
-    text-decoration: none;
-    background-color: #F0EBE3;
+    transform: translateY(-50%); /* Căn giữa theo chiều dọc */
+    z-index: 1; /* Đảm bảo nút luôn hiện trên slide */
 }
 
 /* Vị trí nút "Previous" ở bên trái */
 .prev {
-    left: 0;
+    left: 20px;
 }
 
 /* Vị trí nút "Next" ở bên phải */
 .next {
-    right: 0;
+    right: 20px;
 }
 
+/* Responsive cho màn hình nhỏ */
+@media screen and (max-width: 768px) {
+    .prev,
+    .next {
+        width: 30px; /* Giảm kích thước nút */
+        height: 30px;
+        line-height: 18px;
+        font-size: 14px;
+    }
+
+    .prev {
+        left: 10px;
+    }
+
+    .next {
+        right: 10px;
+    }
+    .dot{
+        height: 10px !important  ;
+        width: 10px !important;
+    }
+}
 
 /* Hiệu ứng chuyển màu nút khi di chuột */
 .prev:hover,

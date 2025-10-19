@@ -20,7 +20,7 @@ const Footer = () => {
             <ul className={styles.box}>
               <li><a href="/">Trang chủ</a></li>
               <li><a href="#">Sản phẩm</a></li>
-              <li><a href="#">Trạm sạc</a></li>
+              <li><a href="/charging">Trạm sạc</a></li>
               <li><a href="/promotions">Ưu đãi</a></li>
               <li><a href="#">Chính sách</a></li>
             </ul>

@@ -1,10 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
-/* body > div p, 
-.row p,
-.award-content p:not(footer p):not(.bottom_text p) {
-  color: #555;
-} */
- 
 * {
     font-family: "Poppins", sans-serif;
     margin: 0;
