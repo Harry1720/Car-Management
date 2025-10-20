@@ -1,0 +1,140 @@
+button:hover {
+    background-color: #0056b3;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.pagination .page-btn{
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-left: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.pagination .page-btn:hover {
+    background-color: rgba(227, 227, 227, 0.2);
+    transform: translateY(-5px);
+}
+
+.pagination .page-btn.active {
+    background-color: rgb(255, 255, 255);;
+    color: black;
+    font-weight: bold;
+}
+
+/* Hiển thị các thẻ xe hơi */
+.cars-grid-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 40px auto 40px auto;
+}
+
+.car-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.car-card {
+    width: 45%;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #000000;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px;
+}
+
+.car-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.car-image {
+    height: 30vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.car-image img {
+    width: 100%;       /* Chiếm toàn bộ chiều ngang container */
+    height: 200px;     /* Chiều cao cố định */
+    object-position: center; /* Căn giữa ảnh */
+    display: block;
+    object-fit: scale-down;
+}
+
+.car-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.car-info h3 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #d9ecff;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.car-details {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-bottom: 15px;
+}
+
+.car-details li {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.car-details li i {
+    margin-right: 10px;
+}
+
+.car-price {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #d9ecff;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.car-button {
+    background-color: transparent;
+    color: white;
+    border: 5px ridge #d9ecff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+}
+
+.car-button:hover {
+   background-color: rgba(227, 227, 227, 0.2);
+}

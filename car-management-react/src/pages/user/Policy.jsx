@@ -13,20 +13,11 @@ const Policy = () => {
 
     useEffect(() => {
         document.title = "Chính sách | VinFast";
-        
-        // Khôi phục tab active từ localStorage
-        const savedTab = localStorage.getItem('activeTab');
-        if (savedTab) {
-            setActiveTab(savedTab);
-        }
     }, []);
 
     const handleTabClick = (tabId) => {
         // Cập nhật active tab
         setActiveTab(tabId);
-        
-        // Lưu tab đang active vào localStorage 
-        localStorage.setItem('activeTab', tabId);
     };
 
     return (
@@ -112,7 +103,7 @@ const Policy = () => {
                                     <thead className="thead-light">
                                         <tr>
                                             <th rowspan="2">Dòng xe</th>
-                                            <th colspan="3">Phí dịch vụ hàng tháng (đã bao gồm VAT)</th>
+                                            <th colspan="3" style={{textAlign:'center'}}>Phí dịch vụ hàng tháng (đã bao gồm VAT)</th>
                                         </tr>
                                         <tr>
                                             <th>Dưới 1500 km</th>

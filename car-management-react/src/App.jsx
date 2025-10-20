@@ -5,7 +5,7 @@ import './assets/css/components/Footer.module.css';
 // Import pages
 import Home from './pages/user/Home';
 import About from './pages/user/About';
-// import BanHang from './pages/user/BanHang';
+import Products from './pages/user/Product';
 // import Deposit from './pages/user/Deposit';
 import Promotion from './pages/user/Promotion';
 import Policy from './pages/user/Policy';
@@ -25,8 +25,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About/>} />
         <Route path="/charging" element={<Charging />} />
-        {/* <Route path="/products" element={<BanHang />} />
-        <Route path="/deposit" element={<Deposit />} /> */}
+        <Route path="/products" element={<Products />} />
+        {/* <Route path="/deposit" element={<Deposit />} /> */}
         <Route path="/promotions" element={<Promotion />} />
         <Route path="/policy" element={<Policy />} />
         {/* <Route path="/login" element={<Login />} /> */}
