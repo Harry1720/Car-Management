@@ -89,7 +89,7 @@ button:hover {
 }
 
 .car-info h3 {
-    font-size: 1.4em;
+    font-size: 1.8em;
     margin-bottom: 10px;
     color: #d9ecff;
     text-align: center;
@@ -107,6 +107,8 @@ button:hover {
     margin-bottom: 8px;
     display: flex;
     align-items: center;
+    font-size: 1.2rem;
+    margin-left: 5%;
 }
 
 .car-details li i {

@@ -52,7 +52,7 @@ const Navbar = ({ activePage }) => {
       </ul>
 
       <div className={styles.icons}>
-        <Link to="#" style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
           <i className="bx bx-user-circle"></i>
         </Link>
       </div>

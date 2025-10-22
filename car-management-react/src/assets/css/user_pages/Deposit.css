@@ -1,53 +1,51 @@
-body {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
 /* Định dạng container bao gồm hai phần */
 .container {
     display: flex;
     height: 100vh;
+    max-width: 100% !important;
     /* Chiều cao bằng 100% viewport height */
 }
 
 /* Định dạng phần bên trái */
 .left {
-    margin-top: 80px;
+    margin-top: 20vh;
     flex: 2;
     /* Phần bên trái chiếm 2 phần */
     padding: 20px;
-    background-color: #f0f0f0;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
-
+.thumb{
+    max-width: 80%;
+}
 /* Định dạng phần bên phải */
 .right {
     margin-top: 80px;
     flex: 1;
     /* Phần bên phải chiếm 1 phần */
     padding: 40px;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.3);
     /* Màu nền trắng */
     box-sizing: border-box;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* Định dạng navbar */
 .right .navbar {
-    background-color: silver;
+    background-color: rgba(255, 255, 255, 0.8);
     margin-bottom: 20px;
     overflow: hidden;
-    font-weight: bold;
-    width: 470px;
-    border-radius: 10px;
+    font-weight: 600;
+    width: 50%px;
+    border-radius: 30px;
+    font-size: 1.1rem;
 }
 
 .right .navbar ul {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
     display: flex;
     /* Hiển thị các mục theo hàng ngang */
     justify-content: space-around;
@@ -57,69 +55,21 @@ body {
 .right .navbar li {
     padding: 8px 16px;
 }
-
+.right .navbar{
+    color: #ffffff;
+}
+.right .navbar .active{
+    color: #000000;
+}
 .right .navbar a {
     color: rgb(0, 0, 0);
     text-decoration: none;
     display: block;
 }
 
-
-/* Định dạng cho phần nội dung */
-
-.right .content {
-    display: contents;
-    /* Ẩn tất cả các nội dung mặc định */
-}
-
-.right .content.active {
-    display: none;
-    /* Hiển thị nội dung khi được kích hoạt */
-}
-
-
-/*CSS*/
-.form-label-group {
-    position: relative;
-    margin-bottom: 1rem;
-}
-
-.form-label-group input {
-    height: 30px;
-    width: 450px;
-    padding: 1rem;
-}
-
-.form-label-group label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 0;
-    line-height: 1.5;
-    color: #495057;
-    pointer-events: none;
-    border: 1px solid transparent;
-    border-radius: .25rem;
-    transition: all .1s ease-in-out;
-}
-
-.form-label-group input::placeholder {
-    color: transparent;
-}
-
-.form-label-group input:not(:placeholder-shown) {
-    padding-top: 1.25rem;
-    padding-bottom: .25rem;
-}
-
-.form-label-group input:not(:placeholder-shown)~label {
-    padding-top: .25rem;
-    padding-bottom: .25rem;
-    font-size: 12px;
-    color: #777;
+.content h2{
+    font-weight: 600;
+    font-size: 2rem;
 }
 
 .has-icon .icon {
@@ -128,90 +78,44 @@ body {
     top: 10px;
 }
 
-.num_text {
-    position: absolute;
-    bottom: 5px;
-    right: 10px;
-    font-size: 12px;
-    color: #777;
+
+.btn {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    margin: 20px auto;
+    font-size: 18px;
+    border-radius: 15px;    
+    font-weight: 600;
+    width: 100%;
+    height: 50px;
+    border-color: transparent !important;
 }
 
-.row-group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    /* Make sure the parent container has a defined height */
-}
-
-.row-group button {
+.btn-primary:hover{
+    background-color: transparent;
     color: white;
-    background-color: rgb(0, 145, 255);
-    border-color: rgb(0, 145, 255);
-    margin-top: 20px;
-    margin-bottom: 20px;
-    block-size: 60px;
-    font-size: 20px;
-    border-radius: 10px;
-    width: 450px;
-    font-weight: bold;
+    border: 2px solid white !important;
+}
+.btn-secondary{
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid white !important;
+}
+.vf_form_user button, .step_3 button{
+    display: inline;
+    width: 45%;
+    margin: 20px 10px;
+}
+.vf_form_user input{
+    background-color: transparent;
+    color: #d9ecff;;
 }
 
-.row-group button:hover {
-    background-color: rgb(0, 85, 255);
-    font-weight: bold;
-}
-
-.container-2 button {
-    color: white;
-    background-color: rgb(0, 145, 255);
-    border-color: rgb(0, 145, 255);
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 50px;
-    block-size: 60px;
-    font-size: 20px;
-    border-radius: 10px;
-    font-weight: bold;
-    width: 160px;
-}
-
-.container-2 button:hover {
-    background-color: rgb(0, 85, 255);
-    font-weight: bold;
-}
-
-.container-2 img {
-    margin-left: 140px;
-}
-
-.row-group {
-    display: flex;
-    justify-content: center;
-}
-
-.row-group button {
-    color: white;
-    background-color: rgb(0, 145, 255);
-    border-color: rgb(0, 145, 255);
-    border-style: dashed;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    block-size: 60px;
-    font-size: 20px;
-    border-radius: 10px;
-}
-
-.form-check {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
 
 .form-check-input {
-    width: 12px;
-    height: 12px;
-    margin-right: 10px;
+    width: 15px;
+    height: 15px;
+    margin-right: 20px;
     cursor: pointer;
 }
 
@@ -228,23 +132,25 @@ body {
     /* Khoảng cách giữa các ô màu */
 }
 
-.configuration,
 .car-specs {
     width: 100%;
-    max-width: 400px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.3);
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
+    border:2px white solid;
 }
 
+.title_config{
+    margin-bottom: 30px;
+}
 .config-section {
     margin-bottom: 20px;
+    font-size: 1.5rem;
 }
 
 .config-header {
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-weight: 600;
 }
 
 .config-option {
@@ -253,23 +159,6 @@ body {
     margin-bottom: 8px;
 }
 
-.radio-button {
-    margin-right: 10px;
-}
-
-.color-options {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.color-swatch {
-    width: 30px;
-    height: 30px;
-    margin-bottom: 5px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 40px;
-}
 
 .spec-item {
     display: flex;
@@ -279,52 +168,36 @@ body {
 }
 
 .spec-label {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .spec-value {
-    color: #007bff;
+    color: #ffffff;
 }
 
-.disclaimer {
-    font-size: 0.8rem;
-    color: #666;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.config-and-specs {
-    flex-direction: column;
-    align-items: flex-start;
-    width: auto;
-}
 
 .configuration {
     margin-bottom: 20px;
 }
-
-.color-swatch {
-    width: 50px;
-    height: 50px;
-    display: inline-block;
-    margin: 5px;
-    cursor: pointer;
-    border: 2px solid black;
-    /* Default border */
-    transition: border 0.3s ease;
+.color-option{
+    border: 1px solid white;
 }
-
-.selected {
-    border: 3px solid blue;
+.color-option.active {
+    border: 5px solid rgb(234, 255, 113);
     /* Border for the selected swatch */
 }
 
-.btn {
-    width: 470px;
-    height: 50px;
+.qr_img{
+    display: flex;
+    margin: 0 auto;
     border-radius: 10px;
-    border: none;
-    font-size: 20px;
-    font-weight: 700;
-    cursor: pointer;
+}
+
+.step_3 ul{
+    padding-left: 40px;
+    font-size: 18px;
+    border: 2px solid white;
+    border-radius: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

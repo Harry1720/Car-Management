@@ -6,10 +6,10 @@ import './assets/css/components/Footer.module.css';
 import Home from './pages/user/Home';
 import About from './pages/user/About';
 import Products from './pages/user/Product';
-// import Deposit from './pages/user/Deposit';
+import Deposit from './pages/user/Deposit';
 import Promotion from './pages/user/Promotion';
 import Policy from './pages/user/Policy';
-// import Login from './pages/user/Login';
+import Login from './pages/user/Login';
 import Charging from './pages/user/ChargingStation';
 
 // // Admin pages
@@ -26,10 +26,10 @@ function App() {
         <Route path="/about" element={<About/>} />
         <Route path="/charging" element={<Charging />} />
         <Route path="/products" element={<Products />} />
-        {/* <Route path="/deposit" element={<Deposit />} /> */}
+        <Route path="/deposit" element={<Deposit />} />
         <Route path="/promotions" element={<Promotion />} />
         <Route path="/policy" element={<Policy />} />
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/login" element={<Login />} />
         
         {/* Admin routes */}
         {/* <Route path="/admin/dashboard" element={<Dashboard />} />

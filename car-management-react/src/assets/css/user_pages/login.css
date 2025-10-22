@@ -1,49 +1,53 @@
 body {
-    background-image: url(/Public/assets/images/bg_login.jpg);
+    background-image: url(/images/bg_login.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     opacity: 0.85;
 }
-
-.logo {
-    width: 140px;
-    height: 40px;
+.login_container{
+    margin-top: 18vh;
+    margin-bottom: 10vh;
 }
-
-.card {
+.login_container .card {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    background-color: #ffffff !important;
+    transform: none !important;
 }
 
-.form-group i {
+.login_container .form-group i {
     color: rgb(70, 70, 70);
     font-size: 14px;
+    margin-right: 10px;
 }
 
-.form-group {
+.login_container .form-group {
     margin-top: 10px;
 }
 
-.subtittle {
-    color: rgb(127, 127, 127);
+.login_container .subtittle {
+    color: rgb(255, 0, 0);
 }
 
-.card-header {
-    background-color: rgb(70, 70, 70);
-    ;
-    color: white;
+.login_container .card-header {
+    border-radius: 20px;
 }
-
-.btn-primary {
-    background-color: rgb(70, 70, 70);
+.login_container .card-header h3{
+    margin: 0;
+    color: rgb(0, 0, 0) !important;
+    font-weight: 600
+}
+.login_container .btn-primary {
+    background-color: rgba(70, 70, 70, 0.5);
     border-color: rgb(156, 156, 156);
     font-size: 20px;
+    color: white;
+    margin-top: 40px;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
+.login_container .btn-primary:hover {
+    background-color: rgb(70, 70, 70);
     border-color: #004085;
 }
-
-.footer {
-    color: rgb(0, 0, 0);
+.login_container label{
+    color: black
 }

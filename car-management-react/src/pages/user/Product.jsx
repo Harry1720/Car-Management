@@ -9,14 +9,14 @@ const Products = () => {
     const carsPerPage = 6;
 
     const cars = [
-        { name: "VinFast VF3", image: "/images/car-pics/vf3/vf3yl.png", origin: "Việt Nam", year: "2023", hw: "32kW", value: "$8 500", link: "../user/Deposit.html?model=vf3" },
-        { name: "VinFast VF5", image: "/images/car-pics/vf5/vf5b.png", origin: "Việt Nam", year: "2023", hw: "100kW", value: "$20 000", link: "../user/Deposit.html?model=vf5" },
-        { name: "VinFast VF6", image: "/images/car-pics/vf6/vf6b.png", origin: "Việt Nam", year: "2023", hw: "150kW", value: "$29 000", link: "../user/Deposit.html?model=vf6" },
-        { name: "VinFast VF7", image: "/images/car-pics/vf7/vf7bl.png", origin: "Việt Nam", year: "2023", hw: "200kW", value: "$36 000", link: "../user/Deposit.html?model=vf7" },
-        { name: "VinFast VF8", image: "/images/car-pics/vf8/vf8b.png", origin: "Việt Nam", year: "2023", hw: "260kW", value: "$47 000", link: "../user/Deposit.html?model=vf8" },
-        { name: "VinFast VF9", image: "/images/car-pics/vf9/vf9r.png", origin: "Việt Nam", year: "2023", hw: "300kW", value: "$64 000", link: "../user/Deposit.html?model=vf9" },
-        { name: "VinFast VFe34", image: "/images/car-pics/vfe34/vfe34wh.png", origin: "Việt Nam", year: "2022", hw: "100kW", value: "$30 000", link: "../user/Deposit.html?model=vfe34" },
-        { name: "VinFast Wild", image: "/images/car-pics/vfwild.png", origin: "Việt Nam", year: "2024", hw: "664HP", value: "$50 000", link: "../user/Deposit.html?model=vfwild" },
+        { name: "VinFast VF3", image: "/images/car-pics/vf3/vf3yl.png", origin: "Việt Nam", year: "2023", hw: "32kW", value: "$8 500", link: "../deposit?model=vf3" },
+        { name: "VinFast VF5", image: "/images/car-pics/vf5/vf5b.png", origin: "Việt Nam", year: "2023", hw: "100kW", value: "$20 000", link: "../deposit?model=vf5" },
+        { name: "VinFast VF6", image: "/images/car-pics/vf6/vf6b.png", origin: "Việt Nam", year: "2023", hw: "150kW", value: "$29 000", link: "../deposit?model=vf6" },
+        { name: "VinFast VF7", image: "/images/car-pics/vf7/vf7bl.png", origin: "Việt Nam", year: "2023", hw: "200kW", value: "$36 000", link: "../deposit?model=vf7" },
+        { name: "VinFast VF8", image: "/images/car-pics/vf8/vf8b.png", origin: "Việt Nam", year: "2023", hw: "260kW", value: "$47 000", link: "../deposit?model=vf8" },
+        { name: "VinFast VF9", image: "/images/car-pics/vf9/vf9r.png", origin: "Việt Nam", year: "2023", hw: "300kW", value: "$64 000", link: "../deposit?model=vf9" },
+        { name: "VinFast VFe34", image: "/images/car-pics/vfe34/vfe34wh.png", origin: "Việt Nam", year: "2022", hw: "100kW", value: "$30 000", link: "../deposit?model=vfe34" },
+        { name: "VinFast Wild", image: "/images/car-pics/vfwild.png", origin: "Việt Nam", year: "2024", hw: "664HP", value: "$50 000", link: "../deposit?model=vfwild" },
     ];
 
     useEffect(() => {
