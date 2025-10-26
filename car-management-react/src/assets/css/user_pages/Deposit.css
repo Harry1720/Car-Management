@@ -1,3 +1,7 @@
+.deposit_page{
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
 /* Định dạng container bao gồm hai phần */
 .container {
     display: flex;

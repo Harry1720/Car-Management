@@ -77,7 +77,7 @@ const Products = () => {
     };
 
     return (
-        <>
+        <div className='product_page'>
             <Navbar activePage="products" />
             <Slideshow/>
             <h1 className="text-center page-title">Dòng xe ô tô điện VinFast</h1>
@@ -90,7 +90,7 @@ const Products = () => {
                 {renderPagination()}
             </div>
             <Footer />
-        </>
+        </div>
     );
 };
 

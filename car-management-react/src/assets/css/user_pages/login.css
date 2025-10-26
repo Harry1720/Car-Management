@@ -1,8 +1,12 @@
-body {
+.container_login{
     background-image: url(/images/bg_login.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.85;
+        background-position: center;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .login_container{
     margin-top: 18vh;
@@ -10,7 +14,7 @@ body {
 }
 .login_container .card {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-    background-color: #ffffff !important;
+    background-color: rgb(255, 255, 255, 0.8) !important;
     transform: none !important;
 }
 

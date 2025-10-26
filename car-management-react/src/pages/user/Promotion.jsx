@@ -10,7 +10,7 @@ const Promotion = () => {
     }, []);
 
     return (
-        <>
+        <div className={styles.promotion_page}>
             <Navbar activePage="promotions" />
             <Slideshow/>
             <div className={styles["promotion-container"]}>
@@ -112,7 +112,7 @@ const Promotion = () => {
                 </div>
             </div>
             <Footer />
-        </>
+        </div>
     );
 };
 

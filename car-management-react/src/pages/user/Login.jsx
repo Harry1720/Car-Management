@@ -43,7 +43,7 @@ const Login = () => {
     };
 
     return (
-        <>
+        <div className="container_login">
             <Navbar activePage="" />
             <div className="login_container">
                 <div className="row justify-content-center">
@@ -91,7 +91,7 @@ const Login = () => {
                 </div>
             </div>
             <Footer />
-        </>
+        </div>
     );
 };
 

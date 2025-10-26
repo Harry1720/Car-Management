@@ -1,92 +1,74 @@
-<!DOCTYPE html>
+import { useEffect, useRef, useState } from 'react';
+import '../../assets/css/admin_pages/QLNhanSu.css';
+import Navbar from '../../components/NavbarAdmin';
+import Footer from '../../components/FooterAdmin';
+import Chart from 'chart.js/auto';
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../../assets/images/tab_logo.png" type="image/x-icon">
-
-    <title>Quản lý nhân sự</title>
-    <link rel="stylesheet" href="../../assets/css/admin_pages/QLNhanSu.css">
-    <link rel="stylesheet" href="../../assets/css/components/navbar_admin.css">
-
-
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    
-    <script>
-        function alertFeature() {
-            alert('Tính năng đang được được phát triển');
-        }
-        </script>
-</head>
-    <script src="../../assets/js/admin/QLNhanSu.js"></script>
-    <script src="/Public/components/navbar_admin.js"></script>
-
-<body>
-    <script>createNavbarAdmin();</script>
-
+const HRPage = () => {
+        useEffect(() => {
+        document.title = "Quản lý khách hàng | VinFast";
+    }, []);
+    return (
+        <>
+        <Navbar/>
     <h1 id="heading"><b>Quản lý nhân sự</b></h1>
 
     <form id="add-row-form">
-        <div class="container">
+        <div className="container">
 
-            <div class="row" id="add-row-form">
-                <div class="col">
+            <div className="row" id="add-row-form">
+                <div className="col">
                     <p>Mã nhân viên</p>
-                    <div><input type="text" id="new-id"></div>
+                    <div><input type="text" id="new-id"/></div>
                 </div>
-                <div class="col">
+                <div className="col">
                     <p>Họ và tên nhân viên</p>
-                    <input type="text" id="new-name">
+                    <input type="text" id="new-name"/>
                 </div>
-                <div class="col">
+                <div className="col">
                     <p>Ngày tháng năm sinh</p>
-                    <input type="text" id="new-birthdate">
+                    <input type="text" id="new-birthdate"/>
                 </div>
-                <div class="col">
+                <div className="col">
                     <p>Địa chỉ</p>
-                    <input type="text" id="new-address">
+                    <input type="text" id="new-address"/>
                 </div>
 
 
             </div>
 
-            <div class="row" id="add-row-form">
-                <div class="col">
+            <div className="row" id="add-row-form">
+                <div className="col">
                     <p>Số điện thoại</p>
-                    <input type="text" id="new-phoneNo">
+                    <input type="text" id="new-phoneNo"/>
                 </div>
-                <div class="col">
+                <div className="col">
                     <p>Email</p>
-                    <input type="text" id="new-email">
+                    <input type="text" id="new-email"/>
                 </div>
-                <div class="col">
+                <div className="col">
                     <p>Chức vụ</p>
-                    <input type="text" id="new-position">
+                    <input type="text" id="new-position"/>
                 </div>
-                <div class="col">
-                    <button type="submit"   onclick ="postEmployeeData()"  ><ion-icon name="person-add-outline"></ion-icon></button>
+                <div className="col">
+                    <button type="submit"   onClick ="postEmployeeData()"  ><ion-icon name="person-add-outline"></ion-icon></button>
                 </div>
 
             </div>
-            <!-- <input type="text" id="new-birthdate" placeholder="Ngày sinh"> -->
-            <!-- <input type="text" id="new-occupation" placeholder="Nghề nghiệp"> -->
+            {/* <!-- <input type="text" id="new-birthdate" placeholder="Ngày sinh"> -->
+            <!-- <input type="text" id="new-occupation" placeholder="Nghề nghiệp"> --> */}
         </div>
 
     </form>
-    <div class="row" id="add-row-form3">
-        <div class="col">
-            <input type="te1xt" id="id-search" placeholder="Tìm kiếm theo mã nhân viên...">
+    <div className="row" id="add-row-form3">
+        <div className="col">
+            <input type="te1xt" id="id-search" placeholder="Tìm kiếm theo mã nhân viên..."/>
         </div>
     </div>
 
 
 
-    <table class="table table-hover table-sortable table-bordered">
+    <table className="table table-hover table-sortable table-bordered">
         <thead>
             <tr>
                 <th>Mã nhân viên</th>
@@ -96,23 +78,17 @@
                 <th>Email</th>
                 <th>Địa chỉ</th>
                 <th>Chức vụ</th>
-                        <!--chinh nut xoa up date o day -->
-
                 <th></th>
             </tr>
         </thead> 
 
-        <!--rgb(148, 238, 208)-->
         
-        <tbody style="background-color: rgb(245, 252, 255)" id="employee-data">
-                                 <!--chinh nut xoa up date o day -->
+        {/* <tbody style="background-color: rgb(245, 252, 255)" id="employee-data">
 
-        </tbody>
+        </tbody> */}
     </table>
-    <div class="footer" style="background-color: #EEEEEE; text-align: center; padding: 10px; color: #757575;">
-        Copyright © HapiHapi 2024
-    </div>
-
-</body>
-
-</html>
+    <Footer/>
+</>
+)
+};
+export default HRPage;

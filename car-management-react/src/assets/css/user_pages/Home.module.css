@@ -6,7 +6,10 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+.home_page{
+     background-color: #2a2a2a;
+     color: #ffffff;
+}
 .nav-container ul {
     margin-bottom: 1rem;
 }

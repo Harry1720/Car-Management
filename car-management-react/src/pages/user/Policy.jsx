@@ -21,7 +21,7 @@ const Policy = () => {
     };
 
     return (
-        <>
+        <div className='policy_page'>
             <Navbar activePage="policy" />
             <Slideshow/>
 
@@ -287,7 +287,7 @@ const Policy = () => {
                 </div>
             </div>
             <Footer />
-        </>
+        </div>
     );
 };
 

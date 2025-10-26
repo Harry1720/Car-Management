@@ -1,147 +1,236 @@
-<!DOCTYPE html>
-<html lang="en">
+import { useEffect, useRef, useState } from 'react';
+import '../../assets/css/admin_pages/Dashboard.css';
+import Navbar from '../../components/NavbarAdmin';
+import Footer from '../../components/FooterAdmin';
+import Chart from 'chart.js/auto';
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <title>Dashboard Quản Lý</title>
-    <link rel="icon" href="../../assets/images/tab_logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="../../assets/css/admin_pages/Dashboard.css">
-    <link rel="stylesheet" href="../../assets/css/components/navbar_admin.css">
+const Dashboard = () => {
+    const chartRef = useRef(null);
+    const chartInstance = useRef(null);
+    const [recentTransactions, setRecentTransactions] = useState([
+        {
+            id: "TR001",
+            citizenId: "079203012345",
+            carId: "VINVF8B",
+            transactionDate: "2023-10-25",
+            paymentDate: "2023-10-26",
+            warrantyDate: "2025-10-26",
+            status: "Đã thanh toán"
+        },
+        {
+            id: "TR002",
+            citizenId: "079203012346",
+            carId: "VINVF9BL",
+            transactionDate: "2023-10-24",
+            paymentDate: "2023-10-24",
+            warrantyDate: "2025-10-24",
+            status: "Đã thanh toán"
+        },
+        {
+            id: "TR003",
+            citizenId: "079203012347",
+            carId: "VINVF7B",
+            transactionDate: "2023-10-23",
+            paymentDate: null,
+            warrantyDate: null,
+            status: "Chờ thanh toán"
+        },
+        {
+            id: "TR004",
+            citizenId: "079203012348",
+            carId: "VINVF6G",
+            transactionDate: "2023-10-22",
+            paymentDate: "2023-10-23",
+            warrantyDate: "2025-10-23",
+            status: "Đã thanh toán"
+        },
+        {
+            id: "TR005",
+            citizenId: "079203012349",
+            carId: "VINVF5B",
+            transactionDate: "2023-10-21",
+            paymentDate: null,
+            warrantyDate: null,
+            status: "Đã hủy"
+        }
+    ]);
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"></link>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    const [agencyInfo, setAgencyInfo] = useState([
+        {
+            id: "AGENCY1",
+            name: "VinFast Landmark 81",
+            address: "208 Nguyễn Hữu Cảnh, Quận Bình Thạnh, TP.HCM",
+            phone: "1900 23 23 89",
+            email: "landmark81@vinfast.vn",
+            password: "********"
+        },
+        {
+            id: "AGENCY2",
+            name: "VinFast Vinhomes Central Park",
+            address: "720A Điện Biên Phủ, Quận Bình Thạnh, TP.HCM",
+            phone: "1900 23 23 90",
+            email: "centralpark@vinfast.vn",
+            password: "********"
+        },
+        {
+            id: "AGENCY3",
+            name: "VinFast Royal City",
+            address: "72A Nguyễn Trãi, Thanh Xuân, Hà Nội",
+            phone: "1900 23 23 91",
+            email: "royalcity@vinfast.vn",
+            password: "********"
+        }
+    ]);
 
-</head>
-    <script src="/Public/components/navbar_admin.js"></script>
-<body>
-    <script>createNavbarAdmin();</script>
+    useEffect(() => {
+        document.title = "Trang tổng quan | VinFast";
 
-    <!-- <div class="header">
-        <span>❮</span>
-        <span class="title">Dashboard</span>
-        <span><i class="material-icons">notifications</i><span class="notification-badge">4</span></span>
-    </div>
-<div class="sidebar">
-        <a href="#"><i class="material-icons">dashboard</i> Dashboard</a>
-        <a href="#"><i class="material-icons">shopping_cart</i> Orders</a>
-        <a href="#"><i class="material-icons">group</i> Customers</a>
-        <a href="#"><i class="material-icons">bar_chart</i> Reports</a>
-        <a href="#"><i class="material-icons">chevron_right</i> Integrations</a>
-        <a href="#">Saved reports</a>
-        <a href="#"><i class="material-icons">calendar_today</i> Current month</a>
-        <a href="#"><i class="material-icons">calendar_today</i> Last quarter</a>
-        <a href="#"><i class="material-icons">calendar_today</i> Year-end sale</a>
-    </div>
- -->
-    <div class="content">
-        <div class="card1">
-            <h2 style="text-align: center;">Thống kê số lượng xe bán được theo ngày</h2>
-            <fieldset>
-                <label for=" ">Vui lòng chọn ngày:
-                    <input type="date" min="2023-01-01"> </label>
-                <button style="border: none; background-color: rgb(26, 144, 255); color: white; font-weight: 600;
-                        padding: 5px 10px;">Chọn</button>
-            </fieldset>
-            <div class="chart-container">
-                </div>
-        </div>
-
-        <div class="card">
-            <h2 style="text-align: center;">Các giao dịch gần nhất</h2>
-            <table class="table table-striped table-hover">
-                <div id="total-revenue"></div>
-                <div id="total-cars-in-stock"></div>
-                <thead style="background-color: rgb(26, 144, 255); color: #ffffff;">
-                    
-                        <tr>
-                            <th>Mã giao dịch</th>
-                            <th>CCCD</th>
-                            <th>Mã xe</th>
-                            <th>Ngày giao dịch</th>
-                            <th>Ngày thanh toán</th>
-                            <th>Thời hạn bảo hành</th>
-                            <th>Trạng thái giao dịch</th>
-                          </tr>
-                </thead>
-                
-                <tbody id="dashboard">
-                 
-                </tbody>
-            </table>
-            <!-- <button class="button" style="margin-top: 20px;">See more orders</button> -->
-        </div>
-
-        <div class="card">
-            <h2 style="text-align: center;">Thông tin đại lý</h2>
-            <table class="table table-striped table-hover">
-                <thead style="background-color: rgb(26, 144, 255); color: #ffffff;">
-                    <tr>
-                        <th>Mã đại lý</th>
-                        <th>Tên đại lý</th>
-                        <th>Địa chỉ</th>
-                        <th>Số điện thoại</th>
-                        <th>Email</th>
-                        <th>Password</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>AGENCY9</td>
-                        <td>anotheragency@example.com</td>
-                        <td>Vinfast .LTD</td>
-                        <td>0123456789</td>
-                        <td>123 Ho Chi Minh City, Vietnam</td>
-                        <td>123456789</td>            
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-
-    <div class="footer" style="background-color: #EEEEEE; text-align: center; padding: 10px; color: #757575;">
-        Copyright © HapiHapi 2024
-    </div>
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
-    <!-- <script>
-        // Line Chart Data
+        // Khởi tạo chart
         const lineChartData = {
             labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00', '24:00'],
             datasets: [{
                 label: 'Sales',
-                data: [0, 300, 600, 900, 1200, 1500, 1800, 2100, 2400],
-                borderColor: '#2196F3',
+                data: [0, 1, 2, 9, 20, 15, 5, 21, 0],
+                borderColor: "#1a90ff ",
                 backgroundColor: 'rgba(33, 150, 243, 0.2)',
-borderWidth: 2,
+                borderWidth: 3,
                 fill: true
             }]
         };
 
-        // Line Chart Options
         const lineChartOptions = {
             scales: {
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        stepSize: 500
+                        stepSize: 5,
+                        color: '#7c7c7c' // Màu của số trên trục y
+                    },
+                    grid: {
+                        color: '#ababab', // Màu của lưới trục y
+                        borderColor: '#ababab' // Màu của trục y
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#7c7c7c' // Màu của số trên trục x
+                    },
+                    grid: {
+                        color: '#ababab', // Màu của lưới trục x
+                        borderColor: '#ababab' // Màu của trục x
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#ffffff', // Màu chữ của legend
                     }
                 }
             }
         };
-
-        // Create Line Chart
-        const lineChartCanvas = document.getElementById('lineChart').getContext('2d');
-        new Chart(lineChartCanvas, {
+            
+        // Tạo chart mới
+        chartInstance.current = new Chart(chartRef.current.getContext('2d'), {
             type: 'line',
             data: lineChartData,
             options: lineChartOptions
         });
-    </script> -->
+    }, []);
 
-</body>
-<script src="../../assets/js/admin/Dashboard.js"></script>
-</html>
+    return (
+        <><Navbar />
+        <div className='dashboard_page'>
+            
+            <div className="content dashboard_container">
+                <div className="card1">
+                    <h2 style={{textAlign: 'center'}}>Thống kê số lượng xe bán được theo ngày</h2>
+                    <fieldset>
+                        <label>
+                            Vui lòng chọn ngày: 
+                            <input type="date" min="2023-01-01"/>
+                        </label>
+                        <button className='button graph_btn'
+                            style={{
+                                border: 'none',
+                                color: 'white',
+                                fontWeight: 600,
+                                padding: '5px 10px'
+                            }}
+                        >
+                            Chọn
+                        </button>
+                    </fieldset>
+                    <div className="chart-container">
+                        <canvas ref={chartRef} id="lineChart"></canvas>
+                    </div>
+                </div>
+
+                <div className="card">
+                    <h2 style={{textAlign: 'center'}}>Các giao dịch gần nhất</h2>
+                    <table className="table table-striped table-hover">
+                        <div id="total-cars-in-stock"></div>
+                        <thead style={{backgroundColor: 'rgb(26, 144, 255)', color: '#ffffff'}}>
+                            <tr>
+                                <th>Mã giao dịch</th>
+                                <th>CCCD</th>
+                                <th>Mã xe</th>
+                                <th>Ngày giao dịch</th>
+                                <th>Ngày thanh toán</th>
+                                <th>Thời hạn bảo hành</th>
+                                <th>Trạng thái giao dịch</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboard">
+                            {recentTransactions.map((transaction, index) => (
+                                <tr key={index}>
+                                    <td>{transaction.id}</td>
+                                    <td>{transaction.citizenId}</td>
+                                    <td>{transaction.carId}</td>
+                                    <td>{transaction.transactionDate}</td>
+                                    <td>{transaction.paymentDate || 'Chưa thanh toán'}</td>
+                                    <td>{transaction.warrantyDate || 'Không có'}</td>
+                                    <td>{transaction.status}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <button className="button" style={{marginTop: '20px'}}>See more orders</button>
+                </div>
+
+                <div className="card">
+                    <h2 style={{textAlign: 'center'}}>Thông tin đại lý</h2>
+                    <table className="table table-striped table-hover">
+                        <thead style={{backgroundColor: 'rgb(26, 144, 255)', color: '#ffffff'}}>
+                            <tr>
+                                <th>Mã đại lý</th>
+                                <th>Tên đại lý</th>
+                                <th>Địa chỉ</th>
+                                <th>Số điện thoại</th>
+                                <th>Email</th>
+                                <th>Password</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {agencyInfo.map((agency, index) => (
+                                <tr key={index}>
+                                    <td>{agency.id}</td>
+                                    <td>{agency.name}</td>
+                                    <td>{agency.address}</td>
+                                    <td>{agency.phone}</td>
+                                    <td>{agency.email}</td>
+                                    <td>{agency.password}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+        <Footer></Footer>
+        </>
+    );
+};
+
+export default Dashboard;

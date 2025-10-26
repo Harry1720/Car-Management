@@ -8,7 +8,7 @@ const About = () => {
         document.title = "Về chúng tôi | VinFast";
     }, []);
     return(
-        <>
+        <div className={style.about_page}>
             <Navbar activePage="about" />
             <video className={style.video_ab} src="https://storage.googleapis.com/vinfast-data-01/The%20company%20behind%20VinFast%20electric%20cars.mp4" muted autoPlay loop></video>
 
@@ -376,7 +376,7 @@ const About = () => {
                 </div></div>
             </section>
             <Footer/>
-        </>
+        </div>
     )
 }
 

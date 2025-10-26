@@ -59,7 +59,7 @@ const ChargingStation = () => {
         if (selectedPanel) selectedPanel.classList.add('active');
     };
     return(
-        <>
+        <div className='charging_page'>
         <Navbar activePage="charging" />
         <Slideshow/>
         <div className='container_charging'>
@@ -512,7 +512,7 @@ const ChargingStation = () => {
             </div>
         </div>
         <Footer/>
-    </>
+    </div>
     )
 }
 export default ChargingStation;

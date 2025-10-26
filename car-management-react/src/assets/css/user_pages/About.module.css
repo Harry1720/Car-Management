@@ -5,6 +5,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+.about_page{
+     background-color: #2a2a2a;
+     color: #ffffff;
+}
 .container1{
     margin: 0 50px;
 }

@@ -13,9 +13,10 @@ import Login from './pages/user/Login';
 import Charging from './pages/user/ChargingStation';
 
 // // Admin pages
-// import Dashboard from './pages/admin/Dashboard';
+import Dashboard from './pages/admin/Dashboard';
 // import DSXe from './pages/admin/DSXe';
-// import QLNhanSu from './pages/admin/QLNhanSu';
+import HRPage from './pages/admin/HumanResources';
+import CustomerManage from './pages/admin/CustomerManage';
 
 function App() {
   return (
@@ -32,9 +33,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         
         {/* Admin routes */}
-        {/* <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/admin/cars" element={<DSXe />} />
-        <Route path="/admin/staff" element={<QLNhanSu />} /> */}
+         <Route path="/admin/dashboard" element={<Dashboard />} />
+         <Route path="/admin/customermanagement" element={<CustomerManage />} />
+        {/*<Route path="/admin/cars" element={<DSXe />} />*/}
+        <Route path="/admin/humanresources" element={<HRPage />} /> 
       </Routes>
     </Router>
   );

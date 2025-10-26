@@ -7,7 +7,7 @@ const Home = () => {
         document.title = "Trang chủ | VinFast";
     }, []);
   return (  
-    <>
+    <div className={styles.home_page}>
     <Navbar activePage="home" />
     {/* tương đương với <React.Fragment> */}
       <ul className={styles.pages}>
@@ -98,7 +98,7 @@ const Home = () => {
       </ul>
 
     <Footer/>
-    </>
+    </div>
     // </React.Fragment>
     //Trong React, một component phải trả về một phần tử JSX duy nhất. Nếu bạn muốn trả về nhiều thẻ <div>, <h1 className = {styles.heading1_home}>,... thì bạn phải bọc chúng trong một phần tử cha.
   );

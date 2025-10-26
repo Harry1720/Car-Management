@@ -2,7 +2,6 @@ import '../../assets/css/user_pages/Deposit.css';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
 
 // Giả lập carModels (bạn thay bằng import thật từ Deposit.js)
 const carModels = {
@@ -368,7 +367,7 @@ const Deposit = () => {
   };
 
   return (
-    <>
+    <div className='deposit_page'>
       <Navbar activePage="products" />
       <div className="container deposit-container">
         <div className="left">
@@ -555,7 +554,7 @@ const Deposit = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
