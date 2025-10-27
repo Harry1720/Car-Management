@@ -22,7 +22,7 @@ const Home = () => {
           <div className={styles["page-footer"]}>
             <div className={styles.buttons}>
               <button>
-                <a style={{textDecoration: 'none', color: 'inherit'}} href="/Public/pages/user/Deposit.html?model=vfwild">Mua ngay</a>
+                <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vfwild">Mua ngay</a>
               </button>
             </div>
           </div>
@@ -39,7 +39,7 @@ const Home = () => {
           <div className={styles["page-footer"]}>
             <div className={styles.buttons}>
               <button>
-                <a style={{textDecoration: 'none', color: 'inherit'}} href="/Public/pages/user/Deposit.html?model=vf9">Mua ngay</a>
+                <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vf9">Mua ngay</a>
               </button>
             </div>
           </div>
@@ -56,7 +56,7 @@ const Home = () => {
           <div className={styles["page-footer"]}>
             <div className={styles.buttons}>
               <button>
-                <a style={{textDecoration: 'none', color: 'inherit'}} href="/Public/pages/user/Deposit.html?model=vf8">Mua ngay</a>
+                <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vf8">Mua ngay</a>
               </button>
             </div>
           </div>
@@ -73,7 +73,7 @@ const Home = () => {
           <div className={styles["page-footer"]}>
             <div className={styles.buttons}>
               <button>
-                <a style={{textDecoration: 'none', color: 'inherit'}} href="/Public/pages/user/Deposit.html?model=vf7">Mua ngay</a>
+                <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vf7">Mua ngay</a>
               </button>
             </div>
           </div>
@@ -90,7 +90,7 @@ const Home = () => {
           <div className={styles["page-footer"]}>
             <div className={`${styles.buttons} ${styles["demo-drive"]}`}>
               <button>
-                <a style={{textDecoration: 'none', color: 'inherit'}} href="/Public/Sanpham/banhang.html">Mua ngay</a>
+                <a style={{textDecoration: 'none', color: 'inherit'}} href="/products">Mua ngay</a>
               </button>
             </div>
           </div>
