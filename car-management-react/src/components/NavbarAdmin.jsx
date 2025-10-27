@@ -5,8 +5,8 @@ const NavbarAdmin = () => {
     const location = useLocation();
     const currentPath = location.pathname;
 
-    return(
-        <>
+    return (
+        <div className='navbar_admin_page'>
             <div className="navbar navbar-expand">
                 <Link to="/admin/dashboard">
                     <img className="logo" src="https://vinfastauto.com/themes/porto/img/new-home-page/VinFast-logo.svg" alt="VINFAST" />
@@ -32,15 +32,16 @@ const NavbarAdmin = () => {
                         </Link>
                     </li>
                     <li className="submenu">
-                        <Link to="#">
+                        <Link to="#"
+                            className={currentPath === '/admin/transaction' || currentPath ==='/admin/accounting' ? 'active' : ''}>
                             <ion-icon name="server-outline"></ion-icon> Thông tin doanh thu</Link>
                         <ul>
                             <li>
-                                <Link to="/Public/pages/admin/qlgd.html">
+                                <Link to="/admin/transaction">
                                     <ion-icon name="receipt-outline"></ion-icon> Thông tin giao dịch</Link>
                             </li>
                             <li>
-                                <Link to="/Public/pages/admin/ketoan.html">
+                                <Link to="/admin/accounting">
                                     <ion-icon name="stats-chart-outline"></ion-icon> Thống kê doanh thu</Link>
                             </li>
                         </ul>
@@ -48,15 +49,16 @@ const NavbarAdmin = () => {
                     </li>
 
                     <li className="submenu">
-                        <Link to="#">
+                        <Link to="#"
+                            className={currentPath === '/admin/carlist' || currentPath ==='/admin/carnumber' ? 'active' : ''}>
                             <ion-icon name="car-sport-outline"></ion-icon> Thông tin về xe</Link>
                         <ul>
                             <li>
-                                <Link to="/Public/pages/admin/DSXe.html">
+                                <Link to="/admin/carlist">
                                     <ion-icon name="receipt-outline"></ion-icon> Danh sách xe</Link>
                             </li>
                             <li>
-                                <Link to="/Public/pages/admin/QLSLXe.html">
+                                <Link to="/admin/carnumber">
                                     <ion-icon name="stats-chart-outline"></ion-icon> Quản lý số lượng xe</Link>
                             </li>
                         </ul>
@@ -68,7 +70,8 @@ const NavbarAdmin = () => {
                     </li>
                 </ul>
             </div>
-        </>
+            <div className="navbar-spacer"></div>
+        </div>
     );
 }
 

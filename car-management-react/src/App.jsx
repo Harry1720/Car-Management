@@ -14,9 +14,12 @@ import Charging from './pages/user/ChargingStation';
 
 // // Admin pages
 import Dashboard from './pages/admin/Dashboard';
-// import DSXe from './pages/admin/DSXe';
+import CarList from './pages/admin/CarList';
 import HRPage from './pages/admin/HumanResources';
 import CustomerManage from './pages/admin/CustomerManage';
+import Transaction from './pages/admin/TransacManage';
+import Accounting from './pages/admin/Accounting';
+import CarNumber from './pages/admin/CarNumber';
 
 function App() {
   return (
@@ -35,8 +38,11 @@ function App() {
         {/* Admin routes */}
          <Route path="/admin/dashboard" element={<Dashboard />} />
          <Route path="/admin/customermanagement" element={<CustomerManage />} />
-        {/*<Route path="/admin/cars" element={<DSXe />} />*/}
-        <Route path="/admin/humanresources" element={<HRPage />} /> 
+        <Route path="/admin/carlist" element={<CarList />} />
+        <Route path="/admin/humanresources" element={<HRPage />} />
+        <Route path="/admin/transaction" element={<Transaction />} /> 
+        <Route path="/admin/accounting" element={<Accounting />} /> 
+        <Route path="/admin/carnumber" element={<CarNumber />} /> 
       </Routes>
     </Router>
   );

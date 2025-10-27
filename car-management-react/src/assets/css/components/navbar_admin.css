@@ -1,19 +1,24 @@
-.navbar {
+.navbar_admin_page .navbar {
     background-color: #e6f3ff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 
-.navbar .main-menu {
+.navbar_admin_page .navbar .main-menu {
     display: flex;
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-.navbar .main-menu li {
+.navbar_admin_page .navbar .main-menu li {
     margin-left: 0px;
 }
 
-.navbar .main-menu li a {
+.navbar_admin_page .navbar .main-menu li a {
     color: rgb(0, 0, 0);
     text-decoration: none;
     padding: 10px 15px;
@@ -21,13 +26,13 @@
     font-weight: 400;
 }
 
-.navbar .main-menu li a.active {
+.navbar_admin_page .navbar .main-menu li a.active {
     color: #1a90ff;
     font-weight: 600;
     position: relative;
 }
 
-.navbar .main-menu li a.active::after {
+.navbar_admin_page .navbar .main-menu li a.active::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -37,7 +42,7 @@
     background-color: #1a90ff;
 }
 
-.navbar .main-menu li a:hover {
+.navbar_admin_page .navbar .main-menu li a:hover {
     background-color: #b8ddff;
     border-radius: 5px;
     color: #1a90ff;
@@ -78,13 +83,18 @@
     font-weight: 600;
 }
 
-ion-icon {
+.navbar_admin_page ion-icon {
     font-size: 20px;
     line-height: 1.5px;
     vertical-align: middle;
     /* Cân đối chữ */
 }
 
-.logo{
+.navbar_admin_page .logo{
     margin-left: 20px; width: 200px; margin-right: 100px;
+}
+
+/* Thêm class mới để tạo padding cho content */
+.navbar_admin_page .navbar-spacer {
+    height: 60px; /* Chiều cao bằng với navbar */
 }

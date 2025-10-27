@@ -9,18 +9,6 @@
     padding: 20px 20px;
 }
 
-
-.table-sortable th {
-    background-color: rgba(0, 128, 255, 0.9);
-    color: #fff;
-    cursor: pointer;
-    text-align: center;
-}
-
-.table-sortable tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
 #add-row-form3 {
     margin-left: 20px;
 }
@@ -73,18 +61,18 @@
     font-weight: 600;
 }
 
-.form-group {
+.customer_page .form-group {
     margin-bottom: 15px;
 }
 
-.form-group label {
+.customer_page .form-group label {
     display: block;
     margin-bottom: 5px;
     color: #555;
     font-weight: 500;
 }
 
-.form-group input {
+.customer_page .form-group input {
     width: 100%;
     padding: 8px 12px;
     border: 1px solid #ddd;
@@ -92,7 +80,7 @@
     font-size: 14px;
 }
 
-.form-group input:focus {
+.customer_page .form-group input:focus {
     border-color: #1a90ff;
     outline: none;
     box-shadow: 0 0 0 2px rgba(26, 144, 255, 0.2);

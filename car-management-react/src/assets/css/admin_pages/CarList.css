@@ -1,0 +1,147 @@
+.car-list-page {
+    margin: 30px 100px;
+}
+
+/* Search and Add Button Row */
+#add-row-form3 .col {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+#id-search {
+    width: 450px;
+    padding: 10px 15px;
+    border: 2px solid #1a90ff;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.btn-primary {
+    background-color: #1a90ff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    height: 50px;
+    width: 50%;
+}
+
+/* Add Form Container */
+.add-car-form, .edit-form {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 25px;
+    margin: 20px 0;
+}
+
+.add-car-form h3, .edit-form h3 {
+    color: #1a90ff;
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-col {
+    flex: 1;
+}
+
+.form-col label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 500;
+}
+
+.form-col input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Button styles */
+.btn-save, .btn-cancel {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-save {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #6c757d;
+    color: white;
+}
+
+.edit-btn, .delete-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    width: 80px;
+}
+
+.edit-btn {
+    background-color: #4CAF50;
+}
+
+.delete-btn {
+    background-color: #f44336;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.table thead th {
+    background-color: #1a90ff;
+    color: white;
+    font-weight: 500;
+}
+
+.table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+.table-sortable tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+#heading {
+    color: rgb(128, 119, 127);
+    text-align: center;
+    font-size: 35px;
+    padding: 20px 20px;
+}

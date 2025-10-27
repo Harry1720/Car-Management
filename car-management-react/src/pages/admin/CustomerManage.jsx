@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import '../../assets/css/admin_pages/quanlyttkh.css';
+import '../../assets/css/admin_pages/CusManage.css';
 import Navbar from '../../components/NavbarAdmin';
 import Footer from '../../components/FooterAdmin';
 

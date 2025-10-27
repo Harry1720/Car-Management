@@ -51,5 +51,13 @@
 }
 
 .card1 label input{
-margin: 0 12px;
+    margin: 0 12px;
+}
+
+.table_of_dashboard table tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.table_of_dashboard table tr:nth-child(even) {
+    background-color: #f8f8f8;
 }

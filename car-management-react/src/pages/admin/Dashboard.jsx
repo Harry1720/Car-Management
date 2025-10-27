@@ -166,10 +166,9 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                <div className="card">
+                <div className="card table_of_dashboard">
                     <h2 style={{textAlign: 'center'}}>Các giao dịch gần nhất</h2>
                     <table className="table table-striped table-hover">
-                        <div id="total-cars-in-stock"></div>
                         <thead style={{backgroundColor: 'rgb(26, 144, 255)', color: '#ffffff'}}>
                             <tr>
                                 <th>Mã giao dịch</th>
@@ -198,7 +197,7 @@ const Dashboard = () => {
                     <button className="button" style={{marginTop: '20px'}}>See more orders</button>
                 </div>
 
-                <div className="card">
+                <div className="card table_of_dashboard">
                     <h2 style={{textAlign: 'center'}}>Thông tin đại lý</h2>
                     <table className="table table-striped table-hover">
                         <thead style={{backgroundColor: 'rgb(26, 144, 255)', color: '#ffffff'}}>

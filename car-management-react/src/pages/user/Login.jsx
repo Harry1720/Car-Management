@@ -57,7 +57,7 @@ const Login = () => {
                                 <form id="login-form" onSubmit={handleSubmit}>
                                     <div className="form-group">
                                         <i className="fas fa-user"></i>
-                                        <label htmlFor="username">Tên đăng nhập</label>
+                                        <label htmlFor="username"><b>Tên đăng nhập</b> (admin)</label>
                                         <input 
                                             type="text" 
                                             id="username" 
@@ -70,7 +70,7 @@ const Login = () => {
                                     </div>
                                     <div className="form-group">
                                         <i className="fas fa-key"></i>
-                                        <label htmlFor="password">Mật khẩu</label>
+                                        <label htmlFor="password"><b>Mật khẩu</b> (admin123)</label>
                                         <input 
                                             type="password" 
                                             id="password" 

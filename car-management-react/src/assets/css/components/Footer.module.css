@@ -72,6 +72,7 @@ footer .content .link-boxes .box1 {
 }
 footer .content .link-boxes .box1 a{
     color: #ffffff;
+    text-decoration: none;
 }
 .content .link-boxes .box li {
     margin: 6px 0;
