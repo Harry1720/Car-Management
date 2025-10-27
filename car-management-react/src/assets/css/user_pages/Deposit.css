@@ -83,10 +83,10 @@
 }
 
 
-.btn {
+.deposit_page .btn {
     color: rgb(0, 0, 0);
     background-color: rgb(255, 255, 255);
-    margin: 20px auto;
+    margin: 10px 0;
     font-size: 18px;
     border-radius: 15px;    
     font-weight: 600;
@@ -95,12 +95,12 @@
     border-color: transparent !important;
 }
 
-.btn-primary:hover{
+.deposit_page .btn-primary:hover{
     background-color: transparent;
     color: white;
     border: 2px solid white !important;
 }
-.btn-secondary{
+.deposit_page .btn-secondary{
     background-color: transparent;
     color: #fff;
     border: 2px solid white !important;

@@ -26,8 +26,9 @@
     color: white;
     cursor: pointer;
     font-weight: 500;
-    height: 50px;
+    height: 45px;
     width: 50%;
+    margin: 0 auto;
 }
 
 /* Add Form Container */
