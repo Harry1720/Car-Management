@@ -1,6 +1,5 @@
-# VinFast Car Management System
-
-This project is a web-based car management system for VinFast dealerships, providing functionality for car browsing, deposits, and administration.
+# VinFast Car Management System - Front-end
+This is a web-based car management system for VinFast dealerships, providing functionality for car browsing, deposits, and administration.
 
 ## Features
 - Car product showcase
@@ -11,14 +10,9 @@ This project is a web-based car management system for VinFast dealerships, provi
 
 ## Setup Instructions
 1. Clone the repository
-2. Install dependencies: `npm install`
-3. Start the server: `npm start`
-4. Access the application at http://localhost:8989
+2. `cd car-management-react`
+3. Install dependencies: `npm install` (also you may need `npm install chart.js`)
+4. Start: `npm run dev`
 
-## Technology Stack
-- Frontend: HTML, CSS, JavaScript
-- Backend: Node.js, Express
-- Database: PostgreSQL
-
-## Project Structure
-See [STRUCTURE.md](docs/STRUCTURE.md) for details on the project organization.
+## Technology
+- Frontend: ReactJS, Vite
