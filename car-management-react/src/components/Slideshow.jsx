@@ -84,8 +84,8 @@ const Slideshow = () => {
                     <p className="modal-text-notice">Mỗi khách hàng chỉ được tham gia một (01) lần, chương trình áp dụng đến 30/06/2024.</p>
                 </div>
             </div>
-            <div id="modal2" className="modal" style={{ margin: '100px 40px', width: '95%' }}>
-                <div className="modal-content" style={{ backgroundColor: 'rgba(255,255,255,0.8)', padding: '20px' }}>
+            <div id="modal2" className="modal">
+                <div className="modal-content">
                     <span className="close" onClick={() => closeModal('modal2')}>&times;</span>
                     <h2 className="modal-title">Nhận ngay 01 cặp vé concert PINK BORN</h2>
                     <p className="modal-text">20 cặp vé PINK BORN dành cho những khách hàng mua xe sớm nhất tại đại lý.</p>

@@ -1,3 +1,234 @@
 .car-number-page {
     margin: 30px 100px;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* Search Section Styling */
+#add-row-form3 {
+    margin: 20px 0 30px 0;
+}
+
+#add-row-form3 .col {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e6f3ff 0%, #b8ddff 100%);
+    border: 2px solid rgba(26, 144, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(26, 144, 255, 0.15);
+}
+
+#id-search {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 15px;
+    border: 2px solid #1a90ff;
+    border-radius: 10px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(26, 144, 255, 0.1);
+}
+
+#id-search:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 4px 12px rgba(26, 144, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+#id-search::placeholder {
+    color: #999;
+}
+
+/* Edit Form Styles */
+.car-number-page .edit-form {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 25px;
+    margin: 20px auto;
+    max-width: 900px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.car-number-page .edit-form h3 {
+    color: #1a90ff;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.car-number-page .form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.car-number-page .form-col {
+    flex: 1;
+    min-width: 200px;
+}
+
+.car-number-page .form-col label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.car-number-page .form-col input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.car-number-page .form-col input:focus {
+    border-color: #1a90ff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(26, 144, 255, 0.2);
+}
+
+.car-number-page .form-col input:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.car-number-page .form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.car-number-page .btn-save,
+.car-number-page .btn-cancel {
+    flex: 0 1 auto;
+    min-width: 150px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.car-number-page .btn-save {
+    background-color: #28a745;
+    color: white;
+}
+
+.car-number-page .btn-save:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.car-number-page .btn-cancel {
+    background-color: #6c757d;
+    color: white;
+}
+
+.car-number-page .btn-cancel:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .car-number-page {
+        margin: 30px 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .car-number-page {
+        margin: 20px 20px;
+    }
+    
+    /* Edit Form Mobile Styles */
+    .car-number-page .edit-form {
+        padding: 20px 15px;
+        margin: 15px 0;
+        max-height: 70vh;
+    }
+    
+    .car-number-page .edit-form h3 {
+        font-size: 18px;
+    }
+    
+    .car-number-page .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .car-number-page .form-col {
+        min-width: 100%;
+        margin-bottom: 12px;
+    }
+    
+    .car-number-page .form-col label {
+        font-size: 13px;
+    }
+    
+    .car-number-page .form-col input {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+    
+    .car-number-page .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .car-number-page .btn-save,
+    .car-number-page .btn-cancel {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    /* Wrapper for scrollable tables */
+    .car-number-page .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    
+    .car-number-page table {
+        min-width: 800px;
+        width: 100%;
+        table-layout: auto;
+    }
+    
+    .car-number-page table th,
+    .car-number-page table td {
+        white-space: nowrap;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .car-number-page {
+        margin: 15px 10px;
+    }
+    
+    .car-number-page .edit-form {
+        padding: 15px 10px;
+        max-height: 65vh;
+    }
+    
+    .car-number-page .edit-form h3 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
 }

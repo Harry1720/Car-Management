@@ -98,6 +98,110 @@
 .deposit_page .btn-primary:hover{
     background-color: transparent;
     color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .left {
+        margin-top: 15vh;
+        flex: 1;
+    }
+    
+    .right {
+        margin-top: 20px;
+        flex: 1;
+        padding: 30px;
+    }
+    
+    .right .navbar {
+        width: 100%;
+        font-size: 1rem;
+    }
+    
+    .thumb {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+    .left {
+        margin-top: 12vh;
+        padding: 15px;
+    }
+    
+    .right {
+        margin-top: 10px;
+        padding: 20px;
+    }
+    
+    .right .navbar {
+        font-size: 0.9rem;
+        border-radius: 20px;
+    }
+    
+    .right .navbar li {
+        padding: 6px 12px;
+    }
+    
+    .content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .deposit_page .btn {
+        font-size: 16px;
+        height: 45px;
+    }
+    
+    .thumb {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .left {
+        margin-top: 10vh;
+        padding: 10px;
+    }
+    
+    .right {
+        margin-top: 5px;
+        padding: 15px;
+    }
+    
+    .right .navbar {
+        font-size: 0.8rem;
+        border-radius: 15px;
+    }
+    
+    .right .navbar ul {
+        flex-direction: column;
+    }
+    
+    .right .navbar li {
+        padding: 8px;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .content h2 {
+        font-size: 1.3rem;
+    }
+    
+    .deposit_page .btn {
+        font-size: 14px;
+        height: 40px;
+        margin: 8px 0;
+    }
+    
+    .thumb {
+        max-width: 100%;
+    }
+}
     border: 2px solid white !important;
 }
 .deposit_page .btn-secondary{

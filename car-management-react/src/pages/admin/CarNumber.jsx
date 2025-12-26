@@ -231,47 +231,49 @@ const CarNumber = () => {
                     </div>
                 )}
 
-                <table className="table table-hover table-sortable table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Mã xe</th>
-                            <th>Ngày nhập</th>
-                            <th>Số lượng tồn</th>
-                            <th>Số lượng nhập</th>
-                            <th>Số lượng xe đã bán</th>
-                            <th colSpan="2">Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {carNumbers
-                            .filter(car => car.model_car_id.toLowerCase().includes(searchTerm.toLowerCase()))
-                            .map(car => (
-                                <tr key={car.model_car_id}>
-                                    <td>{car.model_car_id}</td>
-                                    <td>{formatDate(car.date_import)}</td>
-                                    <td>{car.remaining}</td>
-                                    <td>{car.imported}</td>
-                                    <td>{car.sold}</td>
-                                    <td>
-                                        <button 
-                                            className="delete-btn"
-                                            onClick={() => handleDelete(car.model_car_id)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button 
-                                            className="edit-btn"
-                                            onClick={() => handleEdit(car.model_car_id)}
-                                        >
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                    </tbody>
-                </table>
+                <div className="table-wrapper">
+                    <table className="table table-hover table-sortable table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã xe</th>
+                                <th>Ngày nhập</th>
+                                <th>Số lượng tồn</th>
+                                <th>Số lượng nhập</th>
+                                <th>Số lượng xe đã bán</th>
+                                <th colSpan="2">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {carNumbers
+                                .filter(car => car.model_car_id.toLowerCase().includes(searchTerm.toLowerCase()))
+                                .map(car => (
+                                    <tr key={car.model_car_id}>
+                                        <td>{car.model_car_id}</td>
+                                        <td>{formatDate(car.date_import)}</td>
+                                        <td>{car.remaining}</td>
+                                        <td>{car.imported}</td>
+                                        <td>{car.sold}</td>
+                                        <td>
+                                            <button 
+                                                className="delete-btn"
+                                                onClick={() => handleDelete(car.model_car_id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button 
+                                                className="edit-btn"
+                                                onClick={() => handleEdit(car.model_car_id)}
+                                            >
+                                                Edit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <Footer/>
         </>

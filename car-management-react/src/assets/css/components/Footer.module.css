@@ -54,7 +54,9 @@ footer .content .top {
 .media-icons a i {
     color: #fff !important;
     font-size: 20px;
-    line-height: 40px;
+    line-height: 40px !important;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 footer .content .link-boxes {
@@ -117,4 +119,106 @@ footer .bottom-details .bottom_text {
 
 .box1 p{
     text-align: right;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    footer .content {
+        padding: 25px 30px 35px 30px;
+    }
+    
+    .logo-details img {
+        height: 50px;
+        width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    footer .content {
+        padding: 20px 20px 30px 20px;
+    }
+    
+    footer .content .top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .logo-details img {
+        height: 45px;
+        width: 180px;
+    }
+    
+    footer .content .link-boxes {
+        flex-direction: column;
+    }
+    
+    footer .content .link-boxes .box {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .content .link-boxes .box li {
+        margin: 4px 0;
+    }
+    
+    .content .link-boxes .box li a {
+        font-size: 14px;
+    }
+    
+    footer .content .link-boxes .box1 {
+        font-size: 14px;
+    }
+    
+    .box1 p {
+        text-align: left;
+    }
+    
+    footer .bottom-details .bottom_text {
+        padding: 15px 20px;
+    }
+    
+    .bottom-details .bottom_text span {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    footer .content {
+        padding: 15px 15px 25px 15px;
+    }
+    
+    .logo-details img {
+        height: 40px;
+        width: 150px;
+    }
+    
+    .content .top .media-icons a {
+        height: 35px;
+        width: 35px;
+        line-height: 35px;
+        font-size: 15px;
+        margin: 0 5px;
+    }
+    
+    .media-icons a i {
+        font-size: 18px;
+        line-height: 35px;
+    }
+    
+    .content .link-boxes .box li a {
+        font-size: 13px;
+    }
+    
+    footer .content .link-boxes .box1 {
+        font-size: 13px;
+    }
+    
+    footer .bottom-details .bottom_text {
+        padding: 12px 15px;
+    }
+    
+    .bottom-details .bottom_text span {
+        font-size: 12px;
+    }
 }

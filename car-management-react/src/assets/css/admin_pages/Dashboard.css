@@ -1,6 +1,6 @@
 .dashboard_page{
-    margin: 30px 100px;
-}
+    margin: 30px 100px;    max-width: 100vw;
+    overflow-x: hidden;}
 .dashboard_container .card, .card1 {
     background-color: rgb(248, 248, 248) !important;
     padding: 20px;
@@ -60,4 +60,102 @@
 
 .table_of_dashboard table tr:nth-child(even) {
     background-color: #f8f8f8;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .dashboard_page {
+        margin: 30px 50px;
+    }
+    
+    .chart-container {
+        margin: 0 10%;
+        height: 45vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard_page {
+        margin: 20px 20px;
+    }
+    
+    /* Wrapper for scrollable tables */
+    .dashboard_page .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    
+    .dashboard_page table,
+    .table {
+        min-width: 600px;
+        width: 100%;
+        table-layout: auto;
+    }
+    
+    .dashboard_page table th,
+    .dashboard_page table td,
+    .table th,
+    .table td {
+        white-space: nowrap;
+        padding: 8px 12px;
+    }
+    
+    .dashboard_container .card,
+    .card1 {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .chart-container {
+        margin: 0;
+        height: 40vh;
+    }
+    
+    .table th,
+    .table td {
+        padding: 6px;
+        font-size: 14px;
+    }
+    
+    .card1 label {
+        margin-left: 3vw;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard_page {
+        margin: 15px 10px;
+    }
+    
+    .dashboard_container .card,
+    .card1 {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .chart-container {
+        height: 35vh;
+    }
+    
+    .table th,
+    .table td {
+        padding: 4px;
+        font-size: 12px;
+    }
+    
+    .button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    .card1 label {
+        margin-left: 2vw;
+        font-size: 13px;
+    }
+    
+    .card1 label input {
+        margin: 0 8px;
+    }
 }

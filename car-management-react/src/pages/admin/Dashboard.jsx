@@ -168,61 +168,67 @@ const Dashboard = () => {
 
                 <div className="card table_of_dashboard">
                     <h2 style={{textAlign: 'center'}}>Các giao dịch gần nhất</h2>
-                    <table className="table table-striped table-hover">
-                        <thead style={{backgroundColor: 'rgb(26, 144, 255)', color: '#ffffff'}}>
-                            <tr>
-                                <th>Mã giao dịch</th>
-                                <th>CCCD</th>
-                                <th>Mã xe</th>
-                                <th>Ngày giao dịch</th>
-                                <th>Ngày thanh toán</th>
-                                <th>Thời hạn bảo hành</th>
-                                <th>Trạng thái giao dịch</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dashboard">
-                            {recentTransactions.map((transaction, index) => (
-                                <tr key={index}>
-                                    <td>{transaction.id}</td>
-                                    <td>{transaction.citizenId}</td>
-                                    <td>{transaction.carId}</td>
-                                    <td>{transaction.transactionDate}</td>
-                                    <td>{transaction.paymentDate || 'Chưa thanh toán'}</td>
-                                    <td>{transaction.warrantyDate || 'Không có'}</td>
-                                    <td>{transaction.status}</td>
+                    <div className="table-wrapper">
+                        <table className="table table-striped table-hover">
+                            <thead style={{backgroundColor: 'rgb(26, 144, 255)', color: '#ffffff'}}>
+                                <tr>
+                                    <th>Mã giao dịch</th>
+                                    <th>CCCD</th>
+                                    <th>Mã xe</th>
+                                    <th>Ngày giao dịch</th>
+                                    <th>Ngày thanh toán</th>
+                                    <th>Thời hạn bảo hành</th>
+                                    <th>Trạng thái giao dịch</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <button className="button" style={{marginTop: '20px'}}>See more orders</button>
+                            </thead>
+                            <tbody id="dashboard">
+                                {recentTransactions.map((transaction, index) => (
+                                    <tr key={index}>
+                                        <td>{transaction.id}</td>
+                                        <td>{transaction.citizenId}</td>
+                                        <td>{transaction.carId}</td>
+                                        <td>{transaction.transactionDate}</td>
+                                        <td>{transaction.paymentDate || 'Chưa thanh toán'}</td>
+                                        <td>{transaction.warrantyDate || 'Không có'}</td>
+                                        <td>{transaction.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="/admin/transaction" style={{textDecoration: 'none'}}>
+                        <button className="button" style={{marginTop: '20px'}}>Xem thêm giao dịch</button>
+                    </a>
                 </div>
 
                 <div className="card table_of_dashboard">
                     <h2 style={{textAlign: 'center'}}>Thông tin đại lý</h2>
-                    <table className="table table-striped table-hover">
-                        <thead style={{backgroundColor: 'rgb(26, 144, 255)', color: '#ffffff'}}>
-                            <tr>
-                                <th>Mã đại lý</th>
-                                <th>Tên đại lý</th>
-                                <th>Địa chỉ</th>
-                                <th>Số điện thoại</th>
-                                <th>Email</th>
-                                <th>Password</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {agencyInfo.map((agency, index) => (
-                                <tr key={index}>
-                                    <td>{agency.id}</td>
-                                    <td>{agency.name}</td>
-                                    <td>{agency.address}</td>
-                                    <td>{agency.phone}</td>
-                                    <td>{agency.email}</td>
-                                    <td>{agency.password}</td>
+                    <div className="table-wrapper">
+                        <table className="table table-striped table-hover">
+                            <thead style={{backgroundColor: 'rgb(26, 144, 255)', color: '#ffffff'}}>
+                                <tr>
+                                    <th>Mã đại lý</th>
+                                    <th>Tên đại lý</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {agencyInfo.map((agency, index) => (
+                                    <tr key={index}>
+                                        <td>{agency.id}</td>
+                                        <td>{agency.name}</td>
+                                        <td>{agency.address}</td>
+                                        <td>{agency.phone}</td>
+                                        <td>{agency.email}</td>
+                                        <td>{agency.password}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             

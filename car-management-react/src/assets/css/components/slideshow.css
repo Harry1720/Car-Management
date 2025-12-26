@@ -2,7 +2,8 @@
     display: flex;
     width: 100%;
     justify-content: center;
-    margin: 11vh auto;
+    margin: 0 auto;
+    padding-top: 80px;
     animation: fadedSlide 0.5s ease-in-out;
 }
 @keyframes fadedSlide {
@@ -52,7 +53,17 @@
 }
 
 /* Responsive cho màn hình nhỏ */
+@media screen and (max-width: 1024px) {
+    .mySlides {
+        padding-top: 70px;
+    }
+}
+
 @media screen and (max-width: 768px) {
+    .mySlides {
+        padding-top: 60px;
+    }
+    
     .prev,
     .next {
         width: 30px; /* Giảm kích thước nút */
@@ -71,6 +82,12 @@
     .dot{
         height: 10px !important  ;
         width: 10px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .mySlides {
+        padding-top: 55px;
     }
 }
 
@@ -128,11 +145,14 @@
 
 .close {
     color: #aaa;
-    float: right;
+    position: absolute;
+    right: 15px;
+    top: 10px;
     font-size: 28px;
     font-weight: bold;
-    cursor: pointer; /* Thêm con trỏ kiểu pointer */
-    transition: color 0.3s ease; /* Thêm hiệu ứng chuyển màu mềm mại */
+    cursor: pointer;
+    transition: color 0.3s ease;
+    line-height: 1;
 }
 
 .close:hover,
@@ -150,11 +170,125 @@
 }
 
 .modal{
-    margin: 100px 40px; 
-    width: 95%;
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    padding: 20px;
 }
 
 .modal-content{
-    background-color: rgb(255,255,255,0.8);
-    padding: 20px;
+    background-color: rgb(255,255,255,0.95);
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 700px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* Additional Responsive Design */
+@media (max-width: 1024px) {
+    .mySlides {
+        padding-top: 70px;
+    }
+    
+    .modal-content {
+        width: 85%;
+        padding: 25px;
+        margin: 15% auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+        margin: 20% auto;
+    }
+    
+    .modal-title {
+        font-size: 1.3rem;
+    }
+    
+    .modal-text,
+    .modal-text-notice {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mySlides {
+        padding-top: 55px;
+    }
+    
+    .prev,
+    .next {
+        width: 25px;
+        height: 25px;
+        line-height: 15px;
+        font-size: 12px;
+        padding: 5px;
+    }
+    
+    .prev {
+        left: 5px;
+    }
+    
+    .next {
+        right: 5px;
+    }
+    
+    .dot {
+        height: 8px !important;
+        width: 8px !important;
+        margin: 0 1px 15px 1px;
+    }
+    
+    .dot:nth-child(1) {
+        left: calc(50% - 20px);
+        bottom: 8px;
+    }
+    
+    .dot:nth-child(2) {
+        bottom: 8px;
+    }
+    
+    .dot:nth-child(3) {
+        left: calc(50% + 20px);
+        bottom: 8px;
+    }
+    
+    .modal {
+        padding: 10px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+        margin: 25% auto;
+    }
+    
+    .close {
+        font-size: 24px;
+        right: 10px;
+        top: 5px;
+    }
+    
+    .modal-title {
+        font-size: 1.1rem;
+        margin-top: 5px;
+    }
+    
+    .modal-text,
+    .modal-text-notice {
+        font-size: 13px;
+        line-height: 1.5;
+    }
 }

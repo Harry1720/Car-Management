@@ -21,9 +21,9 @@ const Home = () => {
           </div>
           <div className={styles["page-footer"]}>
             <div className={styles.buttons}>
-              <button>
-                <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vfwild">Mua ngay</a>
-              </button>
+              <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vfwild"><button>
+                Mua ngay
+              </button></a>
             </div>
           </div>
         </li>
@@ -38,9 +38,9 @@ const Home = () => {
           </div>
           <div className={styles["page-footer"]}>
             <div className={styles.buttons}>
-              <button>
-                <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vf9">Mua ngay</a>
-              </button>
+              <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vf9"><button>
+                Mua ngay
+              </button></a>
             </div>
           </div>
         </li>
@@ -55,9 +55,7 @@ const Home = () => {
           </div>
           <div className={styles["page-footer"]}>
             <div className={styles.buttons}>
-              <button>
-                <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vf8">Mua ngay</a>
-              </button>
+                <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vf8"><button>Mua ngay</button></a>
             </div>
           </div>
         </li>
@@ -71,10 +69,8 @@ const Home = () => {
             <h4 className = {styles.heading4_home}>Giá chỉ từ $29999</h4>
           </div>
           <div className={styles["page-footer"]}>
-            <div className={styles.buttons}>
-              <button>
-                <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vf7">Mua ngay</a>
-              </button>
+            <div className={styles.buttons}>  
+                <a style={{textDecoration: 'none', color: 'inherit'}} href="/deposit?model=vf7"><button>Mua ngay</button></a>
             </div>
           </div>
         </li>
@@ -89,9 +85,7 @@ const Home = () => {
           </div>
           <div className={styles["page-footer"]}>
             <div className={`${styles.buttons} ${styles["demo-drive"]}`}>
-              <button>
-                <a style={{textDecoration: 'none', color: 'inherit'}} href="/products">Mua ngay</a>
-              </button>
+                <a style={{textDecoration: 'none', color: 'inherit'}} href="/products"><button>Mua ngay</button></a>
             </div>
           </div>
         </li>

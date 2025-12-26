@@ -1,5 +1,7 @@
 .hr-page {
     margin: 30px 100px;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 /* Table action buttons */
@@ -31,21 +33,49 @@
 }
 
 /* Form styling */
-#add-row-form input[type="text"] {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
+#add-row-form3 .col {
+    margin: 20px 0 30px 0;
+    background: linear-gradient(135deg, #e6f3ff 0%, #b8ddff 100%);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(26, 144, 255, 0.2);
+    border: 2px solid rgba(26, 144, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
+#add-row-form3 .col button {
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    min-width: fit-content;
+}
+
+#add-row-form input[type="text"],
 #id-search {
-    width: 300px;
-    padding: 10px 15px;
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 15px;
     border: 2px solid #1a90ff;
-    border-radius: 4px;
-    font-size: 14px;
-    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(26, 144, 255, 0.1);
+}
+
+#add-row-form input[type="text"]:focus,
+#id-search:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 4px 12px rgba(26, 144, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+#add-row-form input[type="text"]::placeholder,
+#id-search::placeholder {
+    color: #999;
 }
 
 /* Table styling */
@@ -75,23 +105,42 @@
 
 .edit-form-container {
     background-color: #f8f9fa;
-    padding: 20px;
-    margin: 20px 0;
+    padding: 25px;
+    margin: 20px auto;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .edit-form-container h3 {
     color: #1a90ff;
     margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.hr-page .form-group {
+    margin-bottom: 15px;
+}
+
+.hr-page .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 .edit-form-container input {
     width: 100%;
-    padding: 8px 12px;
+    padding: 10px 12px;
     margin: 5px 0;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
 }
 
 .edit-form-container input:focus {
@@ -100,37 +149,265 @@
     box-shadow: 0 0 0 2px rgba(26,144,255,0.2);
 }
 
+.hr-page .button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.hr-page .button-group button {
+    flex: 0 1 auto;
+    min-width: 150px;
+    padding: 12px 30px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.hr-page .btn-save {
+    background-color: #28a745;
+    color: white;
+}
+
+.hr-page .btn-save:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.hr-page .btn-cancel {
+    background-color: #6c757d;
+    color: white;
+}
+
+.hr-page .btn-cancel:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hr-page {
+        margin: 30px 50px;
+    }
+    
+    #id-search {
+        width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hr-page {
+        margin: 20px 20px;
+    }
+    
+    /* Wrapper for scrollable tables */
+    .hr-page .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    
+    .hr-page table {
+        min-width: 800px;
+        width: 100%;
+        table-layout: auto;
+    }
+    
+    .hr-page table th,
+    .hr-page table td {
+        white-space: nowrap;
+        padding: 8px 12px;
+    }
+    
+    #id-search {
+        width: 100%;
+    }
+    
+    .table th,
+    .table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+    
+    .edit-btn,
+    .delete-btn {
+        width: 65px;
+        font-size: 13px;
+        padding: 5px 8px;
+    }
+    
+    .edit-form-container {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hr-page {
+        margin: 15px 10px;
+    }
+    
+    .table {
+        font-size: 11px;
+    }
+    
+    .table th,
+    .table td {
+        padding: 6px 4px;
+    }
+    
+    .edit-btn,
+    .delete-btn {
+        width: 55px;
+        font-size: 11px;
+        padding: 4px 6px;
+    }
+    
+    #add-row-form3 .col {
+        margin: 15px 0 20px 0;
+        padding: 20px;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    #add-row-form3 .col button {
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    #add-row-form input[type="text"],
+    #id-search {
+        width: 100%;
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+    
+    .edit-form-container {
+        padding: 20px 15px;
+        margin: 15px 0;
+        max-height: 70vh;
+    }
+    
+    .edit-form-container h3 {
+        font-size: 18px;
+    }
+    
+    .hr-page .form-group {
+        margin-bottom: 12px;
+    }
+    
+    .hr-page .form-group label {
+        font-size: 13px;
+    }
+    
+    .edit-form-container input {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+    
+    .hr-page .button-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .hr-page .button-group button {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    /* Add form mobile styles */
+    .add-employee-form {
+        padding: 20px 15px;
+        margin: 15px 0;
+        max-height: 70vh;
+    }
+    
+    .add-employee-form h3 {
+        font-size: 18px;
+    }
+    
+    .add-employee-form .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .add-employee-form .form-col {
+        min-width: 100%;
+        margin-bottom: 12px;
+    }
+    
+    .add-employee-form .form-col label {
+        font-size: 13px;
+    }
+    
+    .add-employee-form .form-col input {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+    
+    .add-employee-form .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .add-employee-form .form-actions button {
+        width: 100%;
+        min-width: unset;
+    }
+}
+
 .button-group {
     margin-top: 20px;
     display: flex;
     gap: 10px;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
-.btn-save {
-    background-color: #1a90ff;
-    color: white;
+/* General button styles for add/edit forms */
+.add-employee-form .btn-save,
+.add-employee-form .btn-cancel {
+    flex: 0 1 auto;
+    min-width: 150px;
+    padding: 12px 30px;
     border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
 }
 
+.add-employee-form .btn-save,
+.btn-save {
+    background-color: #28a745;
+    color: white;
+}
+
+.add-employee-form .btn-save:hover,
+.btn-save:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.add-employee-form .btn-cancel,
 .btn-cancel {
     background-color: #6c757d;
     color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
-.btn-save:hover {
-    background-color: #0c7cd5;
-}
-
+.add-employee-form .btn-cancel:hover,
 .btn-cancel:hover {
     background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
 }
 
 /* Search and Add Button Row */
@@ -167,41 +444,58 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 25px;
-    margin: 20px 0;
+    margin: 20px auto;
+    max-width: 900px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .add-employee-form h3 {
     color: #1a90ff;
     margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
 }
 
-.form-row {
+.add-employee-form .form-row {
     display: flex;
     gap: 20px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
-.form-col {
+.add-employee-form .form-col {
     flex: 1;
+    min-width: 200px;
 }
 
-.form-col label {
+.add-employee-form .form-col label {
     display: block;
     margin-bottom: 5px;
     color: #555;
     font-weight: 500;
+    font-size: 14px;
 }
 
-.form-col input {
+.add-employee-form .form-col input {
     width: 100%;
-    padding: 8px 12px;
+    padding: 10px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
 }
 
-.form-actions {
+.add-employee-form .form-col input:focus {
+    border-color: #1a90ff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(26, 144, 255, 0.2);
+}
+
+.add-employee-form .form-actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 20px;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
 }

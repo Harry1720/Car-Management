@@ -165,6 +165,7 @@ const HRPage = () => {
     const handleEdit = (citizenId) => {
         const employeeToEdit = employees.find(emp => emp.employee_citizenid === citizenId);
         setEditingEmployee({...employeeToEdit}); // Clone object to avoid direct mutation
+        setShowAddForm(false); // Close add form when editing
     };
 
     const handleEditChange = (e) => {
@@ -205,7 +206,10 @@ const HRPage = () => {
                         />
                         <button 
                             className="btn btn-primary"
-                            onClick={() => setShowAddForm(!showAddForm)}
+                            onClick={() => {
+                                setShowAddForm(!showAddForm);
+                                setEditingEmployee(null); // Close edit form when adding
+                            }}
                         >
                             {showAddForm ? 'Hủy thêm' : 'Thêm nhân viên'}
                         </button>
@@ -390,49 +394,51 @@ const HRPage = () => {
                     </div>
                 )}
 
-                <table className="table table-hover table-sortable table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Mã nhân viên</th>
-                            <th>Họ và tên nhân viên</th>
-                            <th>Ngày tháng năm sinh</th>
-                            <th>Số điện thoại</th>
-                            <th>Email</th>
-                            <th>Địa chỉ</th>
-                            <th>Chức vụ</th>
-                            <th colSpan="2">Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody style={{backgroundColor: 'rgb(245, 252, 255)'}}>
-                        {filteredEmployees.map((employee) => (
-                            <tr key={employee.employee_citizenid}>
-                                <td>{employee.employee_citizenid}</td>
-                                <td>{employee.employee_name}</td>
-                                <td>{employee.employee_birthday}</td>
-                                <td>{employee.employee_phone_no}</td>
-                                <td>{employee.employee_email}</td>
-                                <td>{employee.employee_address}</td>
-                                <td>{employee.role_title}</td>
-                                <td>
-                                    <button 
-                                        className="delete-btn"
-                                        onClick={() => handleDelete(employee.employee_citizenid)}
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                                <td>
-                                    <button 
-                                        className="edit-btn"
-                                        onClick={() => handleEdit(employee.employee_citizenid)}
-                                    >
-                                        Edit
-                                    </button>
-                                </td>
+                <div className="table-wrapper">
+                    <table className="table table-hover table-sortable table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã nhân viên</th>
+                                <th>Họ và tên nhân viên</th>
+                                <th>Ngày tháng năm sinh</th>
+                                <th>Số điện thoại</th>
+                                <th>Email</th>
+                                <th>Địa chỉ</th>
+                                <th>Chức vụ</th>
+                                <th colSpan="2">Thao tác</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody style={{backgroundColor: 'rgb(245, 252, 255)'}}>
+                            {filteredEmployees.map((employee) => (
+                                <tr key={employee.employee_citizenid}>
+                                    <td>{employee.employee_citizenid}</td>
+                                    <td>{employee.employee_name}</td>
+                                    <td>{employee.employee_birthday}</td>
+                                    <td>{employee.employee_phone_no}</td>
+                                    <td>{employee.employee_email}</td>
+                                    <td>{employee.employee_address}</td>
+                                    <td>{employee.role_title}</td>
+                                    <td>
+                                        <button 
+                                            className="delete-btn"
+                                            onClick={() => handleDelete(employee.employee_citizenid)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button 
+                                            className="edit-btn"
+                                            onClick={() => handleEdit(employee.employee_citizenid)}
+                                        >
+                                            Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <Footer/>
         </>

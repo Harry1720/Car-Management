@@ -91,31 +91,33 @@ const AccountingPage = () => {
                     </div>
                 </div>
 
-                <table className="table table-hover table-sortable table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Mã giao dịch</th>
-                            <th>Số tiền đặt cọc</th>
-                            <th>Số tiền đã thanh toán</th>
-                            <th>Tổng tiền</th>
-                        </tr>
-                    </thead>
-                    <tbody style={{backgroundColor: "rgb(245, 252, 255)"}}>
-                        {accountingData
-                            .filter(keToan => 
-                                keToan.transaction_id.toLowerCase().includes(searchTerm.toLowerCase())
-                            )
-                            .map(keToan => (
-                                <tr key={keToan.transaction_id}>
-                                    <td>{keToan.transaction_id}</td>
-                                    <td>{keToan.deposit_price}</td>
-                                    <td>{keToan.transaction_price}</td>
-                                    <td>{keToan.totalprice}</td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+                <div className="table-wrapper">
+                    <table className="table table-hover table-sortable table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã giao dịch</th>
+                                <th>Số tiền đặt cọc</th>
+                                <th>Số tiền đã thanh toán</th>
+                                <th>Tổng tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody style={{backgroundColor: "rgb(245, 252, 255)"}}>
+                            {accountingData
+                                .filter(keToan => 
+                                    keToan.transaction_id.toLowerCase().includes(searchTerm.toLowerCase())
+                                )
+                                .map(keToan => (
+                                    <tr key={keToan.transaction_id}>
+                                        <td>{keToan.transaction_id}</td>
+                                        <td>{keToan.deposit_price}</td>
+                                        <td>{keToan.transaction_price}</td>
+                                        <td>{keToan.totalprice}</td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <Footer/>
         </>

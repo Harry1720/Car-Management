@@ -28,7 +28,7 @@ const Footer = () => {
             <ul className={styles.box1}>
               <p><b>VinFast Auto Ltd.</b></p>
               <p><b>Địa chỉ: </b> <a href="https://www.google.com/maps/place/Vinfast+B%C3%ACnh+Th%E1%BA%A1nh/@10.7950602,106.7191526,17z/data=!3m1!4b1!4m6!3m5!1s0x317529004b288b51:0xa650ac3f32ab3445!8m2!3d10.7950602!4d106.7217275!16s%2Fg%2F11vr1yrwqg?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D">
-                  Nguyễn Hữu Cảnh, Vinhomes Tân Cảng, Bình Thạnh, Thành phố Hồ Chí Minh</a></p>
+                  Nguyễn Hữu Cảnh, Vinhomes Tân Cảng, Bình Thạnh, TP. Hồ Chí Minh</a></p>
               <p><b>Điện thoại: </b><a href='tel:1900 23 23 89'>1900 23 23 89</a></p>
             </ul>
           </div>

@@ -286,54 +286,56 @@ const TransactionPage = () => {
                     </div>
                 </div>
 
-                <table className="table table-hover table-sortable table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Mã giao dịch</th>
-                            <th>CCCD</th>
-                            <th>Mã xe</th>
-                            <th>Ngày giao dịch</th>
-                            <th>Ngày thanh toán</th>
-                            <th>Thời hạn bảo hành</th>
-                            <th>Trạng thái giao dịch</th>
-                            <th colSpan="2">Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody style={{backgroundColor: "rgb(245, 252, 255)"}}>
-                        {transactions
-                            .filter(transaction => 
-                                transaction.transaction_id.toLowerCase().includes(searchTerm.toLowerCase())
-                            )
-                            .map(transaction => (
-                                <tr key={transaction.transaction_id}>
-                                    <td>{transaction.transaction_id}</td>
-                                    <td>{transaction.citizen_id}</td>
-                                    <td>{transaction.model_car_id}</td>
-                                    <td>{transaction.transaction_date}</td>
-                                    <td>{transaction.payment_date || "---"}</td>
-                                    <td>{transaction.warranty_valid_date || "---"}</td>
-                                    <td>{transaction.status_of_purchasing}</td>
-                                    <td>
-                                        <button 
-                                            className="delete-transaction"
-                                            onClick={() => handleDelete(transaction.transaction_id)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button 
-                                            className="edit-transaction"
-                                            onClick={() => handleEdit(transaction.transaction_id)}
-                                        >
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+                <div className="table-wrapper">
+                    <table className="table table-hover table-sortable table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã giao dịch</th>
+                                <th>CCCD</th>
+                                <th>Mã xe</th>
+                                <th>Ngày giao dịch</th>
+                                <th>Ngày thanh toán</th>
+                                <th>Thời hạn bảo hành</th>
+                                <th>Trạng thái giao dịch</th>
+                                <th colSpan="2">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody style={{backgroundColor: "rgb(245, 252, 255)"}}>
+                            {transactions
+                                .filter(transaction => 
+                                    transaction.transaction_id.toLowerCase().includes(searchTerm.toLowerCase())
+                                )
+                                .map(transaction => (
+                                    <tr key={transaction.transaction_id}>
+                                        <td>{transaction.transaction_id}</td>
+                                        <td>{transaction.citizen_id}</td>
+                                        <td>{transaction.model_car_id}</td>
+                                        <td>{transaction.transaction_date}</td>
+                                        <td>{transaction.payment_date || "---"}</td>
+                                        <td>{transaction.warranty_valid_date || "---"}</td>
+                                        <td>{transaction.status_of_purchasing}</td>
+                                        <td>
+                                            <button 
+                                                className="delete-transaction"
+                                                onClick={() => handleDelete(transaction.transaction_id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button 
+                                                className="edit-transaction"
+                                                onClick={() => handleEdit(transaction.transaction_id)}
+                                            >
+                                                Edit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <Footer/>
         </>

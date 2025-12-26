@@ -1,10 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
-* {
+.promotion_page * {
     font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
+}
+
+/* Exclude footer icons from font override */
+.promotion_page footer i {
+    font-family: "Font Awesome 5 Pro", "Font Awesome 5 Brands" !important;
+}
+
+/* Exclude promotion card icons from font override */
+.promotion_page .promotion-features i {
+    font-family: "Font Awesome 5 Pro", "Font Awesome 5 Brands" !important;
 }
 
 .promotion_page {
@@ -128,4 +136,111 @@
 .promotion-features i {
     color: #ffffff;
     margin-right: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .promotion-container {
+        margin: 100px auto 50px;
+        padding: 0 15px;
+        min-width: auto;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+    }
+    
+    .section-description {
+        margin-bottom: 60px;
+        font-size: 1rem;
+    }
+    
+    .promotions-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .promotion-container {
+        margin: 90px auto 40px;
+        padding: 0 10px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-title::after {
+        width: 150px;
+        height: 3px;
+    }
+    
+    .section-description {
+        margin-bottom: 50px;
+        font-size: 0.95rem;
+    }
+    
+    .promotions-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .promotion-card {
+        margin-bottom: 20px;
+    }
+    
+    .promotion-image {
+        height: 200px;
+    }
+    
+    .promotion-content h3 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .promotion-container {
+        margin: 80px auto 30px;
+        padding: 0 8px;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .section-title::after {
+        width: 120px;
+        height: 2px;
+    }
+    
+    .section-description {
+        margin-bottom: 40px;
+        font-size: 0.9rem;
+    }
+    
+    .promotion-card {
+        margin-bottom: 15px;
+    }
+    
+    .promotion-image {
+        height: 180px;
+    }
+    
+    .promotion-content {
+        padding: 15px;
+    }
+    
+    .promotion-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+    
+    .promotion-content p {
+        font-size: 0.85rem;
+    }
+    
+    .promotion-features span {
+        font-size: 0.85rem;
+    }
 }

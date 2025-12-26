@@ -139,6 +139,7 @@ const CarList = () => {
     const handleEdit = (carId) => {
         const carToEdit = cars.find(car => car.model_car_id === carId);
         setEditingCar(carToEdit);
+        setShowAddForm(false); // Close add form when editing
     };
 
     const handleUpdate = (e) => {
@@ -195,7 +196,10 @@ const CarList = () => {
                         />
                         <button 
                             className="btn btn-primary"
-                            onClick={() => setShowAddForm(!showAddForm)}
+                            onClick={() => {
+                                setShowAddForm(!showAddForm);
+                                setEditingCar(null); // Close edit form when adding
+                            }}
                         >
                             {showAddForm ? 'Hủy thêm' : 'Thêm xe mới'}
                         </button>
@@ -422,55 +426,57 @@ const CarList = () => {
                     </div>
                 )}
 
-                <table className="table table-hover table-sortable table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Mã xe</th>
-                            <th>Tên xe</th>
-                            <th>Giá tiền</th>
-                            <th>Màu sắc</th>
-                            <th>Nguồn gốc</th>
-                            <th>Ngày nhập</th>
-                            <th>Số lượng tồn</th>
-                            <th>Số đã bán</th>
-                            <th>Năm ra mắt</th>
-                            <th colSpan="2">Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cars
-                            .filter(car => car.model_car_id.toLowerCase().includes(searchTerm.toLowerCase()))
-                            .map(car => (
-                                <tr key={car.model_car_id}>
-                                    <td>{car.model_car_id}</td>
-                                    <td>{car.model_car_name}</td>
-                                    <td>{car.price}</td>
-                                    <td>{car.color}</td>
-                                    <td>{car.origin_of_car}</td>
-                                    <td>{car.date_of_import}</td>
-                                    <td>{car.car_number_availability}</td>
-                                    <td>{car.car_sold}</td>
-                                    <td>{car.lauching_year}</td>
-                                    <td>
-                                        <button 
-                                            className="delete-btn"
-                                            onClick={() => handleDelete(car.model_car_id)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button 
-                                            className="edit-btn"
-                                            onClick={() => handleEdit(car.model_car_id)}
-                                        >
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                    </tbody>
-                </table>
+                <div className="table-wrapper">
+                    <table className="table table-hover table-sortable table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã xe</th>
+                                <th>Tên xe</th>
+                                <th>Giá tiền</th>
+                                <th>Màu sắc</th>
+                                <th>Nguồn gốc</th>
+                                <th>Ngày nhập</th>
+                                <th>Số lượng tồn</th>
+                                <th>Số đã bán</th>
+                                <th>Năm ra mắt</th>
+                                <th colSpan="2">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cars
+                                .filter(car => car.model_car_id.toLowerCase().includes(searchTerm.toLowerCase()))
+                                .map(car => (
+                                    <tr key={car.model_car_id}>
+                                        <td>{car.model_car_id}</td>
+                                        <td>{car.model_car_name}</td>
+                                        <td>{car.price}</td>
+                                        <td>{car.color}</td>
+                                        <td>{car.origin_of_car}</td>
+                                        <td>{car.date_of_import}</td>
+                                        <td>{car.car_number_availability}</td>
+                                        <td>{car.car_sold}</td>
+                                        <td>{car.lauching_year}</td>
+                                        <td>
+                                            <button 
+                                                className="delete-btn"
+                                                onClick={() => handleDelete(car.model_car_id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button 
+                                                className="edit-btn"
+                                                onClick={() => handleEdit(car.model_car_id)}
+                                            >
+                                                Edit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <Footer/>
         </>

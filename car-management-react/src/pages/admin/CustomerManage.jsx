@@ -109,7 +109,8 @@ const CustomerManage = () => {
 
     const handleEdit = (citizenId) => {
         const customerToEdit = customers.find(c => c.citizen_id === citizenId);
-        setEditingCustomer(customerToEdit);
+        setEditingCustomer(customerToEdit);        
+        setShowAddForm(false); // Close add form when editing    
     };
 
     const handleUpdate = (e) => {
@@ -174,7 +175,10 @@ const CustomerManage = () => {
                         />
                         <button 
                             className="btn btn-primary"
-                            onClick={() => setShowAddForm(!showAddForm)}
+                            onClick={() => {
+                                setShowAddForm(!showAddForm);
+                                setEditingCustomer(null); // Close edit form when adding
+                            }}
                         >
                             {showAddForm ? 'Hủy thêm' : 'Thêm khách hàng'}
                         </button>
@@ -183,12 +187,7 @@ const CustomerManage = () => {
 
                 {/* Add new customer form */}
                 {showAddForm && (
-                    <div className="add-form" style={{
-                        padding: '20px',
-                        margin: '20px 0',
-                        backgroundColor: '#f8f9fa',
-                        borderRadius: '5px'
-                    }}>
+                    <div className="add-form">
                         <h3>Thêm khách hàng mới</h3>
                         <form onSubmit={handleCreate}>
                             <div className="form-group">
@@ -246,9 +245,16 @@ const CustomerManage = () => {
                                     required
                                 />
                             </div>
-                            <div style={{marginTop: '10px'}}>
-                                <button type="submit" className="btn btn-success">
+                            <div className="button-group">
+                                <button type="submit" className="btn-save">
                                     Thêm khách hàng
+                                </button>
+                                <button 
+                                    type="button" 
+                                    className="btn-cancel"
+                                    onClick={() => setShowAddForm(false)}
+                                >
+                                    Hủy
                                 </button>
                             </div>
                         </form>
@@ -300,66 +306,68 @@ const CustomerManage = () => {
                                     className="form-control"
                                 />
                             </div>
-                            <div style={{marginTop: '10px'}}>
+                            <div className="button-group">
+                                <button 
+                                    type="submit" 
+                                    className="btn-save"
+                                >
+                                    Lưu thay đổi
+                                </button>
                                 <button 
                                     type="button" 
-                                    className="btn btn-secondary"
+                                    className="btn-cancel"
                                     onClick={() => setEditingCustomer(null)}
                                 >
                                     Hủy
-                                </button>
-                                <button 
-                                    type="submit" 
-                                    className="btn btn-primary"
-                                >
-                                    Lưu thay đổi
                                 </button>
                             </div>
                         </form>
                     </div>
                 )}
 
-                <table className="table table-hover table-sortable table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Số CCCD</th>
-                            <th>Họ và Tên</th>
-                            <th>Địa chỉ</th>
-                            <th>Số điện thoại</th>
-                            <th>Email</th>
-                            <th>Số giao dịch</th>
-                            <th colSpan="2">Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody style={{backgroundColor: 'rgb(245, 252, 255)'}} id="customer-data">
-                        {filteredCustomers.map((customer) => (
-                            <tr key={customer.citizen_id}>
-                                <td>{customer.citizen_id}</td>
-                                <td>{customer.customer_name}</td>
-                                <td>{customer.address}</td>
-                                <td>{customer.phone_no}</td>
-                                <td>{customer.email}</td>
-                                <td>{customer.number_transaction}</td>
-                                <td>
-                                    <button 
-                                        className="delete-customer"
-                                        onClick={() => handleDelete(customer.citizen_id)}
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                                <td>
-                                    <button 
-                                        className="edit-customer"
-                                        onClick={() => handleEdit(customer.citizen_id)}
-                                    >
-                                        Edit
-                                    </button>
-                                </td>
+                <div className="table-wrapper">
+                    <table className="table table-hover table-sortable table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Số CCCD</th>
+                                <th>Họ và Tên</th>
+                                <th>Địa chỉ</th>
+                                <th>Số điện thoại</th>
+                                <th>Email</th>
+                                <th>Số giao dịch</th>
+                                <th colSpan="2">Thao tác</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody style={{backgroundColor: 'rgb(245, 252, 255)'}} id="customer-data">
+                            {filteredCustomers.map((customer) => (
+                                <tr key={customer.citizen_id}>
+                                    <td>{customer.citizen_id}</td>
+                                    <td>{customer.customer_name}</td>
+                                    <td>{customer.address}</td>
+                                    <td>{customer.phone_no}</td>
+                                    <td>{customer.email}</td>
+                                    <td>{customer.number_transaction}</td>
+                                    <td>
+                                        <button 
+                                            className="delete-customer"
+                                            onClick={() => handleDelete(customer.citizen_id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button 
+                                            className="edit-customer"
+                                            onClick={() => handleEdit(customer.citizen_id)}
+                                        >
+                                            Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <Footer/>
         </>

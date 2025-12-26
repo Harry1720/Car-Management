@@ -1,10 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
-* {
+
+.about_page * {
     font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
+
+/* Exclude footer icons from font override */
+.about_page footer i {
+    font-family: "Font Awesome 5 Pro", "Font Awesome 5 Brands" !important;
+}
+
 .about_page{
     background-color: #2a2a2a;
     color: #ffffff;
@@ -129,6 +134,12 @@
     border-radius: 10px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.row-cols-4 .col img {
+    margin-left: auto;
+    margin-right: auto;
 }
 .row-cols-4 .col:hover {
     transform: translateY(-10px);
@@ -243,4 +254,164 @@ img:hover {
 .special-award .award-card {
     width: 60%;
     margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container1 {
+        margin: 0 30px;
+    }
+    
+    .top_head_about {
+        margin-left: 40px;
+    }
+    
+    .top_about img {
+        width: 85%;
+        margin-left: 15%;
+    }
+    
+    .video_ab {
+        width: 90%;
+        height: 60vh;
+        margin: 60px auto 0;
+    }
+    
+    .row, .row_head {
+        padding: 25px 10px;
+    }
+    
+    .row-cols-4 .col {
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container1 {
+        margin: 0 20px;
+    }
+    
+    .top_head_about {
+        margin-left: 20px;
+    }
+    
+    .top_head_about h3 {
+        margin-top: 30px;
+        font-size: 1.3rem;
+    }
+    
+    .top_about img {
+        width: 90%;
+        margin-left: 10%;
+    }
+    
+    .video_ab {
+        width: 95%;
+        height: 50vh;
+        margin: 50px auto 0;
+    }
+    
+    .row, .row_head {
+        flex-direction: column;
+        padding: 20px 10px;
+    }
+    
+    .row_head .col {
+        min-width: 100%;
+        padding: 15px;
+    }
+    
+    .col h2 {
+        font-size: 1.3rem;
+    }
+    
+    .col h2::after {
+        width: 80px;
+        height: 2px;
+    }
+    
+    .heading2 {
+        font-size: 32px;
+    }
+    
+    .row-cols-4 {
+        flex-direction: column;
+    }
+    
+    .row-cols-4 .col {
+        min-width: 100%;
+        margin: 10px auto;
+    }
+    
+    .award-card {
+        width: 100% !important;
+    }
+    
+    .special-award .award-card {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .container1 {
+        margin: 0 10px;
+    }
+    
+    .top_head_about {
+        margin-left: 10px;
+    }
+    
+    .top_head_about h3 {
+        margin-top: 20px;
+        font-size: 1.1rem;
+    }
+    
+    .top_about img {
+        width: 95%;
+        margin-left: 5%;
+    }
+    
+    .video_ab {
+        width: 98%;
+        height: 40vh;
+        margin: 40px auto 0;
+        border-radius: 15px;
+    }
+    
+    .row, .row_head {
+        padding: 15px 8px;
+        margin: 20px 0;
+    }
+    
+    .row_head .col {
+        padding: 10px;
+    }
+    
+    .col h2 {
+        font-size: 1.1rem;
+    }
+    
+    .col h2::after {
+        width: 60px;
+    }
+    
+    .col p, .col h3 {
+        font-size: 0.9rem;
+    }
+    
+    .heading2 {
+        font-size: 28px;
+    }
+    
+    .dau_chan1 img {
+        margin-left: 2%;
+    }
+    
+    .special-award .award-card {
+        width: 95%;
+    }
+    
+    .award-content h5 {
+        font-size: 1.2rem;
+    }
 }

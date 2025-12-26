@@ -1,13 +1,53 @@
 .car-list-page {
     margin: 30px 100px;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 /* Search and Add Button Row */
+#add-row-form3 {
+    margin: 20px 0 30px 0;
+}
+
 #add-row-form3 .col {
     display: flex;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
+    gap: 15px;
+    background: linear-gradient(135deg, #e6f3ff 0%, #b8ddff 100%);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(26, 144, 255, 0.2);
+    border: 2px solid rgba(26, 144, 255, 0.1);
+}
+
+#add-row-form3 .col button {
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    min-width: fit-content;
+}
+
+#id-search {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 15px;
+    border: 2px solid #1a90ff;
+    border-radius: 10px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(26, 144, 255, 0.1);
+}
+
+#id-search:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 4px 12px rgba(26, 144, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+#id-search::placeholder {
+    color: #999;
 }
 
 #id-search {
@@ -37,22 +77,29 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 25px;
-    margin: 20px 0;
+    margin: 20px auto;
+    max-width: 900px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .add-car-form h3, .edit-form h3 {
     color: #1a90ff;
     margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .form-row {
     display: flex;
     gap: 20px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .form-col {
     flex: 1;
+    min-width: 250px;
 }
 
 .form-col label {
@@ -60,29 +107,47 @@
     margin-bottom: 5px;
     color: #555;
     font-weight: 500;
+    font-size: 14px;
 }
 
-.form-col input {
+.form-col input,
+.form-col select,
+.form-col textarea {
     width: 100%;
-    padding: 8px 12px;
+    padding: 10px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-col input:focus,
+.form-col select:focus,
+.form-col textarea:focus {
+    border-color: #1a90ff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(26, 144, 255, 0.2);
 }
 
 .form-actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 20px;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
 }
 
 /* Button styles */
 .btn-save, .btn-cancel {
-    padding: 8px 16px;
+    flex: 0 1 auto;
+    min-width: 150px;
+    padding: 12px 30px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
 }
 
 .btn-save {
@@ -90,9 +155,21 @@
     color: white;
 }
 
+.btn-save:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
 .btn-cancel {
     background-color: #6c757d;
     color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
 }
 
 .edit-btn, .delete-btn {
@@ -145,4 +222,172 @@
     text-align: center;
     font-size: 35px;
     padding: 20px 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .car-list-page {
+        margin: 30px 50px;
+    }
+    
+    #id-search {
+        width: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .car-list-page {
+        margin: 20px 20px;
+    }
+    
+    /* Wrapper for scrollable tables */
+    .car-list-page .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    
+    .car-list-page table {
+        min-width: 800px;
+        width: 100%;
+        table-layout: auto;
+    }
+    
+    .car-list-page table th,
+    .car-list-page table td {
+        white-space: nowrap;
+        padding: 8px 12px;
+    }    
+    #add-row-form3 .col {
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px;
+    }
+    
+    #add-row-form3 .col button {
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    #id-search {
+        width: 100%;
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    .btn-primary {
+        width: 100%;
+        height: 40px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+    }
+    
+    .add-car-form,
+    .edit-form,
+    .add-car-form {
+        padding: 15px 10px;
+        max-height: 65vh;
+    }
+    
+    .edit-form h3,
+    .add-car-form h3 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    
+    .table th,
+    .table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+    
+    #heading {
+        font-size: 28px;
+    }
+    
+    .edit-btn,
+    .delete-btn {
+        width: 65px;
+        font-size: 13px;
+        padding: 5px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .car-list-page {
+        margin: 15px 10px;
+    }
+    
+    #heading {
+        font-size: 24px;
+        padding: 15px 10px;
+    }
+    
+    .add-car-form,
+    .edit-form,
+    .add-car-form {
+        padding: 20px 15px;
+        margin: 15px 0;
+        max-height: 70vh;
+    }
+    
+    .edit-form h3,
+    .add-car-form h3 {
+        font-size: 18px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .form-col {
+        min-width: 100%;
+        margin-bottom: 12px;
+    }
+    
+    .form-col label {
+        font-size: 13px;
+    }
+    
+    .form-col input,
+    .form-col select,
+    .form-col textarea {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-save, .btn-cancel {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    .table {
+        font-size: 11px;
+    }
+    
+    .table th,
+    .table td {
+        padding: 6px 4px;
+    }
+    
+    .edit-btn,
+    .delete-btn {
+        width: 55px;
+        font-size: 11px;
+        padding: 4px 6px;
+    }
+    
+    .btn-save,
+    .btn-cancel {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
 }
