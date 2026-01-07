@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import '../../assets/css/admin_pages/HR.css';
 import Navbar from '../../components/NavbarAdmin';
 import Footer from '../../components/FooterAdmin';
+import { employeeService } from '../../services/employeeService';
 
 const HRPage = () => {
-    const [employees, setEmployees] = useState([
+    // Store sample data before useState
+    const oldEmployees = [
         {
             employee_citizenid: "EMP001",
             employee_name: "Nguyễn Văn A",
@@ -104,10 +106,34 @@ const HRPage = () => {
             employee_address: "9 Cách Mạng Tháng 8, Q10, HCMC",
             role_title: "Giám sát Sản xuất"
         }
+    ];
 
-    ]);
-
+    const [employees, setEmployees] = useState(oldEmployees);
+    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    
+    useEffect(() => {
+        fetchEmployees();
+    }, []);
+    
+    const fetchEmployees = async () => {
+        try {
+            setLoading(true);
+            const response = await employeeService.getAllEmployees();
+            let employeeData = Array.isArray(response) ? response : (response?.data || response?.employees || []);
+            
+            if (employeeData && Array.isArray(employeeData) && employeeData.length > 0) {
+                setEmployees([...oldEmployees, ...employeeData]);
+            } else {
+                setEmployees(oldEmployees);
+            }
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching employees:', error);
+            setEmployees(oldEmployees);
+            setLoading(false);
+        }
+    };
     const [editingEmployee, setEditingEmployee] = useState(null);
     const [newEmployee, setNewEmployee] = useState({
         employee_citizenid: '',
@@ -124,19 +150,36 @@ const HRPage = () => {
         document.title = "Quản lý nhân sự | VinFast";
     }, []);
 
-    const handleAddEmployee = (e) => {
+    const handleAddEmployee = async (e) => {
         e.preventDefault();
-        setEmployees([...employees, newEmployee]);
-        setNewEmployee({
-            employee_citizenid: '',
-            employee_name: '',
-            employee_birthday: '',
-            employee_phone_no: '',
-            employee_email: '',
-            employee_address: '',
-            role_title: ''
-        });
-        setShowAddForm(false);
+        
+        // Validate required fields
+        if (!newEmployee.employee_citizenid?.trim() || !newEmployee.employee_name?.trim() || 
+            !newEmployee.employee_birthday?.trim() || !newEmployee.employee_phone_no?.trim() || 
+            !newEmployee.employee_email?.trim() || !newEmployee.employee_address?.trim() || 
+            !newEmployee.role_title?.trim()) {
+            alert('Vui lòng điền đầy đủ tất cả các trường!');
+            return;
+        }
+        
+        try {
+            await employeeService.createEmployee(newEmployee);
+            await fetchEmployees();
+            setNewEmployee({
+                employee_citizenid: '',
+                employee_name: '',
+                employee_birthday: '',
+                employee_phone_no: '',
+                employee_email: '',
+                employee_address: '',
+                role_title: ''
+            });
+            setShowAddForm(false);
+            alert('Thêm nhân viên thành công!');
+        } catch (error) {
+            console.error('Error creating employee:', error);
+            alert('Lỗi khi thêm nhân viên: ' + (error.response?.data?.message || error.message));
+        }
     };
 
     const handleInputChange = (e) => {
@@ -158,12 +201,27 @@ const HRPage = () => {
         }));
     };
 
-    const handleDelete = (citizenId) => {
-        setEmployees(employees.filter(emp => emp.employee_citizenid !== citizenId));
+    const handleDelete = async (citizenId) => {
+        try {
+            // Only delete from API if it's a MongoDB ID (starts with numbers or has _id)
+            const employee = employees.find(emp => emp._id === citizenId || emp.employee_citizenid === citizenId);
+            
+            if (employee && employee._id && employee._id.length === 24) {
+                // This is a MongoDB ID, delete from API
+                await employeeService.deleteEmployee(employee._id);
+            }
+            
+            // Remove from UI regardless
+            setEmployees(employees.filter(emp => emp._id !== citizenId && emp.employee_citizenid !== citizenId));
+            alert('Xóa nhân viên thành công!');
+        } catch (error) {
+            console.error('Error deleting employee:', error);
+            alert('Lỗi khi xóa nhân viên');
+        }
     };
 
     const handleEdit = (citizenId) => {
-        const employeeToEdit = employees.find(emp => emp.employee_citizenid === citizenId);
+        const employeeToEdit = employees.find(emp => emp._id === citizenId || emp.employee_citizenid === citizenId);
         setEditingEmployee({...employeeToEdit}); // Clone object to avoid direct mutation
         setShowAddForm(false); // Close add form when editing
     };
@@ -176,16 +234,23 @@ const HRPage = () => {
         }));
     };
 
-    const handleUpdate = (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
-        setEmployees(employees.map(emp => 
-            emp.employee_citizenid === editingEmployee.employee_citizenid ? editingEmployee : emp
-        ));
-        setEditingEmployee(null);
+        try {
+            const employeeId = editingEmployee._id || editingEmployee.employee_citizenid;
+            await employeeService.updateEmployee(employeeId, editingEmployee);
+            setEmployees(employees.map(emp => 
+                (emp._id === employeeId || emp.employee_citizenid === employeeId) ? editingEmployee : emp
+            ));
+            setEditingEmployee(null);
+        } catch (error) {
+            console.error('Error updating employee:', error);
+            alert('Lỗi khi cập nhật nhân viên');
+        }
     };
 
     const filteredEmployees = employees.filter(employee =>
-        employee.employee_citizenid.toLowerCase().includes(searchTerm.toLowerCase())
+        (employee.employee_citizenid || employee.identityNumber || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -409,33 +474,60 @@ const HRPage = () => {
                             </tr>
                         </thead>
                         <tbody style={{backgroundColor: 'rgb(245, 252, 255)'}}>
-                            {filteredEmployees.map((employee) => (
-                                <tr key={employee.employee_citizenid}>
-                                    <td>{employee.employee_citizenid}</td>
-                                    <td>{employee.employee_name}</td>
-                                    <td>{employee.employee_birthday}</td>
-                                    <td>{employee.employee_phone_no}</td>
-                                    <td>{employee.employee_email}</td>
-                                    <td>{employee.employee_address}</td>
-                                    <td>{employee.role_title}</td>
-                                    <td>
-                                        <button 
-                                            className="delete-btn"
-                                            onClick={() => handleDelete(employee.employee_citizenid)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button 
-                                            className="edit-btn"
-                                            onClick={() => handleEdit(employee.employee_citizenid)}
-                                        >
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                            {loading ? (
+                                <tr><td colSpan="9" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                            ) : employees.length === 0 ? (
+                                <tr><td colSpan="9" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                            ) : (
+                                filteredEmployees.map((employee) => {
+                                    // Format date
+                                    const formatDate = (dateString) => {
+                                        if (!dateString) return '';
+                                        const date = new Date(dateString);
+                                        return date.toLocaleDateString('vi-VN');
+                                    };
+
+                                    // Format address
+                                    const formatAddress = (addressData) => {
+                                        if (!addressData) return '';
+                                        if (typeof addressData === 'string') return addressData;
+                                        if (typeof addressData === 'object') {
+                                            return [addressData.street, addressData.city, addressData.state]
+                                                .filter(Boolean)
+                                                .join(', ');
+                                        }
+                                        return '';
+                                    };
+
+                                    return (
+                                        <tr key={employee._id || employee.employee_citizenid}>
+                                            <td>{employee.employee_citizenid || employee.identityNumber || ''}</td>
+                                            <td>{employee.employee_name || employee.name || ''}</td>
+                                            <td>{formatDate(employee.employee_birthday || employee.dob)}</td>
+                                            <td>{employee.employee_phone_no || employee.phone || ''}</td>
+                                            <td>{employee.employee_email || employee.email || ''}</td>
+                                            <td>{formatAddress(employee.employee_address || employee.address)}</td>
+                                            <td>{employee.role_title || employee.position || ''}</td>
+                                            <td>
+                                                <button 
+                                                    className="delete-btn"
+                                                    onClick={() => handleDelete(employee._id || employee.employee_citizenid)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button 
+                                                    className="edit-btn"
+                                                    onClick={() => handleEdit(employee._id || employee.employee_citizenid)}
+                                                >
+                                                    Edit
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            )}
                         </tbody>
                     </table>
                 </div>

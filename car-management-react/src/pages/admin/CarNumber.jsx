@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import '../../assets/css/admin_pages/CarNumber.css';
 import Navbar from '../../components/NavbarAdmin';
 import Footer from '../../components/FooterAdmin';
+import { carService } from '../../services/carService';
 
 const CarNumber = () => {
-    const [carNumbers, setCarNumbers] = useState([
+    // Sample data
+    const oldCarNumbers = [
         {
             model_car_id: "VINVF8BL",
             date_import: "2024-06-01",
@@ -110,36 +112,43 @@ const CarNumber = () => {
             imported: 12,
             sold: 8
         }
-    ]);
+    ];
+
+    const [carNumbers, setCarNumbers] = useState(oldCarNumbers);
+    const [loading, setLoading] = useState(true);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [editingCarNumber, setEditingCarNumber] = useState(null);
 
-    const handleDelete = (carId) => {
-        setCarNumbers(carNumbers.filter(car => car.model_car_id !== carId));
-    };
-
-    const handleEdit = (carId) => {
-        const carToEdit = carNumbers.find(car => car.model_car_id === carId);
-        setEditingCarNumber(carToEdit);
-    };
-
-    const handleUpdate = (e) => {
-        e.preventDefault();
-        setCarNumbers(carNumbers.map(car => 
-            car.model_car_id === editingCarNumber.model_car_id ? editingCarNumber : car
-        ));
-        setEditingCarNumber(null);
-    };
-
-    const formatDate = (isoDate) => {
-        const date = new Date(isoDate);
-        return date.toLocaleDateString('en-GB'); // Will format as DD/MM/YYYY
-    };
-
     useEffect(() => {
         document.title = "Quản lý số lượng xe | VinFast";
+        fetchCarNumbers();
     }, []);
+
+    const fetchCarNumbers = async () => {
+        try {
+            setLoading(true);
+            const response = await carService.getAllCars(1, 100);
+            const carsArray = Array.isArray(response) ? response : (response?.cars || []);
+            
+            // Map API cars to carNumbers format
+            const apiCarNumbers = carsArray.map(car => ({
+                model_car_id: car.model,
+                date_import: car.date_of_import || new Date().toISOString().split('T')[0],
+                remaining: (car.stock || 0) - (car.car_sold || 0),
+                imported: car.stock || 0,
+                sold: car.car_sold || 0
+            }));
+            
+            // Merge sample data with API data
+            setCarNumbers([...oldCarNumbers, ...apiCarNumbers]);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching cars:', error);
+            setCarNumbers(oldCarNumbers);
+            setLoading(false);
+        }
+    };
 
     return(
         <>
@@ -162,7 +171,13 @@ const CarNumber = () => {
                 {editingCarNumber && (
                     <div className="edit-form">
                         <h3>Chỉnh sửa thông tin số lượng xe</h3>
-                        <form onSubmit={handleUpdate}>
+                        <form onSubmit={(e) => {
+                            e.preventDefault();
+                            setCarNumbers(carNumbers.map(car => 
+                                car.model_car_id === editingCarNumber.model_car_id ? editingCarNumber : car
+                            ));
+                            setEditingCarNumber(null);
+                        }}>
                             <div className="form-row">
                                 <div className="form-col">
                                     <label>Mã xe</label>
@@ -244,19 +259,24 @@ const CarNumber = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {carNumbers
+                            {loading ? (
+                                <tr><td colSpan="7" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                            ) : carNumbers.length === 0 ? (
+                                <tr><td colSpan="7" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                            ) : (
+                            carNumbers
                                 .filter(car => car.model_car_id.toLowerCase().includes(searchTerm.toLowerCase()))
-                                .map(car => (
-                                    <tr key={car.model_car_id}>
+                                .map((car, index) => (
+                                    <tr key={index}>
                                         <td>{car.model_car_id}</td>
-                                        <td>{formatDate(car.date_import)}</td>
+                                        <td>{car.date_import}</td>
                                         <td>{car.remaining}</td>
                                         <td>{car.imported}</td>
                                         <td>{car.sold}</td>
                                         <td>
                                             <button 
                                                 className="delete-btn"
-                                                onClick={() => handleDelete(car.model_car_id)}
+                                                onClick={() => setCarNumbers(carNumbers.filter((_, i) => i !== index))}
                                             >
                                                 Delete
                                             </button>
@@ -264,13 +284,14 @@ const CarNumber = () => {
                                         <td>
                                             <button 
                                                 className="edit-btn"
-                                                onClick={() => handleEdit(car.model_car_id)}
+                                                onClick={() => setEditingCarNumber(car)}
                                             >
                                                 Edit
                                             </button>
                                         </td>
                                     </tr>
-                                ))}
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>

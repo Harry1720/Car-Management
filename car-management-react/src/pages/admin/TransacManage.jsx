@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import '../../assets/css/admin_pages/Transaction.css';
 import Navbar from '../../components/NavbarAdmin';
 import Footer from '../../components/FooterAdmin';
+import { transactionService } from '../../services/transactionService';
 
 const TransactionPage = () => {
     const [transactions, setTransactions] = useState([
+
         {
             transaction_id: "TRX001",
             citizen_id: "079203012345",
@@ -141,25 +143,57 @@ const TransactionPage = () => {
             status_of_purchasing: "Đã thanh toán"
         }
     ]);
-
+    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    
+    useEffect(() => {
+        fetchTransactions();
+    }, []);
+    
+    const fetchTransactions = async () => {
+        try {
+            setLoading(true);
+            const response = await transactionService.getAllTransactions();
+            const data = response.data || response;
+            if (data && Array.isArray(data) && data.length > 0) {
+                setTransactions(data);
+            }
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching transactions:', error);
+            setLoading(false);
+        }
+    };
     const [editingTransaction, setEditingTransaction] = useState(null);
 
-    const handleDelete = (transactionId) => {
-        setTransactions(transactions.filter(t => t.transaction_id !== transactionId));
+    const handleDelete = async (transactionId) => {
+        try {
+            await transactionService.deleteTransaction(transactionId);
+            setTransactions(transactions.filter(t => t._id !== transactionId && t.transaction_id !== transactionId));
+        } catch (error) {
+            console.error('Error deleting transaction:', error);
+            alert('Lỗi khi xóa giao dịch');
+        }
     };
 
     const handleEdit = (transactionId) => {
-        const transactionToEdit = transactions.find(t => t.transaction_id === transactionId);
+        const transactionToEdit = transactions.find(t => t._id === transactionId || t.transaction_id === transactionId);
         setEditingTransaction(transactionToEdit);
     };
 
-    const handleUpdate = (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
-        setTransactions(transactions.map(t => 
-            t.transaction_id === editingTransaction.transaction_id ? editingTransaction : t
-        ));
-        setEditingTransaction(null);
+        try {
+            const transactionId = editingTransaction._id || editingTransaction.transaction_id;
+            await transactionService.updateTransaction(transactionId, editingTransaction);
+            setTransactions(transactions.map(t => 
+                (t._id === transactionId || t.transaction_id === transactionId) ? editingTransaction : t
+            ));
+            setEditingTransaction(null);
+        } catch (error) {
+            console.error('Error updating transaction:', error);
+            alert('Lỗi khi cập nhật giao dịch');
+        }
     };
 
     const handleEditChange = (e) => {
@@ -301,12 +335,17 @@ const TransactionPage = () => {
                             </tr>
                         </thead>
                         <tbody style={{backgroundColor: "rgb(245, 252, 255)"}}>
-                            {transactions
+                            {loading ? (
+                                <tr><td colSpan="9" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                            ) : transactions.length === 0 ? (
+                                <tr><td colSpan="9" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                            ) : (
+                            transactions
                                 .filter(transaction => 
-                                    transaction.transaction_id.toLowerCase().includes(searchTerm.toLowerCase())
+                                    (transaction.transaction_id || '').toLowerCase().includes(searchTerm.toLowerCase())
                                 )
                                 .map(transaction => (
-                                    <tr key={transaction.transaction_id}>
+                                    <tr key={transaction._id || transaction.transaction_id}>
                                         <td>{transaction.transaction_id}</td>
                                         <td>{transaction.citizen_id}</td>
                                         <td>{transaction.model_car_id}</td>
@@ -317,7 +356,7 @@ const TransactionPage = () => {
                                         <td>
                                             <button 
                                                 className="delete-transaction"
-                                                onClick={() => handleDelete(transaction.transaction_id)}
+                                                onClick={() => handleDelete(transaction._id || transaction.transaction_id)}
                                             >
                                                 Delete
                                             </button>
@@ -325,14 +364,14 @@ const TransactionPage = () => {
                                         <td>
                                             <button 
                                                 className="edit-transaction"
-                                                onClick={() => handleEdit(transaction.transaction_id)}
+                                                onClick={() => handleEdit(transaction._id || transaction.transaction_id)}
                                             >
                                                 Edit
                                             </button>
                                         </td>
                                     </tr>
                                 ))
-                            }
+                            )}
                         </tbody>
                     </table>
                 </div>

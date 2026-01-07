@@ -271,16 +271,27 @@
 .spec-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
-    margin-bottom: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.spec-item:last-child {
+    border-bottom: none;
 }
 
 .spec-label {
     font-weight: 600;
+    font-size: 1rem;
+    flex: 1;
 }
 
 .spec-value {
     color: #ffffff;
+    font-size: 1rem;
+    text-align: right;
+    font-weight: 500;
 }
 
 

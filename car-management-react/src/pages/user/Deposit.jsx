@@ -2,6 +2,7 @@ import '../../assets/css/user_pages/Deposit.css';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useEffect, useState } from "react";
+import { carService } from '../../services/carService';
 
 // Giả lập carModels (bạn thay bằng import thật từ Deposit.js)
 const carModels = {
@@ -314,12 +315,58 @@ const Deposit = () => {
     document.title = "Giao dịch | VinFast";
     const urlParams = new URLSearchParams(window.location.search);
     const carModel = urlParams.get("model") || "vf3";
-    const car = carModels[carModel];
+    
+    // First try to find in hardcoded models
+    let car = carModels[carModel];
+    
     if (car) {
       setSelectedCar(car);
       setSelectedColor(car.colors[0]);
+    } else {
+      // If not found in hardcoded, fetch from API by model
+      fetchCarByModel(carModel);
     }
   }, []);
+
+  const fetchCarByModel = async (modelId) => {
+    try {
+      const response = await carService.getAllCars(1, 100);
+      const carsArray = Array.isArray(response) ? response : (response?.cars || []);
+      const foundCar = carsArray.find(c => c.model && c.model.toLowerCase() === modelId.toLowerCase());
+      
+      if (foundCar) {
+        // Convert API car to display format
+        const displayCar = {
+          id: foundCar.model,
+          name: foundCar.name || 'Xe VinFast',
+          version: foundCar.name,
+          specs: {
+            power: foundCar.specifications?.engine || 'N/A',
+            acceleration: foundCar.specifications?.transmission || 'N/A',
+            range: foundCar.specifications?.fuelConsumption || 'N/A'
+          },
+          price: `${(foundCar.price / 1000000).toFixed(0)}.000.000 VNĐ`,
+          deposit: `${Math.round(foundCar.price / 1000000 * 0.1)}.000.000 VNĐ`,
+          defaultImage: foundCar.images?.[0] || '/images/car-pics/vf3/vf3yl.png',
+          colors: [
+            {
+              name: foundCar.color || 'Mặc định',
+              color: foundCar.color || 'gray',
+              image: foundCar.images?.[0] || '/images/car-pics/vf3/vf3yl.png'
+            }
+          ]
+        };
+        setSelectedCar(displayCar);
+        setSelectedColor(displayCar.colors[0]);
+      }
+    } catch (error) {
+      console.error('Error fetching car:', error);
+      // Fall back to vf3 if error
+      const defaultCar = carModels['vf3'];
+      setSelectedCar(defaultCar);
+      setSelectedColor(defaultCar.colors[0]);
+    }
+  };
 
   // Chuyển bước
   const goNextStep = () => {
@@ -414,25 +461,29 @@ const Deposit = () => {
               <h2>Lựa chọn xe</h2>
               <div className="configuration">
                 <div className='title_config'>* Xin mời Quý khách vui lòng chọn màu sắc của xe.</div>
-                <div className="config-section">
-                  <div className="config-header">Phiên bản xe</div>
-                  <label>{selectedCar?.version}</label>
-                </div>
-
+                
                 <div className="car-specs">
                   <div className="spec-item">
-                    <div className="spec-label">Công suất tối đa</div>
-                    <div className="spec-value">{selectedCar?.specs.power}</div>
+                    <span className="spec-label">Phiên bản xe</span>
+                    <span className="spec-value">{selectedCar?.version}</span>
                   </div>
                   <div className="spec-item">
-                    <div className="spec-label">Tăng tốc 0-50 km/h</div>
-                    <div className="spec-value">
+                    <span className="spec-label">Màu xe</span>
+                    <span className="spec-value">{selectedColor?.name}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Công suất tối đa</span>
+                    <span className="spec-value">{selectedCar?.specs.power}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Tăng tốc 0-50 km/h</span>
+                    <span className="spec-value">
                       {selectedCar?.specs.acceleration}
-                    </div>
+                    </span>
                   </div>
                   <div className="spec-item">
-                    <div className="spec-label">Quãng đường di chuyển</div>
-                    <div className="spec-value">{selectedCar?.specs.range}</div>
+                    <span className="spec-label">Quãng đường di chuyển</span>
+                    <span className="spec-value">{selectedCar?.specs.range}</span>
                   </div>
                 </div>
               </div>
@@ -496,6 +547,9 @@ const Deposit = () => {
               <ul>
                 <li>Phiên bản: <b>{selectedCar?.version}</b></li>
                 <li>Màu sắc: <b>{selectedColor?.name}</b></li>
+                <li>Công suất: <b>{selectedCar?.specs.power}</b></li>
+                <li>Hộp số: <b>{selectedCar?.specs.acceleration}</b></li>
+                <li>Quãng đường: <b>{selectedCar?.specs.range}</b></li>
                 <li>Giá xe: <b>{selectedCar?.price}</b></li>
                 <li>Số tiền đặt cọc: <b>{selectedCar?.deposit}</b></li>
               </ul>

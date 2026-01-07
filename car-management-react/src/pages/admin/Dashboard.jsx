@@ -3,11 +3,37 @@ import '../../assets/css/admin_pages/Dashboard.css';
 import Navbar from '../../components/NavbarAdmin';
 import Footer from '../../components/FooterAdmin';
 import Chart from 'chart.js/auto';
+import { dashboardService } from '../../services/dashboardService';
 
 const Dashboard = () => {
     const chartRef = useRef(null);
     const chartInstance = useRef(null);
-    const [recentTransactions, setRecentTransactions] = useState([
+    const [recentTransactions, setRecentTransactions] = useState([]);
+    const [agencyInfo, setAgencyInfo] = useState([]);
+    const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+        fetchDashboardData();
+    }, []);
+    
+    const fetchDashboardData = async () => {
+        try {
+            setLoading(true);
+            const response = await dashboardService.getDashboardStats();
+            const transactions = response.data?.recentTransactions || [];
+            const agencies = response.data?.agencyInfo || [];
+            setRecentTransactions(transactions.length > 0 ? transactions : oldRecentTransactions);
+            setAgencyInfo(agencies.length > 0 ? agencies : oldAgencyInfo);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching dashboard data:', error);
+            setRecentTransactions(oldRecentTransactions);
+            setAgencyInfo(oldAgencyInfo);
+            setLoading(false);
+        }
+    };
+    
+    const oldRecentTransactions = [
         {
             id: "TR001",
             citizenId: "079203012345",
@@ -53,9 +79,9 @@ const Dashboard = () => {
             warrantyDate: null,
             status: "Đã hủy"
         }
-    ]);
+    ];
 
-    const [agencyInfo, setAgencyInfo] = useState([
+    const oldAgencyInfo = [
         {
             id: "AGENCY1",
             name: "VinFast Landmark 81",
@@ -80,7 +106,7 @@ const Dashboard = () => {
             email: "royalcity@vinfast.vn",
             password: "********"
         }
-    ]);
+    ];
 
     useEffect(() => {
         document.title = "Trang tổng quan | VinFast";
@@ -182,9 +208,14 @@ const Dashboard = () => {
                                 </tr>
                             </thead>
                             <tbody id="dashboard">
-                                {recentTransactions.map((transaction, index) => (
-                                    <tr key={index}>
-                                        <td>{transaction.id}</td>
+                                {loading ? (
+                                    <tr><td colSpan="7" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                                ) : recentTransactions.length === 0 ? (
+                                    <tr><td colSpan="7" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                                ) : (
+                                recentTransactions.map((transaction, index) => (
+                                    <tr key={transaction._id || index}>
+                                        <td>{transaction.id || transaction._id}</td>
                                         <td>{transaction.citizenId}</td>
                                         <td>{transaction.carId}</td>
                                         <td>{transaction.transactionDate}</td>
@@ -192,7 +223,8 @@ const Dashboard = () => {
                                         <td>{transaction.warrantyDate || 'Không có'}</td>
                                         <td>{transaction.status}</td>
                                     </tr>
-                                ))}
+                                ))
+                                )}
                             </tbody>
                         </table>
                     </div>
@@ -216,16 +248,22 @@ const Dashboard = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {agencyInfo.map((agency, index) => (
-                                    <tr key={index}>
-                                        <td>{agency.id}</td>
+                                {loading ? (
+                                    <tr><td colSpan="6" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                                ) : agencyInfo.length === 0 ? (
+                                    <tr><td colSpan="6" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                                ) : (
+                                agencyInfo.map((agency, index) => (
+                                    <tr key={agency._id || index}>
+                                        <td>{agency.id || agency._id}</td>
                                         <td>{agency.name}</td>
                                         <td>{agency.address}</td>
                                         <td>{agency.phone}</td>
                                         <td>{agency.email}</td>
                                         <td>{agency.password}</td>
                                     </tr>
-                                ))}
+                                ))
+                                )}
                             </tbody>
                         </table>
                     </div>

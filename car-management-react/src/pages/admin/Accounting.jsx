@@ -2,9 +2,46 @@ import { useEffect, useState } from 'react';
 import '../../assets/css/admin_pages/Accounting.css';
 import Navbar from '../../components/NavbarAdmin';
 import Footer from '../../components/FooterAdmin';
+import { accountingService } from '../../services/accountingService';
 
 const AccountingPage = () => {
     const [accountingData, setAccountingData] = useState([
+        {
+            transaction_id: "TRX001",
+            deposit_price: "100,000,000 VNĐ",
+            transaction_price: "1,089,000,000 VNĐ",
+            totalprice: "1,189,000,000 VNĐ"
+        },
+        {
+            transaction_id: "TRX002",
+            deposit_price: "150,000,000 VNĐ",
+            transaction_price: "1,491,000,000 VNĐ",
+            totalprice: "1,641,000,000 VNĐ"
+        }
+    ]);
+    const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
+    
+    useEffect(() => {
+        fetchAccountingData();
+    }, []);
+    
+    const fetchAccountingData = async () => {
+        try {
+            setLoading(true);
+            const response = await accountingService.getAccountingData();
+            const data = response.data || response;
+            if (data && Array.isArray(data) && data.length > 0) {
+                setAccountingData(data);
+            }
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching accounting data:', error);
+            setLoading(false);
+        }
+    };
+    
+    const oldAccountingData = [
         {
             transaction_id: "TRX001",
             deposit_price: "100,000,000 VNĐ",
@@ -65,9 +102,7 @@ const AccountingPage = () => {
             transaction_price: "0 VNĐ",
             totalprice: "85,000,000 VNĐ"
         }
-    ]);
-
-    const [searchTerm, setSearchTerm] = useState('');
+    ];
 
     useEffect(() => {
         document.title = "Kế toán | VinFast";
@@ -102,19 +137,24 @@ const AccountingPage = () => {
                             </tr>
                         </thead>
                         <tbody style={{backgroundColor: "rgb(245, 252, 255)"}}>
-                            {accountingData
+                            {loading ? (
+                                <tr><td colSpan="4" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                            ) : accountingData.length === 0 ? (
+                                <tr><td colSpan="4" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                            ) : (
+                            accountingData
                                 .filter(keToan => 
-                                    keToan.transaction_id.toLowerCase().includes(searchTerm.toLowerCase())
+                                    (keToan.transaction_id || '').toLowerCase().includes(searchTerm.toLowerCase())
                                 )
                                 .map(keToan => (
-                                    <tr key={keToan.transaction_id}>
+                                    <tr key={keToan._id || keToan.transaction_id}>
                                         <td>{keToan.transaction_id}</td>
                                         <td>{keToan.deposit_price}</td>
                                         <td>{keToan.transaction_price}</td>
                                         <td>{keToan.totalprice}</td>
                                     </tr>
                                 ))
-                            }
+                            )}
                         </tbody>
                     </table>
                 </div>

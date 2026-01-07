@@ -2,9 +2,49 @@ import { useEffect, useState } from 'react';
 import '../../assets/css/admin_pages/CusManage.css';
 import Navbar from '../../components/NavbarAdmin';
 import Footer from '../../components/FooterAdmin';
+import { customerService } from '../../services/customerService';
 
 const CustomerManage = () => {
     const [customers, setCustomers] = useState([
+        {
+            citizen_id: "079203012345",
+            customer_name: "Nguyễn Văn An",
+            address: "123 Nguyễn Huệ, Q1, TP.HCM",
+            phone_no: "0901234567",
+            email: "nguyenvanan@email.com",
+            number_transaction: 2
+        },
+        {
+            citizen_id: "079203012346",
+            customer_name: "Trần Thị Bình",
+            address: "456 Lê Lợi, Q5, TP.HCM",
+            phone_no: "0912345678",
+            email: "tranthibinh@email.com",
+            number_transaction: 1
+        }
+    ]);
+    const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+        fetchCustomers();
+    }, []);
+    
+    const fetchCustomers = async () => {
+        try {
+            setLoading(true);
+            const response = await customerService.getAllCustomers();
+            const data = response.data || response;
+            if (data && Array.isArray(data) && data.length > 0) {
+                setCustomers(data);
+            }
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching customers:', error);
+            setLoading(false);
+        }
+    };
+    
+    const oldCustomers = [
         {
             citizen_id: "079203012345",
             customer_name: "Nguyễn Văn An",
@@ -85,7 +125,7 @@ const CustomerManage = () => {
             email: "truongthikim@email.com",
             number_transaction: 3
         }
-    ]);
+    ];
     const [searchTerm, setSearchTerm] = useState('');
     const [editingCustomer, setEditingCustomer] = useState(null);
     const [showAddForm, setShowAddForm] = useState(false);
@@ -103,22 +143,35 @@ const CustomerManage = () => {
         customer.citizen_id.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const handleDelete = (citizenId) => {
-        setCustomers(customers.filter(customer => customer.citizen_id !== citizenId));
+    const handleDelete = async (citizenId) => {
+        try {
+            await customerService.deleteCustomer(citizenId);
+            setCustomers(customers.filter(customer => customer._id !== citizenId && customer.citizen_id !== citizenId));
+        } catch (error) {
+            console.error('Error deleting customer:', error);
+            alert('Lỗi khi xóa khách hàng');
+        }
     };
 
     const handleEdit = (citizenId) => {
-        const customerToEdit = customers.find(c => c.citizen_id === citizenId);
+        const customerToEdit = customers.find(c => c._id === citizenId || c.citizen_id === citizenId);
         setEditingCustomer(customerToEdit);        
         setShowAddForm(false); // Close add form when editing    
     };
 
-    const handleUpdate = (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
-        setCustomers(customers.map(customer => 
-            customer.citizen_id === editingCustomer.citizen_id ? editingCustomer : customer
-        ));
-        setEditingCustomer(null);
+        try {
+            const customerId = editingCustomer._id || editingCustomer.citizen_id;
+            await customerService.updateCustomer(customerId, editingCustomer);
+            setCustomers(customers.map(customer => 
+                (customer._id === customerId || customer.citizen_id === customerId) ? editingCustomer : customer
+            ));
+            setEditingCustomer(null);
+        } catch (error) {
+            console.error('Error updating customer:', error);
+            alert('Lỗi khi cập nhật khách hàng');
+        }
     };
 
     const handleChange = (e) => {
@@ -130,18 +183,24 @@ const CustomerManage = () => {
     };
 
     // Add new handler for creating customer
-    const handleCreate = (e) => {
+    const handleCreate = async (e) => {
         e.preventDefault();
-        setCustomers([...customers, newCustomer]);
-        setNewCustomer({
-            citizen_id: '',
-            customer_name: '',
-            address: '',
-            phone_no: '',
-            email: '',
-            number_transaction: 0
-        });
-        setShowAddForm(false);
+        try {
+            const response = await customerService.createCustomer(newCustomer);
+            setCustomers([...customers, response]);
+            setNewCustomer({
+                citizen_id: '',
+                customer_name: '',
+                address: '',
+                phone_no: '',
+                email: '',
+                number_transaction: 0
+            });
+            setShowAddForm(false);
+        } catch (error) {
+            console.error('Error creating customer:', error);
+            alert('Lỗi khi thêm khách hàng');
+        }
     };
 
     // Add handler for new customer form changes
@@ -339,8 +398,13 @@ const CustomerManage = () => {
                             </tr>
                         </thead>
                         <tbody style={{backgroundColor: 'rgb(245, 252, 255)'}} id="customer-data">
-                            {filteredCustomers.map((customer) => (
-                                <tr key={customer.citizen_id}>
+                            {loading ? (
+                                <tr><td colSpan="8" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                            ) : customers.length === 0 ? (
+                                <tr><td colSpan="8" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                            ) : (
+                            filteredCustomers.map((customer) => (
+                                <tr key={customer._id || customer.citizen_id}>
                                     <td>{customer.citizen_id}</td>
                                     <td>{customer.customer_name}</td>
                                     <td>{customer.address}</td>
@@ -350,7 +414,7 @@ const CustomerManage = () => {
                                     <td>
                                         <button 
                                             className="delete-customer"
-                                            onClick={() => handleDelete(customer.citizen_id)}
+                                            onClick={() => handleDelete(customer._id || customer.citizen_id)}
                                         >
                                             Delete
                                         </button>
@@ -358,13 +422,14 @@ const CustomerManage = () => {
                                     <td>
                                         <button 
                                             className="edit-customer"
-                                            onClick={() => handleEdit(customer.citizen_id)}
+                                            onClick={() => handleEdit(customer._id || customer.citizen_id)}
                                         >
                                             Edit
                                         </button>
                                     </td>
                                 </tr>
-                            ))}
+                            ))
+                            )}
                         </tbody>
                     </table>
                 </div>
