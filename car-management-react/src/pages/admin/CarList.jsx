@@ -5,41 +5,7 @@ import Footer from '../../components/FooterAdmin';
 import { carService } from '../../services/carService';
 
 const CarList = () => {
-    const [cars, setCars] = useState([
-        {
-            model_car_id: "VINVF8B",
-            model_car_name: "VinFast VF8",
-            price: "1.089.000.000 VNĐ",
-            color: "Xanh dương",
-            origin_of_car: "Việt Nam",
-            date_of_import: "2024-01-15",
-            car_number_availability: 15,
-            car_sold: 8,
-            lauching_year: "2023"
-        },
-        {
-            model_car_id: "VINVF9BL",
-            model_car_name: "VinFast VF9",
-            price: "1.491.000.000 VNĐ",
-            color: "Đen",
-            origin_of_car: "Việt Nam", 
-            date_of_import: "2024-02-01",
-            car_number_availability: 12,
-            car_sold: 5,
-            lauching_year: "2023"
-        },
-        {
-            model_car_id: "VINVF5B",
-            model_car_name: "VinFast VF5",
-            price: "458.000.000 VNĐ",
-            color: "Xanh dương",
-            origin_of_car: "Việt Nam",
-            date_of_import: "2024-03-10",
-            car_number_availability: 20,
-            car_sold: 15,
-            lauching_year: "2023"
-        }
-    ]);
+    const [cars, setCars] = useState([]);
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
@@ -51,128 +17,15 @@ const CarList = () => {
             setLoading(true);
             const response = await carService.getAllCars(1, 100);
             let carsArr = Array.isArray(response) ? response : (response && Array.isArray(response.cars) ? response.cars : []);
-            setCars([...oldCars, ...carsArr]);
+            setCars(carsArr);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching cars:', error);
-            setCars(oldCars);
+            setCars([]);
             setLoading(false);
         }
     };
     
-    const oldCars = [
-        {
-            model_car_id: "VINVF8B",
-            model_car_name: "VinFast VF8",
-            price: "1.089.000.000 VNĐ",
-            color: "Xanh dương",
-            origin_of_car: "Việt Nam",
-            date_of_import: "2024-01-15",
-            car_number_availability: 15,
-            car_sold: 8,
-            lauching_year: "2023"
-        },
-        {
-            model_car_id: "VINVF9BL",
-            model_car_name: "VinFast VF9",
-            price: "1.491.000.000 VNĐ",
-            color: "Đen",
-            origin_of_car: "Việt Nam", 
-            date_of_import: "2024-02-01",
-            car_number_availability: 12,
-            car_sold: 5,
-            lauching_year: "2023"
-        },
-        {
-            model_car_id: "VINVF5B",
-            model_car_name: "VinFast VF5",
-            price: "458.000.000 VNĐ",
-            color: "Xanh dương",
-            origin_of_car: "Việt Nam",
-            date_of_import: "2024-03-10",
-            car_number_availability: 20,
-            car_sold: 15,
-            lauching_year: "2023"
-        },
-        {
-            model_car_id: "VINVF6A",
-            model_car_name: "VinFast VF6",
-            price: "765.000.000 VNĐ",
-            color: "Trắng",
-            origin_of_car: "Việt Nam",
-            date_of_import: "2024-04-12",
-            car_number_availability: 18,
-            car_sold: 10,
-            lauching_year: "2023"
-        },
-        {
-            model_car_id: "VINVF7P",
-            model_car_name: "VinFast VF7 Plus",
-            price: "990.000.000 VNĐ",
-            color: "Bạc",
-            origin_of_car: "Việt Nam",
-            date_of_import: "2024-05-08",
-            car_number_availability: 14,
-            car_sold: 7,
-            lauching_year: "2023"
-        },
-        {
-            model_car_id: "VINVF8E",
-            model_car_name: "VinFast VF8 Eco",
-            price: "1.059.000.000 VNĐ",
-            color: "Đỏ",
-            origin_of_car: "Việt Nam",
-            date_of_import: "2024-06-18",
-            car_number_availability: 10,
-            car_sold: 6,
-            lauching_year: "2023"
-        },
-        {
-            model_car_id: "VINVF9S",
-            model_car_name: "VinFast VF9 Smart",
-            price: "1.680.000.000 VNĐ",
-            color: "Trắng ngọc trai",
-            origin_of_car: "Việt Nam",
-            date_of_import: "2024-07-02",
-            car_number_availability: 9,
-            car_sold: 4,
-            lauching_year: "2023"
-        },
-        {
-            model_car_id: "VINVF5C",
-            model_car_name: "VinFast VF5 Plus",
-            price: "512.000.000 VNĐ",
-            color: "Vàng",
-            origin_of_car: "Việt Nam",
-            date_of_import: "2024-08-10",
-            car_number_availability: 22,
-            car_sold: 16,
-            lauching_year: "2023"
-        },
-        {
-            model_car_id: "VINVF6B",
-            model_car_name: "VinFast VF6 Plus",
-            price: "820.000.000 VNĐ",
-            color: "Xám",
-            origin_of_car: "Việt Nam",
-            date_of_import: "2024-09-05",
-            car_number_availability: 13,
-            car_sold: 8,
-            lauching_year: "2023"
-        },
-        {
-            model_car_id: "VINVF9L",
-            model_car_name: "VinFast VF9 Luxury",
-            price: "1.750.000.000 VNĐ",
-            color: "Xanh rêu",
-            origin_of_car: "Việt Nam",
-            date_of_import: "2024-10-01",
-            car_number_availability: 8,
-            car_sold: 3,
-            lauching_year: "2023"
-        }
-    ];
-
     const [searchTerm, setSearchTerm] = useState('');
     const [newCar, setNewCar] = useState({
         model_car_id: '',
@@ -187,7 +40,9 @@ const CarList = () => {
         engine: '',
         transmission: '',
         fuelType: '',
-        fuelConsumption: ''
+        fuelConsumption: '',
+        range: '',
+        images: []
     });
     const [editingCar, setEditingCar] = useState(null);
     const [showAddForm, setShowAddForm] = useState(false);
@@ -203,26 +58,69 @@ const CarList = () => {
             alert('Lỗi khi xóa xe: ' + (error.response?.data?.message || error.message));
         }
     };
+    
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        if (files.length > 5) {
+            alert('Chỉ được chọn tối đa 5 ảnh!');
+            return;
+        }
+        setNewCar(prev => ({ ...prev, images: files }));
+    };
+    
+    const handleEditImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        if (files.length > 5) {
+            alert('Chỉ được chọn tối đa 5 ảnh!');
+            return;
+        }
+        setEditingCar(prev => ({ ...prev, newImages: files }));
+    };
 
     const handleEdit = (carId) => {
         const carToEdit = cars.find(car => car._id === carId);
-        setEditingCar(carToEdit);
+        // Map database fields to form fields
+        setEditingCar({
+            ...carToEdit,
+            model_car_name: carToEdit.name,
+            model_car_id: carToEdit.model,
+            car_number_availability: carToEdit.stock,
+            lauching_year: carToEdit.year,
+            // Giữ nguyên các field đã có tên giống nhau
+            origin_of_car: carToEdit.origin_of_car,
+            date_of_import: carToEdit.date_of_import,
+            car_sold: carToEdit.car_sold,
+            color: carToEdit.color,
+            price: carToEdit.price,
+            images: carToEdit.images || [],
+        });
         setShowAddForm(false);
     };
 
     const handleUpdate = async (e) => {
         e.preventDefault();
+        if (!window.confirm('Bạn có chắc chắn muốn cập nhật thông tin xe này?')) return;
         try {
             const carId = editingCar._id;
-            const updateData = {
-                name: editingCar.model_car_name || editingCar.name,
-                model: editingCar.model_car_id || editingCar.model,
-                price: typeof editingCar.price === 'string' ? parseFloat(editingCar.price.toString().replace(/\./g, '')) : editingCar.price,
-                color: editingCar.color,
-                year: typeof editingCar.lauching_year === 'string' ? parseInt(editingCar.lauching_year) : editingCar.lauching_year,
-                stock: typeof editingCar.car_number_availability === 'string' ? parseInt(editingCar.car_number_availability) : editingCar.car_number_availability
-            };
-            await carService.updateCar(carId, updateData);
+            const formData = new FormData();
+            formData.append('name', editingCar.model_car_name || editingCar.name);
+            formData.append('model', editingCar.model_car_id || editingCar.model);
+            formData.append('price', typeof editingCar.price === 'string' ? parseFloat(editingCar.price.toString().replace(/\./g, '')) : editingCar.price);
+            formData.append('color', editingCar.color);
+            formData.append('year', typeof editingCar.lauching_year === 'string' ? parseInt(editingCar.lauching_year) : editingCar.lauching_year);
+            formData.append('stock', typeof editingCar.car_number_availability === 'string' ? parseInt(editingCar.car_number_availability) : editingCar.car_number_availability);
+            formData.append('origin_of_car', editingCar.origin_of_car || '');
+            formData.append('date_of_import', editingCar.date_of_import || '');
+            formData.append('car_sold', typeof editingCar.car_sold === 'string' ? parseInt(editingCar.car_sold) : (editingCar.car_sold || 0));
+            
+            // Thêm ảnh mới nếu có
+            if (editingCar.newImages && editingCar.newImages.length > 0) {
+                editingCar.newImages.forEach(image => {
+                    formData.append('images', image);
+                });
+            }
+            
+            await carService.updateCar(carId, formData);
             await fetchCars();
             setEditingCar(null);
             alert('Cập nhật xe thành công!');
@@ -234,6 +132,8 @@ const CarList = () => {
 
     const handleCreate = async (e) => {
         e.preventDefault();
+        
+        if (!window.confirm('Bạn có chắc chắn muốn thêm xe mới này?')) return;
         
         // Validate all required fields - properly check strings and numbers
         const hasErrors = 
@@ -257,27 +157,38 @@ const CarList = () => {
         }
         
         try {
-            const carData = {
-                name: newCar.model_car_name,
-                model: newCar.model_car_id,
-                price: parseFloat(newCar.price.toString().replace(/\./g, '')) || 0,
-                color: newCar.color,
-                year: parseInt(newCar.lauching_year) || new Date().getFullYear(),
-                stock: parseInt(newCar.car_number_availability) || 0,
-                origin_of_car: newCar.origin_of_car,
-                date_of_import: newCar.date_of_import,
-                car_sold: parseInt(newCar.car_sold) || 0,
-                specifications: {
+            const formData = new FormData();
+            formData.append('name', newCar.model_car_name);
+            formData.append('model', newCar.model_car_id);
+            formData.append('price', parseFloat(newCar.price.toString().replace(/\./g, '')) || 0);
+            formData.append('color', newCar.color);
+            formData.append('year', parseInt(newCar.lauching_year) || new Date().getFullYear());
+            formData.append('stock', parseInt(newCar.car_number_availability) || 0);
+            formData.append('origin_of_car', newCar.origin_of_car);
+            formData.append('date_of_import', newCar.date_of_import);
+            formData.append('car_sold', parseInt(newCar.car_sold) || 0);
+            
+            // Thêm specifications
+            if (newCar.engine || newCar.transmission || newCar.fuelType || newCar.fuelConsumption || newCar.range) {
+                formData.append('specifications', JSON.stringify({
                     engine: newCar.engine,
                     transmission: newCar.transmission,
                     fuelType: newCar.fuelType,
-                    fuelConsumption: newCar.fuelConsumption
-                }
-            };
+                    fuelConsumption: newCar.fuelConsumption,
+                    range: newCar.range
+                }));
+            }
             
-            console.log('carData being sent to API:', carData);
+            // Thêm ảnh
+            if (newCar.images && newCar.images.length > 0) {
+                newCar.images.forEach(image => {
+                    formData.append('images', image);
+                });
+            }
             
-            const response = await carService.createCar(carData);
+            console.log('FormData being sent to API');
+            
+            const response = await carService.createCar(formData);
             
             console.log('API response:', response);
             
@@ -295,7 +206,9 @@ const CarList = () => {
                 engine: '',
                 transmission: '',
                 fuelType: '',
-                fuelConsumption: ''
+                fuelConsumption: '',
+                range: '',
+                images: []
             });
             setShowAddForm(false);
             alert('Thêm xe thành công!');
@@ -496,6 +409,33 @@ const CarList = () => {
                                         placeholder="Ví dụ: 5L/100km"
                                     />
                                 </div>
+                                <div className="form-col">
+                                    <label>Quãng đường</label>
+                                    <input 
+                                        type="text" 
+                                        id="new-range"
+                                        value={newCar.range || ''}
+                                        onChange={handleInputChange}
+                                        placeholder="Ví dụ: 450km"
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-col" style={{width: '100%'}}>
+                                    <label>Ảnh xe (Tối đa 5 ảnh)</label>
+                                    <input 
+                                        type="file" 
+                                        id="new-images"
+                                        accept="image/*"
+                                        multiple
+                                        onChange={handleImageChange}
+                                    />
+                                    {newCar.images && newCar.images.length > 0 && (
+                                        <div style={{marginTop: '10px', fontSize: '14px', color: '#666'}}>
+                                            Đã chọn {newCar.images.length} ảnh
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             <div className="form-actions">
                                 <button 
@@ -585,7 +525,7 @@ const CarList = () => {
                                     <input 
                                         type="number" 
                                         name="car_number_availability"
-                                        value={editingCar.car_number_availability || ''}
+                                        value={editingCar.car_number_availability !== undefined && editingCar.car_number_availability !== null ? editingCar.car_number_availability : ''}
                                         onChange={(e) => setEditingCar({...editingCar, car_number_availability: e.target.value})}
                                     />
                                 </div>
@@ -594,7 +534,7 @@ const CarList = () => {
                                     <input 
                                         type="number" 
                                         name="car_sold"
-                                        value={editingCar.car_sold || ''}
+                                        value={editingCar.car_sold !== undefined && editingCar.car_sold !== null ? editingCar.car_sold : ''}
                                         onChange={(e) => setEditingCar({...editingCar, car_sold: e.target.value})}
                                     />
                                 </div>
@@ -606,6 +546,37 @@ const CarList = () => {
                                         value={editingCar.lauching_year || ''}
                                         onChange={(e) => setEditingCar({...editingCar, lauching_year: e.target.value})}
                                     />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-col" style={{width: '100%'}}>
+                                    <label>Thêm ảnh mới (Tối đa 5 ảnh)</label>
+                                    <input 
+                                        type="file" 
+                                        accept="image/*"
+                                        multiple
+                                        onChange={handleEditImageChange}
+                                    />
+                                    {editingCar.newImages && editingCar.newImages.length > 0 && (
+                                        <div style={{marginTop: '10px', fontSize: '14px', color: '#666'}}>
+                                            Đã chọn {editingCar.newImages.length} ảnh mới
+                                        </div>
+                                    )}
+                                    {editingCar.images && editingCar.images.length > 0 && (
+                                        <div style={{marginTop: '10px'}}>
+                                            <p style={{fontSize: '14px', color: '#333', marginBottom: '5px'}}>Ảnh hiện tại:</p>
+                                            <div style={{display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
+                                                {editingCar.images.map((img, idx) => (
+                                                    <img 
+                                                        key={idx} 
+                                                        src={img} 
+                                                        alt={`Car ${idx + 1}`}
+                                                        style={{width: '100px', height: '75px', objectFit: 'cover', borderRadius: '4px'}}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             <div className="form-actions">
@@ -626,21 +597,27 @@ const CarList = () => {
                             <tr>
                                 <th>Mã xe</th>
                                 <th>Tên xe</th>
+                                <th>Ảnh</th>
                                 <th>Giá tiền</th>
                                 <th>Màu sắc</th>
                                 <th>Nguồn gốc</th>
                                 <th>Ngày nhập</th>
-                                <th>Số lượng tồn</th>
+                                <th>Số lượng nhập</th>
                                 <th>Số đã bán</th>
                                 <th>Năm ra mắt</th>
+                                <th>Công suất</th>
+                                <th>Hộp số</th>
+                                <th>Nhiên liệu</th>
+                                <th>Tiêu thụ</th>
+                                <th>Quãng đường</th>
                                 <th colSpan="2">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
                             {loading ? (
-                                <tr><td colSpan="11" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                                <tr><td colSpan="17" style={{textAlign: 'center'}}>Đang tải...</td></tr>
                             ) : cars.length === 0 ? (
-                                <tr><td colSpan="11" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                                <tr><td colSpan="17" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
                             ) : (
                             cars
                                 .filter(car => ((car.model_car_id || car.model || '').toLowerCase().includes(searchTerm.toLowerCase())))
@@ -648,6 +625,17 @@ const CarList = () => {
                                     <tr key={car._id || car.model_car_id || car.model}>
                                         <td>{car.model_car_id || car.model}</td>
                                         <td>{car.model_car_name || car.name}</td>
+                                        <td>
+                                            {car.images && car.images.length > 0 ? (
+                                                <img 
+                                                    src={car.images[0]} 
+                                                    alt={car.model_car_name || car.name}
+                                                    style={{width: '60px', height: '45px', objectFit: 'cover', borderRadius: '4px'}}
+                                                />
+                                            ) : (
+                                                <span style={{fontSize: '12px', color: '#999'}}>Chưa có ảnh</span>
+                                            )}
+                                        </td>
                                         <td>{car.price}</td>
                                         <td>{car.color}</td>
                                         <td>{car.origin_of_car || ''}</td>
@@ -655,6 +643,11 @@ const CarList = () => {
                                         <td>{car.car_number_availability || car.stock}</td>
                                         <td>{car.car_sold || ''}</td>
                                         <td>{car.lauching_year || car.year}</td>
+                                        <td>{car.specifications?.engine || 'N/A'}</td>
+                                        <td>{car.specifications?.transmission || 'N/A'}</td>
+                                        <td>{car.specifications?.fuelType || 'N/A'}</td>
+                                        <td>{car.specifications?.fuelConsumption || 'N/A'}</td>
+                                        <td>{car.specifications?.range || 'N/A'}</td>
                                         <td>
                                             <button 
                                                 className="delete-btn"

@@ -5,24 +5,7 @@ import Footer from '../../components/FooterAdmin';
 import { customerService } from '../../services/customerService';
 
 const CustomerManage = () => {
-    const [customers, setCustomers] = useState([
-        {
-            citizen_id: "079203012345",
-            customer_name: "Nguyễn Văn An",
-            address: "123 Nguyễn Huệ, Q1, TP.HCM",
-            phone_no: "0901234567",
-            email: "nguyenvanan@email.com",
-            number_transaction: 2
-        },
-        {
-            citizen_id: "079203012346",
-            customer_name: "Trần Thị Bình",
-            address: "456 Lê Lợi, Q5, TP.HCM",
-            phone_no: "0912345678",
-            email: "tranthibinh@email.com",
-            number_transaction: 1
-        }
-    ]);
+    const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
@@ -33,8 +16,8 @@ const CustomerManage = () => {
         try {
             setLoading(true);
             const response = await customerService.getAllCustomers();
-            const data = response.data || response;
-            if (data && Array.isArray(data) && data.length > 0) {
+            const data = response.customers || response.data || response;
+            if (Array.isArray(data)) {
                 setCustomers(data);
             }
             setLoading(false);
@@ -44,106 +27,24 @@ const CustomerManage = () => {
         }
     };
     
-    const oldCustomers = [
-        {
-            citizen_id: "079203012345",
-            customer_name: "Nguyễn Văn An",
-            address: "123 Nguyễn Huệ, Q1, TP.HCM",
-            phone_no: "0901234567",
-            email: "nguyenvanan@email.com",
-            number_transaction: 2
-        },
-        {
-            citizen_id: "079203012346",
-            customer_name: "Trần Thị Bình",
-            address: "456 Lê Lợi, Q5, TP.HCM",
-            phone_no: "0912345678",
-            email: "tranthibinh@email.com",
-            number_transaction: 1
-        },
-        {
-            citizen_id: "079203012347",
-            customer_name: "Lê Văn Cường",
-            address: "789 CMT8, Q3, TP.HCM",
-            phone_no: "0923456789",
-            email: "levancuong@email.com",
-            number_transaction: 3
-        },
-        {
-            citizen_id: "079203012348",
-            customer_name: "Phạm Thị Dung",
-            address: "321 Hai Bà Trưng, Q1, TP.HCM",
-            phone_no: "0934567890",
-            email: "phamthidung@email.com",
-            number_transaction: 1
-        },
-        {
-            citizen_id: "079203012349",
-            customer_name: "Hoàng Văn Em",
-            address: "654 Nguyễn Trãi, Q5, TP.HCM",
-            phone_no: "0945678901",
-            email: "hoangvanem@email.com",
-            number_transaction: 2
-        },
-        {
-            citizen_id: "079203012350",
-            customer_name: "Ngô Thị Hoa",
-            address: "987 Võ Văn Tần, Q3, TP.HCM",
-            phone_no: "0956789012",
-            email: "ngothihoa@email.com",
-            number_transaction: 1
-        },
-        {
-            citizen_id: "079203012351",
-            customer_name: "Đặng Văn Giang",
-            address: "147 Lý Tự Trọng, Q1, TP.HCM",
-            phone_no: "0967890123",
-            email: "dangvangiang@email.com",
-            number_transaction: 4
-        },
-        {
-            citizen_id: "079203012352",
-            customer_name: "Vũ Thị Hương",
-            address: "258 Trần Hưng Đạo, Q5, TP.HCM",
-            phone_no: "0978901234",
-            email: "vuthihuong@email.com",
-            number_transaction: 2
-        },
-        {
-            citizen_id: "079203012353",
-            customer_name: "Bùi Văn Inh",
-            address: "369 Nam Kỳ Khởi Nghĩa, Q3, TP.HCM",
-            phone_no: "0989012345",
-            email: "buivaninh@email.com",
-            number_transaction: 1
-        },
-        {
-            citizen_id: "079203012354",
-            customer_name: "Trương Thị Kim",
-            address: "159 Pasteur, Q1, TP.HCM",
-            phone_no: "0990123456",
-            email: "truongthikim@email.com",
-            number_transaction: 3
-        }
-    ];
     const [searchTerm, setSearchTerm] = useState('');
     const [editingCustomer, setEditingCustomer] = useState(null);
     const [showAddForm, setShowAddForm] = useState(false);
     const [newCustomer, setNewCustomer] = useState({
-        citizen_id: '',
-        customer_name: '',
+        identityNumber: '',
+        name: '',
         address: '',
-        phone_no: '',
-        email: '',
-        number_transaction: 0
+        phone: '',
+        email: ''
     });
 
     // Lọc customers dựa trên searchTerm
     const filteredCustomers = customers.filter(customer =>
-        customer.citizen_id.toLowerCase().includes(searchTerm.toLowerCase())
+        (customer.identityNumber || customer.citizen_id || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const handleDelete = async (citizenId) => {
+        if (!window.confirm('Bạn có chắc chắn muốn xóa khách hàng này?')) return;
         try {
             await customerService.deleteCustomer(citizenId);
             setCustomers(customers.filter(customer => customer._id !== citizenId && customer.citizen_id !== citizenId));
@@ -155,22 +56,44 @@ const CustomerManage = () => {
 
     const handleEdit = (citizenId) => {
         const customerToEdit = customers.find(c => c._id === citizenId || c.citizen_id === citizenId);
-        setEditingCustomer(customerToEdit);        
+        // Map database fields to form fields
+        setEditingCustomer({
+            ...customerToEdit,
+            citizen_id: customerToEdit.identityNumber || customerToEdit.citizen_id,
+            identityNumber: customerToEdit.identityNumber || customerToEdit.citizen_id,
+            customer_name: customerToEdit.name || customerToEdit.customer_name,
+            name: customerToEdit.name || customerToEdit.customer_name,
+            address: customerToEdit.address,
+            phone_no: customerToEdit.phone || customerToEdit.phone_no,
+            phone: customerToEdit.phone || customerToEdit.phone_no,
+            email: customerToEdit.email,
+            number_transaction: customerToEdit.number_transaction !== undefined ? customerToEdit.number_transaction : 0
+        });        
         setShowAddForm(false); // Close add form when editing    
     };
 
     const handleUpdate = async (e) => {
         e.preventDefault();
+        if (!window.confirm('Bạn có chắc chắn muốn cập nhật thông tin khách hàng này?')) return;
         try {
             const customerId = editingCustomer._id || editingCustomer.citizen_id;
-            await customerService.updateCustomer(customerId, editingCustomer);
-            setCustomers(customers.map(customer => 
-                (customer._id === customerId || customer.citizen_id === customerId) ? editingCustomer : customer
-            ));
+            
+            // Map form fields back to database fields
+            const updateData = {
+                name: editingCustomer.customer_name || editingCustomer.name,
+                email: editingCustomer.email,
+                phone: editingCustomer.phone_no || editingCustomer.phone,
+                address: editingCustomer.address,
+                identityNumber: editingCustomer.identityNumber || editingCustomer.citizen_id
+            };
+            
+            await customerService.updateCustomer(customerId, updateData);
+            await fetchCustomers(); // Refresh data from server
             setEditingCustomer(null);
+            alert('Cập nhật khách hàng thành công!');
         } catch (error) {
             console.error('Error updating customer:', error);
-            alert('Lỗi khi cập nhật khách hàng');
+            alert('Lỗi khi cập nhật khách hàng: ' + (error.response?.data?.message || error.message));
         }
     };
 
@@ -185,21 +108,23 @@ const CustomerManage = () => {
     // Add new handler for creating customer
     const handleCreate = async (e) => {
         e.preventDefault();
+        if (!window.confirm('Bạn có chắc chắn muốn thêm khách hàng mới này?')) return;
         try {
             const response = await customerService.createCustomer(newCustomer);
             setCustomers([...customers, response]);
             setNewCustomer({
-                citizen_id: '',
-                customer_name: '',
+                identityNumber: '',
+                name: '',
                 address: '',
-                phone_no: '',
-                email: '',
-                number_transaction: 0
+                phone: '',
+                email: ''
             });
             setShowAddForm(false);
+            alert('Thêm khách hàng thành công!');
+            fetchCustomers();
         } catch (error) {
             console.error('Error creating customer:', error);
-            alert('Lỗi khi thêm khách hàng');
+            alert('Lỗi khi thêm khách hàng: ' + (error.message || 'Vui lòng thử lại'));
         }
     };
 
@@ -253,8 +178,8 @@ const CustomerManage = () => {
                                 <label>Số CCCD:</label>
                                 <input
                                     type="text"
-                                    name="citizen_id"
-                                    value={newCustomer.citizen_id}
+                                    name="identityNumber"
+                                    value={newCustomer.identityNumber}
                                     onChange={handleNewCustomerChange}
                                     className="form-control"
                                     required
@@ -264,8 +189,8 @@ const CustomerManage = () => {
                                 <label>Họ và Tên:</label>
                                 <input
                                     type="text"
-                                    name="customer_name"
-                                    value={newCustomer.customer_name}
+                                    name="name"
+                                    value={newCustomer.name}
                                     onChange={handleNewCustomerChange}
                                     className="form-control"
                                     required
@@ -279,6 +204,7 @@ const CustomerManage = () => {
                                     value={newCustomer.address}
                                     onChange={handleNewCustomerChange}
                                     className="form-control"
+                                    placeholder="Số nhà, đường, quận/huyện, thành phố"
                                     required
                                 />
                             </div>
@@ -286,8 +212,8 @@ const CustomerManage = () => {
                                 <label>Số điện thoại:</label>
                                 <input
                                     type="text"
-                                    name="phone_no"
-                                    value={newCustomer.phone_no}
+                                    name="phone"
+                                    value={newCustomer.phone}
                                     onChange={handleNewCustomerChange}
                                     className="form-control"
                                     required
@@ -405,12 +331,12 @@ const CustomerManage = () => {
                             ) : (
                             filteredCustomers.map((customer) => (
                                 <tr key={customer._id || customer.citizen_id}>
-                                    <td>{customer.citizen_id}</td>
-                                    <td>{customer.customer_name}</td>
-                                    <td>{customer.address}</td>
-                                    <td>{customer.phone_no}</td>
+                                    <td>{customer.identityNumber || customer.citizen_id}</td>
+                                    <td>{customer.name || customer.customer_name}</td>
+                                    <td>{customer.address || 'N/A'}</td>
+                                    <td>{customer.phone || customer.phone_no}</td>
                                     <td>{customer.email}</td>
-                                    <td>{customer.number_transaction}</td>
+                                    <td>{customer.number_transaction || 0}</td>
                                     <td>
                                         <button 
                                             className="delete-customer"

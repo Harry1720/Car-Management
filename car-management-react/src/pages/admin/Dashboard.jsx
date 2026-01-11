@@ -11,113 +11,52 @@ const Dashboard = () => {
     const [recentTransactions, setRecentTransactions] = useState([]);
     const [agencyInfo, setAgencyInfo] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+    const [chartData, setChartData] = useState(null);
     
     useEffect(() => {
         fetchDashboardData();
+        fetchTransactionStats(selectedDate);
     }, []);
     
     const fetchDashboardData = async () => {
         try {
             setLoading(true);
-            const response = await dashboardService.getDashboardStats();
-            const transactions = response.data?.recentTransactions || [];
-            const agencies = response.data?.agencyInfo || [];
-            setRecentTransactions(transactions.length > 0 ? transactions : oldRecentTransactions);
-            setAgencyInfo(agencies.length > 0 ? agencies : oldAgencyInfo);
+            const [transactionsRes, statsRes] = await Promise.all([
+                dashboardService.getRecentTransactions(10),
+                dashboardService.getDashboardStats()
+            ]);
+            
+            setRecentTransactions(transactionsRes || []);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching dashboard data:', error);
-            setRecentTransactions(oldRecentTransactions);
-            setAgencyInfo(oldAgencyInfo);
             setLoading(false);
         }
     };
     
-    const oldRecentTransactions = [
-        {
-            id: "TR001",
-            citizenId: "079203012345",
-            carId: "VINVF8B",
-            transactionDate: "2023-10-25",
-            paymentDate: "2023-10-26",
-            warrantyDate: "2025-10-26",
-            status: "Đã thanh toán"
-        },
-        {
-            id: "TR002",
-            citizenId: "079203012346",
-            carId: "VINVF9BL",
-            transactionDate: "2023-10-24",
-            paymentDate: "2023-10-24",
-            warrantyDate: "2025-10-24",
-            status: "Đã thanh toán"
-        },
-        {
-            id: "TR003",
-            citizenId: "079203012347",
-            carId: "VINVF7B",
-            transactionDate: "2023-10-23",
-            paymentDate: null,
-            warrantyDate: null,
-            status: "Chờ thanh toán"
-        },
-        {
-            id: "TR004",
-            citizenId: "079203012348",
-            carId: "VINVF6G",
-            transactionDate: "2023-10-22",
-            paymentDate: "2023-10-23",
-            warrantyDate: "2025-10-23",
-            status: "Đã thanh toán"
-        },
-        {
-            id: "TR005",
-            citizenId: "079203012349",
-            carId: "VINVF5B",
-            transactionDate: "2023-10-21",
-            paymentDate: null,
-            warrantyDate: null,
-            status: "Đã hủy"
+    const fetchTransactionStats = async (date) => {
+        try {
+            const response = await dashboardService.getTransactionStatistics(date);
+            updateChart(response);
+        } catch (error) {
+            console.error('Error fetching transaction stats:', error);
+            // Show empty chart on error
+            updateChart({ hourlyData: Array(9).fill(0) });
         }
-    ];
-
-    const oldAgencyInfo = [
-        {
-            id: "AGENCY1",
-            name: "VinFast Landmark 81",
-            address: "208 Nguyễn Hữu Cảnh, Quận Bình Thạnh, TP.HCM",
-            phone: "1900 23 23 89",
-            email: "landmark81@vinfast.vn",
-            password: "********"
-        },
-        {
-            id: "AGENCY2",
-            name: "VinFast Vinhomes Central Park",
-            address: "720A Điện Biên Phủ, Quận Bình Thạnh, TP.HCM",
-            phone: "1900 23 23 90",
-            email: "centralpark@vinfast.vn",
-            password: "********"
-        },
-        {
-            id: "AGENCY3",
-            name: "VinFast Royal City",
-            address: "72A Nguyễn Trãi, Thanh Xuân, Hà Nội",
-            phone: "1900 23 23 91",
-            email: "royalcity@vinfast.vn",
-            password: "********"
+    };
+    
+    const updateChart = (data) => {
+        if (chartInstance.current) {
+            chartInstance.current.destroy();
         }
-    ];
-
-    useEffect(() => {
-        document.title = "Trang tổng quan | VinFast";
-
-        // Khởi tạo chart
+        
         const lineChartData = {
             labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00', '24:00'],
             datasets: [{
-                label: 'Sales',
-                data: [0, 1, 2, 9, 20, 15, 5, 21, 0],
-                borderColor: "#1a90ff ",
+                label: 'Số lượng giao dịch',
+                data: data?.hourlyData || [],
+                borderColor: "#1a90ff",
                 backgroundColor: 'rgba(33, 150, 243, 0.2)',
                 borderWidth: 3,
                 fill: true
@@ -130,38 +69,52 @@ const Dashboard = () => {
                     beginAtZero: true,
                     ticks: {
                         stepSize: 5,
-                        color: '#7c7c7c' // Màu của số trên trục y
+                        color: '#7c7c7c'
                     },
                     grid: {
-                        color: '#ababab', // Màu của lưới trục y
-                        borderColor: '#ababab' // Màu của trục y
+                        color: '#ababab',
+                        borderColor: '#ababab'
                     }
                 },
                 x: {
                     ticks: {
-                        color: '#7c7c7c' // Màu của số trên trục x
+                        color: '#7c7c7c'
                     },
                     grid: {
-                        color: '#ababab', // Màu của lưới trục x
-                        borderColor: '#ababab' // Màu của trục x
+                        color: '#ababab',
+                        borderColor: '#ababab'
                     }
                 }
             },
             plugins: {
                 legend: {
                     labels: {
-                        color: '#ffffff', // Màu chữ của legend
+                        color: '#ffffff',
                     }
                 }
             }
         };
-            
-        // Tạo chart mới
+        
         chartInstance.current = new Chart(chartRef.current.getContext('2d'), {
             type: 'line',
             data: lineChartData,
             options: lineChartOptions
         });
+    };
+    
+    const handleDateChange = () => {
+        fetchTransactionStats(selectedDate);
+    };
+
+    useEffect(() => {
+        document.title = "Trang tổng quan | VinFast";
+        updateChart({});
+        
+        return () => {
+            if (chartInstance.current) {
+                chartInstance.current.destroy();
+            }
+        };
     }, []);
 
     return (
@@ -174,9 +127,16 @@ const Dashboard = () => {
                     <fieldset>
                         <label>
                             Vui lòng chọn ngày: 
-                            <input type="date" min="2023-01-01"/>
+                            <input 
+                                type="date" 
+                                min="2023-01-01"
+                                value={selectedDate}
+                                onChange={(e) => setSelectedDate(e.target.value)}
+                            />
                         </label>
-                        <button className='button graph_btn'
+                        <button 
+                            className='button graph_btn'
+                            onClick={handleDateChange}
                             style={{
                                 border: 'none',
                                 color: 'white',
@@ -199,12 +159,12 @@ const Dashboard = () => {
                             <thead style={{backgroundColor: 'rgb(26, 144, 255)', color: '#ffffff'}}>
                                 <tr>
                                     <th>Mã giao dịch</th>
-                                    <th>CCCD</th>
-                                    <th>Mã xe</th>
+                                    <th>Khách hàng</th>
+                                    <th>Mã đặt cọc</th>
                                     <th>Ngày giao dịch</th>
                                     <th>Ngày thanh toán</th>
                                     <th>Thời hạn bảo hành</th>
-                                    <th>Trạng thái giao dịch</th>
+                                    <th>Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody id="dashboard">
@@ -215,13 +175,13 @@ const Dashboard = () => {
                                 ) : (
                                 recentTransactions.map((transaction, index) => (
                                     <tr key={transaction._id || index}>
-                                        <td>{transaction.id || transaction._id}</td>
-                                        <td>{transaction.citizenId}</td>
-                                        <td>{transaction.carId}</td>
-                                        <td>{transaction.transactionDate}</td>
-                                        <td>{transaction.paymentDate || 'Chưa thanh toán'}</td>
-                                        <td>{transaction.warrantyDate || 'Không có'}</td>
-                                        <td>{transaction.status}</td>
+                                        <td>{transaction._id || 'N/A'}</td>
+                                        <td>{transaction.customerId?.name || 'N/A'}</td>
+                                        <td>{transaction.depositId?._id || 'N/A'}</td>
+                                        <td>{transaction.transactionDate ? new Date(transaction.transactionDate).toLocaleDateString('vi-VN') : 'N/A'}</td>
+                                        <td>{transaction.paymentDate ? new Date(transaction.paymentDate).toLocaleDateString('vi-VN') : 'Chưa thanh toán'}</td>
+                                        <td>{transaction.warrantyDate ? new Date(transaction.warrantyDate).toLocaleDateString('vi-VN') : 'Không có'}</td>
+                                        <td>{transaction.status || 'N/A'}</td>
                                     </tr>
                                 ))
                                 )}
@@ -231,42 +191,6 @@ const Dashboard = () => {
                     <a href="/admin/transaction" style={{textDecoration: 'none'}}>
                         <button className="button" style={{marginTop: '20px'}}>Xem thêm giao dịch</button>
                     </a>
-                </div>
-
-                <div className="card table_of_dashboard">
-                    <h2 style={{textAlign: 'center'}}>Thông tin đại lý</h2>
-                    <div className="table-wrapper">
-                        <table className="table table-striped table-hover">
-                            <thead style={{backgroundColor: 'rgb(26, 144, 255)', color: '#ffffff'}}>
-                                <tr>
-                                    <th>Mã đại lý</th>
-                                    <th>Tên đại lý</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Email</th>
-                                    <th>Password</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {loading ? (
-                                    <tr><td colSpan="6" style={{textAlign: 'center'}}>Đang tải...</td></tr>
-                                ) : agencyInfo.length === 0 ? (
-                                    <tr><td colSpan="6" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
-                                ) : (
-                                agencyInfo.map((agency, index) => (
-                                    <tr key={agency._id || index}>
-                                        <td>{agency.id || agency._id}</td>
-                                        <td>{agency.name}</td>
-                                        <td>{agency.address}</td>
-                                        <td>{agency.phone}</td>
-                                        <td>{agency.email}</td>
-                                        <td>{agency.password}</td>
-                                    </tr>
-                                ))
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
             

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './assets/css/components/Navbar.module.css';
 import './assets/css/components/Footer.module.css';
+import ProtectedRoute from './components/ProtectedRoute';
 
 // Import pages
 import Home from './pages/user/Home';
@@ -35,14 +36,14 @@ function App() {
         <Route path="/policy" element={<Policy />} />
         <Route path="/login" element={<Login />} />
         
-        {/* Admin routes */}
-         <Route path="/admin/dashboard" element={<Dashboard />} />
-         <Route path="/admin/customermanagement" element={<CustomerManage />} />
-        <Route path="/admin/carlist" element={<CarList />} />
-        <Route path="/admin/humanresources" element={<HRPage />} />
-        <Route path="/admin/transaction" element={<Transaction />} /> 
-        <Route path="/admin/accounting" element={<Accounting />} /> 
-        <Route path="/admin/carnumber" element={<CarNumber />} /> 
+        {/* Admin routes - Protected */}
+         <Route path="/admin/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+         <Route path="/admin/customermanagement" element={<ProtectedRoute><CustomerManage /></ProtectedRoute>} />
+        <Route path="/admin/carlist" element={<ProtectedRoute><CarList /></ProtectedRoute>} />
+        <Route path="/admin/humanresources" element={<ProtectedRoute><HRPage /></ProtectedRoute>} />
+        <Route path="/admin/transaction" element={<ProtectedRoute><Transaction /></ProtectedRoute>} /> 
+        <Route path="/admin/accounting" element={<ProtectedRoute><Accounting /></ProtectedRoute>} /> 
+        <Route path="/admin/carnumber" element={<ProtectedRoute><CarNumber /></ProtectedRoute>} /> 
       </Routes>
     </Router>
   );

@@ -64,4 +64,15 @@ export const authService = {
   logout: () => {
     localStorage.removeItem('token');
   },
+  
+  // Kiểm tra token còn hạn
+  isAuthenticated: () => {
+    const token = localStorage.getItem('token');
+    return !!token;
+  },
+  
+  // Lấy token
+  getToken: () => {
+    return localStorage.getItem('token');
+  },
 };

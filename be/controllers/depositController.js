@@ -71,8 +71,9 @@ exports.createDeposit = async (req, res) => {
     });
 
     await deposit.save();
-    res.status(201).json(deposit);
+    res.status(201).json({ deposit });
   } catch (err) {
+    console.error('Error creating deposit:', err);
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
 };

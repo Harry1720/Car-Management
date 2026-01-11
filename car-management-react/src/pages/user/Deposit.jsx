@@ -3,295 +3,9 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useEffect, useState } from "react";
 import { carService } from '../../services/carService';
-
-// Giả lập carModels (bạn thay bằng import thật từ Deposit.js)
-const carModels = {
-    "vf3": {
-        id: "VINVF3YL",
-        name: "VinFast 3",
-        version: "VF3 - Tiêu chuẩn",
-        specs: {
-            power: "32 kW",
-            acceleration: "5,3 giây",
-            range: "~210 km"
-        },
-        price: "198.000.000 VNĐ",
-        deposit: "20.000.000 VNĐ",
-        defaultImage: "/images/car-pics/vf3/vf3yl.png",
-        colors: [
-            {
-                name: "Vàng",
-                color: "yellow",
-                image: "/images/car-pics/vf3/vf3yl.png"
-            },
-            {
-                name: "Xanh dương",
-                color: "rgb(0, 145, 255)",
-                image: "/images/car-pics/vf3/vf3b.png"
-            },
-            {
-                name: "Hồng",
-                color: "pink",
-                image: "/images/car-pics/vf3/vf3pk.png"
-            },
-            {
-                name: "Đỏ",
-                color: "red",
-                image: "/images/car-pics/vf3/vf3r.png"
-            },
-            {
-                name: "Trắng",
-                color: "white",
-                image: "/images/car-pics/vf3/vf3wh.png"
-            }
-        ]
-    },
-    "vf5": {
-        id: "VINVF5B",
-        name: "VinFast 5",
-        version: "VF5 - Tiêu chuẩn",
-        specs: {
-            power: "100 kW",
-            acceleration: "~4 giây",
-            range: "~326,4 km"
-        },
-        price: "458.000.000 VNĐ",
-        deposit: "45.000.000 VNĐ",
-        defaultImage: "/images/car-pics/vf5/vf5b.png",
-        colors: [
-            {
-                name: "Xanh dương",
-                color: "rgb(0, 145, 255)",
-                image: "/images/car-pics/vf5/vf5b.png"
-            },
-            {
-                name: "Đen",
-                color: "rgb(0, 0, 0)",
-                image: "/images/car-pics/vf5/vf5bl.png"
-            },
-            {
-                name: "Đỏ",
-                color: "red",
-                image: "/images/car-pics/vf5/vf5r.png"
-            },
-            {
-                name: "Trắng",
-                color: "rgb(255, 255, 255)",
-                image: "/images/car-pics/vf5/vf5wh.png"
-            }
-        ]
-    },
-    "vf6": {
-        id: "VINVF6G",
-        name: "VinFast 6",
-        version: "VF6 - Tiêu chuẩn",
-        specs: {
-            power: "150 kW",
-            acceleration: "~3 giây",
-            range: "~399 km"
-        },
-        price: "675.000.000 VNĐ",
-        deposit: "67.000.000 VNĐ",
-        defaultImage: "/images/car-pics/vf6/vf6b.png",
-        colors: [
-            {
-                name: "Xanh dương",
-                color: "rgb(0, 145, 255)",
-                image: "/images/car-pics/vf6/vf6b.png"
-            },
-            {
-                name: "Đen",
-                color: "rgb(0, 0, 0)",
-                image: "/images/car-pics/vf6/vf6bl.png"
-            },
-            {
-                name: "Xanh lá",
-                color: "green",
-                image: "/images/car-pics/vf6/vf6g.png"
-            },
-            {
-                name: "Đỏ",
-                color: "red",
-                image: "/images/car-pics/vf6/vf6r.png"
-            },
-            {
-                name: "Trắng",
-                color: "rgb(255, 255, 255)",
-                image: "/images/car-pics/vf6/vf6wh.png"
-            }
-        ]
-    },
-    "vf7": {
-        id: "VINVF7B",
-        name: "VinFast 7",
-        version: "VF7 - Tiêu chuẩn",
-        specs: {
-            power: "200 kW",
-            acceleration: "~3 giây",
-            range: "~450 km"
-        },
-        price: "850.000.000 VNĐ",
-        deposit: "85.000.000 VNĐ",
-        defaultImage: "/images/car-pics/vf7/vf7bl.png",
-        colors: [
-            {
-                name: "Đen",
-                color: "black",
-                image: "/images/car-pics/vf7/vf7bl.png"
-            },
-            {
-                name: "Xanh dương",
-                color: "rgb(0, 145, 255)",
-                image: "/images/car-pics/vf7/vf7b.png"
-            },
-            {
-                name: "Đỏ",
-                color: "red",
-                image: "/images/car-pics/vf7/vf7r.png"
-            },
-            {
-                name: "Xanh lá",
-                color: "green",
-                image: "/images/car-pics/vf7/vf7g.png"
-            },
-            {
-                name: "Trắng",
-                color: "rgb(255, 255, 255)",
-                image: "/images/car-pics/vf7/vf7wh.png"
-            }
-        ]
-    },
-    "vf8": {
-        id: "VINVF8B",
-        name: "VinFast 8",
-        version: "VF8 - Tiêu chuẩn",
-        specs: {
-            power: "260 kW",
-            acceleration: "~2.9 giây",
-            range: "~471 km"
-        },
-        price: "1.089.000.000 VNĐ",
-        deposit: "100.000.000 VNĐ",
-        defaultImage: "/images/car-pics/vf8/vf8b.png",
-        colors: [
-            {
-                name: "Xanh dương",
-                color: "rgb(0, 145, 255)",
-                image: "/images/car-pics/vf8/vf8b.png"
-            },
-            {
-                name: "Đỏ",
-                color: "red",
-                image: "/images/car-pics/vf8/vf8r.png"
-            },
-            {
-                name: "Xám",
-                color: "rgb(224, 224, 224)",
-                image: "/images/car-pics/vf8/vf8wh.png"
-            },
-            {
-                name: "Đen",
-                color: "black",
-                image: "/images/car-pics/vf8/vf8bl.png"
-            },
-            {
-                name: "Xanh lá",
-                color: "green",
-                image: "/images/car-pics/vf8/vf8g.png"
-            }
-        ]
-    },
-    "vf9": {
-        id: "VINVF9BL",
-        name: "VinFast 9",
-        version: "VF9 - Tiêu chuẩn",
-        specs: {
-            power: "300 kW",
-            acceleration: "~2.5 giây",
-            range: "~580 km"
-        },
-        price: "1.491.000.000 VNĐ",
-        deposit: "150.000.000 VNĐ",
-        defaultImage: "/images/car-pics/vf9/vf9r.png",
-        colors: [
-            {
-                name: "Đỏ",
-                color: "red",
-                image: "/images/car-pics/vf9/vf9r.png"
-            },
-            {
-                name: "Trắng",
-                color: "rgb(255, 255, 255)",
-                image: "/images/car-pics/vf9/vf9wh.png"
-            },
-            {
-                name: "Đen",
-                color: "black",
-                image: "/images/car-pics/vf9/vf9bl.png"
-            },
-            {
-                name: "Xanh dương",
-                color: "rgb(0, 145, 255)",
-                image: "/images/car-pics/vf9/vf9b.png"
-            }
-        ]
-    },
-    "vfe34": {
-        id: "VINE34WH",
-        name: "VinFast e34",
-        version: "VF e34 - Tiêu chuẩn",
-        specs: {
-            power: "100 kW",
-            acceleration: "~4 giây",
-            range: "~326,4 km"
-        },
-        price: "690.000.000 VNĐ",
-        deposit: "69.000.000 VNĐ",
-        defaultImage: "/images/car-pics/vfe34/vfe34wh.png",
-        colors: [
-            {
-                name: "Trắng",
-                color: "white",
-                image: "/images/car-pics/vfe34/vfe34wh.png"
-            },
-            {
-                name: "Đen",
-                color: "black",
-                image: "/images/car-pics/vfe34/vfe34bl.png"
-            },
-            {
-                name: "Xanh dương",
-                color: "rgb(0, 145, 255)",
-                image: "/images/car-pics/vfe34/vfe34b.png"
-            },
-            {
-                name: "Đỏ",
-                color: "rgb(255, 0, 0)",
-                image: "/images/car-pics/vfe34/vfe34r.png"
-            }
-        ]
-    },
-    "vfwild": {
-        id: "VINVFWG",
-        name: "VinFast Wild",
-        version: "VF Wild - Tiêu chuẩn",
-        specs: {
-            power: "300 kW",
-            acceleration: "---",
-            range: "---"
-        },
-        price: "1.190.000.000 VNĐ",
-        deposit: "120.000.000 VNĐ",
-        defaultImage: "/images/car-pics/vfwild.png",
-        colors: [
-            {
-                name: "Bạc",
-                color: "silver",
-                image: "/images/car-pics/vfwild.png"
-            }
-        ]
-    }
-};
+import { customerService } from '../../services/customerService';
+import { depositService } from '../../services/depositService';
+import { transactionService } from '../../services/transactionService';
 
 const Deposit = () => {
   const [step, setStep] = useState(1);
@@ -316,16 +30,8 @@ const Deposit = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const carModel = urlParams.get("model") || "vf3";
     
-    // First try to find in hardcoded models
-    let car = carModels[carModel];
-    
-    if (car) {
-      setSelectedCar(car);
-      setSelectedColor(car.colors[0]);
-    } else {
-      // If not found in hardcoded, fetch from API by model
-      fetchCarByModel(carModel);
-    }
+    // Fetch from API by model
+    fetchCarByModel(carModel);
   }, []);
 
   const fetchCarByModel = async (modelId) => {
@@ -361,10 +67,7 @@ const Deposit = () => {
       }
     } catch (error) {
       console.error('Error fetching car:', error);
-      // Fall back to vf3 if error
-      const defaultCar = carModels['vf3'];
-      setSelectedCar(defaultCar);
-      setSelectedColor(defaultCar.colors[0]);
+      alert('Không thể tải thông tin xe. Vui lòng thử lại.');
     }
   };
 
@@ -392,25 +95,75 @@ const Deposit = () => {
       return;
     }
 
-    // const customerData = {
-    //   ...customer,
-    //   Model_Car_ID: selectedCar?.id,
-    // };
+    try {
+      // Bước 1: Tìm xe trong database theo model ID
+      const carsResponse = await carService.getAllCars(1, 100);
+      const carsArray = Array.isArray(carsResponse) ? carsResponse : (carsResponse?.cars || []);
+      const carInDb = carsArray.find(c => c.model === selectedCar?.id || c.model_car_id === selectedCar?.id);
+      
+      if (!carInDb) {
+        alert("Không tìm thấy xe trong hệ thống. Vui lòng thử lại.");
+        return;
+      }
 
-    // try {
-    //   const response = await fetch("http://localhost:8989/fillCustomerInfo", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(customerData),
-    //   });
+      // Bước 2: Tạo hoặc tìm customer
+      const customerData = {
+        name: customer.Customer_Name,
+        email: customer.Email,
+        phone: customer.Phone_No,
+        address: customer.Address,
+        identityNumber: customer.Citizen_ID,
+      };
 
-    //   if (!response.ok) throw new Error(await response.text());
-      alert("Đặt cọc thành công! Cảm ơn quý khách đã lựa chọn VinFast.");
+      let customerId;
+      try {
+        const customerResponse = await customerService.createCustomer(customerData);
+        customerId = customerResponse.customer._id;
+      } catch (error) {
+        // Nếu customer đã tồn tại, backend sẽ trả về customerId trong error response
+        console.error('Error creating customer:', error);
+        alert("Có lỗi khi tạo thông tin khách hàng: " + (error.message || "Vui lòng thử lại."));
+        return;
+      }
+
+      // Bước 3: Tính toán số tiền
+      const totalPrice = carInDb.price;
+      const depositAmount = Math.round(totalPrice * 0.1); // 10% đặt cọc
+      const remainingBalance = totalPrice - depositAmount;
+
+      // Bước 4: Tạo deposit
+      const depositData = {
+        customerId: customerId,
+        carId: carInDb._id,
+        depositAmount: depositAmount,
+        totalPrice: totalPrice,
+        remainingBalance: remainingBalance,
+        status: 'confirmed',
+        notes: `Đặt cọc xe ${carInDb.name || carInDb.model_car_name} màu ${selectedColor?.name || 'mặc định'}`
+      };
+
+      const depositResponse = await depositService.createDeposit(depositData);
+      const depositId = depositResponse.deposit._id;
+
+      // Bước 5: Tạo transaction thanh toán đặt cọc
+      const transactionData = {
+        depositId: depositId,
+        customerId: customerId,
+        amount: depositAmount,
+        paymentMethod: 'bank_transfer',
+        description: `Thanh toán đặt cọc xe ${carInDb.name || carInDb.model_car_name}`,
+        reference: `DEP-${Date.now()}`,
+        carId: carInDb._id
+      };
+
+      await transactionService.createTransaction(transactionData);
+
+      alert("Đặt cọc thành công! Cảm ơn quý khách đã lựa chọn VinFast.\nGiao dịch đã được ghi nhận vào hệ thống.");
       window.location.href = "/products";
-    // } catch (error) {
-    //   console.error("Error:", error);
-    //   alert("Có lỗi xảy ra khi đặt cọc. Vui lòng thử lại.");
-    // }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Có lỗi xảy ra khi đặt cọc: " + (error.message || "Vui lòng thử lại."));
+    }
   };
 
   return (

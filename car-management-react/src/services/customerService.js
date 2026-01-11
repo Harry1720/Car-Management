@@ -4,11 +4,14 @@ export const customerService = {
   // Lấy danh sách khách hàng
   getAllCustomers: async (page = 1, limit = 10, status = '') => {
     try {
+      console.log('Fetching customers with token:', localStorage.getItem('token') ? 'Token exists' : 'No token');
       const response = await apiClient.get('/customers', {
         params: { page, limit, status },
       });
+      console.log('Customers response:', response.data);
       return response.data;
     } catch (error) {
+      console.error('Error fetching customers:', error.response?.data || error);
       throw error.response?.data || error;
     }
   },

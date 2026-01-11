@@ -5,110 +5,8 @@ import Footer from '../../components/FooterAdmin';
 import { employeeService } from '../../services/employeeService';
 
 const HRPage = () => {
-    // Store sample data before useState
-    const oldEmployees = [
-        {
-            employee_citizenid: "EMP001",
-            employee_name: "Nguyễn Văn A",
-            employee_birthday: "1990-01-01",
-            employee_phone_no: "0901234567",
-            employee_email: "nva@vinfast.com",
-            employee_address: "123 Nguyễn Huệ, Q1, HCMC",
-            role_title: "Quản lý"
-        },
-        {
-            employee_citizenid: "EMP002",
-            employee_name: "Trần Thị B",
-            employee_birthday: "1992-03-15",
-            employee_phone_no: "0902345678",
-            employee_email: "ttb@vinfast.com",
-            employee_address: "45 Lê Lợi, Q1, HCMC",
-            role_title: "Nhân viên Kinh doanh"
-        },
-        {
-            employee_citizenid: "EMP003",
-            employee_name: "Lê Văn C",
-            employee_birthday: "1988-07-20",
-            employee_phone_no: "0903456789",
-            employee_email: "lvc@vinfast.com",
-            employee_address: "12 Trần Phú, Q5, HCMC",
-            role_title: "Kỹ sư"
-        },
-        {
-            employee_citizenid: "EMP004",
-            employee_name: "Phạm Thị D",
-            employee_birthday: "1995-11-02",
-            employee_phone_no: "0904567890",
-            employee_email: "ptd@vinfast.com",
-            employee_address: "78 Pasteur, Q3, HCMC",
-            role_title: "Chuyên viên Nhân sự"
-        },
-        {
-            employee_citizenid: "EMP005",
-            employee_name: "Ngô Văn E",
-            employee_birthday: "1991-05-10",
-            employee_phone_no: "0905678901",
-            employee_email: "nve@vinfast.com",
-            employee_address: "56 Hai Bà Trưng, Q1, HCMC",
-            role_title: "Quản lý Dự án"
-        },
-        {
-            employee_citizenid: "EMP006",
-            employee_name: "Đỗ Thị F",
-            employee_birthday: "1993-09-25",
-            employee_phone_no: "0906789012",
-            employee_email: "dtf@vinfast.com",
-            employee_address: "34 Nguyễn Trãi, Q5, HCMC",
-            role_title: "Kế toán"
-        },
-        {
-            employee_citizenid: "EMP007",
-            employee_name: "Vũ Minh G",
-            employee_birthday: "1987-12-12",
-            employee_phone_no: "0907890123",
-            employee_email: "vmg@vinfast.com",
-            employee_address: "23 Lý Tự Trọng, Q1, HCMC",
-            role_title: "Trưởng phòng Kỹ thuật"
-        },
-        {
-            employee_citizenid: "EMP008",
-            employee_name: "Hoàng Thị H",
-            employee_birthday: "1996-02-28",
-            employee_phone_no: "0908901234",
-            employee_email: "hth@vinfast.com",
-            employee_address: "89 Điện Biên Phủ, Q3, HCMC",
-            role_title: "Thư ký"
-        },
-        {
-            employee_citizenid: "EMP009",
-            employee_name: "Phan Văn I",
-            employee_birthday: "1994-04-05",
-            employee_phone_no: "0909012345",
-            employee_email: "pvi@vinfast.com",
-            employee_address: "67 Nguyễn Đình Chiểu, Q3, HCMC",
-            role_title: "Nhân viên IT"
-        },
-        {
-            employee_citizenid: "EMP010",
-            employee_name: "Bùi Thị J",
-            employee_birthday: "1990-08-18",
-            employee_phone_no: "0910123456",
-            employee_email: "btj@vinfast.com",
-            employee_address: "101 Võ Thị Sáu, Q3, HCMC",
-            role_title: "Chuyên viên Marketing"
-        },
-        {
-            employee_citizenid: "EMP011",
-            employee_name: "Nguyễn Quốc K",
-            employee_birthday: "1989-06-22",
-            employee_phone_no: "0911234567",
-            employee_email: "nqk@vinfast.com",
-            employee_address: "9 Cách Mạng Tháng 8, Q10, HCMC",
-            role_title: "Giám sát Sản xuất"
-        }
-    ];
 
-    const [employees, setEmployees] = useState(oldEmployees);
+    const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     
@@ -122,15 +20,15 @@ const HRPage = () => {
             const response = await employeeService.getAllEmployees();
             let employeeData = Array.isArray(response) ? response : (response?.data || response?.employees || []);
             
-            if (employeeData && Array.isArray(employeeData) && employeeData.length > 0) {
-                setEmployees([...oldEmployees, ...employeeData]);
+            if (employeeData && Array.isArray(employeeData)) {
+                setEmployees(employeeData);
             } else {
-                setEmployees(oldEmployees);
+                setEmployees([]);
             }
             setLoading(false);
         } catch (error) {
             console.error('Error fetching employees:', error);
-            setEmployees(oldEmployees);
+            setEmployees([]);
             setLoading(false);
         }
     };
@@ -152,6 +50,8 @@ const HRPage = () => {
 
     const handleAddEmployee = async (e) => {
         e.preventDefault();
+        
+        if (!window.confirm('Bạn có chắc chắn muốn thêm nhân viên mới này?')) return;
         
         // Validate required fields
         if (!newEmployee.employee_citizenid?.trim() || !newEmployee.employee_name?.trim() || 
@@ -202,6 +102,7 @@ const HRPage = () => {
     };
 
     const handleDelete = async (citizenId) => {
+        if (!window.confirm('Bạn có chắc chắn muốn xóa nhân viên này?')) return;
         try {
             // Only delete from API if it's a MongoDB ID (starts with numbers or has _id)
             const employee = employees.find(emp => emp._id === citizenId || emp.employee_citizenid === citizenId);
@@ -222,7 +123,35 @@ const HRPage = () => {
 
     const handleEdit = (citizenId) => {
         const employeeToEdit = employees.find(emp => emp._id === citizenId || emp.employee_citizenid === citizenId);
-        setEditingEmployee({...employeeToEdit}); // Clone object to avoid direct mutation
+        
+        // Handle address - could be object or string
+        let addressString = '';
+        if (typeof employeeToEdit.address === 'object' && employeeToEdit.address) {
+            addressString = [employeeToEdit.address.street, employeeToEdit.address.city, employeeToEdit.address.state].filter(Boolean).join(', ');
+        } else {
+            addressString = employeeToEdit.address || employeeToEdit.employee_address || '';
+        }
+        
+        // Format date for input[type="date"] (YYYY-MM-DD)
+        let formattedDate = '';
+        if (employeeToEdit.dob) {
+            const date = new Date(employeeToEdit.dob);
+            formattedDate = date.toISOString().split('T')[0];
+        } else if (employeeToEdit.employee_birthday) {
+            formattedDate = employeeToEdit.employee_birthday;
+        }
+        
+        // Map database fields to form fields
+        setEditingEmployee({
+            ...employeeToEdit,
+            employee_citizenid: employeeToEdit.identityNumber || employeeToEdit.employee_citizenid || '',
+            employee_name: employeeToEdit.name || employeeToEdit.employee_name || '',
+            employee_birthday: formattedDate,
+            employee_phone_no: employeeToEdit.phone || employeeToEdit.employee_phone_no || '',
+            employee_email: employeeToEdit.email || employeeToEdit.employee_email || '',
+            employee_address: addressString,
+            role_title: employeeToEdit.position || employeeToEdit.role || employeeToEdit.role_title || ''
+        });
         setShowAddForm(false); // Close add form when editing
     };
 
@@ -236,16 +165,28 @@ const HRPage = () => {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
+        if (!window.confirm('Bạn có chắc chắn muốn cập nhật thông tin nhân viên này?')) return;
         try {
             const employeeId = editingEmployee._id || editingEmployee.employee_citizenid;
-            await employeeService.updateEmployee(employeeId, editingEmployee);
-            setEmployees(employees.map(emp => 
-                (emp._id === employeeId || emp.employee_citizenid === employeeId) ? editingEmployee : emp
-            ));
+            
+            // Map form fields back to database fields
+            const updateData = {
+                name: editingEmployee.employee_name,
+                dob: editingEmployee.employee_birthday,
+                phone: editingEmployee.employee_phone_no,
+                email: editingEmployee.employee_email,
+                address: editingEmployee.employee_address,
+                position: editingEmployee.role_title,
+                identityNumber: editingEmployee.employee_citizenid
+            };
+            
+            await employeeService.updateEmployee(employeeId, updateData);
+            await fetchEmployees(); // Refresh data from server
             setEditingEmployee(null);
+            alert('Cập nhật nhân viên thành công!');
         } catch (error) {
             console.error('Error updating employee:', error);
-            alert('Lỗi khi cập nhật nhân viên');
+            alert('Lỗi khi cập nhật nhân viên: ' + (error.response?.data?.message || error.message));
         }
     };
 
@@ -383,11 +324,21 @@ const HRPage = () => {
                         <form onSubmit={handleUpdate}>
                             <div className="row">
                                 <div className="col">
+                                    <p>Mã nhân viên</p>
+                                    <input 
+                                        type="text"
+                                        name="employee_citizenid"
+                                        value={editingEmployee.employee_citizenid || ''}
+                                        onChange={handleEditChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="col">
                                     <p>Họ và tên nhân viên</p>
                                     <input 
                                         type="text"
                                         name="employee_name"
-                                        value={editingEmployee.employee_name}
+                                        value={editingEmployee.employee_name || ''}
                                         onChange={handleEditChange}
                                         required
                                     />
@@ -397,17 +348,7 @@ const HRPage = () => {
                                     <input 
                                         type="date"
                                         name="employee_birthday"
-                                        value={editingEmployee.employee_birthday}
-                                        onChange={handleEditChange}
-                                        required
-                                    />
-                                </div>
-                                <div className="col">
-                                    <p>Số điện thoại</p>
-                                    <input 
-                                        type="text"
-                                        name="employee_phone_no"
-                                        value={editingEmployee.employee_phone_no}
+                                        value={editingEmployee.employee_birthday || ''}
                                         onChange={handleEditChange}
                                         required
                                     />
@@ -415,11 +356,21 @@ const HRPage = () => {
                             </div>
                             <div className="row">
                                 <div className="col">
+                                    <p>Số điện thoại</p>
+                                    <input 
+                                        type="text"
+                                        name="employee_phone_no"
+                                        value={editingEmployee.employee_phone_no || ''}
+                                        onChange={handleEditChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="col">
                                     <p>Email</p>
                                     <input 
                                         type="email"
                                         name="employee_email"
-                                        value={editingEmployee.employee_email}
+                                        value={editingEmployee.employee_email || ''}
                                         onChange={handleEditChange}
                                         required
                                     />
@@ -429,17 +380,19 @@ const HRPage = () => {
                                     <input 
                                         type="text"
                                         name="employee_address"
-                                        value={editingEmployee.employee_address}
+                                        value={editingEmployee.employee_address || ''}
                                         onChange={handleEditChange}
                                         required
                                     />
                                 </div>
+                            </div>
+                            <div className="row">
                                 <div className="col">
                                     <p>Chức vụ</p>
                                     <input 
                                         type="text"
                                         name="role_title"
-                                        value={editingEmployee.role_title}
+                                        value={editingEmployee.role_title || ''}
                                         onChange={handleEditChange}
                                         required
                                     />

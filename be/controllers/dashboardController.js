@@ -22,7 +22,7 @@ exports.getDashboardStats = async (req, res) => {
 
     // Total revenue (income from transactions)
     const totalRevenue = await Accounting.aggregate([
-      { $match: { type: 'income' } },
+      { $match: { type: 'income', isDeleted: false } },
       {
         $group: {
           _id: null,
@@ -33,7 +33,7 @@ exports.getDashboardStats = async (req, res) => {
 
     // Total expenses
     const totalExpenses = await Accounting.aggregate([
-      { $match: { type: 'expense' } },
+      { $match: { type: 'expense', isDeleted: false } },
       {
         $group: {
           _id: null,
@@ -64,7 +64,7 @@ exports.getDashboardStats = async (req, res) => {
 exports.getMonthlyRevenue = async (req, res) => {
   try {
     const monthlyData = await Accounting.aggregate([
-      { $match: { type: 'income' } },
+      { $match: { type: 'income', isDeleted: false } },
       {
         $group: {
           _id: '$month',
@@ -131,18 +131,70 @@ exports.getDepositStatistics = async (req, res) => {
 // Get transaction statistics
 exports.getTransactionStatistics = async (req, res) => {
   try {
-    const stats = await Transaction.aggregate([
+    const { date } = req.query;
+    let startDate, endDate;
+    
+    if (date) {
+      // Nếu có ngày cụ thể, lấy dữ liệu cho ngày đó
+      startDate = new Date(date);
+      startDate.setHours(0, 0, 0, 0);
+      endDate = new Date(date);
+      endDate.setHours(23, 59, 59, 999);
+    } else {
+      // Mặc định lấy ngày hôm nay
+      startDate = new Date();
+      startDate.setHours(0, 0, 0, 0);
+      endDate = new Date();
+      endDate.setHours(23, 59, 59, 999);
+    }
+    
+    // Lấy số lượng giao dịch theo giờ
+    const hourlyData = await Transaction.aggregate([
+      {
+        $match: {
+          transactionDate: {
+            $gte: startDate,
+            $lte: endDate
+          },
+          status: 'completed'
+        }
+      },
+      {
+        $project: {
+          hour: { $hour: '$transactionDate' }
+        }
+      },
       {
         $group: {
-          _id: '$status',
-          count: { $sum: 1 },
-          totalAmount: { $sum: '$amount' },
-        },
+          _id: '$hour',
+          count: { $sum: 1 }
+        }
       },
+      { $sort: { _id: 1 } }
     ]);
-
-    res.json(stats);
+    
+    // Tạo mảng 24 giờ với giá trị 0
+    const hourlyStats = Array(9).fill(0);
+    const timeSlots = [0, 3, 6, 9, 12, 15, 18, 21, 24];
+    
+    // Fill data vào các khung giờ tương ứng
+    hourlyData.forEach(item => {
+      const hour = item._id;
+      // Tìm khung giờ gần nhất
+      for (let i = 0; i < timeSlots.length - 1; i++) {
+        if (hour >= timeSlots[i] && hour < timeSlots[i + 1]) {
+          hourlyStats[i] += item.count;
+          break;
+        }
+      }
+    });
+    
+    res.json({
+      hourlyData: hourlyStats,
+      date: startDate.toISOString().split('T')[0]
+    });
   } catch (err) {
+    console.error('Error getting transaction statistics:', err);
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
 };

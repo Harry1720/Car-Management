@@ -16,7 +16,12 @@ const Login = () => {
 
     useEffect(() => {
         document.title = "Đăng nhập | VinFast";
-    }, []);
+        
+        // Nếu đã đăng nhập, chuyển hướng đến dashboard
+        if (authService.isAuthenticated()) {
+            navigate('/admin/dashboard');
+        }
+    }, [navigate]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

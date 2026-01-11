@@ -7,20 +7,18 @@ const customerSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: [true, 'Email là bắt buộc'],
     unique: true,
     lowercase: true,
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Email không hợp lệ'],
   },
   phone: {
     type: String,
-    required: true,
+    required: [true, 'Số điện thoại là bắt buộc'],
+    match: [/^[0-9]{10,11}$/, 'Số điện thoại không hợp lệ'],
   },
   address: {
-    street: String,
-    city: String,
-    state: String,
-    zipCode: String,
-    country: String,
+    type: String,
   },
   dob: Date,
   gender: {
@@ -29,12 +27,19 @@ const customerSchema = new mongoose.Schema({
   },
   identityNumber: {
     type: String,
-    unique: true,
+    sparse: true, // Cho phép nhiều document có giá trị null/undefined
   },
   status: {
     type: String,
     enum: ['active', 'inactive', 'banned'],
     default: 'active',
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
+  deletedAt: {
+    type: Date,
   },
   carsInterested: [
     {
@@ -42,6 +47,10 @@ const customerSchema = new mongoose.Schema({
       ref: 'Car',
     },
   ],
+  number_transaction: {
+    type: Number,
+    default: 0,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

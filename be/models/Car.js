@@ -11,10 +11,13 @@ const carSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true,
+    required: [true, 'Giá xe là bắt buộc'],
+    min: [0, 'Giá xe phải lớn hơn 0'],
   },
   year: {
     type: Number,
+    min: [2000, 'Năm sản xuất phải từ 2000 trở lên'],
+    max: [new Date().getFullYear() + 1, 'Năm sản xuất không hợp lệ'],
   },
   color: {
     type: String,
@@ -41,11 +44,13 @@ const carSchema = new mongoose.Schema({
     transmission: String,
     seats: Number,
     fuelConsumption: String,
+    range: String,
   },
   images: [String],
   stock: {
     type: Number,
     default: 0,
+    min: [0, 'Số lượng tồn kho không thể âm'],
   },
   category: {
     type: String,
@@ -55,6 +60,13 @@ const carSchema = new mongoose.Schema({
     type: String,
     enum: ['available', 'unavailable', 'discontinued'],
     default: 'available',
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
+  deletedAt: {
+    type: Date,
   },
   createdAt: {
     type: Date,

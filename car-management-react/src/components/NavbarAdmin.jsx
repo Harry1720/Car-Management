@@ -1,9 +1,11 @@
 import '../assets/css/components/navbar_admin.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { authService } from '../services/authService';
 
 const NavbarAdmin = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const currentPath = location.pathname;
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -13,6 +15,13 @@ const NavbarAdmin = () => {
 
     const closeMobileMenu = () => {
         setIsMobileMenuOpen(false);
+    };
+    
+    const handleLogout = () => {
+        if (window.confirm('Đăng xuất khỏi hệ thống?')) {
+            authService.logout();
+            navigate('/login', { replace: true });
+        }
     };
 
     return (
@@ -87,8 +96,8 @@ const NavbarAdmin = () => {
                     </li>
 
                     <li>
-                        <Link to="/" onClick={closeMobileMenu}>
-                            <ion-icon name="log-out-outline"></ion-icon> Đăng xuất</Link>
+                        <a onClick={handleLogout} style={{cursor: 'pointer'}}>
+                            <ion-icon name="log-out-outline"></ion-icon> Đăng xuất</a>
                     </li>
                 </ul>
             </div>

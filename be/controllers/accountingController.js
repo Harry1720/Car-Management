@@ -6,7 +6,7 @@ exports.getAllAccounting = async (req, res) => {
     const { page = 1, limit = 10, type, category, month } = req.query;
     const skip = (page - 1) * limit;
 
-    let query = {};
+    let query = { isDeleted: false };
     if (type) query.type = type;
     if (category) query.category = category;
     if (month) query.month = month;
@@ -134,7 +134,7 @@ exports.getAccountingSummaryByMonth = async (req, res) => {
       },
     ]);
 
-    const records = await Accounting.find({ month })
+    const records = await Accounting.find({ month, isDeleted: false })
       .populate('transactionId')
       .populate('customerId')
       .populate('carId');
@@ -153,7 +153,7 @@ exports.getAccountingSummaryByMonth = async (req, res) => {
 exports.getAccountingStatistics = async (req, res) => {
   try {
     const incomeStats = await Accounting.aggregate([
-      { $match: { type: 'income' } },
+      { $match: { type: 'income', isDeleted: false } },
       {
         $group: {
           _id: '$category',
@@ -164,7 +164,7 @@ exports.getAccountingStatistics = async (req, res) => {
     ]);
 
     const expenseStats = await Accounting.aggregate([
-      { $match: { type: 'expense' } },
+      { $match: { type: 'expense', isDeleted: false } },
       {
         $group: {
           _id: '$category',
@@ -175,6 +175,7 @@ exports.getAccountingStatistics = async (req, res) => {
     ]);
 
     const monthlyStats = await Accounting.aggregate([
+      { $match: { isDeleted: false } },
       {
         $group: {
           _id: {

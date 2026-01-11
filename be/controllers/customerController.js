@@ -6,7 +6,7 @@ exports.getAllCustomers = async (req, res) => {
     const { page = 1, limit = 10, status } = req.query;
     const skip = (page - 1) * limit;
 
-    let query = {};
+    let query = { isDeleted: false };
     if (status) query.status = status;
 
     const customers = await Customer.find(query)
@@ -46,6 +46,7 @@ exports.getCustomerById = async (req, res) => {
 // Create customer
 exports.createCustomer = async (req, res) => {
   try {
+    console.log('Creating customer with data:', req.body);
     const {
       name,
       email,
@@ -56,6 +57,13 @@ exports.createCustomer = async (req, res) => {
       identityNumber,
       carsInterested,
     } = req.body;
+
+    // Kiểm tra email đã tồn tại chưa
+    const existingCustomer = await Customer.findOne({ email });
+    if (existingCustomer) {
+      console.log('Customer already exists with email:', email);
+      return res.status(200).json({ customer: existingCustomer });
+    }
 
     const customer = new Customer({
       name,
@@ -69,8 +77,10 @@ exports.createCustomer = async (req, res) => {
     });
 
     await customer.save();
-    res.status(201).json(customer);
+    console.log('Customer created successfully:', customer._id);
+    res.status(201).json({ customer });
   } catch (err) {
+    console.error('Error creating customer:', err);
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
 };
@@ -94,14 +104,22 @@ exports.updateCustomer = async (req, res) => {
   }
 };
 
-// Delete customer
+// Delete customer (soft delete)
 exports.deleteCustomer = async (req, res) => {
   try {
-    const customer = await Customer.findByIdAndDelete(req.params.id);
+    const customer = await Customer.findByIdAndUpdate(
+      req.params.id,
+      { 
+        isDeleted: true,
+        deletedAt: new Date(),
+        status: 'inactive'
+      },
+      { new: true }
+    );
     if (!customer) {
       return res.status(404).json({ message: 'Khách hàng không tồn tại' });
     }
-    res.json({ message: 'Xóa khách hàng thành công' });
+    res.json({ message: 'Xóa khách hàng thành công', customer });
   } catch (err) {
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
@@ -145,6 +163,32 @@ exports.removeCarInterest = async (req, res) => {
     }
 
     res.json(customer);
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi server', error: err.message });
+  }
+};
+
+// Update transaction counts for all customers
+exports.updateTransactionCounts = async (req, res) => {
+  try {
+    const Transaction = require('../models/Transaction');
+    const customers = await Customer.find({ isDeleted: false });
+    
+    let updated = 0;
+    for (const customer of customers) {
+      const transactionCount = await Transaction.countDocuments({ 
+        customerId: customer._id 
+      });
+      
+      customer.number_transaction = transactionCount;
+      await customer.save();
+      updated++;
+    }
+
+    res.json({ 
+      message: `Đã cập nhật số giao dịch cho ${updated} khách hàng`,
+      updated 
+    });
   } catch (err) {
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }

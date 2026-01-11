@@ -30,6 +30,13 @@ const transactionSchema = new mongoose.Schema({
     enum: ['pending', 'completed', 'failed', 'refunded'],
     default: 'pending',
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
+  deletedAt: {
+    type: Date,
+  },
   reference: String,
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,

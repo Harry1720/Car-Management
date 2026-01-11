@@ -42,9 +42,10 @@ export const dashboardService = {
   },
 
   // Lấy thống kê giao dịch
-  getTransactionStatistics: async () => {
+  getTransactionStatistics: async (date) => {
     try {
-      const response = await apiClient.get('/dashboard/transactions/statistics');
+      const params = date ? { date } : {};
+      const response = await apiClient.get('/dashboard/transactions/statistics', { params });
       return response.data;
     } catch (error) {
       throw error.response?.data || error;

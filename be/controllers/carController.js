@@ -6,7 +6,7 @@ exports.getAllCars = async (req, res) => {
     const { page = 1, limit = 10, category, status } = req.query;
     const skip = (page - 1) * limit;
 
-    let query = {};
+    let query = { isDeleted: false };
     if (category) query.category = category;
     if (status) query.status = status;
 
@@ -62,6 +62,22 @@ exports.createCar = async (req, res) => {
       car_sold,
     } = req.body;
 
+    // Lấy ảnh từ Cloudinary nếu có upload
+    let images = [];
+    if (req.files && req.files.length > 0) {
+      images = req.files.map(file => file.path);
+    }
+    
+    // Parse specifications nếu là string JSON
+    let parsedSpecifications = specifications;
+    if (typeof specifications === 'string') {
+      try {
+        parsedSpecifications = JSON.parse(specifications);
+      } catch (e) {
+        parsedSpecifications = {};
+      }
+    }
+
     const car = new Car({
       name,
       model,
@@ -69,13 +85,14 @@ exports.createCar = async (req, res) => {
       year,
       color,
       description,
-      specifications,
+      specifications: parsedSpecifications,
       stock,
       category,
       status,
       origin_of_car,
       date_of_import,
       car_sold,
+      images,
     });
 
     await car.save();
@@ -88,7 +105,30 @@ exports.createCar = async (req, res) => {
 // Update car
 exports.updateCar = async (req, res) => {
   try {
+    console.log('=== UPDATE CAR ===');
+    console.log('Car ID:', req.params.id);
+    console.log('Body:', req.body);
+    console.log('Files:', req.files);
+    
     const updates = { ...req.body, updatedAt: Date.now() };
+    
+    // Parse specifications nếu là string JSON
+    if (updates.specifications && typeof updates.specifications === 'string') {
+      try {
+        updates.specifications = JSON.parse(updates.specifications);
+      } catch (e) {
+        console.log('Error parsing specifications:', e);
+      }
+    }
+    
+    // Nếu có upload ảnh mới, thêm vào
+    if (req.files && req.files.length > 0) {
+      const newImages = req.files.map(file => file.path);
+      // Lấy ảnh cũ nếu có
+      const oldCar = await Car.findById(req.params.id);
+      updates.images = [...(oldCar.images || []), ...newImages];
+    }
+    
     const car = await Car.findByIdAndUpdate(req.params.id, updates, {
       new: true,
       runValidators: true,
@@ -98,20 +138,30 @@ exports.updateCar = async (req, res) => {
       return res.status(404).json({ message: 'Xe không tồn tại' });
     }
 
+    console.log('Car updated successfully:', car._id);
     res.json(car);
   } catch (err) {
+    console.error('Error updating car:', err);
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
 };
 
-// Delete car
+// Delete car (soft delete)
 exports.deleteCar = async (req, res) => {
   try {
-    const car = await Car.findByIdAndDelete(req.params.id);
+    const car = await Car.findByIdAndUpdate(
+      req.params.id,
+      { 
+        isDeleted: true,
+        deletedAt: new Date(),
+        status: 'discontinued'
+      },
+      { new: true }
+    );
     if (!car) {
       return res.status(404).json({ message: 'Xe không tồn tại' });
     }
-    res.json({ message: 'Xóa xe thành công' });
+    res.json({ message: 'Xóa xe thành công', car });
   } catch (err) {
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }

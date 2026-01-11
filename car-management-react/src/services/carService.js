@@ -36,7 +36,11 @@ export const carService = {
   // Tạo xe mới
   createCar: async (carData) => {
     try {
-      const response = await apiClient.post('/cars', carData);
+      const response = await apiClient.post('/cars', carData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -46,7 +50,11 @@ export const carService = {
   // Cập nhật xe
   updateCar: async (id, carData) => {
     try {
-      const response = await apiClient.put(`/cars/${id}`, carData);
+      const response = await apiClient.put(`/cars/${id}`, carData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return response.data;
     } catch (error) {
       throw error.response?.data || error;

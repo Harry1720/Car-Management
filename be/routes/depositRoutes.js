@@ -3,10 +3,12 @@ const router = express.Router();
 const depositController = require('../controllers/depositController');
 const { protect, authorize } = require('../middlewares/authMiddleware');
 
-// Protected routes
-router.get('/', protect, depositController.getAllDeposits);
-router.get('/:id', protect, depositController.getDepositById);
-router.post('/', protect, depositController.createDeposit);
+// Public routes - cho phép đặt cọc không cần đăng nhập
+router.post('/', depositController.createDeposit);
+
+// Protected routes - Admin và Employee có thể xem
+router.get('/', protect, authorize('admin', 'employee'), depositController.getAllDeposits);
+router.get('/:id', protect, authorize('admin', 'employee'), depositController.getDepositById);
 router.put('/:id', protect, authorize('admin'), depositController.updateDeposit);
 router.delete('/:id', protect, authorize('admin'), depositController.deleteDeposit);
 

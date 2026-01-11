@@ -2,108 +2,33 @@ import { useEffect, useState } from 'react';
 import '../../assets/css/admin_pages/Accounting.css';
 import Navbar from '../../components/NavbarAdmin';
 import Footer from '../../components/FooterAdmin';
-import { accountingService } from '../../services/accountingService';
+import { depositService } from '../../services/depositService';
 
 const AccountingPage = () => {
-    const [accountingData, setAccountingData] = useState([
-        {
-            transaction_id: "TRX001",
-            deposit_price: "100,000,000 VNĐ",
-            transaction_price: "1,089,000,000 VNĐ",
-            totalprice: "1,189,000,000 VNĐ"
-        },
-        {
-            transaction_id: "TRX002",
-            deposit_price: "150,000,000 VNĐ",
-            transaction_price: "1,491,000,000 VNĐ",
-            totalprice: "1,641,000,000 VNĐ"
-        }
-    ]);
+    const [depositData, setDepositData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     
     useEffect(() => {
-        fetchAccountingData();
+        fetchDepositData();
     }, []);
     
-    const fetchAccountingData = async () => {
+    const fetchDepositData = async () => {
         try {
             setLoading(true);
-            const response = await accountingService.getAccountingData();
-            const data = response.data || response;
-            if (data && Array.isArray(data) && data.length > 0) {
-                setAccountingData(data);
+            const response = await depositService.getAllDeposits();
+            console.log('Deposit response:', response);
+            const data = response.deposits || response.data || response;
+            if (data && Array.isArray(data)) {
+                setDepositData(data);
             }
             setLoading(false);
         } catch (error) {
-            console.error('Error fetching accounting data:', error);
+            console.error('Error fetching deposit data:', error);
             setLoading(false);
         }
     };
     
-    const oldAccountingData = [
-        {
-            transaction_id: "TRX001",
-            deposit_price: "100,000,000 VNĐ",
-            transaction_price: "1,089,000,000 VNĐ",
-            totalprice: "1,189,000,000 VNĐ"
-        },
-        {
-            transaction_id: "TRX002",
-            deposit_price: "150,000,000 VNĐ",
-            transaction_price: "1,491,000,000 VNĐ",
-            totalprice: "1,641,000,000 VNĐ"
-        },
-        {
-            transaction_id: "TRX003",
-            deposit_price: "85,000,000 VNĐ",
-            transaction_price: "0 VNĐ",
-            totalprice: "85,000,000 VNĐ"
-        },
-        {
-            transaction_id: "TRX004",
-            deposit_price: "67,000,000 VNĐ",
-            transaction_price: "675,000,000 VNĐ",
-            totalprice: "742,000,000 VNĐ"
-        },
-        {
-            transaction_id: "TRX005",
-            deposit_price: "45,000,000 VNĐ",
-            transaction_price: "0 VNĐ",
-            totalprice: "45,000,000 VNĐ"
-        },
-        {
-            transaction_id: "TRX006",
-            deposit_price: "67,000,000 VNĐ",
-            transaction_price: "675,000,000 VNĐ",
-            totalprice: "742,000,000 VNĐ"
-        },
-        {
-            transaction_id: "TRX007",
-            deposit_price: "100,000,000 VNĐ",
-            transaction_price: "1,089,000,000 VNĐ",
-            totalprice: "1,189,000,000 VNĐ"
-        },
-        {
-            transaction_id: "TRX008",
-            deposit_price: "45,000,000 VNĐ",
-            transaction_price: "0 VNĐ",
-            totalprice: "45,000,000 VNĐ"
-        },
-        {
-            transaction_id: "TRX009",
-            deposit_price: "45,000,000 VNĐ",
-            transaction_price: "458,000,000 VNĐ",
-            totalprice: "503,000,000 VNĐ"
-        },
-        {
-            transaction_id: "TRX010",
-            deposit_price: "85,000,000 VNĐ",
-            transaction_price: "0 VNĐ",
-            totalprice: "85,000,000 VNĐ"
-        }
-    ];
-
     useEffect(() => {
         document.title = "Kế toán | VinFast";
     }, []);
@@ -119,7 +44,7 @@ const AccountingPage = () => {
                         <input 
                             type="text" 
                             id="id-search" 
-                            placeholder="Tìm kiếm theo mã giao dịch..."
+                            placeholder="Tìm kiếm theo mã đặt cọc hoặc tên khách hàng..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -130,30 +55,49 @@ const AccountingPage = () => {
                     <table className="table table-hover table-sortable table-bordered">
                         <thead>
                             <tr>
-                                <th>Mã giao dịch</th>
+                                <th>Mã đặt cọc</th>
+                                <th>Khách hàng</th>
+                                <th>Xe</th>
                                 <th>Số tiền đặt cọc</th>
-                                <th>Số tiền đã thanh toán</th>
-                                <th>Tổng tiền</th>
+                                <th>Tổng giá xe</th>
+                                <th>Còn lại</th>
+                                <th>Ngày đặt cọc</th>
+                                <th>Trạng thái</th>
                             </tr>
                         </thead>
                         <tbody style={{backgroundColor: "rgb(245, 252, 255)"}}>
                             {loading ? (
-                                <tr><td colSpan="4" style={{textAlign: 'center'}}>Đang tải...</td></tr>
-                            ) : accountingData.length === 0 ? (
-                                <tr><td colSpan="4" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                                <tr><td colSpan="8" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                            ) : depositData.length === 0 ? (
+                                <tr><td colSpan="8" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
                             ) : (
-                            accountingData
-                                .filter(keToan => 
-                                    (keToan.transaction_id || '').toLowerCase().includes(searchTerm.toLowerCase())
-                                )
-                                .map(keToan => (
-                                    <tr key={keToan._id || keToan.transaction_id}>
-                                        <td>{keToan.transaction_id}</td>
-                                        <td>{keToan.deposit_price}</td>
-                                        <td>{keToan.transaction_price}</td>
-                                        <td>{keToan.totalprice}</td>
-                                    </tr>
-                                ))
+                            depositData
+                                .filter(deposit => {
+                                    const searchStr = searchTerm.toLowerCase();
+                                    const depositId = deposit._id?.toString() || '';
+                                    const customerName = deposit.customerId?.name || '';
+                                    return depositId.includes(searchStr) || customerName.toLowerCase().includes(searchStr);
+                                })
+                                .map((deposit, index) => {
+                                    const statusMap = {
+                                        'pending': 'Chờ xác nhận',
+                                        'confirmed': 'Đã xác nhận',
+                                        'completed': 'Hoàn thành',
+                                        'cancelled': 'Đã hủy'
+                                    };
+                                    return (
+                                        <tr key={deposit._id || index}>
+                                            <td>{deposit._id?.slice(-6) || 'N/A'}</td>
+                                            <td>{deposit.customerId?.name || 'N/A'}</td>
+                                            <td>{deposit.carId?.name || deposit.carId?.model_car_name || 'N/A'}</td>
+                                            <td>{deposit.depositAmount ? `${deposit.depositAmount.toLocaleString()} VNĐ` : 'N/A'}</td>
+                                            <td>{deposit.totalPrice ? `${deposit.totalPrice.toLocaleString()} VNĐ` : 'N/A'}</td>
+                                            <td>{deposit.remainingBalance ? `${deposit.remainingBalance.toLocaleString()} VNĐ` : 'N/A'}</td>
+                                            <td>{deposit.depositDate ? new Date(deposit.depositDate).toLocaleDateString('vi-VN') : 'N/A'}</td>
+                                            <td>{statusMap[deposit.status] || deposit.status || 'N/A'}</td>
+                                        </tr>
+                                    );
+                                })
                             )}
                         </tbody>
                     </table>

@@ -49,8 +49,13 @@ const employeeSchema = new mongoose.Schema({
     type: String,
     enum: ['active', 'inactive', 'on_leave', 'terminated'],
     default: 'active',
+  },  isDeleted: {
+    type: Boolean,
+    default: false,
   },
-  createdAt: {
+  deletedAt: {
+    type: Date,
+  },  createdAt: {
     type: Date,
     default: Date.now,
   },

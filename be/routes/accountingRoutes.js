@@ -3,15 +3,15 @@ const router = express.Router();
 const accountingController = require('../controllers/accountingController');
 const { protect, authorize } = require('../middlewares/authMiddleware');
 
-// Protected routes
-router.get('/', protect, authorize('admin', 'accountant'), accountingController.getAllAccounting);
-router.get('/:id', protect, authorize('admin', 'accountant'), accountingController.getAccountingById);
-router.post('/', protect, authorize('admin', 'accountant'), accountingController.createAccounting);
-router.put('/:id', protect, authorize('admin', 'accountant'), accountingController.updateAccounting);
-router.delete('/:id', protect, authorize('admin', 'accountant'), accountingController.deleteAccounting);
+// Protected routes - Admin và Employee có thể truy cập
+router.get('/', protect, authorize('admin', 'employee'), accountingController.getAllAccounting);
+router.get('/:id', protect, authorize('admin', 'employee'), accountingController.getAccountingById);
+router.post('/', protect, authorize('admin', 'employee'), accountingController.createAccounting);
+router.put('/:id', protect, authorize('admin', 'employee'), accountingController.updateAccounting);
+router.delete('/:id', protect, authorize('admin'), accountingController.deleteAccounting);
 
-// Summary and statistics
-router.get('/month/:month', protect, authorize('admin', 'accountant'), accountingController.getAccountingSummaryByMonth);
-router.get('/stats/all', protect, authorize('admin', 'accountant'), accountingController.getAccountingStatistics);
+// Summary and statistics - Admin và Employee có thể xem
+router.get('/month/:month', protect, authorize('admin', 'employee'), accountingController.getAccountingSummaryByMonth);
+router.get('/stats/all', protect, authorize('admin', 'employee'), accountingController.getAccountingStatistics);
 
 module.exports = router;
