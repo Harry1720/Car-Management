@@ -5,9 +5,9 @@ const { protect, authorize } = require('../middlewares/authMiddleware');
 const upload = require('../middlewares/upload');
 
 // Public routes
+router.get('/category/:category', carController.getCarsByCategory);
 router.get('/', carController.getAllCars);
 router.get('/:id', carController.getCarById);
-router.get('/category/:category', carController.getCarsByCategory);
 
 // Admin and Employee routes - Allow upload of maximum 5 images
 router.post('/', protect, authorize('admin', 'employee'), upload.array('images', 5), carController.createCar);

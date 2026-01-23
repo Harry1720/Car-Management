@@ -38,8 +38,6 @@ const uploadToS3 = async (file) => {
       Key: s3Key,
       Body: file.buffer,
       ContentType: file.mimetype,
-      // Allow public read access
-      ACL: 'public-read',
     };
 
     // Upload to S3
