@@ -1,4 +1,8 @@
 const Car = require('../models/Car');
+const {
+  uploadMultipleToS3,
+  deleteMultipleFromS3,
+} = require('../services/s3.service');
 
 // Get all cars
 exports.getAllCars = async (req, res) => {
@@ -62,13 +66,13 @@ exports.createCar = async (req, res) => {
       car_sold,
     } = req.body;
 
-    // Lấy ảnh từ Cloudinary nếu có upload
+    // Upload images to S3 if files are provided
     let images = [];
     if (req.files && req.files.length > 0) {
-      images = req.files.map(file => file.path);
+      images = await uploadMultipleToS3(req.files);
     }
     
-    // Parse specifications nếu là string JSON
+    // Parse specifications if it's a JSON string
     let parsedSpecifications = specifications;
     if (typeof specifications === 'string') {
       try {
@@ -98,6 +102,7 @@ exports.createCar = async (req, res) => {
     await car.save();
     res.status(201).json(car);
   } catch (err) {
+    console.error('Error creating car:', err);
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
 };
@@ -112,7 +117,7 @@ exports.updateCar = async (req, res) => {
     
     const updates = { ...req.body, updatedAt: Date.now() };
     
-    // Parse specifications nếu là string JSON
+    // Parse specifications if it's a JSON string
     if (updates.specifications && typeof updates.specifications === 'string') {
       try {
         updates.specifications = JSON.parse(updates.specifications);
@@ -121,12 +126,12 @@ exports.updateCar = async (req, res) => {
       }
     }
     
-    // Nếu có upload ảnh mới, thêm vào
+    // Upload new images to S3 if provided
     if (req.files && req.files.length > 0) {
-      const newImages = req.files.map(file => file.path);
-      // Lấy ảnh cũ nếu có
+      const newImageUrls = await uploadMultipleToS3(req.files);
+      // Get existing images
       const oldCar = await Car.findById(req.params.id);
-      updates.images = [...(oldCar.images || []), ...newImages];
+      updates.images = [...(oldCar.images || []), ...newImageUrls];
     }
     
     const car = await Car.findByIdAndUpdate(req.params.id, updates, {
@@ -146,10 +151,23 @@ exports.updateCar = async (req, res) => {
   }
 };
 
-// Delete car (soft delete)
+// Delete car (soft delete) and clean up S3 images
 exports.deleteCar = async (req, res) => {
   try {
-    const car = await Car.findByIdAndUpdate(
+    // Get the car before deleting to access images
+    const car = await Car.findById(req.params.id);
+    
+    if (!car) {
+      return res.status(404).json({ message: 'Xe không tồn tại' });
+    }
+
+    // Delete images from S3
+    if (car.images && car.images.length > 0) {
+      await deleteMultipleFromS3(car.images);
+    }
+
+    // Perform soft delete
+    const updatedCar = await Car.findByIdAndUpdate(
       req.params.id,
       { 
         isDeleted: true,
@@ -158,11 +176,10 @@ exports.deleteCar = async (req, res) => {
       },
       { new: true }
     );
-    if (!car) {
-      return res.status(404).json({ message: 'Xe không tồn tại' });
-    }
-    res.json({ message: 'Xóa xe thành công', car });
+
+    res.json({ message: 'Xóa xe thành công', car: updatedCar });
   } catch (err) {
+    console.error('Error deleting car:', err);
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
 };
