@@ -10,7 +10,7 @@ This is a web-based car management system for VinFast dealerships, providing fun
 
 ## Setup Instructions
 1. Clone the repository
-2. `cd car-management-react`
+2. `cd frontend`
 3. Install dependencies: `npm install` (also you may need `npm install chart.js`)
 4. Start: `npm run dev`
 

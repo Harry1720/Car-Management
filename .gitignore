@@ -36,5 +36,5 @@ coverage/
 *.test-results
 
 # Ignore by folder
-be/node_modules/
-car-management-react/node_modules/
+backend/node_modules/
+frontend/node_modules/

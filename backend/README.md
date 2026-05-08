@@ -141,13 +141,13 @@ node seeds/seedDatabase.js
 Build Docker image:
 
 ```bash
-docker build -t car-management-backend .
+docker build -t backend .
 ```
 
 Chạy container:
 
 ```bash
-docker run -p 5000:5000 --env-file .env car-management-backend
+docker run -p 5000:5000 --env-file .env backend
 ```
 
 ## Công nghệ sử dụng
