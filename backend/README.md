@@ -20,9 +20,27 @@ cp .env.example .env
 
 Cập nhật các biến môi trường:
 
-- `MONGODB_URI`: Kết nối MongoDB (local hoặc Atlas)
-- `JWT_SECRET`: Secret key cho JWT tokens
-- `PORT`: Port chạy server (mặc định: 5000)
+- PORT=5000: Đây là cổng (port) mà server Node.js của bạn sẽ chạy. Bạn có thể giữ nguyên 5000, hoặc đổi thành 3000, 8080 tùy ý (miễn là không bị trùng với ứng dụng khác).
+
+- NODE_ENV=development: Biến này báo cho server biết bạn đang ở môi trường lập trình. Khi nào đưa web lên mạng thực tế (deploy), bạn sẽ đổi nó thành production.
+
+- FRONTEND_URL=http://localhost:5173: Đây là đường dẫn ứng dụng Frontend của bạn (thường Vite.js dùng cổng 5173). Backend cần cái này để cho phép Frontend gọi API (cấu hình CORS).
+
+- MONGODB_URI: Đây là đường dẫn để kết nối với cơ sở dữ liệu MongoDB.
+
+- JWT_SECRET: Đây là "chìa khóa" dùng để mã hóa mật khẩu hoặc phiên đăng nhập của người dùng. Bạn phải tự tạo ra nó.
+
+`node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"`
+
+Sau đó copy kết quả dán vào .env.
+
+- JWT_EXPIRE=7d: Thời gian token hết hạn. 7d là 7 ngày, 1h là 1 giờ. Bạn có thể giữ nguyên.
+
+- CLOUDINARY_CLOUD_NAME: Ở phần phần Product Environment Credentials, Copy giá trị "Cloud Name" dán vào.
+
+- CLOUDINARY_API_KEY: Copy "API Key" dán vào.
+
+- CLOUDINARY_API_SECRET: Bấm hình con mắt để hiện mật khẩu, copy "API Secret" dán vào.
 
 ### 3. Khởi động server
 

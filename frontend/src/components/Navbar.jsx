@@ -31,6 +31,15 @@ const Navbar = ({ activePage }) => {
       <ul className={isMobileMenuOpen ? styles['mobile-menu-open'] : ''}>
         <li>
           <Link
+            to="/"
+            className={activePage === 'home' ? styles.active : ''}
+            onClick={closeMobileMenu}
+          >
+            Trang chủ
+          </Link>
+        </li>
+        <li>
+          <Link
             to="/about"
             className={activePage === 'about' ? styles.active : ''}
             onClick={closeMobileMenu}
@@ -77,9 +86,10 @@ const Navbar = ({ activePage }) => {
         <li className={styles['mobile-only']}>
           <Link
             to="/login"
+            className={activePage === 'login' ? styles.active : ''}
             onClick={closeMobileMenu}
           >
-            <i className="bx bx-user-circle" style={{marginRight: '8px'}}></i>
+            {/* <i className="bx bx-user-circle" style={{marginRight: '8px'}}></i> */}
            Đăng nhập
           </Link>
         </li>

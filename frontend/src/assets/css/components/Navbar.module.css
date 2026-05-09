@@ -78,11 +78,11 @@
     height: 3px;
     background-color: white;
     transition: 0.3s;
-    border-radius: 2px;
+    border-radius: 10px;
 }
 
 .hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
+    transform: rotate(45deg) translate(5px, 4px);
 }
 
 .hamburger.active span:nth-child(2) {
@@ -121,7 +121,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     .nav-container {
         padding-right: 20px;
         padding-left: 15px;
@@ -141,6 +141,13 @@
     .nav-container .icons {
         font-size: 30px;
         gap: 15px;
+    }
+}
+
+@media (max-width: 992px) {
+    .nav-container ul {
+        gap: 0px;
+        font-size: 12px;
     }
 }
 

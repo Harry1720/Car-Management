@@ -1,13 +1,135 @@
 .navbar_admin_page .navbar {
     background-color: #e6f3ff;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
     z-index: 1000;
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
+}
+
+/* Desktop: vertical sidebar */
+@media (min-width: 769px) {
+    .navbar_admin_page .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 290px;
+        flex-direction: column;
+        /* align-items: stretch; */
+        padding: 20px 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        transition: width 0.5s ease;
+    }
+
+    /* Mặc định trên Desktop (Sidebar mở rộng) */
+    .navbar_admin_page .logo-icon {
+        display: none; /* Ẩn icon nhỏ */
+    }
+    .navbar_admin_page .logo-full {
+        display: block; /* Hiện logo lớn */
+        width: 180px;
+        height: 38px;
+        margin-left: 20%;
+    }
+
+    /* Khi sidebar thu gọn (Desktop) */
+    .navbar_admin_page .navbar.collapsed .logo-full {
+        display: none; /* Ẩn logo lớn */
+    }
+    .navbar_admin_page .navbar.collapsed .logo-icon {
+        display: block; /* Hiện icon nhỏ */
+        width: 40px;
+        height: 38px;
+        margin: 0 auto;
+    }
+
+    .navbar_admin_page .navbar.collapsed {
+        width: 80px;
+    }
+
+    .navbar_admin_page .navbar.collapsed .label {
+        opacity: 0;
+        visibility: hidden;
+        width: 0;
+        display: inline-block;
+    }
+
+    .navbar_admin_page .navbar .text-label {
+        flex: 1;
+    }
+
+    .navbar_admin_page .navbar.collapsed .submenu-indicator {
+        display: none;
+    }
+
+    .navbar_admin_page .navbar.collapsed .brand {
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 20px;
+    }
+
+    .navbar_admin_page .navbar.collapsed .collapse-btn {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    .navbar_admin_page .brand {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 20px 5px 20px 5px;
+        box-sizing: border-box;
+    }
+
+    .navbar_admin_page .collapse-btn {
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        cursor: pointer;
+        color: #333;
+        transition: 0.3s;
+        background: transparent;
+    }
+
+    .navbar_admin_page .collapse-btn:focus {
+        outline: none;
+    }
+
+    .navbar_admin_page .navbar .main-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 12px;
+        flex: 1;
+    }
+
+    .navbar_admin_page .navbar .main-menu li.logout-item {
+        margin-top: auto;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        padding-top: 10px;
+    }
+
+    .navbar_admin_page .navbar.collapsed .main-menu li a {
+        justify-content: center;
+        padding: 15px 0;
+        gap: 0;
+    }
+
+    .navbar_admin_page .navbar.collapsed .submenu ul li a {
+        justify-content: center;
+        padding: 12px 0;
+        gap: 0;
+    }
+
+    .navbar_admin_page .navbar.collapsed .main-menu li a.active::after {
+        left: 2%;
+        right: 2%;
+    }
 }
 
 /* Hamburger Menu */
@@ -28,7 +150,7 @@
 }
 
 .navbar_admin_page .hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
+    transform: rotate(45deg) translate(5px, 4px);
 }
 
 .navbar_admin_page .hamburger.active span:nth-child(2) {
@@ -53,13 +175,20 @@
 .navbar_admin_page .navbar .main-menu li a {
     color: rgb(0, 0, 0);
     text-decoration: none;
-    padding: 10px 15px;
+    padding: 15px 10px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 15px;
     font-weight: 400;
     width: 100%;
     box-sizing: border-box;
+    white-space: nowrap; /* Đảm bảo text không bị rớt dòng khi đang thu/mở */
+}
+
+.navbar_admin_page ion-icon.submenu-indicator {
+    min-width: unset;
+    font-size: 16px;
+    margin-left: auto;
 }
 
 .navbar_admin_page .navbar .main-menu li a.active {
@@ -72,8 +201,8 @@
     content: '';
     position: absolute;
     bottom: 0;
-    left: 15px;
-    right: 15px;
+    left: 2%;
+    right: 2%;
     height: 2px;
     background-color: #1a90ff;
 }
@@ -84,12 +213,18 @@
     color: #1a90ff;
 }
 
+.submenu {
+    position: relative;
+    flex-direction: column;
+}
+
 .submenu ul {
     display: none;
-    position: absolute;
-    background-color: #e6f3ff;
+    position: relative;
+    background-color: transparent;
     padding: 0;
     list-style-type: none;
+    width: 100%;
 }
 
 .submenu:hover ul {
@@ -98,6 +233,7 @@
 
 .submenu ul li {
     margin: 0;
+    padding-left: 20px;
 }
 
 .submenu ul li a {
@@ -128,11 +264,12 @@
     font-size: 20px;
     line-height: 1.5px;
     vertical-align: middle;
-    /* Cân đối chữ */
 }
 
 .navbar_admin_page .logo{
-    margin-left: 20px; width: 200px; margin-right: 100px;
+    /* margin-left: 10px;  */
+    width: 180px; 
+    /* margin-right: 10px; */
 }
 
 /* Thêm class mới để tạo padding cho content */
@@ -140,21 +277,18 @@
     height: 60px; /* Chiều cao bằng với navbar */
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .navbar_admin_page .logo {
-        margin-left: 15px;
-        width: 160px;
-        margin-right: 50px;
-    }
-    
-    .navbar_admin_page .navbar .main-menu li a {
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-}
-
 @media (max-width: 768px) {
+    .navbar_admin_page .navbar.collapsed .logo-full,
+    .navbar_admin_page .logo-full {
+        display: block !important;
+        width: 140px;
+        margin: 0;
+    }
+    .navbar_admin_page .navbar.collapsed .logo-icon,
+    .navbar_admin_page .logo-icon {
+        display: none !important;
+    }
+
     .navbar_admin_page .navbar {
         padding: 10px 15px;
     }
@@ -167,6 +301,10 @@
     
     .navbar_admin_page .hamburger {
         display: flex;
+    }
+
+    .navbar_admin_page .collapse-btn {
+        display: none;
     }
     
     .navbar_admin_page .navbar .main-menu {
