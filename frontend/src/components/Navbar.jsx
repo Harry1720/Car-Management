@@ -1,9 +1,23 @@
 import styles from '../assets/css/components/Navbar.module.css';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Navbar = ({ activePage }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -14,7 +28,7 @@ const Navbar = ({ activePage }) => {
   };
 
   return (
-    <nav className={styles["nav-container"]}>
+    <nav className={`${styles["nav-container"]} ${isScrolled ? styles.scrolled : ''}`}>
       <Link to="/" onClick={closeMobileMenu}>
         <img className={styles.logo} src="/images/vinlogo.png" alt="VinFast Logo" />
       </Link>

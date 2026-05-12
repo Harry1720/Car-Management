@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './assets/css/components/Navbar.module.css';
 import './assets/css/components/Footer.module.css';
 import ProtectedRoute from './components/ProtectedRoute';
+import BackToTop from './components/BackToTop';
 
 // Import pages
 import Home from './pages/user/Home';
@@ -45,6 +46,7 @@ function App() {
         <Route path="/admin/accounting" element={<ProtectedRoute><Accounting /></ProtectedRoute>} /> 
         <Route path="/admin/carnumber" element={<ProtectedRoute><CarNumber /></ProtectedRoute>} /> 
       </Routes>
+      <BackToTop />
     </Router>
   );
 }
