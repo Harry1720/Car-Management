@@ -230,14 +230,14 @@
         height: 55px;
     }
     
-    .logo {
+    /* .logo {
         width: 100px;
         height: 25px;
-    }
+    } */
     
     .nav-container ul {
         top: 55px;
-        font-size: 14px;
+        font-size: 18px;
         padding: 15px;
         gap: 12px;
     }

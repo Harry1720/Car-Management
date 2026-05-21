@@ -50,6 +50,9 @@ const About = () => {
 
           <div className={style.row_head}>
             <div className={style.col}>
+              <div className={style.usp_icon}>
+                <i className="fas fa-eye" aria-hidden="true"></i>
+              </div>
               <h2 className={style.heading2}>Tầm nhìn</h2>
               <p>
                 Trở thành thương hiệu xe điện thông minh thúc đẩy mạnh mẽ cuộc
@@ -57,10 +60,16 @@ const About = () => {
               </p>
             </div>
             <div className={style.col}>
+              <div className={style.usp_icon}>
+                <i className="fas fa-seedling" aria-hidden="true"></i>
+              </div>
               <h2 className={style.heading2}>Sứ mệnh</h2>
               <p>Vì một tương lai xanh cho mọi người.</p>
             </div>
             <div className={style.col}>
+              <div className={style.usp_icon}>
+                <i className="fas fa-handshake" aria-hidden="true"></i>
+              </div>
               <h2 className={style.heading2}>Triết lý thương hiệu</h2>
               <p>
                 Đặt khách hàng làm trọng tâm, VinFast không ngừng sáng tạo để
@@ -69,6 +78,9 @@ const About = () => {
               </p>
             </div>
             <div className={style.col}>
+              <div className={style.usp_icon}>
+                <i className="fas fa-award" aria-hidden="true"></i>
+              </div>
               <h2 className={style.heading2}>Giá trị cốt lõi</h2>
               <p>Sản phẩm đẳng cấp, giá tốt, hậu mãi vượt trội.</p>
             </div>

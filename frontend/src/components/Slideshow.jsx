@@ -58,13 +58,13 @@ const Slideshow = () => {
     return (
         <div className="slideshow-container" onClick={handleModalClick}>
             <div className="mySlides" style={{ display: slideIndex === 0 ? 'block' : 'none' }}>
-                <img src="/images/banner/adst.png" style={{ width: '100%' }} onClick={() => openModal('modal1')} alt="Slide 1" />
+                <img src="/images/banner/banner_st.png" style={{ width: '100%' }} onClick={() => openModal('modal1')} alt="Slide 1" />
             </div>
             <div className="mySlides" style={{ display: slideIndex === 1 ? 'block' : 'none' }}>
-                <img src="/images/banner/pbad.png" style={{ width: '100%' }} onClick={() => openModal('modal2')} alt="Slide 2" />
+                <img src="/images/banner/banner_bp.png" style={{ width: '100%' }} onClick={() => openModal('modal2')} alt="Slide 2" />
             </div>
             <div className="mySlides" style={{ display: slideIndex === 2 ? 'block' : 'none' }}>
-                <img src="/images/banner/qotad.png" style={{ width: '100%' }} onClick={() => openModal('modal3')} alt="Slide 3" />
+                <img src="/images/banner/banner_wedding.png" style={{ width: '100%' }} onClick={() => openModal('modal3')} alt="Slide 3" />
             </div>
 
             <a className="prev" href="#" onClick={(e) => { e.preventDefault(); plusSlides(1); }} style={{ cursor: 'pointer' }}>&#10094;</a>

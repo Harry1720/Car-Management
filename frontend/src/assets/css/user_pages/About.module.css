@@ -17,6 +17,14 @@
   font-family: "Font Awesome 5 Pro", "Font Awesome 5 Brands" !important;
 }
 
+/* Ensure Font Awesome icons render correctly inside about page */
+.about_page i[class^="fa"],
+.about_page i[class*=" fa-"] {
+  font-family: "Font Awesome 7 Free";
+  font-style: normal;
+  font-weight: 900;
+}
+
 .about_page {
   background:
     radial-gradient(at top, rgba(255, 196, 103, 0.24), transparent 32%),
@@ -37,7 +45,7 @@
   width: 100%;
   height: 75vh;
   object-fit: cover;
-  margin: 10px auto 0; /* top 90px, auto canh giữa ngang */
+  /* margin: 10px auto 0; top 90px, auto canh giữa ngang */
   display: block;
   /* border-radius: 20px; */
   /* box-shadow: 0 5px 15px rgba(255, 255, 255, 0.8); */
@@ -67,11 +75,16 @@
 
 .top_head_about h3 {
   margin-top: 30px;
+  font-size: 2rem;
 }
 .top_head_about h1 {
   font-weight: bold;
-  font-size: clamp(1.8rem, 3vw, 3rem);
+  font-size: clamp(2.5rem, 3vw, 3rem);
   margin-bottom: 25px;
+}
+.top_head_about p {
+  font-size: clamp(0.9rem, 3vw, 1.06rem);
+  color: var(--subheading-color);
 }
 
 /* Định dạng hàng và cột */
@@ -83,13 +96,11 @@
   padding: 30px 15px;
 }
 .row_head {
-  display: flex;
-  flex-wrap: wrap; /* nếu muốn tự xuống hàng khi nhỏ */
   width: 100%;
-  margin: 150px 0 !important;
-  margin: 30px 0;
-  gap: 20px;
-  align-items: stretch;
+  margin: 100px 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
 }
 
 .row_head .col {
@@ -99,6 +110,23 @@
   box-sizing: border-box;
   background-color: var(--background-card-color);
   border-radius: 20px;
+}
+/* make each column resemble the USP cards on Home page */
+.row_head .col .usp_icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 210, 140, 0.24),
+    rgba(255, 255, 255, 0.08)
+  );
+  color: #ffd28c;
+  font-size: 1.2rem;
 }
 .col {
   padding: 5px;
@@ -111,13 +139,18 @@
   position: relative;
   font-size: 25px;
   font-weight: 600;
-  text-align: center;
+}
+
+.row_head .col h2 {
+  text-align: left;
+  font-size: 1.25rem;
+  margin: 0 0 8px 0;
 }
 
 .col:hover {
   transform: translateY(-5px);
 }
-.col h2::after {
+/* .col h2::after {
   content: "";
   position: absolute;
   bottom: -5px;
@@ -126,15 +159,15 @@
   width: 100px;
   height: 3px;
   background-color: var(--primary-color);
-}
+} */
 .col h3 {
   text-align: center;
 }
 
 .row_head .col p {
-  text-align: justify;
-  line-height: 1.65;
-  font-size: 18px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.74);
+  line-height: 1.8;
 }
 
 /* Dấu chân toàn cầu */
@@ -158,7 +191,6 @@
 .heading2,
 .awards-section .section-title {
   margin-bottom: 15px;
-  font-size: 40px;
   font-family: var(--font-heading);
   line-height: 1.1;
   font-weight: bold;
@@ -216,13 +248,14 @@
   transform: translateY(-10px);
 }
 .dau_chan {
-  margin: 130px 0;
+  margin: 100px 0 50px;
 }
 .dau_chan p {
   text-align: justify;
 }
 .dau_chan .heading3 {
   margin-top: 15px;
+  font-size: clamp(1.5rem, 3vw, 2rem);
 }
 
 /* Định dạng hình ảnh */
@@ -372,9 +405,9 @@ img:hover {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .container1 {
+  /* .container1 {
     margin: 0 30px;
-  }
+  } */
 
   .top_head_about {
     margin-left: 40px;
@@ -386,9 +419,9 @@ img:hover {
   }
 
   .video_ab {
-    width: 90%;
+    width: 100%;
     height: 60vh;
-    margin: 60px auto 0;
+    /* margin: 60px auto 0; */
   }
 
   .row,
@@ -404,12 +437,15 @@ img:hover {
     font-size: 1.8rem;
     gap: 15px;
   }
+  .row_head {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
-  .container1 {
+  /* .container1 {
     margin: 0 20px;
-  }
+  } */
 
   .top_head_about {
     margin-left: 20px;
@@ -426,9 +462,9 @@ img:hover {
   }
 
   .video_ab {
-    width: 95%;
+    /* width: 95%; */
     height: 50vh;
-    margin: 50px auto 0;
+    /* margin: 50px auto 0; */
   }
 
   .row,
@@ -481,13 +517,20 @@ img:hover {
     font-size: 1.5rem;
     padding: 8px 12px;
   }
+
+  .awards-section {
+    margin: unset;
+  }
 }
 
 @media (max-width: 480px) {
-  .container1 {
+  /* .container1 {
     margin: 0 10px;
-  }
+  } */
 
+  .row_head {
+    grid-template-columns: 1fr;
+  }
   .top_head_about {
     margin-left: 10px;
   }
@@ -503,16 +546,16 @@ img:hover {
   }
 
   .video_ab {
-    width: 98%;
+    /* width: 100%; */
     height: 40vh;
-    margin: 40px auto 0;
-    border-radius: 15px;
+    /* margin: 40px auto 0; */
+    /* border-radius: 15px; */
   }
 
   .row,
   .row_head {
     padding: 15px 8px;
-    margin: 20px 0;
+    /* margin: 20px 0; */
   }
 
   .row_head .col {
@@ -532,17 +575,17 @@ img:hover {
     font-size: 0.9rem;
   }
 
-  .heading2 {
+  /* .heading2 {
     font-size: 28px;
-  }
+  } */
 
   .dau_chan1 img {
     margin-left: 2%;
   }
 
-  .special-award .award-card {
+  /* .special-award .award-card {
     width: 95%;
-  }
+  } */
 
   .award-content h5 {
     font-size: 1.2rem;
@@ -561,6 +604,10 @@ img:hover {
 
   .year-tab.active::after {
     width: 50%;
+  }
+  .awards-section {
+    margin: 0;
+    width: 100%;
   }
 }
 
@@ -587,7 +634,6 @@ img:hover {
 
 :global(.swiper-button-next):hover,
 :global(.swiper-button-prev):hover {
-    background: rgba(255, 255, 255, 0.24);
-    border-radius: 10px ;
-
+  background: rgba(255, 255, 255, 0.24);
+  border-radius: 10px;
 }
