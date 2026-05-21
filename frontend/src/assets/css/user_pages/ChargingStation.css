@@ -55,6 +55,7 @@ footer i {
   line-height: 1.6;
   width: min(1200px, calc(100% - 32px));
   margin: 0 auto;
+  padding-bottom: 80px;
 }
 .container_charging :is(h1, h2, h3, h4, h5, h6) {
   margin-top: 0;
@@ -939,6 +940,9 @@ footer i {
 }
 
 @media (max-width: 480px) {
+  .charging_page {
+    padding-top: 60px;
+  }
   /* .container_charging {
     margin: 0 10px;
     line-height: 1.5;

@@ -524,6 +524,9 @@ img:hover {
 }
 
 @media (max-width: 480px) {
+  .about_page{
+    padding-top: 60px;
+  }
   /* .container1 {
     margin: 0 10px;
   } */
