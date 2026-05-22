@@ -1,101 +1,195 @@
-import styles from '../../assets/css/user_pages/Promotion.module.css';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
-import { useEffect } from "react";
-import Slideshow from '../../components/Slideshow';
+import styles from "../../assets/css/user_pages/Promotion.module.css";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import { useEffect, useState } from "react";
+import Slideshow from "../../components/Slideshow";
+import PromoConsultForm from "../../components/PromoConsultForm";
+
+const promotionOptions = [
+  { label: "Trả góp 0% lãi suất", value: "Trả góp 0% lãi suất" },
+  { label: "Miễn phí 1 năm thuê pin", value: "Miễn phí 1 năm thuê pin" },
+  {
+    label: "Thu cũ đổi mới - Lên đời xe điện",
+    value: "Thu cũ đổi mới - Lên đời xe điện",
+  },
+  { label: "Ưu đãi mùa hè 2026", value: "Ưu đãi mùa hè 2026" },
+  { label: "Gói ưu đãi doanh nghiệp", value: "Gói ưu đãi doanh nghiệp" },
+  { label: "Tặng vé concert PINK BORN", value: "Tặng vé concert PINK BORN" },
+  {
+    label: "Nhận ngay 01 vé VIP Sky Tour",
+    value: "Nhận ngay 01 vé VIP Sky Tour",
+  },
+  {
+    label: "Giảm ngay 10% tiền phí trước bạ",
+    value: "Giảm ngay 10% tiền phí trước bạ",
+  },
+];
 
 const Promotion = () => {
-    useEffect(() => {
-        document.title = "Ưu đãi | VinFast";
-    }, []);
+  const [consultSubmitLabel, setConsultSubmitLabel] = useState(
+    "ĐĂNG KÝ TƯ VẤN ƯU ĐÃI",
+  );
 
-    return (
-        <div className={styles.promotion_page}>
-            <Navbar activePage="promotions" />
-            <Slideshow/>
-            <div className={styles["promotion-container"]}>
-                <h1 className={styles["section-title"]}>Ưu đãi đặc biệt</h1>
-                <p className={styles["section-description"]}>
-                    Khám phá các ưu đãi đặc biệt từ VinFast dành riêng cho bạn
-                </p>
+  useEffect(() => {
+    document.title = "Ưu đãi | VinFast";
+  }, []);
 
-                <div className={styles["promotions-grid"]}>
-                    <div className={styles["promotion-card"]}>
-                        <div className={styles["promotion-image"]}>
-                            <img src="/images/promotions/financing.jpg" alt="Ưu đãi tài chính" />
-                        </div>
-                        <div className={styles["promotion-content"]}>
-                            <h3>Trả góp 0% lãi suất</h3>
-                            <p>Áp dụng cho tất cả các dòng xe VF 5, VF 6 và VF 7 với kỳ hạn 12 tháng đầu khi mua xe thông qua ngân hàng đối tác</p>
-                            <div className={styles["promotion-features"]}>
-                                <span><i className="fas fa-check-circle"></i> Lãi suất 0%</span>
-                                <span><i className="fas fa-check-circle"></i> Thời gian 12 tháng</span>
-                                <span><i className="fas fa-check-circle"></i> Không cần chứng minh thu nhập</span>
-                            </div>
-                        </div>
-                    </div>
+  const handlePromotionConsultSubmit = (formData) => {
+    console.log("Promotion consult form submitted:", formData);
+    setConsultSubmitLabel("ĐĂNG KÝ NHẬN ƯU ĐÃI");
+  };
 
-                    <div className={styles["promotion-card"]}>
-                        <div className={styles["promotion-image"]}>
-                            <img src="/images/promotions/battery.jpg" alt="Ưu đãi pin" />
-                        </div>
-                        <div className={styles["promotion-content"]}>
-                            <h3>Miễn phí 1 năm thuê pin</h3>
-                            <p>Nhận ngay 1 năm thuê pin miễn phí khi mua xe VinFast trong tháng 6/2024</p>
-                            <div className={styles["promotion-features"]}>
-                                <span><i className="fas fa-check-circle"></i> Tiết kiệm đến 31,2 triệu</span>
-                                <span><i className="fas fa-check-circle"></i> Áp dụng cho tất cả dòng xe</span>
-                                <span><i className="fas fa-check-circle"></i> Thời hạn: 30/06/2024</span>
-                            </div>
-                        </div>
-                    </div>
+  return (
+    <div className={styles.promotion_page}>
+      <Navbar activePage="promotions" />
+      <Slideshow />
+      <div className={styles["promotion-container"]}>
+        <h1 className={styles["section-title"]}>Ưu đãi đặc biệt</h1>
+        <p className={styles["section-description"]}>
+          Khám phá các ưu đãi đặc biệt từ VinFast dành riêng cho bạn
+        </p>
 
-                    <div className={styles["promotion-card"]}>
-                        <div className={styles["promotion-image"]}>
-                            <img src="/images/promotions/trade-in.jpg" alt="Thu cũ đổi mới" />
-                        </div>
-                        <div className={styles["promotion-content"]}>
-                            <h3>Thu cũ đổi mới - Lên đời xe điện</h3>
-                            <p>Đổi xe xăng cũ lấy xe điện mới với ưu đãi đặc biệt lên đến 20 triệu đồng</p>
-                            <div className={styles["promotion-features"]}>
-                                <span><i className="fas fa-check-circle"></i> Định giá xe cũ cao hơn thị trường</span>
-                                <span><i className="fas fa-check-circle"></i> Hỗ trợ thủ tục sang tên</span>
-                                <span><i className="fas fa-check-circle"></i> Áp dụng cho mọi hãng xe</span>
-                            </div>
-                        </div>
-                    </div>
+        <div className={styles["promotions-grid"]}>
+          <div className={styles["promotion-card"]}>
+            <div className={styles["promotion-image"]}>
+              <img
+                src="/images/promotions/financing.jpg"
+                alt="Ưu đãi tài chính"
+              />
+            </div>
+            <div className={styles["promotion-content"]}>
+              <h3>Trả góp 0% lãi suất</h3>
+              <p>
+                Áp dụng cho tất cả các dòng xe VF 5, VF 6 và VF 7 với kỳ hạn 12
+                tháng đầu khi mua xe thông qua ngân hàng đối tác
+              </p>
+              <div className={styles["promotion-features"]}>
+                <span>
+                  <i className="fas fa-check-circle"></i> Lãi suất 0%
+                </span>
+                <span>
+                  <i className="fas fa-check-circle"></i> Thời gian 12 tháng
+                </span>
+                <span>
+                  <i className="fas fa-check-circle"></i> Không cần chứng minh
+                  thu nhập
+                </span>
+              </div>
+            </div>
+          </div>
 
-                    <div className={styles["promotion-card"]}>
-                        <div className={styles["promotion-image"]}>
-                            <img src="/images/promotions/holiday.jpg" alt="Khuyến mãi mùa lễ" />
-                        </div>
-                        <div className={styles["promotion-content"]}>
-                            <h3>Ưu đãi mùa hè 2024</h3>
-                            <p>Nhận ngay gói quà tặng trị giá 30 triệu đồng khi mua xe VinFast trong mùa hè này</p>
-                            <div className={styles["promotion-features"]}>
-                                <span><i className="fas fa-check-circle"></i> Tặng bộ phụ kiện chính hãng</span>
-                                <span><i className="fas fa-check-circle"></i> Voucher sạc pin trị giá 10 triệu</span>
-                                <span><i className="fas fa-check-circle"></i> Bảo hiểm vật chất 1 năm</span>
-                            </div>
-                        </div>
-                    </div>
+          <div className={styles["promotion-card"]}>
+            <div className={styles["promotion-image"]}>
+              <img src="/images/promotions/battery.jpg" alt="Ưu đãi pin" />
+            </div>
+            <div className={styles["promotion-content"]}>
+              <h3>Miễn phí 1 năm thuê pin</h3>
+              <p>
+                Nhận ngay 1 năm thuê pin miễn phí khi mua xe VinFast trong tháng
+                6/2026
+              </p>
+              <div className={styles["promotion-features"]}>
+                <span>
+                  <i className="fas fa-check-circle"></i> Tiết kiệm đến 31,2
+                  triệu
+                </span>
+                <span>
+                  <i className="fas fa-check-circle"></i> Áp dụng cho tất cả
+                  dòng xe
+                </span>
+                <span>
+                  <i className="fas fa-check-circle"></i> Thời hạn: 30/06/2026
+                </span>
+              </div>
+            </div>
+          </div>
 
-                    <div className={styles["promotion-card"]}>
-                        <div className={styles["promotion-image"]}>
-                            <img src="/images/promotions/business.jpg" alt="Ưu đãi doanh nghiệp" />
-                        </div>
-                        <div className={styles["promotion-content"]}>
-                            <h3>Gói ưu đãi doanh nghiệp</h3>
-                            <p>Dành cho các doanh nghiệp và đơn vị mua xe với số lượng lớn từ 3 xe trở lên</p>
-                            <div className={styles["promotion-features"]}>
-                                <span><i className="fas fa-check-circle"></i> Giảm giá theo số lượng</span>
-                                <span><i className="fas fa-check-circle"></i> Hỗ trợ dịch vụ sau bán hàng ưu tiên</span>
-                                <span><i className="fas fa-check-circle"></i> Tặng trạm sạc miễn phí</span>
-                            </div>
-                        </div>
-                    </div>
+          <div className={styles["promotion-card"]}>
+            <div className={styles["promotion-image"]}>
+              <img src="/images/promotions/trade-in.jpg" alt="Thu cũ đổi mới" />
+            </div>
+            <div className={styles["promotion-content"]}>
+              <h3>Thu cũ đổi mới - Lên đời xe điện</h3>
+              <p>
+                Đổi xe xăng cũ lấy xe điện mới với ưu đãi đặc biệt lên đến 20
+                triệu đồng
+              </p>
+              <div className={styles["promotion-features"]}>
+                <span>
+                  <i className="fas fa-check-circle"></i> Định giá xe cũ cao hơn
+                  thị trường
+                </span>
+                <span>
+                  <i className="fas fa-check-circle"></i> Hỗ trợ thủ tục sang
+                  tên
+                </span>
+                <span>
+                  <i className="fas fa-check-circle"></i> Áp dụng cho mọi hãng
+                  xe
+                </span>
+              </div>
+            </div>
+          </div>
 
-                    <div className={styles["promotion-card"]}>
+          <div className={styles["promotion-card"]}>
+            <div className={styles["promotion-image"]}>
+              <img
+                src="/images/promotions/holiday.jpg"
+                alt="Khuyến mãi mùa lễ"
+              />
+            </div>
+            <div className={styles["promotion-content"]}>
+              <h3>Ưu đãi mùa hè 2026</h3>
+              <p>
+                Nhận ngay gói quà tặng trị giá 30 triệu đồng khi mua xe VinFast
+                trong mùa hè này
+              </p>
+              <div className={styles["promotion-features"]}>
+                <span>
+                  <i className="fas fa-check-circle"></i> Tặng bộ phụ kiện chính
+                  hãng
+                </span>
+                <span>
+                  <i className="fas fa-check-circle"></i> Voucher sạc pin trị
+                  giá 10 triệu
+                </span>
+                <span>
+                  <i className="fas fa-check-circle"></i> Bảo hiểm vật chất 1
+                  năm
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles["promotion-card"]}>
+            <div className={styles["promotion-image"]}>
+              <img
+                src="/images/promotions/business.jpg"
+                alt="Ưu đãi doanh nghiệp"
+              />
+            </div>
+            <div className={styles["promotion-content"]}>
+              <h3>Gói ưu đãi doanh nghiệp</h3>
+              <p>
+                Dành cho các doanh nghiệp và đơn vị mua xe với số lượng lớn từ 3
+                xe trở lên
+              </p>
+              <div className={styles["promotion-features"]}>
+                <span>
+                  <i className="fas fa-check-circle"></i> Giảm giá theo số lượng
+                </span>
+                <span>
+                  <i className="fas fa-check-circle"></i> Hỗ trợ dịch vụ sau bán
+                  hàng ưu tiên
+                </span>
+                <span>
+                  <i className="fas fa-check-circle"></i> Tặng trạm sạc miễn phí
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* <div className={styles["promotion-card"]}>
                         <div className={styles["promotion-image"]}>
                             <img src="/images/promotions/concert.jpg" alt="Vé concert" />
                         </div>
@@ -108,12 +202,35 @@ const Promotion = () => {
                                 <span><i className="fas fa-check-circle"></i> Thời hạn: 30/06/2024</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <Footer />
+                    </div> */}
         </div>
-    );
+
+        <div className={styles["consult-form-section"]}>
+          <div className={styles["consult-form-copy"]}>
+            <h2>Tư vấn ưu đãi</h2>
+            <p>
+              Chọn đúng chương trình bạn quan tâm để đội ngũ Sale phản hồi nhanh
+              và tư vấn sát nhu cầu hơn.
+            </p>
+          </div>
+
+          <PromoConsultForm
+            open={true}
+            variant="section"
+            // promoTitle="Chọn ưu đãi bạn quan tâm"
+            defaultModel="VF 8"
+            defaultPromotionInterest="Tặng vé concert PINK BORN"
+            promotionOptions={promotionOptions}
+            showPromotionSelect={true}
+            showNotes={false}
+            submitLabel={consultSubmitLabel}
+            onSubmit={handlePromotionConsultSubmit}
+          />
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default Promotion;

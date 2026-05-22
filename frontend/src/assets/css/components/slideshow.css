@@ -1,10 +1,11 @@
 .mySlides {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    margin: 0 auto;
-    padding-top: 80px;
-    animation: fadedSlide 0.5s ease-in-out;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 0 auto;
+  padding-top: 80px;
+  animation: fadedSlide 0.5s ease-in-out;
+  cursor: pointer;
 }
 @keyframes fadedSlide {
   from {
@@ -18,277 +19,561 @@
 }
 
 .slideshow-container {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 /* Style cho các nút "Previous" và "Next" */
 .prev,
 .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: 40px;
-    height: 40px;
-    padding: 8px;
-    color: rgba(255, 255, 255, 0.781);
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 50%;
-    user-select: none;
-    text-align: center;
-    line-height: 24px;
-    transform: translateY(-50%); /* Căn giữa theo chiều dọc */
-    z-index: 1; /* Đảm bảo nút luôn hiện trên slide */
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  color: rgba(255, 255, 255, 0.781);
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 50%;
+  user-select: none;
+  text-align: center;
+  line-height: 24px;
+  transform: translateY(-50%); /* Căn giữa theo chiều dọc */
+  z-index: 1; /* Đảm bảo nút luôn hiện trên slide */
 }
 
 /* Vị trí nút "Previous" ở bên trái */
 .prev {
-    left: 20px;
+  left: 20px;
 }
 
 /* Vị trí nút "Next" ở bên phải */
 .next {
-    right: 20px;
+  right: 20px;
 }
 
 /* Responsive cho màn hình nhỏ */
 @media screen and (max-width: 1024px) {
-    .mySlides {
-        padding-top: 70px;
-    }
+  .mySlides {
+    padding-top: 70px;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .mySlides {
-        padding-top: 60px;
-    }
-    
-    .prev,
-    .next {
-        width: 30px; /* Giảm kích thước nút */
-        height: 30px;
-        line-height: 18px;
-        font-size: 14px;
-    }
+  .mySlides {
+    padding-top: 60px;
+  }
 
-    .prev {
-        left: 10px;
-    }
+  .prev,
+  .next {
+    width: 30px; /* Giảm kích thước nút */
+    height: 30px;
+    line-height: 18px;
+    font-size: 14px;
+  }
 
-    .next {
-        right: 10px;
-    }
-    .dot{
-        height: 10px !important  ;
-        width: 10px !important;
-    }
+  .prev {
+    left: 10px;
+  }
+
+  .next {
+    right: 10px;
+  }
+  .dot {
+    height: 10px !important  ;
+    width: 10px !important;
+  }
 }
 
 @media screen and (max-width: 480px) {
-    .mySlides {
-        padding-top: 55px;
-    }
+  .mySlides {
+    padding-top: 55px;
+  }
 }
 
 /* Hiệu ứng chuyển màu nút khi di chuột */
 .prev:hover,
 .next:hover {
-    background-color: rgba(215, 215, 215, 0.9);
-    text-decoration: none;
-    color: #0F0844;
+  background-color: rgba(215, 215, 215, 0.9);
+  text-decoration: none;
+  color: #0f0844;
 }
-
 
 /* Style cho các nút chấm tròn */
 .dot {
-    cursor: pointer;
-    height: 15px;
-    width: 15px;
-    margin: 0 2px 20px 2px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-    position: absolute;
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px 20px 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+  position: absolute;
 }
-
 
 /* Chấm tròn được chọn */
 .dot_active,
 .dot:hover {
-    background-color: #717171;
+  background-color: #717171;
 }
-
 
 /* Đặt vị trí của các chấm tròn */
 .dot:nth-child(1) {
-    left: calc(50% - 30px);
-    /* Đặt vị trí ngang so với giữa container */
-    bottom: 10px;
-    /* Điều chỉnh vị trí dưới cùng */
+  left: calc(50% - 30px);
+  /* Đặt vị trí ngang so với giữa container */
+  bottom: 10px;
+  /* Điều chỉnh vị trí dưới cùng */
 }
 
 .dot:nth-child(2) {
-    left: 50%;
-    /* Đặt vị trí ngang so với giữa container */
-    bottom: 10px;
-    /* Điều chỉnh vị trí dưới cùng */
+  left: 50%;
+  /* Đặt vị trí ngang so với giữa container */
+  bottom: 10px;
+  /* Điều chỉnh vị trí dưới cùng */
 }
 
 .dot:nth-child(3) {
-    left: calc(50% + 30px);
-    /* Đặt vị trí ngang so với giữa container */
-    bottom: 10px;
-    /* Điều chỉnh vị trí dưới cùng */
+  left: calc(50% + 30px);
+  /* Đặt vị trí ngang so với giữa container */
+  bottom: 10px;
+  /* Điều chỉnh vị trí dưới cùng */
 }
 
-.close {
-    color: #aaa;
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-    line-height: 1;
-}
+/* .close {
+  color: rgb(255, 166, 0);
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  line-height: 1;
+} */
 
+.promo-consult-close:hover,
 .close:hover,
+.promo-consult-close:focus,
 .close:focus {
-    color: #f44336; /* Đổi màu đỏ khi hover */
-    text-decoration: none;
+  color: #f44336; /* Đổi màu đỏ khi hover */
+  text-decoration: none;
+  outline: none;
 }
 
-.modal-text{
-    color: black;
+.modal-text {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
 }
 
-.modal-text-notice, .modal-title{
-    color: red;
+.modal-title {
+  color: #f3d6a0;
+  font-weight: 600;
+  font-family: "Roboto", sans-serif;
+  margin: 0 auto 20px auto;
 }
 
-.modal{
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.6);
-    padding: 20px;
+.modal-text-notice {
+  color: #f3aeae;
+  line-height: 1.6;
 }
 
-.modal-content{
-    background-color: rgb(255,255,255,0.95);
-    margin: 10% auto;
-    padding: 30px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 700px;
-    position: relative;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+.modal-list {
+  margin: 0 0 20px 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.modal-list li {
+  position: relative;
+  padding: 14px 16px 14px 44px;
+  border-radius: 36px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.6;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+}
+
+.modal-list li::before {
+  content: "•";
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f6c24b;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.modal-list li span,
+.modal-list li strong {
+  color: #ffd36a;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+}
+
+.modal-cta {
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 0;
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin-top: 14px;
+  background: linear-gradient(
+    135deg,
+    rgb(255, 230, 167),
+    rgba(255, 150, 51, 0.8)
+  );
+  color: #1f1300;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: 0 0px 30px rgba(255, 145, 0, 0.35);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.modal-cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+  box-shadow: 0 0 36px rgba(255, 145, 0, 0.45);
+}
+
+.promo-consult-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  padding: 20px;
+  background: rgba(2, 2, 2, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.promo-consult-modal {
+  position: relative;
+  width: min(640px, 100%);
+  /* height: 90vh; */
+  border-radius: 24px;
+  padding: 28px;
+  background: linear-gradient(
+    180deg,
+    rgba(24, 24, 32, 0.96),
+    rgba(14, 14, 20, 0.98)
+  );
+  border: 1px solid rgba(255, 211, 106, 0.18);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+}
+
+.promo-consult-close,
+.close {
+  position: absolute;
+  right: 16px;
+  top: 10px;
+  border: 0;
+  background: transparent;
+  color: #ffd36a;
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+  font-weight: unset;
+  text-shadow: unset;
+  opacity: unset;
+}
+
+.promo-consult-kicker {
+  margin: 0 0 10px 0;
+  color: #ffd36a;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+}
+
+.promo-consult-modal h3 {
+  margin: 0 0 12px 0;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-family: "Roboto", sans-serif;
+}
+
+/* .promo-consult-summary {
+  margin: 0 0 20px 0;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.6;
+} */
+
+.promo-consult-form {
+  display: grid;
+  gap: 14px;
+}
+
+.promo-consult-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.promo-consult-form span {
+  font-weight: 600;
+  color: #f8e9c7;
+  font-family: "Roboto", sans-serif;
+}
+
+/* .promo-consult-form small {
+  color: #ffd36a;
+  line-height: 1.4;
+} */
+
+.promo-consult-form input,
+.promo-consult-form select,
+.promo-consult-form textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+}
+
+.promo-consult-form select {
+  padding-right: 3rem;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #ffd36a 50%),
+    linear-gradient(135deg, #ffd36a 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) calc(50% - 2px),
+    calc(100% - 14px) calc(50% - 2px);
+  background-size:
+    6px 6px,
+    6px 6px;
+  background-repeat: no-repeat;
+  color-scheme: dark;
+}
+
+.promo-consult-form select option {
+  background-color: #15161d;
+  color: #ffffff;
+}
+
+.promo-consult-form select::-ms-expand {
+  display: none;
+}
+
+.promo-consult-form textarea {
+  resize: none;
+}
+.promo-consult-form input::placeholder,
+.promo-consult-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.promo-consult-form input:focus,
+.promo-consult-form select:focus,
+.promo-consult-form textarea:focus {
+  border-color: rgba(255, 211, 106, 0.75);
+  box-shadow: 0 0 0 3px rgba(255, 211, 106, 0.14);
+}
+
+.promo-consult-submit {
+  border: 0;
+  border-radius: 16px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #ffd36a, #ffb55c);
+  color: #241400;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 0 40px rgba(255, 145, 0, 0.6);
+  font-family: "Roboto", sans-serif !important;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(2, 2, 2, 0.8);
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow-y: hidden;
+}
+
+.modal-content {
+  background: linear-gradient(
+    180deg,
+    rgba(245, 224, 186, 0.22),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(245, 224, 186, 0.2);
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 24px;
+  /* width: 90%;
+    max-width: 700px; */
+  width: min(900px, 95%);
+  position: relative;
+  box-shadow: 0 0px 60px rgba(245, 224, 186, 0.35);
+  color: #ffffff;
+  /* font-family: "Poppins", sans-serif; */
+  text-align: justify;
+}
+
+.modal-content h2,
+.modal-content p,
+.modal-content ul,
+.modal-content button {
+  font-family: "Roboto", sans-serif;
 }
 
 /* Additional Responsive Design */
 @media (max-width: 1024px) {
-    .mySlides {
-        padding-top: 70px;
-    }
-    
-    .modal-content {
-        width: 85%;
-        padding: 25px;
-        margin: 15% auto;
-    }
+  .mySlides {
+    padding-top: 70px;
+  }
+
+  .modal-content {
+    width: 85%;
+    padding: 25px;
+    margin: 15% auto;
+  }
 }
 
 @media (max-width: 768px) {
-    .modal-content {
-        width: 90%;
-        padding: 20px;
-        margin: 20% auto;
-    }
-    
-    .modal-title {
-        font-size: 1.3rem;
-    }
-    
-    .modal-text,
-    .modal-text-notice {
-        font-size: 14px;
-    }
+  .modal-content {
+    width: 90%;
+    padding: 20px;
+    margin: 20% auto;
+  }
+
+  .modal-title {
+    font-size: 1.3rem;
+  }
+
+  .modal-text,
+  .modal-text-notice {
+    font-size: 14px;
+  }
+
+  .promo-consult-modal {
+    padding: 22px 18px;
+  }
 }
 
 @media (max-width: 480px) {
-    .mySlides {
-        padding-top: 55px;
-    }
-    
-    .prev,
-    .next {
-        width: 25px;
-        height: 25px;
-        line-height: 15px;
-        font-size: 12px;
-        padding: 5px;
-    }
-    
-    .prev {
-        left: 5px;
-    }
-    
-    .next {
-        right: 5px;
-    }
-    
-    .dot {
-        height: 8px !important;
-        width: 8px !important;
-        margin: 0 1px 15px 1px;
-    }
-    
-    .dot:nth-child(1) {
-        left: calc(50% - 20px);
-        bottom: 8px;
-    }
-    
-    .dot:nth-child(2) {
-        bottom: 8px;
-    }
-    
-    .dot:nth-child(3) {
-        left: calc(50% + 20px);
-        bottom: 8px;
-    }
-    
-    .modal {
-        padding: 10px;
-    }
-    
-    .modal-content {
-        width: 95%;
-        padding: 15px;
-        margin: 25% auto;
-    }
-    
-    .close {
-        font-size: 24px;
-        right: 10px;
-        top: 5px;
-    }
-    
-    .modal-title {
-        font-size: 1.1rem;
-        margin-top: 5px;
-    }
-    
-    .modal-text,
-    .modal-text-notice {
-        font-size: 13px;
-        line-height: 1.5;
-    }
+  .mySlides {
+    padding-top: 55px;
+  }
+
+  .prev,
+  .next {
+    width: 25px;
+    height: 25px;
+    line-height: 15px;
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .prev {
+    left: 5px;
+  }
+
+  .next {
+    right: 5px;
+  }
+
+  .dot {
+    height: 8px !important;
+    width: 8px !important;
+    margin: 0 1px 15px 1px;
+  }
+
+  .dot:nth-child(1) {
+    left: calc(50% - 20px);
+    bottom: 8px;
+  }
+
+  .dot:nth-child(2) {
+    bottom: 8px;
+  }
+
+  .dot:nth-child(3) {
+    left: calc(50% + 20px);
+    bottom: 8px;
+  }
+
+  .modal {
+    padding: 10px;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+    margin: 25% auto;
+  }
+
+  .close {
+    font-size: 36px;
+    right: 10px;
+    top: 5px;
+  }
+
+  .modal-title {
+    /* font-size: 1.1rem; */
+    margin-top: 15px;
+  }
+
+  .modal-text,
+  .modal-text-notice {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .modal-list li {
+    padding: 12px 12px 12px 34px;
+    /* font-size: 13px; */
+  }
+
+  .modal-list li::before {
+    left: 12px;
+  }
+
+  .modal-cta {
+    font-size: 0.95rem;
+    padding: 13px 16px;
+    margin-bottom: 18px;
+  }
+
+  .promo-consult-overlay {
+    padding: 12px;
+  }
+
+  .promo-consult-modal {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+
+  .promo-consult-close {
+    right: 10px;
+    top: 4px;
+  }
 }

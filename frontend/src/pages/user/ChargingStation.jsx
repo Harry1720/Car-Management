@@ -227,7 +227,7 @@ const ChargingStation = () => {
                 >
                   <h4>
                     Chính sách thuê pin dòng xe điện VF 5 Plus thị trường Việt
-                    Nam áp dụng từ ngày 22/02/2024
+                    Nam áp dụng từ ngày 22/02/2025
                   </h4>
                   <div className="table-responsive overflow-x-auto">
                     <table
@@ -268,7 +268,7 @@ const ChargingStation = () => {
                 >
                   <h4>
                     Chính sách thuê pin dòng xe điện VF 9 thị trường Việt Nam áp
-                    dụng từ ngày 01/06/2024
+                    dụng từ ngày 01/06/2025
                   </h4>
                   <div className="table-responsive overflow-x-auto">
                     <table
@@ -309,7 +309,7 @@ const ChargingStation = () => {
                     Chính sách bán hàng tri ân ngày Nhà Giáo Việt Nam 20/11
                   </h4>
                   <p>
-                    Áp dụng cho KH đặt cọc mua xe từ 01/11/2024 tới 31/12/2024
+                    Áp dụng cho KH đặt cọc mua xe từ 01/11/2025 tới 31/12/2025
                   </p>
                   <div className="table-responsive overflow-x-auto">
                     <table
@@ -365,7 +365,7 @@ const ChargingStation = () => {
                 >
                   <h4>
                     Chính sách thuê pin các dòng xe điện thị trường Việt Nam áp
-                    dụng từ ngày 01/03/2024
+                    dụng từ ngày 01/03/2025
                   </h4>
                   <div className="table-responsive overflow-x-auto">
                     <table
@@ -494,7 +494,7 @@ const ChargingStation = () => {
                       chủ sở hữu. <br />
                       <i>
                         (Áp dụng với các Khách hàng ký Hợp đồng thuê pin trước
-                        ngày 01.01.2024)
+                        ngày 01.01.2025)
                       </i>
                     </li>
                   </ul>
@@ -514,11 +514,11 @@ const ChargingStation = () => {
                       Khách hàng không phải đặt cọc khi thuê pin <br />{" "}
                       <i>
                         (Áp dụng với Khách hàng ký Hợp đồng thuê pin trước ngày
-                        01.11.2024)
+                        01.11.2025)
                       </i>
                     </li>
                     <li>
-                      Các Khách hàng ký Hợp đồng thuê pin từ ngày 01.11.2024 trở
+                      Các Khách hàng ký Hợp đồng thuê pin từ ngày 01.11.2025 trở
                       đi cần đặt cọc thuê pin, phí đặt cọc áp dụng theo từng
                       dòng xe.
                     </li>
@@ -796,7 +796,7 @@ const ChargingStation = () => {
               </p>
               <ul>
                 <li>
-                  <b>Đơn giá sạc: 3.858 VNĐ/kWh</b> áp dụng từ ngày 19/03/2024
+                  <b>Đơn giá sạc: 3.858 VNĐ/kWh</b> áp dụng từ ngày 19/03/2025
                 </li>
                 <li>
                   <b>Đơn giá sạc quá giờ: 1.000 đồng/phút</b>, kể từ phút thứ 31

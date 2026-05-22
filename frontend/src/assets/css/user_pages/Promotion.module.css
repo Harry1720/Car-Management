@@ -1,246 +1,349 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
+:root {
+  --primary-color: rgb(245, 224, 186);
+  --font-heading: "Roboto", sans-serif;
+  --background-card-color: rgba(255, 255, 255, 0.05);
+  --subheading-color: rgba(255, 255, 255, 0.72);
+}
+
 .promotion_page * {
-    font-family: "Poppins", sans-serif;
-    box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 
 /* Exclude footer icons from font override */
-.promotion_page footer i {
+/* .promotion_page footer i {
     font-family: "Font Awesome 5 Pro", "Font Awesome 5 Brands" !important;
-}
+} */
 
 /* Exclude promotion card icons from font override */
-.promotion_page .promotion-features i {
+/* .promotion_page .promotion-features i {
     font-family: "Font Awesome 5 Pro", "Font Awesome 5 Brands" !important;
-}
+} */
 
 .promotion_page {
-    font-family: "Poppins", sans-serif;
-    background-color: #2a2a2a;
-    color: #ffffff;
-    line-height: 1.6;
-    min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  line-height: 1.6;
+  /* min-height: 100vh; */
+  background:
+    radial-gradient(at top, rgba(255, 196, 103, 0.24), transparent 32%),
+    radial-gradient(
+      circle at bottom,
+      rgba(255, 196, 103, 0.14),
+      transparent 32%
+    ),
+    radial-gradient(at right 10%, rgba(255, 196, 103, 0.24), transparent 12%),
+    radial-gradient(at 0 40%, rgba(255, 196, 103, 0.24), transparent 12%),
+    radial-gradient(at right 70%, rgba(255, 196, 103, 0.24), transparent 12%),
+    linear-gradient(180deg, #111111 0%, #1a1a1a 32%, #121212 100%);
+}
+
+/* Ensure icons keep their font (avoid being overridden by Poppins) */
+.promotion_page i[class^="fa"],
+.promotion_page i[class*=" fa-"] {
+  font-family: "Font Awesome 7 Free";
+  font-style: normal;
+  font-weight: 900;
 }
 
 /* Container chính */
 .promotion-container {
-    max-width: 1200px;
-    margin: 120px auto 60px;
-    padding: 0 20px;
-    min-width: calc(100vw - 250px);;
-    overflow: hidden;
+  max-width: 1200px;
+  margin: 120px auto 60px;
+  padding: 0 20px;
+  /* min-width: calc(100vw - 250px);; */
+  overflow: hidden;
+  width: min(1200px, calc(100% - 32px));
+  padding-bottom: 100px;
 }
 
 /* Tiêu đề chính */
 .section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 10px;
-    position: relative;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  position: relative;
 }
 
-.section-title::after {
-    content: '';
-    position: absolute;
-    width: 190px;
-    height: 4px;
-    background-color: #ffffff;
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-}
+/* .section-title::after {
+  content: "";
+  position: absolute;
+  width: 190px;
+  height: 4px;
+  background-color: #ffffff;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+} */
 
 .section-description {
-    text-align: center;
-    color: #d9d9d9;
-    margin-bottom: 80px;
-    font-size: 1.1rem;
-    margin-top: 20px;
+  text-align: center;
+  color: var(--subheading-color);
+  margin-bottom: 80px;
+  font-size: 1.3rem;
+  margin-top: 20px;
 }
 
 /* Grid khuyến mãi */
 .promotions-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
-    gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+  gap: 20px;
 }
 
 /* Card khuyến mãi */
 .promotion-card {
-    background-color: #1c1b1b;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 40px;
+  padding: 25px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  background-color: rgba(28, 28, 30, 0.2);
+  border: 1px solid rgba(245, 224, 186, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(245, 224, 186, 0.1);
+  /* margin-bottom: 24px; */
+  overflow: hidden;
 }
 
 .promotion-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 20px rgba(245, 224, 186, 0.14);
+  transform: translateY(-5px);
 }
 
 /* Phần ảnh của card */
 .promotion-image {
-    height: 250px;
-    position: relative;
-    overflow: hidden;
+  height: 250px;
+  position: relative;
+  overflow: hidden;
 }
 
 .promotion-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  border-radius: 10px;
 }
 
-.promotion-card:hover .promotion-image img {
-    transform: scale(1.05);
-}
+/* .promotion-card:hover .promotion-image img {
+  transform: scale(1.05);
+} */
 
 /* Phần nội dung của card */
 .promotion-content {
-    padding: 20px;
+  padding: 20px;
 }
 
 .promotion-content h3 {
-    font-size: 1.3rem;
-    margin-bottom: 12px;
-    font-weight: 600;
-    color: #ffffff;
+  font-size: clamp(1.5rem, 2vw, 1.6rem);
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: rgb(245, 224, 186);
+  font-family: "Roboto", sans-serif;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .promotion-content p {
-    color: #d9d9d9;
-    margin-bottom: 15px;
-    font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+.promotion-summary {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Tính năng của ưu đãi */
 .promotion-features {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
 .promotion-features span {
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
 }
 
 .promotion-features i {
-    color: #ffffff;
-    margin-right: 8px;
+  color: #ffffff;
+  margin-right: 8px;
+}
+
+.consult-form-section {
+  margin-top: 90px;
+  padding: 34px;
+  border-radius: 28px;
+  background: linear-gradient(
+    180deg,
+    rgba(245, 224, 186, 0.12),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid rgba(245, 224, 186, 0.14);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+}
+
+.consult-form-copy {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.consult-form-copy h2 {
+  margin: 0 0 10px 0;
+  color: var(--primary-color);
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  font-family: var(--font-heading);
+}
+
+.consult-form-copy p {
+  margin: 0;
+  color: var(--subheading-color);
+}
+
+.consult-form-section :global(.promo-consult-section) {
+  display: block;
+}
+
+.consult-form-section :global(.promo-consult-section-card) {
+  width: 100%;
+  border-radius: 22px;
+  padding: 28px;
+  background: linear-gradient(
+    180deg,
+    rgba(24, 24, 32, 0.96),
+    rgba(14, 14, 20, 0.98)
+  );
+  border: 1px solid rgba(255, 211, 106, 0.16);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-    .promotion-container {
-        margin: 100px auto 50px;
-        padding: 0 15px;
-        min-width: auto;
-    }
-    
-    .section-title {
-        font-size: 2.2rem;
-    }
-    
-    .section-description {
-        margin-bottom: 60px;
-        font-size: 1rem;
-    }
-    
-    .promotions-grid {
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 25px;
-    }
+  .promotion-container {
+    margin: 100px auto 50px;
+    padding: 0 15px;
+    min-width: auto;
+  }
+
+  .section-title {
+    font-size: 2.8rem;
+  }
+
+  .section-description {
+    margin-bottom: 60px;
+    font-size: 1.2rem;
+  }
+
+  .consult-form-section {
+    margin-top: 70px;
+    padding: 28px;
+  }
+
+  .promotions-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+  }
 }
 
 @media (max-width: 768px) {
-    .promotion-container {
-        margin: 90px auto 40px;
-        padding: 0 10px;
-    }
-    
-    .section-title {
-        font-size: 1.8rem;
-    }
-    
-    .section-title::after {
-        width: 150px;
-        height: 3px;
-    }
-    
-    .section-description {
-        margin-bottom: 50px;
-        font-size: 0.95rem;
-    }
-    
-    .promotions-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .promotion-card {
-        margin-bottom: 20px;
-    }
-    
-    .promotion-image {
-        height: 200px;
-    }
-    
-    .promotion-content h3 {
-        font-size: 1.2rem;
-    }
+  .promotion-container {
+    margin: 90px auto 40px;
+    padding: 0 10px;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+  }
+
+  .section-title::after {
+    width: 150px;
+    height: 3px;
+  }
+
+  .section-description {
+    margin-bottom: 50px;
+    font-size: 1.1rem;
+  }
+
+  .promotions-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .promotion-card {
+    margin-bottom: 20px;
+  }
+
+  .consult-form-section {
+    padding: 22px;
+  }
+
+  .promotion-image {
+    height: 200px;
+  }
+
+  .promotion-content h3 {
+    font-size: 1.2rem;
+  }
 }
 
 @media (max-width: 480px) {
-    .promotion-container {
-        margin: 80px auto 30px;
-        padding: 0 8px;
-    }
-    
-    .section-title {
-        font-size: 1.5rem;
-    }
-    
-    .section-title::after {
-        width: 120px;
-        height: 2px;
-    }
-    
-    .section-description {
-        margin-bottom: 40px;
-        font-size: 0.9rem;
-    }
-    
-    .promotion-card {
-        margin-bottom: 15px;
-    }
-    
-    .promotion-image {
-        height: 180px;
-    }
-    
-    .promotion-content {
-        padding: 15px;
-    }
-    
-    .promotion-content h3 {
-        font-size: 1.1rem;
-        margin-bottom: 10px;
-    }
-    
-    .promotion-content p {
-        font-size: 0.85rem;
-    }
-    
-    .promotion-features span {
-        font-size: 0.85rem;
-    }
+  .promotion-container {
+    margin: 80px auto 30px;
+    padding: 0 8px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-title::after {
+    width: 120px;
+    height: 2px;
+  }
+
+  .section-description {
+    margin-bottom: 40px;
+    font-size: 0.9rem;
+  }
+
+  .promotion-card {
+    margin-bottom: 15px;
+  }
+
+  .consult-form-section {
+    margin-top: 60px;
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .promotion-image {
+    height: 180px;
+  }
+
+  .promotion-content {
+    padding: 15px;
+  }
+
+  .promotion-content h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .promotion-content p {
+    font-size: 0.85rem;
+  }
+
+  .promotion-features span {
+    font-size: 0.85rem;
+  }
 }

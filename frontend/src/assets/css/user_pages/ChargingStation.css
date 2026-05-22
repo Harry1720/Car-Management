@@ -161,9 +161,9 @@ footer i {
     30,
     0.2
   ); /* Màu nền sáng hơn nền trang một chút */
-  border: 1px solid rgba(255, 255, 255, 0.05); /* Viền cực kỳ mờ chỉ để tạo khối */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Viền cực kỳ mờ chỉ để tạo khối */
   border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(245, 224, 186, 0.04);
+  box-shadow: 0 8px 20px rgba(245, 224, 186, 0.09);
   /* 0 2px 4px -1px rgba(0, 0, 0, 0.6); */
 }
 
