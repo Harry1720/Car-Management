@@ -122,7 +122,7 @@ const Home = () => {
         />
         <div className={styles.home_page__hero_section__overlay}>
           <div className={styles.home_page__hero_section__title}>
-            Ô TÔ VINFAST
+            Ô TÔ ĐIỆN VINFAST
           </div>
           <div className={styles.home_page__hero_section__subtitle}>
             Khai phá kỷ nguyên di chuyển điện - Hướng tới tương lai không khói

@@ -1,224 +1,279 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
-footer {
-    font-family: "Poppins", sans-serif;
-    display: block;
-    position: static;
-    background: #0a0a0a;
-    width: 100%;
-    bottom: 0px;
-    left: 0px;
-}
-p {
-    margin-top: 0;
-    margin-bottom: 1rem;
-}
-footer .content {
-    max-width: 1250px;
-    margin: auto;
-    padding: 30px 40px 40px 40px;
+.footer {
+  font-family: "Poppins", sans-serif;
+  background: #0a0a0a;
+  color: #f5f5f5;
+  width: 100%;
 }
 
-footer .content .top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
+.footer a {
+  color: inherit;
 }
 
-.content .top .media-icons {
-    display: flex;
+.content {
+  max-width: 1250px;
+  margin: auto;
+  padding: 36px 40px 28px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+  gap: 28px;
+  align-items: start;
 }
 
-.content .top .media-icons a {
-    height: 40px;
-    width: 40px;
-    margin: 0 8px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 40px;
-    font-size: 17px;
-    text-decoration: none;
-    transition: all 0.4s ease;
+.brandColumn,
+.quickLinks,
+.contactColumn,
+.mapColumn {
+  min-width: 0;
 }
 
-.top .media-icons a:nth-child(1) {
-    background: #4267B2;
+.brandColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-
-.top .media-icons a:nth-child(2) {
-    background: #1DA1F2;
+.logoDetails {
+  display: inline-flex;
+  width: fit-content;
 }
 
-.media-icons a i {
-    color: #fff !important;
-    font-size: 20px;
-    line-height: 40px !important;
-    display: inline-block;
-    vertical-align: middle;
+.brandText {
+  margin: 0;
+  /* max-width: 320px; */
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.7;
+  font-size: 15px;
 }
 
-footer .content .link-boxes {
-    width: 100%;
-    display: flex;
+.columnTitle {
+  margin: 0 0 18px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
-footer .content .link-boxes .box {
-    width: calc(100%/2.3);
+.socialIcons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-footer .content .link-boxes .box1 {
-    color: rgb(255, 255, 255);
-    font-size: 16px;
-}
-footer .content .link-boxes .box1 a{
-    color: #ffffff;
-    text-decoration: none;
-}
-.content .link-boxes .box li {
-    margin: 6px 0;
-    list-style: none;
-}
-
-.content .link-boxes .box li a {
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 400;
-    text-decoration: none;
-    opacity: 0.8;
-    transition: all 0.4s ease
+.socialIcons a {
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 42px;
+  font-size: 17px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffcc33;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.content .link-boxes .box li a:hover {
-    opacity: 1;
+.socialIcons a:hover {
+  background: linear-gradient(135deg, #ffcc33 0%, #ff7a18 100%);
+  border-color: transparent;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255, 140, 0, 0.28);
 }
 
-footer .bottom-details {
-    width: 100%;
-    background: #ffffff;
+.socialIcons a i {
+  color: currentColor !important;
+  font-size: 18px;
+  line-height: 42px !important;
+  display: inline-block;
+  vertical-align: middle;
 }
 
-footer .bottom-details .bottom_text {
-    max-width: 1250px;
-    margin: auto;
-    padding: 20px 40px;
+.quickLinks,
+.contactColumn,
+.mapColumn {
+  padding-top: 4px;
 }
 
-.bottom-details .bottom_text span{
-    font-size: 14px;
-    font-weight: 300;
-    color: #000000;
+.linkList,
+.contactList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.logo-details img {
-    height: 60px;
-    width: 250px;
-    filter: brightness(0) invert(1);
+.linkList li,
+.contactList li {
+  margin: 0 0 12px;
 }
 
-.box1 p{
-    text-align: right;
+.linkList a {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    footer .content {
-        padding: 25px 30px 35px 30px;
-    }
-    
-    .logo-details img {
-        height: 50px;
-        width: 200px;
-    }
+.linkList a:hover,
+.contactList a:hover {
+  color: #ffcc33;
+}
+
+.contactList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.contactList li i {
+  color: #ffcc33;
+  margin-top: 4px;
+  font-size: 15px;
+  min-width: 16px;
+}
+
+.contactList a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Định nghĩa lại font cho icon, vì nếu không sẽ bị ghi đè font poppins và làm icon bị lỗi */
+.contactList i[class^="fa"],
+.contactList i[class*=" fa-"] {
+  font-family: "Font Awesome 7 Free" !important;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.mapContainer {
+  width: 100%;
+  min-height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #111111;
+}
+
+.mapContainer iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(85%);
+  transition: filter 0.3s ease;
+}
+
+.mapContainer iframe:hover {
+  filter: none;
+}
+
+.bottomDetails {
+  width: 100%;
+  margin-top: 28px;
+  background: #0a0a0a;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bottomText {
+  max-width: 1250px;
+  margin: auto;
+  padding: 16px 40px;
+}
+
+.copyrightText {
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Roboto", sans-serif !important;
+}
+
+.logo {
+  height: 60px;
+  width: 250px;
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 1100px) {
+  .content {
+    grid-template-columns: 1.2fr 1fr;
+  }
+
+  .mapContainer {
+    min-height: 220px;
+  }
 }
 
 @media (max-width: 768px) {
-    footer .content {
-        padding: 20px 20px 30px 20px;
-    }
-    
-    footer .content .top {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    
-    .logo-details img {
-        height: 45px;
-        width: 180px;
-    }
-    
-    footer .content .link-boxes {
-        flex-direction: column;
-    }
-    
-    footer .content .link-boxes .box {
-        width: 100%;
-        margin-bottom: 15px;
-    }
-    
-    .content .link-boxes .box li {
-        margin: 4px 0;
-    }
-    
-    .content .link-boxes .box li a {
-        font-size: 14px;
-    }
-    
-    footer .content .link-boxes .box1 {
-        font-size: 14px;
-    }
-    
-    .box1 p {
-        text-align: left;
-    }
-    
-    footer .bottom-details .bottom_text {
-        padding: 15px 20px;
-    }
-    
-    .bottom-details .bottom_text span {
-        font-size: 13px;
-    }
+  .content {
+    grid-template-columns: 1fr;
+    padding: 24px 20px 22px;
+    gap: 22px;
+  }
+
+  .logo {
+    height: 48px;
+    width: 190px;
+  }
+
+  .brandText,
+  .linkList a,
+  .contactList {
+    font-size: 14px;
+  }
+
+  .bottomText {
+    padding: 14px 20px;
+  }
+
+  .copyrightText {
+    font-size: 13px;
+  }
+
+  .mapContainer,
+  .mapContainer iframe {
+    min-height: 200px;
+  }
 }
 
 @media (max-width: 480px) {
-    footer .content {
-        padding: 15px 15px 25px 15px;
-    }
-    
-    .logo-details img {
-        height: 40px;
-        width: 150px;
-    }
-    
-    .content .top .media-icons a {
-        height: 35px;
-        width: 35px;
-        line-height: 35px;
-        font-size: 15px;
-        margin: 0 5px;
-    }
-    
-    .media-icons a i {
-        font-size: 18px;
-        line-height: 35px;
-    }
-    
-    .content .link-boxes .box li a {
-        font-size: 13px;
-    }
-    
-    footer .content .link-boxes .box1 {
-        font-size: 13px;
-    }
-    
-    footer .bottom-details .bottom_text {
-        padding: 12px 15px;
-    }
-    
-    .bottom-details .bottom_text span {
-        font-size: 12px;
-    }
+  .content {
+    padding: 20px 16px 18px;
+  }
+
+  .logo {
+    height: 42px;
+    width: 160px;
+  }
+
+  .socialIcons a {
+    height: 38px;
+    width: 38px;
+    line-height: 38px;
+  }
+
+  .socialIcons a i {
+    font-size: 16px;
+    line-height: 38px !important;
+  }
+
+  .columnTitle {
+    font-size: 15px;
+  }
+
+  .mapContainer,
+  .mapContainer iframe {
+    min-height: 180px;
+  }
 }
