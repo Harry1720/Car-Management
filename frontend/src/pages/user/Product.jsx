@@ -1,130 +1,215 @@
-import '../../assets/css/user_pages/Product.css';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
+import "../../assets/css/user_pages/Product.css";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import { useEffect, useState } from "react";
-import Slideshow from '../../components/Slideshow';
-import { carService } from '../../services/carService';
+import Slideshow from "../../components/Slideshow";
+import { carService } from "../../services/carService";
+
+const formatVnd = (value) => {
+  const amount = Number(value || 0);
+  return `${new Intl.NumberFormat("vi-VN").format(amount)} VNĐ`;
+};
+
+const electricSpecs = [
+  {
+    matches: ["VF3"],
+    batteryKwh: "18.6",
+    rangeKm: "210",
+    acceleration: "9.0 giây",
+  },
+  {
+    matches: ["VF5"],
+    batteryKwh: "37.23",
+    rangeKm: "300",
+    acceleration: "10.9 giây",
+  },
+  {
+    matches: ["VF6"],
+    batteryKwh: "59.6",
+    rangeKm: "399",
+    acceleration: "8.9 giây",
+  },
+  {
+    matches: ["VF7"],
+    batteryKwh: "75.3",
+    rangeKm: "450",
+    acceleration: "5.8 giây",
+  },
+  {
+    matches: ["VF8"],
+    batteryKwh: "87.7",
+    rangeKm: "470",
+    acceleration: "5.5 giây",
+  },
+  {
+    matches: ["VF9"],
+    batteryKwh: "123",
+    rangeKm: "600",
+    acceleration: "5.0 giây",
+  },
+];
+
+const getElectricSpecs = (car) => {
+  const lookupKey = `${car.model || ""} ${car.name || ""}`.toUpperCase();
+  return (
+    electricSpecs.find((spec) =>
+      spec.matches.some((match) => lookupKey.includes(match)),
+    ) || {
+      batteryKwh: "Đang cập nhật",
+      rangeKm: "Đang cập nhật",
+      acceleration: "Đang cập nhật",
+    }
+  );
+};
 
 const Products = () => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [cars, setCars] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const carsPerPage = 6;
+  const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-    useEffect(() => {
-        document.title = "Sản phẩm | VinFast";
-        fetchCars();
-    }, []);
+  // Display logic
+  const INITIAL_DISPLAY = 9; // 3 rows x 3 cols on desktop
+  const LOAD_MORE_COUNT = 6; // load 6 more on each "Xem thêm"
+  const [displayedCount, setDisplayedCount] = useState(INITIAL_DISPLAY);
+  const [prevDisplayedCount, setPrevDisplayedCount] = useState(0);
 
-    const fetchCars = async () => {
-        try {
-            setLoading(true);
-            const data = await carService.getAllCars(1, 100); // Lấy 100 xe
-            const carsArray = Array.isArray(data) ? data : (data?.cars || []);
-            const carsData = carsArray.map(car => {
-                const priceValue = car.price || 0;
-                const displayPrice = priceValue >= 100000000 ? (priceValue / 1000000000).toFixed(1) : (priceValue / 1000000).toFixed(1);
-                const unit = priceValue >= 100000000 ? 'B' : 'M';
-                return {
-                    _id: car._id,
-                    name: car.name,
-                    model: car.model,
-                    image: car.images && car.images.length > 0 ? car.images[0] : "/images/car-pics/vf3/vf3yl.png",
-                    origin: car.origin_of_car || "Việt Nam",
-                    year: car.year || 2024,
-                    hw: car.specifications?.engine || "N/A",
-                    price: car.price,
-                    value: `${displayPrice}${unit} VND`,
-                    link: `../deposit?model=${car.model.toLowerCase()}`
-                };
-            });
-            setCars(carsData);
-            setError('');
-        } catch (err) {
-            setError('Không thể tải danh sách xe. Vui lòng thử lại.');
-            console.error('Error fetching cars:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
+  useEffect(() => {
+    document.title = "Sản phẩm | VinFast";
+    fetchCars();
+  }, []);
 
-    const renderCars = () => {
-        const startIndex = (currentPage - 1) * carsPerPage;
-        const endIndex = Math.min(startIndex + carsPerPage, cars.length);
-        const carsToShow = cars.slice(startIndex, endIndex);
+  const fetchCars = async () => {
+    try {
+      setLoading(true);
+      const data = await carService.getAllCars(1, 100); // Lấy 100 xe
+      const carsArray = Array.isArray(data) ? data : data?.cars || [];
+      const carsData = carsArray.map((car) => {
+        const fallbackSpecs = getElectricSpecs(car);
+        const carSpecs = car.specifications || {};
+        return {
+          _id: car._id,
+          name: car.name,
+          model: car.model,
+          image:
+            car.images && car.images.length > 0
+              ? car.images[0]
+              : "/images/car-pics/vf3/vf3yl.png",
+          origin: car.origin_of_car || "Việt Nam",
+          year: car.year || 2024,
+          batteryKwh: carSpecs.batteryCapacity || fallbackSpecs.batteryKwh,
+          rangeKm: carSpecs.range || fallbackSpecs.rangeKm,
+          acceleration: carSpecs.acceleration || fallbackSpecs.acceleration,
+          priceLabel: formatVnd(car.price),
+          link: `../deposit?model=${(car.model || "").toLowerCase()}`,
+        };
+      });
+      setCars(carsData);
+      // initialize displayed count based on fetched length
+      setDisplayedCount(Math.min(INITIAL_DISPLAY, carsData.length));
+      setError("");
+    } catch (err) {
+      setError("Không thể tải danh sách xe. Vui lòng thử lại.");
+      console.error("Error fetching cars:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        const rows = [];
-        for (let i = 0; i < carsToShow.length; i += 3) {
-            const rowCars = carsToShow.slice(i, Math.min(i + 3, carsToShow.length));
-            rows.push(
-                <div className="car-row" key={i}>
-                    {rowCars.map((car, index) => (
-                        <div className="car-card" key={index}>
-                            <div className="car-image">
-                                <img src={car.image} alt={car.name} />
-                            </div>
-                            <div className="car-info">
-                                <h3>{car.name}</h3>
-                                <ul className="car-details">
-                                    <li><i className="fas fa-globe"></i> Xuất xứ: {car.origin}</li>
-                                    <li><i className="fas fa-calendar"></i> Năm: {car.year}</li>
-                                    <li><i className="fas fa-tachometer-alt"></i> Công suất: {car.hw}</li>
-                                </ul>
-                                <div className="car-price">{car.value}</div>
-                            </div>
-                            <button className="car-button" onClick={() => window.location.href = car.link}>
-                                Chi tiết
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            );
-        }
-        return rows;
-    };
+  const renderCars = () => {
+    const carsToShow = cars.slice(0, displayedCount);
 
-    const renderPagination = () => {
-        const totalPages = Math.ceil(cars.length / carsPerPage);
-        const buttons = [];
+    return carsToShow.map((car, index) => {
+      // determine if this item is newly loaded to apply animation
+      const isNew = index >= prevDisplayedCount && index < displayedCount;
+      const animationDelay = isNew
+        ? `${(index - prevDisplayedCount) * 80}ms`
+        : undefined;
 
-        for (let i = 1; i <= totalPages; i++) {
-            buttons.push(
-                <button
-                    key={i}
-                    className={`page-btn ${i === currentPage ? 'active' : ''}`}
-                    onClick={() => setCurrentPage(i)}
-                >
-                    {i}
-                </button>
-            );
-        }
-        return buttons;
-    };
-
-    return (
-        <div className='product_page'>
-            <Navbar activePage="products" />
-            <Slideshow/>
-            <h1 className="text-center page-title">Dòng xe ô tô điện VinFast</h1>
-            <p className="text-center page-desc">Khám phá các mẫu xe điện thông minh, hiện đại và thân thiện với môi trường từ VinFast – Lựa chọn tối ưu cho tương lai di chuyển xanh.</p>
-
-            {loading && <p className="text-center">Đang tải danh sách xe...</p>}
-            {error && <p className="text-center text-danger">{error}</p>}
-            
-            {!loading && !error && (
-                <>
-                    <div className="cars-grid-container">
-                        {renderCars()}
-                    </div>
-                    <div className="pagination">
-                        {renderPagination()}
-                    </div>
-                </>
-            )}
-            <Footer />
+      return (
+        <div
+          className={`car-card ${isNew ? "new-item" : ""}`}
+          style={animationDelay ? { animationDelay } : undefined}
+        >
+          <div className="car-image">
+            <img src={car.image} alt={car.name} />
+          </div>
+          <div className="car-info">
+            <h3>{car.name}</h3>
+            <ul className="car-details">
+              <li>
+                <i className="fas fa-globe"></i>
+                <span className="car-detail-label">Xuất xứ</span>
+                <span className="car-detail-value">{car.origin}</span>
+              </li>
+              <li>
+                <i className="fas fa-calendar"></i>
+                <span className="car-detail-label">Năm</span>
+                <span className="car-detail-value">{car.year}</span>
+              </li>
+              <li>
+                <i className="fas fa-battery-three-quarters"></i>
+                <span className="car-detail-label">Dung lượng pin</span>
+                <span className="car-detail-value">{car.batteryKwh} kWh</span>
+              </li>
+              <li>
+                <i className="fas fa-bolt"></i>
+                <span className="car-detail-label">Quãng đường</span>
+                <span className="car-detail-value">{car.rangeKm} km</span>
+              </li>
+              {/* <li>
+                <i className="fas fa-rocket"></i>
+                <span className="car-detail-label">Tăng tốc 0-100km/h</span>
+                <span className="car-detail-value">{car.acceleration}</span>
+              </li> */}
+            </ul>
+            <div className="car-price">{car.priceLabel}</div>
+          </div>
+          <button
+            className="car-button"
+            onClick={() => (window.location.href = car.link)}
+          >
+            Khám phá ngay →
+          </button>
         </div>
-    );
+      );
+    });
+  };
+
+  const handleLoadMore = () => {
+    setPrevDisplayedCount(displayedCount);
+    setDisplayedCount((prev) => Math.min(prev + LOAD_MORE_COUNT, cars.length));
+  };
+
+  return (
+    <div className="product_page">
+      <Navbar activePage="products" />
+      <Slideshow />
+      <div className="product_page__container">
+        <h1 className="text-center page-title">Dòng xe ô tô điện VinFast</h1>
+        <p className="text-center product_page__page-desc">
+          Khám phá các mẫu xe điện thông minh, hiện đại và thân thiện với môi
+          trường từ VinFast – Lựa chọn tối ưu cho tương lai di chuyển xanh.
+        </p>
+
+        {loading && <p className="text-center">Đang tải danh sách xe...</p>}
+        {error && <p className="text-center text-danger">{error}</p>}
+
+        {!loading && !error && (
+          <>
+            <div className="cars-grid-container">{renderCars()}</div>
+            {displayedCount < cars.length && (
+              <div className="load-more-container">
+                <button className="load-more-btn" onClick={handleLoadMore}>
+                  Xem thêm
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default Products;

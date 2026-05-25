@@ -23,10 +23,12 @@ const sampleCars = [
     origin_of_car: "Việt Nam",
     date_of_import: "2024-01-15",
     specifications: {
-      engine: "100 kW",
+      engine: "Động cơ điện",
       transmission: "Tự động",
       fuelType: "Điện",
-      fuelConsumption: "~326,4 km"
+      batteryCapacity: "87.7 kWh",
+      range: "~326,4 km",
+      acceleration: "~5.5 giây"
     }
   },
   {
@@ -40,10 +42,12 @@ const sampleCars = [
     origin_of_car: "Việt Nam",
     date_of_import: "2024-02-01",
     specifications: {
-      engine: "150 kW",
+      engine: "Động cơ điện",
       transmission: "Tự động",
       fuelType: "Điện",
-      fuelConsumption: "~400 km"
+      batteryCapacity: "123 kWh",
+      range: "~400 km",
+      acceleration: "~5.0 giây"
     }
   },
   {
@@ -57,10 +61,12 @@ const sampleCars = [
     origin_of_car: "Việt Nam",
     date_of_import: "2024-03-10",
     specifications: {
-      engine: "70 kW",
+      engine: "Động cơ điện",
       transmission: "Tự động",
       fuelType: "Điện",
-      fuelConsumption: "~250 km"
+      batteryCapacity: "37.23 kWh",
+      range: "~250 km",
+      acceleration: "~10.9 giây"
     }
   }
 ];
@@ -84,7 +90,9 @@ const seedCars = async () => {
       console.log(`   - Engine: ${car.specifications?.engine}`);
       console.log(`   - Transmission: ${car.specifications?.transmission}`);
       console.log(`   - Fuel Type: ${car.specifications?.fuelType}`);
-      console.log(`   - Range: ${car.specifications?.fuelConsumption}`);
+      console.log(`   - Battery: ${car.specifications?.batteryCapacity}`);
+      console.log(`   - Range: ${car.specifications?.range}`);
+      console.log(`   - 0-100 km/h: ${car.specifications?.acceleration}`);
     });
 
     process.exit(0);

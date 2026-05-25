@@ -45,6 +45,8 @@ const carSchema = new mongoose.Schema({
     seats: Number,
     fuelConsumption: String,
     range: String,
+    batteryCapacity: String,
+    acceleration: String,
   },
   images: [String],
   stock: {

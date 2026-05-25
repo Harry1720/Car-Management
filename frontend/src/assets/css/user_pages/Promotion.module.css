@@ -101,7 +101,7 @@
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
-  background-color: rgba(28, 28, 30, 0.2);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(245, 224, 186, 0.05),  rgba(245, 224, 186, 0.25));
   border: 1px solid rgba(245, 224, 186, 0.2);
   border-radius: 10px;
   box-shadow: 0 8px 20px rgba(245, 224, 186, 0.1);
