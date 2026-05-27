@@ -3,12 +3,6 @@ const cors = require("cors");
 const logger = require("./middlewares/logger");
 const errorHandler = require("./middlewares/errorHandler");
 
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-].filter(Boolean);
-
 // Import routes
 const authRoutes = require("./routes/authRoutes");
 const carRoutes = require("./routes/carRoutes");
@@ -22,18 +16,7 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const app = express();
 
 // Middleware
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-        return;
-      }
-
-      callback(new Error("Not allowed by CORS"));
-    },
-  }),
-);
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger);
