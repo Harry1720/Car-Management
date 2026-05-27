@@ -62,10 +62,17 @@ const getElectricSpecs = (car) => {
   );
 };
 
+const modelOptions = ["Chưa chọn được", "VF Wild", "VF 9", "VF 8", "VF 7"];
+
 const Products = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [leadForm, setLeadForm] = useState({
+    fullName: "",
+    phone: "",
+    model: "VF 8",
+  });
 
   // Display logic
   const INITIAL_DISPLAY = 9; // 3 rows x 3 cols on desktop
@@ -77,6 +84,21 @@ const Products = () => {
     document.title = "Sản phẩm | VinFast";
     fetchCars();
   }, []);
+
+  const handleLeadChange = (event) => {
+    const { name, value } = event.target;
+
+    setLeadForm((currentForm) => ({
+      ...currentForm,
+      [name]: value,
+    }));
+  };
+
+  const handleLeadSubmit = (event) => {
+    event.preventDefault();
+    window.alert("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
+    setLeadForm({ fullName: "", phone: "", model: "VF 8" });
+  };
 
   const fetchCars = async () => {
     try {
@@ -206,6 +228,57 @@ const Products = () => {
             )}
           </>
         )}
+
+        <section className="product_page__lead_section">
+          <div className="product_page__lead_copy">
+            <h2>Đăng ký lái thử &amp; Nhận tư vấn</h2>
+            <p>
+              Đội ngũ chuyên gia của VinFast luôn sẵn sàng hỗ trợ bạn chọn ra
+              mẫu xe ưng ý và các ưu đãi tốt nhất trong tháng.
+            </p>
+          </div>
+          <form className="product_page__lead_form" onSubmit={handleLeadSubmit}>
+            <label>
+              <span>Họ và tên</span>
+              <input
+                type="text"
+                name="fullName"
+                placeholder="Nhập họ và tên"
+                value={leadForm.fullName}
+                onChange={handleLeadChange}
+                required
+              />
+            </label>
+            <label>
+              <span>Số điện thoại</span>
+              <input
+                type="text"
+                name="phone"
+                placeholder="Nhập số điện thoại"
+                value={leadForm.phone}
+                onChange={handleLeadChange}
+                required
+              />
+            </label>
+            <label>
+              <span>Dòng xe quan tâm</span>
+              <select
+                name="model"
+                value={leadForm.model}
+                onChange={handleLeadChange}
+              >
+                {modelOptions.map((model) => (
+                  <option key={model} value={model}>
+                    {model}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button className="product_page__button_primary" type="submit">
+              Nhận tư vấn ngay
+            </button>
+          </form>
+        </section>
       </div>
       <Footer />
     </div>

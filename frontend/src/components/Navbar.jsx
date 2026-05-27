@@ -54,29 +54,11 @@ const Navbar = ({ activePage }) => {
         </li>
         <li>
           <Link
-            to="/about"
-            className={activePage === 'about' ? styles.active : ''}
-            onClick={closeMobileMenu}
-          >
-            Về chúng tôi
-          </Link>
-        </li>
-        <li>
-          <Link
             to="/products"
             className={activePage === 'products' ? styles.active : ''}
             onClick={closeMobileMenu}
           >
             Sản phẩm
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/charging"
-            className={activePage === 'charging' ? styles.active : ''}
-            onClick={closeMobileMenu}
-          >
-            Trạm sạc
           </Link>
         </li>
         <li>
@@ -90,11 +72,29 @@ const Navbar = ({ activePage }) => {
         </li>
         <li>
           <Link
+            to="/charging"
+            className={activePage === 'charging' ? styles.active : ''}
+            onClick={closeMobileMenu}
+          >
+            Trạm sạc
+          </Link>
+        </li>
+        <li>
+          <Link
             to="/policy"
             className={activePage === 'policy' ? styles.active : ''}
             onClick={closeMobileMenu}
           >
             Chính sách
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/about"
+            className={activePage === 'about' ? styles.active : ''}
+            onClick={closeMobileMenu}
+          >
+            Về chúng tôi
           </Link>
         </li>
         <li className={styles['mobile-only']}>

@@ -429,7 +429,14 @@
 }
 
 .home_page__lead_form option {
-  color: #111111;
+  background: #111111;
+  color: #ffffff;
+}
+
+.home_page__lead_form option:checked,
+.home_page__lead_form option:hover {
+  background: #111111;
+  color: #ffffff;
 }
 
 .home_page__video_modal {
