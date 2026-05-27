@@ -23,8 +23,7 @@ const Footer = () => {
             />
           </Link>
           <p className={styles.brandText}>
-            Dẫn lối trải nghiệm di chuyển hiện đại, sang trọng và bền vững cùng
-            VinFast.
+            Khởi tạo tương lai di chuyển xanh.
           </p>
           <div className={styles.socialIcons}>
             <a

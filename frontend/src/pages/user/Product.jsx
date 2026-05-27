@@ -136,14 +136,14 @@ const Products = () => {
           <div className="car-info">
             <h3>{car.name}</h3>
             <ul className="car-details">
-              <li>
+              {/* <li>
                 <i className="fas fa-globe"></i>
                 <span className="car-detail-label">Xuất xứ</span>
                 <span className="car-detail-value">{car.origin}</span>
-              </li>
+              </li> */}
               <li>
                 <i className="fas fa-calendar"></i>
-                <span className="car-detail-label">Năm</span>
+                <span className="car-detail-label">Năm sản xuất</span>
                 <span className="car-detail-value">{car.year}</span>
               </li>
               <li>
@@ -162,7 +162,7 @@ const Products = () => {
                 <span className="car-detail-value">{car.acceleration}</span>
               </li> */}
             </ul>
-            <div className="car-price">{car.priceLabel}</div>
+            <div className="car-price">Từ {car.priceLabel}</div>
           </div>
           <button
             className="car-button"
@@ -200,7 +200,7 @@ const Products = () => {
             {displayedCount < cars.length && (
               <div className="load-more-container">
                 <button className="load-more-btn" onClick={handleLoadMore}>
-                  Xem thêm
+                  Xem thêm ↓
                 </button>
               </div>
             )}
