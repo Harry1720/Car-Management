@@ -24,7 +24,7 @@ Cập nhật các biến môi trường:
 
 - NODE_ENV=development: Biến này báo cho server biết bạn đang ở môi trường lập trình. Khi nào đưa web lên mạng thực tế (deploy), bạn sẽ đổi nó thành production.
 
-- FRONTEND_URL=http://localhost:5173: Đây là đường dẫn ứng dụng Frontend của bạn (thường Vite.js dùng cổng 5173). Backend cần cái này để cho phép Frontend gọi API (cấu hình CORS).
+- FRONTEND_URL=http://localhost:5173: Đây là đường dẫn ứng dụng Frontend của bạn khi dev. Khi deploy, đổi thành domain thật của frontend, ví dụ https://your-app.vercel.app. Backend dùng giá trị này để cho phép Frontend gọi API (CORS).
 
 - MONGODB_URI: Đây là đường dẫn để kết nối với cơ sở dữ liệu MongoDB.
 
