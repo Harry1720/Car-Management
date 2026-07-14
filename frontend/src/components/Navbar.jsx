@@ -28,7 +28,12 @@ const Navbar = ({ activePage }) => {
   };
 
   return (
-    <nav className={`${styles["nav-container"]} ${isScrolled ? styles.scrolled : ''}`}>
+    <>
+      <div 
+        className={`${styles.backdrop} ${isMobileMenuOpen ? styles['backdrop-active'] : ''}`}
+        onClick={closeMobileMenu}
+      ></div>
+      <nav className={`${styles["nav-container"]} ${isScrolled ? styles.scrolled : ''}`}>
       <Link to="/" onClick={closeMobileMenu}>
         <img className={styles.logo} src="/images/vinlogo.png" alt="VinFast Logo" />
       </Link>
@@ -97,14 +102,24 @@ const Navbar = ({ activePage }) => {
             Về chúng tôi
           </Link>
         </li>
+        <li className={`${styles['mobile-only']} ${styles.divider}`}></li>
         <li className={styles['mobile-only']}>
           <Link
             to="/login"
             className={activePage === 'login' ? styles.active : ''}
             onClick={closeMobileMenu}
           >
-            {/* <i className="bx bx-user-circle" style={{marginRight: '8px'}}></i> */}
            Đăng nhập
+          </Link>
+        </li>
+        <li className={styles['mobile-only']}>
+          <Link
+            to="/login"
+            state={{ isRegister: true }}
+            className={activePage === 'register' ? styles.active : ''}
+            onClick={closeMobileMenu}
+          >
+           Đăng ký
           </Link>
         </li>
       </ul>
@@ -115,6 +130,7 @@ const Navbar = ({ activePage }) => {
         </Link>
       </div>
     </nav>
+    </>
   );
 };
 

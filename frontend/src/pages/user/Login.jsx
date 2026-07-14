@@ -1,145 +1,205 @@
 import "../../assets/css/user_pages/Login.css";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { authService } from "../../services/authService";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const location = useLocation();
+  const [isRightPanelActive, setIsRightPanelActive] = useState(false);
+  
+  const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginError, setLoginError] = useState("");
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+
+  const [registerData, setRegisterData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: ""
+  });
+  const [registerLoading, setRegisterLoading] = useState(false);
+  const [registerError, setRegisterError] = useState("");
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
-    document.title = "Đăng nhập | VinFast";
-
-    // Nếu đã đăng nhập, chuyển hướng đến dashboard
+    document.title = "Đăng nhập / Đăng ký | VinFast";
     if (authService.isAuthenticated()) {
       navigate("/admin/dashboard");
     }
-  }, [navigate]);
+    if (location.state?.isRegister) {
+      setIsRightPanelActive(true);
+    }
+  }, [navigate, location.state]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-    setError("");
+  const handleLoginChange = (e) => {
+    setLoginData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setLoginError("");
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+  const handleRegisterChange = (e) => {
+    setRegisterData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setRegisterError("");
+  };
 
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    setLoginLoading(true);
+    setLoginError("");
     try {
-      await authService.login(formData.email, formData.password);
+      await authService.login(loginData.email, loginData.password);
       alert("Đăng nhập thành công!");
-      // Redirect to admin dashboard
       navigate("/admin/dashboard");
     } catch (err) {
-      setError(
-        err.message ||
-          "Đăng nhập thất bại. Vui lòng kiểm tra email và password.",
-      );
-      alert(err.message || "Tên đăng nhập hoặc mật khẩu không đúng!");
+      setLoginError(err.message || "Tên đăng nhập hoặc mật khẩu không đúng!");
     } finally {
-      setLoading(false);
+      setLoginLoading(false);
+    }
+  };
+
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    if (registerData.password !== registerData.confirmPassword) {
+      setRegisterError("Mật khẩu xác nhận không khớp!");
+      return;
+    }
+    setRegisterLoading(true);
+    setRegisterError("");
+    try {
+      await authService.register({
+        name: `${registerData.firstName} ${registerData.lastName}`,
+        email: registerData.email,
+        phone: registerData.phone,
+        password: registerData.password
+      });
+      alert("Đăng ký thành công! Vui lòng đăng nhập.");
+      setIsRightPanelActive(false); // Switch back to login
+      // clear register data
+      setRegisterData({ firstName: "", lastName: "", email: "", phone: "", password: "", confirmPassword: "" });
+    } catch (err) {
+      setRegisterError(err.message || "Đăng ký thất bại!");
+    } finally {
+      setRegisterLoading(false);
     }
   };
 
   return (
-    <>
-      <Navbar activePage="login" />
-      <div className="container_login">
-        <div className="login_container">
-          <div className="">
-            <div className="col-md-4">
-              <div className="card">
-                {/* <div className="card-header text-center">
-                  <h3>Đăng nhập</h3>
-                </div> */}
-                <div className="card-body">
-                  {/* <div className="subtittle">
-                    (Chỉ dành cho Nhân viên Quản lý Đại lý)
-                  </div> */}
-                  {error && <div className="alert alert-danger">{error}</div>}
-                  <form id="login-form" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                      <div className="field-heading">
-                        <i className="fas fa-user"></i>
-                        <label htmlFor="email">
-                          <b>Email</b>
-                        </label>
-                      </div>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        className="form-control"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="Nhập email của bạn"
-                        required
-                      />
-                    </div>
-                    <div className="form-group2">
-                      <div className="field-heading">
-                        <i className="fas fa-key"></i>
-                        <label htmlFor="password">
-                          <b>Mật khẩu</b>
-                        </label>
-                      </div>
-                      <div className="password-input-wrap">
-                        <input
-                          type={showPassword ? "text" : "password"}
-                          id="password"
-                          name="password"
-                          className="form-control"
-                          value={formData.password}
-                          onChange={handleChange}
-                          placeholder="Nhập mật khẩu của bạn"
-                          required
-                        />
-                        <button
-                          type="button"
-                          className="password-toggle-btn"
-                          onClick={() => setShowPassword((prev) => !prev)}
-                          aria-label={
-                            showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"
-                          }
-                          aria-pressed={showPassword}
-                        >
-                          <i
-                            className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
-                          ></i>
-                        </button>
-                      </div>
-                    </div>
-                    {/* <span>Bạn chưa có tài khoản?<a> Hãy đăng ký ngay!</a></span> */}
-
-                    <button
-                      type="submit"
-                      className="btn-primary btn-block"
-                      disabled={loading}
-                    >
-                      {loading ? "Đang đăng nhập..." : "ĐĂNG NHẬP"}
-                    </button>
-                  </form>
+    <div className="container_login">
+      <Link to="/" className="back-home-btn">
+        <i className="fas fa-arrow-left"></i> Trang chủ
+      </Link>
+      
+      <div className="login_container">
+        <div className={`auth-card ${isRightPanelActive ? "right-panel-active" : ""}`}>
+          
+          {/* Form Đăng ký */}
+          <div className="form-container sign-up-container">
+            <h3 className="text-center mb-4">Đăng ký</h3>
+            {registerError && <div className="alert alert-danger" style={{fontSize: '14px', padding: '10px'}}>{registerError}</div>}
+            <form onSubmit={handleRegisterSubmit}>
+              <div style={{display: 'flex', gap: '10px'}}>
+                <div className="input-group-custom" style={{flex: 1}}>
+                  <i className="fas fa-user"></i>
+                  <input type="text" name="firstName" value={registerData.firstName} onChange={handleRegisterChange} placeholder="Họ" required />
                 </div>
+                <div className="input-group-custom" style={{flex: 1}}>
+                  <input type="text" name="lastName" value={registerData.lastName} onChange={handleRegisterChange} placeholder="Tên" required />
+                </div>
+              </div>
+              
+              <div className="input-group-custom">
+                <i className="fas fa-envelope"></i>
+                <input type="email" name="email" value={registerData.email} onChange={handleRegisterChange} placeholder="Email" required />
+              </div>
+              
+              <div className="input-group-custom">
+                <i className="fas fa-phone"></i>
+                <input type="tel" name="phone" value={registerData.phone} onChange={handleRegisterChange} placeholder="Số điện thoại" required />
+              </div>
+              
+              <div className="input-group-custom">
+                <i className="fas fa-lock"></i>
+                <input type={showRegisterPassword ? "text" : "password"} name="password" value={registerData.password} onChange={handleRegisterChange} placeholder="Mật khẩu" required />
+                <button type="button" className="password-toggle-btn" onClick={() => setShowRegisterPassword(!showRegisterPassword)}>
+                  <i className={`fas ${showRegisterPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
+                </button>
+              </div>
+              
+              <div className="input-group-custom">
+                <i className="fas fa-check-circle"></i>
+                <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" value={registerData.confirmPassword} onChange={handleRegisterChange} placeholder="Xác nhận mật khẩu" required />
+                <button type="button" className="password-toggle-btn" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                  <i className={`fas ${showConfirmPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
+                </button>
+              </div>
+
+              <button type="submit" className="btn-primary-auth" disabled={registerLoading}>
+                {registerLoading ? "Đang xử lý..." : "TẠO TÀI KHOẢN"}
+              </button>
+            </form>
+            <div className="mobile-toggle" onClick={() => setIsRightPanelActive(false)}>
+              Đã có tài khoản? <b>Đăng nhập</b>
+            </div>
+          </div>
+
+          {/* Form Đăng nhập */}
+          <div className="form-container sign-in-container">
+            <h3 className="text-center mb-4">Đăng nhập</h3>
+            <p className="text-center mb-4" style={{color: 'rgba(255,255,255,0.7)', fontSize: '14px'}}>Truy cập workspace và dự án của bạn</p>
+            {loginError && <div className="alert alert-danger" style={{fontSize: '14px', padding: '10px'}}>{loginError}</div>}
+            <form onSubmit={handleLoginSubmit}>
+              <div className="input-group-custom">
+                <i className="fas fa-envelope"></i>
+                <input type="email" name="email" value={loginData.email} onChange={handleLoginChange} placeholder="Email hoặc số điện thoại" required />
+              </div>
+              
+              <div className="input-group-custom">
+                <i className="fas fa-key"></i>
+                <input type={showLoginPassword ? "text" : "password"} name="password" value={loginData.password} onChange={handleLoginChange} placeholder="Mật khẩu" required />
+                <button type="button" className="password-toggle-btn" onClick={() => setShowLoginPassword(!showLoginPassword)}>
+                  <i className={`fas ${showLoginPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
+                </button>
+              </div>
+
+              <div className="text-right w-100" style={{marginTop: '-5px', marginBottom: '20px'}}>
+                <a href="#" style={{color: 'rgba(255,255,255,0.7)', fontSize: '13px', textDecoration: 'none'}}>Quên mật khẩu?</a>
+              </div>
+
+              <button type="submit" className="btn-primary-auth" disabled={loginLoading}>
+                {loginLoading ? "Đang đăng nhập..." : "ĐĂNG NHẬP"}
+              </button>
+            </form>
+            <div className="mobile-toggle" onClick={() => setIsRightPanelActive(true)}>
+              Chưa có tài khoản? <b>Đăng ký</b>
+            </div>
+          </div>
+
+          {/* Overlay */}
+          <div className="overlay-container">
+            <div className="overlay">
+              <div className="overlay-panel overlay-left">
+                <h2>Bạn mới tham gia?</h2>
+                <p>Tạo tài khoản để tham gia hệ thống của chúng tôi, hưởng thụ các ưu đãi và chọn cho mình xế hộp mơ ước một cách dễ dàng.</p>
+                <button className="btn-outline-white" onClick={() => setIsRightPanelActive(true)}>ĐĂNG KÝ</button>
+              </div>
+              <div className="overlay-panel overlay-right">
+                <h2>Đã có tài khoản?</h2>
+                <p>Đăng nhập để xem thông tin, tiếp tục mua sắm và nhận các ưu đãi hấp dẫn.</p>
+                <button className="btn-outline-white" onClick={() => setIsRightPanelActive(false)}>ĐĂNG NHẬP</button>
               </div>
             </div>
           </div>
+
         </div>
       </div>
-      <Footer />
-    </>
+    </div>
   );
 };
 

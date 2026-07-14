@@ -213,7 +213,7 @@ const Products = () => {
           trường từ VinFast – Lựa chọn tối ưu cho tương lai di chuyển xanh.
         </p>
 
-        {loading && <p className="text-center">Đang tải danh sách xe...</p>}
+        {loading && <p className="text-center" style={{padding: '0 40px'}}>Đang tải danh sách xe. Vui lòng đợi một chút.</p>}
         {error && <p className="text-center text-danger">{error}</p>}
 
         {!loading && !error && (

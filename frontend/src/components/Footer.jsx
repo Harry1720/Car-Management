@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
                                                         
 const quickLinks = [
   { label: "Trang chủ", to: "/" },
-  { label: "Về chúng tôi", to: "/about" },
   { label: "Sản phẩm", to: "/products" },
-  { label: "Trạm sạc", to: "/charging" },
   { label: "Ưu đãi", to: "/promotions" },
+  { label: "Trạm sạc", to: "/charging" },
   { label: "Chính sách", to: "/policy" },
+  { label: "Về chúng tôi", to: "/about" },
 ];
 
 const Footer = () => {
