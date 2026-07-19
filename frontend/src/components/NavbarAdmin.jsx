@@ -70,42 +70,44 @@ const NavbarAdmin = () => {
                             <span className="label text-label">Quản lý nhân sự</span>
                         </Link>
                     </li>
-                    <li className="submenu">
-                        <Link to="#"
-                            className={currentPath === '/admin/transaction' || currentPath ==='/admin/accounting' ? 'active' : ''}>
-                            <ion-icon name="server-outline"></ion-icon> 
-                            <span className="label text-label">Thông tin doanh thu</span>
-                            <ion-icon name="chevron-down-outline" className="submenu-indicator label"></ion-icon>
+                    <li className="menu-group-label">
+                        <span className="label text-label">Doanh thu & Giao dịch</span>
+                    </li>
+                    <li>
+                        <Link to="/admin/transaction" 
+                              className={currentPath === '/admin/transaction' ? 'active' : ''}
+                              onClick={closeMobileMenu}>
+                            <ion-icon name="receipt-outline"></ion-icon> 
+                            <span className="label text-label">Thông tin giao dịch</span>
                         </Link>
-                        <ul>
-                            <li>
-                                <Link to="/admin/transaction" onClick={closeMobileMenu}>
-                                    <ion-icon name="receipt-outline"></ion-icon> <span className="label text-label">Thông tin giao dịch</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/admin/accounting" onClick={closeMobileMenu}>
-                                    <ion-icon name="stats-chart-outline"></ion-icon> <span className="label text-label">Thống kê doanh thu</span></Link>
-                            </li>
-                        </ul>
+                    </li>
+                    <li>
+                        <Link to="/admin/accounting" 
+                              className={currentPath === '/admin/accounting' ? 'active' : ''}
+                              onClick={closeMobileMenu}>
+                            <ion-icon name="stats-chart-outline"></ion-icon> 
+                            <span className="label text-label">Thống kê doanh thu</span>
+                        </Link>
                     </li>
 
-                    <li className="submenu">
-                        <Link to="#"
-                            className={currentPath === '/admin/carlist' || currentPath ==='/admin/carnumber' ? 'active' : ''}>
-                            <ion-icon name="car-sport-outline"></ion-icon> <span className="label text-label">Thông tin về xe</span>
-                            <ion-icon name="chevron-down-outline" className="submenu-indicator label"></ion-icon>
+                    <li className="menu-group-label">
+                        <span className="label text-label">Quản lý Xe</span>
+                    </li>
+                    <li>
+                        <Link to="/admin/carlist" 
+                              className={currentPath === '/admin/carlist' ? 'active' : ''}
+                              onClick={closeMobileMenu}>
+                            <ion-icon name="car-sport-outline"></ion-icon> 
+                            <span className="label text-label">Danh sách xe</span>
                         </Link>
-                        <ul>
-                            <li>
-                                <Link to="/admin/carlist" onClick={closeMobileMenu}>
-                                    <ion-icon name="receipt-outline"></ion-icon> <span className="label text-label">Danh sách xe</span></Link>
-                            </li>
-                            <li>
-                                <Link to="/admin/carnumber" onClick={closeMobileMenu}>
-                                    <ion-icon name="stats-chart-outline"></ion-icon> <span className="label text-label">Quản lý số lượng xe</span></Link>
-                            </li>
-                        </ul>
+                    </li>
+                    <li>
+                        <Link to="/admin/carnumber" 
+                              className={currentPath === '/admin/carnumber' ? 'active' : ''}
+                              onClick={closeMobileMenu}>
+                            <ion-icon name="car-outline"></ion-icon> 
+                            <span className="label text-label">Số lượng xe</span>
+                        </Link>
                     </li>
 
                     <li className="logout-item">

@@ -16,25 +16,25 @@
     padding: 20px;
     border-radius: 12px;
     background: linear-gradient(135deg, #e6f3ff 0%, #b8ddff 100%);
-    border: 2px solid rgba(26, 144, 255, 0.1);
-    box-shadow: 0 4px 15px rgba(26, 144, 255, 0.15);
+    border: 2px solid rgba(30, 58, 138, 0.1);
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.15);
 }
 
 #id-search {
     flex: 1;
     padding: 12px 20px;
     font-size: 15px;
-    border: 2px solid #1a90ff;
+    border: 2px solid #1E3A8A;
     border-radius: 10px;
     background-color: #fff;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(26, 144, 255, 0.1);
+    box-shadow: 0 2px 5px rgba(30, 58, 138, 0.1);
 }
 
 #id-search:focus {
     outline: none;
     border-color: #0066cc;
-    box-shadow: 0 4px 12px rgba(26, 144, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
     transform: translateY(-2px);
 }
 
@@ -55,7 +55,7 @@
 }
 
 .car-number-page .edit-form h3 {
-    color: #1a90ff;
+    color: #1E3A8A;
     margin-bottom: 20px;
     font-size: 20px;
     font-weight: 600;
@@ -91,9 +91,9 @@
 }
 
 .car-number-page .form-col input:focus {
-    border-color: #1a90ff;
+    border-color: #1E3A8A;
     outline: none;
-    box-shadow: 0 0 0 2px rgba(26, 144, 255, 0.2);
+    box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.2);
 }
 
 .car-number-page .form-col input:disabled {

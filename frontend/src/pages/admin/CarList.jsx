@@ -652,16 +652,18 @@ const CarList = () => {
                                             <button 
                                                 className="delete-btn"
                                                 onClick={() => handleDelete(car._id)}
+                                                title="Xóa"
                                             >
-                                                Delete
+                                                <ion-icon name="trash-outline"></ion-icon>
                                             </button>
                                         </td>
                                         <td>
                                             <button 
                                                 className="edit-btn"
                                                 onClick={() => handleEdit(car._id)}
+                                                title="Sửa"
                                             >
-                                                Edit
+                                                <ion-icon name="create-outline"></ion-icon>
                                             </button>
                                         </td>
                                     </tr>

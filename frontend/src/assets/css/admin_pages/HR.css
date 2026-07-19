@@ -38,8 +38,8 @@
     background: linear-gradient(135deg, #e6f3ff 0%, #b8ddff 100%);
     padding: 25px;
     border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(26, 144, 255, 0.2);
-    border: 2px solid rgba(26, 144, 255, 0.1);
+    box-shadow: 0 8px 20px rgba(30, 58, 138, 0.2);
+    border: 2px solid rgba(30, 58, 138, 0.1);
     display: flex;
     align-items: center;
     gap: 15px;
@@ -58,18 +58,18 @@
     flex: 1;
     padding: 12px 20px;
     font-size: 15px;
-    border: 2px solid #1a90ff;
+    border: 2px solid #1E3A8A;
     border-radius: 10px;
     background-color: #fff;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(26, 144, 255, 0.1);
+    box-shadow: 0 2px 5px rgba(30, 58, 138, 0.1);
 }
 
 #add-row-form input[type="text"]:focus,
 #id-search:focus {
     outline: none;
     border-color: #0066cc;
-    box-shadow: 0 4px 12px rgba(26, 144, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
     transform: translateY(-2px);
 }
 
@@ -94,9 +94,9 @@
 }
 
 .table thead th {
-    background-color: #1a90ff;
-    color: white;
-    font-weight: 500;
+    background-color: #f4f6f8;
+    color: #333333;
+    font-weight: bold;
 }
 
 .table tbody tr:hover {
@@ -115,7 +115,7 @@
 }
 
 .edit-form-container h3 {
-    color: #1a90ff;
+    color: #1E3A8A;
     margin-bottom: 20px;
     font-size: 20px;
     font-weight: 600;
@@ -144,7 +144,7 @@
 }
 
 .edit-form-container input:focus {
-    border-color: #1a90ff;
+    border-color: #1E3A8A;
     outline: none;
     box-shadow: 0 0 0 2px rgba(26,144,255,0.2);
 }
@@ -421,14 +421,14 @@
 #id-search {
     width: 450px;
     padding: 10px 15px;
-    border: 2px solid #1a90ff;
+    border: 2px solid #1E3A8A;
     border-radius: 4px;
     font-size: 14px;
     margin-bottom: 0;
 }
 
 .hr-page .btn-primary {
-    background-color: #1a90ff;
+    background-color: #1E3A8A;
     border: none;
     border-radius: 4px;
     color: white;
@@ -451,7 +451,7 @@
 }
 
 .add-employee-form h3 {
-    color: #1a90ff;
+    color: #1E3A8A;
     margin-bottom: 20px;
     font-size: 20px;
     font-weight: 600;
@@ -487,9 +487,9 @@
 }
 
 .add-employee-form .form-col input:focus {
-    border-color: #1a90ff;
+    border-color: #1E3A8A;
     outline: none;
-    box-shadow: 0 0 0 2px rgba(26, 144, 255, 0.2);
+    box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.2);
 }
 
 .add-employee-form .form-actions {

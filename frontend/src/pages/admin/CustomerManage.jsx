@@ -325,7 +325,7 @@ const CustomerManage = () => {
                         </thead>
                         <tbody style={{backgroundColor: 'rgb(245, 252, 255)'}} id="customer-data">
                             {loading ? (
-                                <tr><td colSpan="8" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                                <tr><td colSpan="8" style={{textAlign: 'center'}}> ...</td></tr>
                             ) : customers.length === 0 ? (
                                 <tr><td colSpan="8" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
                             ) : (
@@ -341,16 +341,18 @@ const CustomerManage = () => {
                                         <button 
                                             className="delete-customer"
                                             onClick={() => handleDelete(customer._id || customer.citizen_id)}
+                                            title="Xóa"
                                         >
-                                            Delete
+                                            <ion-icon name="trash-outline"></ion-icon>
                                         </button>
                                     </td>
                                     <td>
                                         <button 
                                             className="edit-customer"
                                             onClick={() => handleEdit(customer._id || customer.citizen_id)}
+                                            title="Sửa"
                                         >
-                                            Edit
+                                            <ion-icon name="create-outline"></ion-icon>
                                         </button>
                                     </td>
                                 </tr>

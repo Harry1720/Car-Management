@@ -11,11 +11,11 @@
 
 #add-row-form3 {
     margin: 20px 0 30px 0;
-    background: linear-gradient(135deg, #e6f3ff 0%, #b8ddff 100%);
+    background: #ffffff;
     padding: 25px;
     border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(26, 144, 255, 0.2);
-    border: 2px solid rgba(26, 144, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: none;
 }
 
 #add-row-form3 .col {
@@ -38,11 +38,11 @@
     flex: 1;
     padding: 12px 20px;
     font-size: 15px;
-    border: 2px solid #1a90ff;
+    border: 2px solid #1E3A8A;
     border-radius: 10px;
     background-color: #fff;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(26, 144, 255, 0.1);
+    box-shadow: 0 2px 5px rgba(30, 58, 138, 0.1);
 }
 
 #add-row-form input[type="text"]:focus,
@@ -50,7 +50,7 @@
 #id-search:focus {
     outline: none;
     border-color: #0066cc;
-    box-shadow: 0 4px 12px rgba(26, 144, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
     transform: translateY(-2px);
 }
 
@@ -87,7 +87,7 @@
 
 .add-form h3,
 .edit-form h3 {
-    color: #1a90ff;
+    color: #1E3A8A;
     margin-bottom: 20px;
     font-weight: 600;
     font-size: 20px;
@@ -115,9 +115,9 @@
 }
 
 .customer_page .form-group input:focus {
-    border-color: #1a90ff;
+    border-color: #1E3A8A;
     outline: none;
-    box-shadow: 0 0 0 2px rgba(26, 144, 255, 0.2);
+    box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.2);
 }
 
 .customer_page .button-group {
@@ -165,7 +165,7 @@
 
 /* Button Styles */
 .customer_page .btn-primary {
-    background-color: #1a90ff;
+    background-color: #1E3A8A;
     border: none;
     border-radius: 4px;
     color: white;
@@ -353,7 +353,7 @@
 #id-search {
     width: 450px;
     padding: 10px 15px;
-    border: 2px solid #1a90ff;
+    border: 2px solid #1E3A8A;
     border-radius: 4px;
     font-size: 14px;
     margin-bottom: 0; /* Remove bottom margin */
@@ -367,42 +367,38 @@
 /* Table Action Buttons */
 .delete-customer,
 .edit-customer {
-    padding: 6px 12px;
+    padding: 6px;
     border: none;
-    border-radius: 4px;
-    color: white;
+    background-color: transparent;
+    color: #6b7280;
     cursor: pointer;
-    font-weight: 500;
-    width: 80px;
-}
-
-.delete-customer {
-    background-color: #dc3545;
-}
-
-.edit-customer {
-    background-color: #28a745;
+    font-size: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s;
 }
 
 .delete-customer:hover {
-    background-color: #c82333;
+    color: #ef4444;
 }
 
 .edit-customer:hover {
-    background-color: #218838;
+    color: #10b981;
 }
 
 /* Table Styles Enhancement */
 .table {
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
 }
 
 .table th {
-    background-color: #1a90ff;
-    color: white;
-    font-weight: 500;
+    background-color: #f4f6f8;
+    color: #333333;
+    font-weight: bold;
     padding: 12px;
 }
 

@@ -101,7 +101,7 @@ const Login = () => {
           
           {/* Form Đăng ký */}
           <div className="form-container sign-up-container">
-            <h3 className="text-center mb-4">Đăng ký</h3>
+            <h3 className="text-center mb-4" style={{fontFamily:'Roboto, sans-serif', fontSize:'36px'}}>Tạo tài khoản mới</h3>
             {registerError && <div className="alert alert-danger" style={{fontSize: '14px', padding: '10px'}}>{registerError}</div>}
             <form onSubmit={handleRegisterSubmit}>
               <div style={{display: 'flex', gap: '10px'}}>
@@ -151,8 +151,8 @@ const Login = () => {
 
           {/* Form Đăng nhập */}
           <div className="form-container sign-in-container">
-            <h3 className="text-center mb-4">Đăng nhập</h3>
-            <p className="text-center mb-4" style={{color: 'rgba(255,255,255,0.7)', fontSize: '14px'}}>Truy cập workspace và dự án của bạn</p>
+            <h3 className="text-center mb-4" style={{fontFamily:'Roboto, sans-serif', fontSize:'36px'}}>Chào mừng trở lại!</h3>
+            {/* <p className="text-center mb-4" style={{color: 'rgba(255,255,255,0.7)', fontSize: '14px'}}>Truy cập workspace và dự án của bạn</p> */}
             {loginError && <div className="alert alert-danger" style={{fontSize: '14px', padding: '10px'}}>{loginError}</div>}
             <form onSubmit={handleLoginSubmit}>
               <div className="input-group-custom">

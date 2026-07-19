@@ -168,7 +168,7 @@ const CarNumber = () => {
                                                 className="delete-btn"
                                                 onClick={() => setCarNumbers(carNumbers.filter((_, i) => i !== index))}
                                             >
-                                                Delete
+                                                <ion-icon name="trash-outline"></ion-icon>
                                             </button>
                                         </td>
                                         <td>
@@ -176,7 +176,7 @@ const CarNumber = () => {
                                                 className="edit-btn"
                                                 onClick={() => setEditingCarNumber(car)}
                                             >
-                                                Edit
+                                                <ion-icon name="create-outline"></ion-icon>
                                             </button>
                                         </td>
                                     </tr>

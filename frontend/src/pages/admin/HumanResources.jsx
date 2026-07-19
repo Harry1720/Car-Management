@@ -466,7 +466,7 @@ const HRPage = () => {
                                                     className="delete-btn"
                                                     onClick={() => handleDelete(employee._id || employee.employee_citizenid)}
                                                 >
-                                                    Delete
+                                                    <ion-icon name="trash-outline"></ion-icon>
                                                 </button>
                                             </td>
                                             <td>
@@ -474,7 +474,7 @@ const HRPage = () => {
                                                     className="edit-btn"
                                                     onClick={() => handleEdit(employee._id || employee.employee_citizenid)}
                                                 >
-                                                    Edit
+                                                    <ion-icon name="create-outline"></ion-icon>
                                                 </button>
                                             </td>
                                         </tr>

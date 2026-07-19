@@ -1,9 +1,25 @@
+body {
+    background-color: #f4f6f8;
+}
+
+.customer_page,
+.transaction-page,
+.car-list-page,
+.hr-page,
+.dashboard-page,
+.car-number-page {
+    min-height: calc(100vh - 104px);
+    margin: 30px 50px 30px 130px !important;
+    max-width: calc(100vw - 180px) !important;
+    box-sizing: border-box;
+}
+
 .navbar_admin_page .navbar {
-    background-color: #e6f3ff;
+    background-color: #ffffff;
     z-index: 1000;
     display: flex;
     align-items: center;
-    /* padding: 10px 20px; */
+    border-right: 1px solid #eaeaea;
 }
 
 /* Desktop: vertical sidebar */
@@ -48,6 +64,10 @@
         width: 80px;
     }
 
+    .navbar_admin_page .navbar.collapsed .menu-group-label {
+        display: none;
+    }
+
     .navbar_admin_page .navbar.collapsed .label {
         opacity: 0;
         visibility: hidden;
@@ -59,9 +79,9 @@
         flex: 1;
     }
 
-    .navbar_admin_page .navbar.collapsed .submenu-indicator {
+    /* .navbar_admin_page .navbar.collapsed .submenu-indicator {
         display: none;
-    }
+    } */
 
     .navbar_admin_page .navbar.collapsed .brand {
         flex-direction: column;
@@ -116,20 +136,48 @@
 
     .navbar_admin_page .navbar.collapsed .main-menu li a {
         justify-content: center;
-        padding: 15px 0;
+        padding: 15px 10px;
         gap: 0;
     }
 
-    .navbar_admin_page .navbar.collapsed .submenu ul li a {
+    /* .navbar_admin_page .navbar.collapsed .submenu ul li a {
         justify-content: center;
         padding: 12px 0;
         gap: 0;
-    }
+    } */
 
-    .navbar_admin_page .navbar.collapsed .main-menu li a.active::after {
-        left: 2%;
-        right: 2%;
+    .navbar_admin_page .navbar.collapsed .main-menu li a.active {
+        border-left: none;
+        background-color: transparent;
     }
+}
+
+/* Global Action Buttons Override for Admin Pages */
+.edit-btn, .delete-btn,
+.edit-customer, .delete-customer,
+.edit-transaction, .delete-transaction {
+    padding: 6px !important;
+    border: none !important;
+    background-color: transparent !important;
+    color: #6b7280 !important;
+    cursor: pointer !important;
+    font-size: 20px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    height: auto !important;
+    transition: color 0.3s !important;
+}
+
+.edit-btn:hover, .edit-customer:hover, .edit-transaction:hover {
+    color: #10b981 !important;
+    background-color: transparent !important;
+}
+
+.delete-btn:hover, .delete-customer:hover, .delete-transaction:hover {
+    color: #ef4444 !important;
+    background-color: transparent !important;
 }
 
 /* Hamburger Menu */
@@ -185,35 +233,42 @@
     white-space: nowrap; /* Đảm bảo text không bị rớt dòng khi đang thu/mở */
 }
 
-.navbar_admin_page ion-icon.submenu-indicator {
+/* .navbar_admin_page ion-icon.submenu-indicator {
     min-width: unset;
     font-size: 16px;
     margin-left: auto;
-}
+} */
 
 .navbar_admin_page .navbar .main-menu li a.active {
-    color: #1a90ff;
+    color: #1E3A8A;
     font-weight: 600;
     position: relative;
+    background-color: rgba(244, 246, 248, 0.8);
+    border-left: 4px solid #1E3A8A;
+    border-radius: 0 5px 5px 0;
 }
 
 .navbar_admin_page .navbar .main-menu li a.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 2%;
-    right: 2%;
-    height: 2px;
-    background-color: #1a90ff;
+    display: none;
 }
 
 .navbar_admin_page .navbar .main-menu li a:hover {
-    background-color: #b8ddff;
+    background-color: #f4f6f8;
     border-radius: 5px;
-    color: #1a90ff;
+    color: #1E3A8A;
 }
 
-.submenu {
+.menu-group-label {
+    padding: 15px 15px 5px 15px;
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+/* .submenu {
     position: relative;
     flex-direction: column;
 }
@@ -258,7 +313,7 @@
     background-color: #b8ddff;
     color: #1a90ff;
     font-weight: 600;
-}
+} */
 
 .navbar_admin_page ion-icon {
     font-size: 20px;
@@ -313,7 +368,7 @@
         top: 60px;
         left: 0;
         right: 0;
-        background-color: #e6f3ff;
+        background-color: #ffffff;
         flex-direction: column;
         padding: 20px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -334,7 +389,7 @@
         border-radius: 5px;
     }
     
-    .submenu ul {
+    /* .submenu ul {
         position: static;
         display: none;
         padding-left: 20px;
@@ -344,7 +399,7 @@
     .submenu.active ul,
     .submenu:hover ul {
         display: block;
-    }
+    } */
     
     .navbar_admin_page ion-icon {
         font-size: 20px;
