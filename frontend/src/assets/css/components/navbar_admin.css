@@ -6,7 +6,7 @@ body {
 .transaction-page,
 .car-list-page,
 .hr-page,
-.dashboard-page,
+.dashboard_page,
 .car-number-page {
     min-height: calc(100vh - 104px);
     margin: 30px 50px 30px 130px !important;
@@ -178,6 +178,16 @@ body {
 .delete-btn:hover, .delete-customer:hover, .delete-transaction:hover {
     color: #ef4444 !important;
     background-color: transparent !important;
+}
+
+/* Flatten Search Bar Container */
+#add-row-form3, #add-row-form3 .col {
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin-bottom: 20px !important;
 }
 
 /* Hamburger Menu */
@@ -432,4 +442,104 @@ body {
     .navbar_admin_page .navbar-spacer {
         height: 50px;
     }
+}
+
+/* Global Admin Page Layout */
+.customer_page,
+.transaction-page,
+.car-list-page,
+.hr-page,
+.car-number-page,
+.dashboard_page,
+.accounting-page {
+    margin: 30px 50px 30px 130px !important;
+    max-width: calc(100vw - 180px) !important;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+    .customer_page,
+    .transaction-page,
+    .car-list-page,
+    .hr-page,
+    .car-number-page,
+    .dashboard_page,
+    .accounting-page {
+        margin: 80px 20px 30px 20px !important;
+        max-width: calc(100vw - 40px) !important;
+    }
+}
+
+/* Page Header Structure */
+.page-header-block {
+    margin: 10px 0 30px 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.page-overline {
+    font-size: 12px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    display: block;
+}
+.page-main-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: #0f172a;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+    letter-spacing: -0.5px;
+}
+.page-subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Modal Popups */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+.modal-content {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #1e293b;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Red Logout Button */
+.logout-btn-red {
+    color: #ef4444 !important;
+    transition: all 0.3s ease;
+}
+.logout-btn-red:hover {
+    color: #b91c1c !important;
+    background-color: #fee2e2 !important;
 }

@@ -198,7 +198,11 @@ const HRPage = () => {
         <>
             <Navbar/>
             <div className="hr-page">
-                <h1 id="heading"><b>Quản lý nhân sự</b></h1>
+                <div className="page-header-block">
+                    <span className="page-overline">HUMAN RESOURCES</span>
+                    <h1 className="page-main-title">QUẢN LÝ NHÂN SỰ</h1>
+                    <p className="page-subtitle">Quản lý thêm mới, chỉnh sửa thông tin nhân viên và phân quyền.</p>
+                </div>
 
                 {/* Search and Add button row */}
                 <div className="row" id="add-row-form3">
@@ -224,9 +228,10 @@ const HRPage = () => {
 
                 {/* Add new employee form */}
                 {showAddForm && (
-                    <div className="add-employee-form">
-                        <h3>Thêm nhân viên mới</h3>
-                        <form onSubmit={handleAddEmployee}>
+                    <div className="modal-overlay" onClick={() => setShowAddForm(false)}>
+                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                            <h3>Thêm nhân viên mới</h3>
+                            <form onSubmit={handleAddEmployee}>
                             <div className="form-row">
                                 <div className="form-col">
                                     <label>Mã nhân viên</label>
@@ -312,16 +317,18 @@ const HRPage = () => {
                                 <button type="submit" className="btn-save">
                                     Thêm mới
                                 </button>
-                            </div>
-                        </form>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 )}
 
                 {/* Add edit form */}
                 {editingEmployee && (
-                    <div className="edit-form-container">
-                        <h3>Chỉnh sửa thông tin nhân viên</h3>
-                        <form onSubmit={handleUpdate}>
+                    <div className="modal-overlay" onClick={() => setEditingEmployee(null)}>
+                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                            <h3>Chỉnh sửa thông tin nhân viên</h3>
+                            <form onSubmit={handleUpdate}>
                             <div className="row">
                                 <div className="col">
                                     <p>Mã nhân viên</p>
@@ -410,6 +417,7 @@ const HRPage = () => {
                             </div>
                         </form>
                     </div>
+                </div>
                 )}
 
                 <div className="table-wrapper">

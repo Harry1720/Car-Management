@@ -37,7 +37,11 @@ const TransactionPage = () => {
         <>
             <Navbar/>
             <div className="transaction-page">
-                <h1 id="heading"><b>Quản lý thông tin giao dịch</b></h1>
+                <div className="page-header-block">
+                    <span className="page-overline">TRANSACTION MANAGEMENT</span>
+                    <h1 className="page-main-title">QUẢN LÝ GIAO DỊCH</h1>
+                    <p className="page-subtitle">Quản lý và tra cứu thông tin giao dịch, thanh toán cọc xe.</p>
+                </div>
 
                 <div className="row" id="add-row-form3">
                     <div className="col">

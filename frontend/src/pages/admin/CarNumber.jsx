@@ -44,7 +44,11 @@ const CarNumber = () => {
         <>
             <Navbar/>
             <div className="car-number-page">
-                <h1 id="heading"><b>Quản lý số lượng xe</b></h1>
+                <div className="page-header-block">
+                    <span className="page-overline">CAR STOCK</span>
+                    <h1 className="page-main-title">QUẢN LÝ SỐ LƯỢNG XE</h1>
+                    <p className="page-subtitle">Quản lý và cập nhật số lượng xe tồn kho, xe đã bán.</p>
+                </div>
 
                 <div className="row" id="add-row-form3">
                     <div className="col">
@@ -59,9 +63,10 @@ const CarNumber = () => {
                 </div>
 
                 {editingCarNumber && (
-                    <div className="edit-form">
-                        <h3>Chỉnh sửa thông tin số lượng xe</h3>
-                        <form onSubmit={(e) => {
+                    <div className="modal-overlay" onClick={() => setEditingCarNumber(null)}>
+                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                            <h3>Chỉnh sửa thông tin số lượng xe</h3>
+                            <form onSubmit={(e) => {
                             e.preventDefault();
                             setCarNumbers(carNumbers.map(car => 
                                 car.model_car_id === editingCarNumber.model_car_id ? editingCarNumber : car
@@ -132,7 +137,8 @@ const CarNumber = () => {
                                     Lưu thay đổi
                                 </button>
                             </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 )}
 

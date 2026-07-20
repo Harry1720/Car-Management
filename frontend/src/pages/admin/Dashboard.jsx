@@ -120,6 +120,11 @@ const Dashboard = () => {
     return (
         <><Navbar />
         <div className='dashboard_page'>
+            <div className="page-header-block" style={{ padding: '20px' }}>
+                <span className="page-overline">DASHBOARD OVERVIEW</span>
+                <h1 className="page-main-title">BẢNG TỔNG QUAN HỆ THỐNG</h1>
+                <p className="page-subtitle">Giao diện tổng quan trạng thái, cập nhật dữ liệu máy chủ thực tế tức thời.</p>
+            </div>
             
             <div className="content dashboard_container">
                 <div className="card1">

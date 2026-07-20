@@ -243,7 +243,11 @@ const CarList = () => {
         <>
             <Navbar/>
             <div className="car-list-page">
-                <h1 id="heading"><b>Danh sách xe</b></h1>
+                <div className="page-header-block">
+                    <span className="page-overline">CAR MANAGEMENT</span>
+                    <h1 className="page-main-title">DANH SÁCH XE</h1>
+                    <p className="page-subtitle">Quản lý thêm mới, chỉnh sửa thông tin xe và hình ảnh.</p>
+                </div>
 
                 {/* Search and Add button row */}
                 <div className="row" id="add-row-form3">
@@ -269,9 +273,10 @@ const CarList = () => {
 
                 {/* Add new car form */}
                 {showAddForm && (
-                    <div className="add-car-form">
-                        <h3>Thêm xe mới</h3>
-                        <form onSubmit={handleCreate}>
+                    <div className="modal-overlay" onClick={() => setShowAddForm(false)}>
+                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                            <h3>Thêm xe mới</h3>
+                            <form onSubmit={handleCreate}>
                             <div className="form-row">
                                 <div className="form-col">
                                     <label>Mã xe</label>
@@ -451,16 +456,18 @@ const CarList = () => {
                                 >
                                     Thêm mới
                                 </button>
-                            </div>
-                        </form>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 )}
 
                 {/* Edit car form */}
                 {editingCar && (
-                    <div className="edit-form">
-                        <h3>Chỉnh sửa thông tin xe</h3>
-                        <form onSubmit={handleUpdate}>
+                    <div className="modal-overlay" onClick={() => setEditingCar(null)}>
+                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                            <h3>Chỉnh sửa thông tin xe</h3>
+                            <form onSubmit={handleUpdate}>
                             <div className="form-row">
                                 <div className="form-col">
                                     <label>Mã xe</label>
@@ -589,6 +596,7 @@ const CarList = () => {
                             </div>
                         </form>
                     </div>
+                </div>
                 )}
 
                 <div className="table-wrapper">

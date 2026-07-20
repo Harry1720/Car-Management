@@ -111,7 +111,7 @@ const NavbarAdmin = () => {
                     </li>
 
                     <li className="logout-item">
-                        <a onClick={handleLogout} style={{cursor: 'pointer'}}>
+                        <a onClick={handleLogout} className="logout-btn-red" style={{cursor: 'pointer'}}>
                             <ion-icon name="log-out-outline"></ion-icon> <span className="label text-label">Đăng xuất</span></a>
                     </li>
                 </ul>

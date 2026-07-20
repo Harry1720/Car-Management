@@ -37,7 +37,11 @@ const AccountingPage = () => {
         <>
             <Navbar/>
             <div className="accounting-page">
-                <h1 id="heading"><b>Danh sách doanh thu</b></h1>
+                <div className="page-header-block">
+                    <span className="page-overline">REVENUE MANAGEMENT</span>
+                    <h1 className="page-main-title">DANH SÁCH DOANH THU</h1>
+                    <p className="page-subtitle">Quản lý và tra cứu thông tin doanh thu, hóa đơn thanh toán.</p>
+                </div>
 
                 <div className="row" id="add-row-form3">
                     <div className="col">

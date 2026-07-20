@@ -145,7 +145,11 @@ const CustomerManage = () => {
         <>
             <Navbar/>
             <div className='customer_page'>
-                <h1 id="heading"><b>Quản lý thông tin khách hàng</b></h1>
+                <div className="page-header-block">
+                    <span className="page-overline">CUSTOMER MANAGEMENT</span>
+                    <h1 className="page-main-title">QUẢN LÝ KHÁCH HÀNG</h1>
+                    <p className="page-subtitle">Quản lý thêm mới, chỉnh sửa và tra cứu thông tin khách hàng.</p>
+                </div>
 
                 {/* Combine search and add button in one row */}
                 <div className="row" id="add-row-form3">
@@ -171,9 +175,10 @@ const CustomerManage = () => {
 
                 {/* Add new customer form */}
                 {showAddForm && (
-                    <div className="add-form">
-                        <h3>Thêm khách hàng mới</h3>
-                        <form onSubmit={handleCreate}>
+                    <div className="modal-overlay" onClick={() => setShowAddForm(false)}>
+                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                            <h3>Thêm khách hàng mới</h3>
+                            <form onSubmit={handleCreate}>
                             <div className="form-group">
                                 <label>Số CCCD:</label>
                                 <input
@@ -244,13 +249,15 @@ const CustomerManage = () => {
                             </div>
                         </form>
                     </div>
+                </div>
                 )}
 
-                {/* Form chỉnh sửa */}
+                {/* Edit customer form */}
                 {editingCustomer && (
-                    <div className="edit-form">
-                        <h3>Chỉnh sửa thông tin khách hàng</h3>
-                        <form onSubmit={handleUpdate}>
+                    <div className="modal-overlay" onClick={() => setEditingCustomer(null)}>
+                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                            <h3>Chỉnh sửa thông tin khách hàng</h3>
+                            <form onSubmit={handleUpdate}>
                             <div className="form-group">
                                 <label>Họ và Tên:</label>
                                 <input
@@ -308,6 +315,7 @@ const CustomerManage = () => {
                             </div>
                         </form>
                     </div>
+                </div>
                 )}
 
                 <div className="table-wrapper">
