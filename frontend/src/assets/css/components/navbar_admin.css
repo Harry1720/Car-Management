@@ -7,11 +7,13 @@ body {
 .car-list-page,
 .hr-page,
 .dashboard_page,
-.car-number-page {
+.car-number-page,
+.accounting-page {
     min-height: calc(100vh - 104px);
     margin: 30px 50px 30px 130px !important;
     max-width: calc(100vw - 180px) !important;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .navbar_admin_page .navbar {
@@ -22,6 +24,11 @@ body {
     border-right: 1px solid #eaeaea;
 }
 
+.navbar_admin_page .navbar .text-label {
+    flex: 1;
+    transition: opacity 0.3s ease, width 0.3s ease; 
+}
+
 /* Desktop: vertical sidebar */
 @media (min-width: 769px) {
     .navbar_admin_page .navbar {
@@ -29,7 +36,7 @@ body {
         top: 0;
         left: 0;
         bottom: 0;
-        width: 290px;
+        width: 325px;
         flex-direction: column;
         /* align-items: stretch; */
         padding: 20px 10px;
@@ -46,7 +53,7 @@ body {
         display: block; /* Hiện logo lớn */
         width: 180px;
         height: 38px;
-        margin-left: 20%;
+        margin: 0;
     }
 
     /* Khi sidebar thu gọn (Desktop) */
@@ -89,22 +96,22 @@ body {
         padding-bottom: 20px;
     }
 
-    .navbar_admin_page .navbar.collapsed .collapse-btn {
+    /* .navbar_admin_page .navbar.collapsed .collapse-btn {
         margin-left: 0;
         margin-top: 20px;
-    }
+    } */
 
     .navbar_admin_page .brand {
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         width: 100%;
-        padding: 20px 5px 20px 5px;
+        padding: 20px 0px;
         box-sizing: border-box;
     }
 
-    .navbar_admin_page .collapse-btn {
+    /* .navbar_admin_page .collapse-btn {
         border: none;
         display: flex;
         align-items: center;
@@ -114,11 +121,11 @@ body {
         color: #333;
         transition: 0.3s;
         background: transparent;
-    }
+    } */
 
-    .navbar_admin_page .collapse-btn:focus {
+    /* .navbar_admin_page .collapse-btn:focus {
         outline: none;
-    }
+    } */
 
     .navbar_admin_page .navbar .main-menu {
         display: flex;
@@ -190,6 +197,72 @@ body {
     margin-bottom: 20px !important;
 }
 
+/* Toolbar Layout */
+#add-row-form3 .col {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+#add-row-form3 .col input[type="text"] {
+    width: 350px !important;
+    padding: 10px 15px 10px 40px !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="%2394a3b8" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"/></svg>') no-repeat 12px center !important;
+    background-size: 18px !important;
+    transition: all 0.3s !important;
+}
+
+#add-row-form3 .col input[type="text"]:focus {
+    outline: none !important;
+    border-color: #1E3A8A !important;
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1) !important;
+}
+
+#add-row-form3 .col button.btn-primary {
+    width: fit-content !important;
+    padding: 8px 24px !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+/* Center Table Action Buttons */
+.table-wrapper table th,
+.table-wrapper table td {
+    text-align: center !important;
+}
+
+.table-wrapper table td button.edit-btn,
+.table-wrapper table td button.delete-btn,
+.table-wrapper table td button.edit-customer,
+.table-wrapper table td button.delete-customer,
+.table-wrapper table td button.edit-transaction,
+.table-wrapper table td button.delete-transaction {
+    margin: 0 auto;
+    display: block;
+}
+
+/* Admin Footer */
+.admin-footer {
+    background-color: #EEEEEE;
+    text-align: center;
+    padding: 10px;
+    color: #757575;
+    width: calc(100% - 80px);
+    margin-left: 80px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .admin-footer {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
 /* Hamburger Menu */
 .navbar_admin_page .hamburger {
     display: none;
@@ -234,13 +307,19 @@ body {
     color: rgb(0, 0, 0);
     text-decoration: none;
     padding: 15px 10px;
+    margin: 0 10px;
     display: flex;
     align-items: center;
     gap: 15px;
     font-weight: 400;
-    width: 100%;
+    width: calc(100% - 20px);
     box-sizing: border-box;
     white-space: nowrap; /* Đảm bảo text không bị rớt dòng khi đang thu/mở */
+    border-radius: 5px;
+}
+
+.navbar_admin_page .navbar:not(.collapsed) .main-menu li a {
+    border-left: 4px solid transparent;
 }
 
 /* .navbar_admin_page ion-icon.submenu-indicator {
@@ -255,7 +334,6 @@ body {
     position: relative;
     background-color: rgba(244, 246, 248, 0.8);
     border-left: 4px solid #1E3A8A;
-    border-radius: 0 5px 5px 0;
 }
 
 .navbar_admin_page .navbar .main-menu li a.active::after {
@@ -368,9 +446,9 @@ body {
         display: flex;
     }
 
-    .navbar_admin_page .collapse-btn {
+    /* .navbar_admin_page .collapse-btn {
         display: none;
-    }
+    } */
     
     .navbar_admin_page .navbar .main-menu {
         display: none;
@@ -414,6 +492,10 @@ body {
     .navbar_admin_page ion-icon {
         font-size: 20px;
     }
+    .navbar_admin_page .navbar .main-menu li.logout-item {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        padding-top: 10px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -444,19 +526,6 @@ body {
     }
 }
 
-/* Global Admin Page Layout */
-.customer_page,
-.transaction-page,
-.car-list-page,
-.hr-page,
-.car-number-page,
-.dashboard_page,
-.accounting-page {
-    margin: 30px 50px 30px 130px !important;
-    max-width: calc(100vw - 180px) !important;
-    box-sizing: border-box;
-    overflow-x: hidden;
-}
 
 @media (max-width: 768px) {
     .customer_page,
@@ -466,7 +535,7 @@ body {
     .car-number-page,
     .dashboard_page,
     .accounting-page {
-        margin: 80px 20px 30px 20px !important;
+        margin: 20px 20px 30px 20px !important;
         max-width: calc(100vw - 40px) !important;
     }
 }

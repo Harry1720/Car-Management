@@ -168,7 +168,7 @@ const CustomerManage = () => {
                                 setEditingCustomer(null); // Close edit form when adding
                             }}
                         >
-                            {showAddForm ? 'Hủy thêm' : 'Thêm khách hàng'}
+                            {showAddForm ? <><ion-icon name="close-outline"></ion-icon> Hủy thêm</> : <><ion-icon name="add-outline"></ion-icon> Thêm khách hàng</>}
                         </button>
                     </div>
                 </div>

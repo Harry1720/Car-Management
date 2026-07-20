@@ -266,7 +266,7 @@ const CarList = () => {
                                 setEditingCar(null); // Close edit form when adding
                             }}
                         >
-                            {showAddForm ? 'Hủy thêm' : 'Thêm xe mới'}
+                            {showAddForm ? <><ion-icon name="close-outline"></ion-icon> Hủy thêm</> : <><ion-icon name="add-outline"></ion-icon> Thêm xe mới</>}
                         </button>
                     </div>
                 </div>

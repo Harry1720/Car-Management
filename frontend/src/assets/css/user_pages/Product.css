@@ -39,7 +39,7 @@
   line-height: 1.6;
   width: min(1500px, calc(100% - 32px));
   margin: 0 auto;
-  padding-bottom: 80px;
+  /* padding-bottom: 80px; */
 }
 
 /* .pagination {
@@ -451,14 +451,13 @@
   gap: 20px;
   padding: 24px;
   border-radius: 30px;
-  margin-bottom: 80px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   align-items: center;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(18px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
-    width: min(1200px, calc(100% - 32px));
-  margin: 0 auto;
+  width: min(1200px, calc(100% - 32px));
+  margin: 120px auto;
 }
 
 .product_page__lead_copy {
