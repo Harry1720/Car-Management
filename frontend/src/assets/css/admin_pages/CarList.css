@@ -151,12 +151,12 @@
 }
 
 .btn-save {
-    background-color: #28a745;
+    background-color: #1E3A8A;
     color: white;
 }
 
 .btn-save:hover {
-    background-color: #218838;
+    background-color: #1e40af;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
 }
@@ -395,4 +395,261 @@
         padding: 6px 12px;
         font-size: 13px;
     }
+}
+
+/* --- Modal Layout Refactor --- */
+.wide-modal-content {
+    max-width: 1200px !important;
+    width: 90vw !important;
+    position: relative;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+    color: #333;
+    transition: color 0.2s;
+}
+
+.modal-close-btn:hover {
+    color: #ff4d4f;
+}
+
+/* --- CarList specific --- */
+.modal-form-layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.modal-form-col-left {
+    flex: 1;
+}
+
+.modal-form-col-right {
+    flex: 1;
+    border-left: 1px solid #ddd;
+    padding-left: 30px;
+}
+
+.form-actions-right {
+    margin-top: 30px;
+    justify-content: flex-end;
+}
+
+.image-preview-modal {
+    padding: 20px !important;
+    text-align: center;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.preview-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.preview-image-content {
+    max-height: 80vh;
+    max-width: 90vw;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.variant-image-item {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #eee;
+    transition: transform 0.2s;
+}
+
+.variant-image-item:hover {
+    transform: scale(1.1);
+}
+
+.add-variant-btn {
+    padding: 5px 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove-variant-btn {
+    background: none;
+    color: #ff4d4f;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.file-upload-label {
+    padding: 5px 15px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Replaced Inline Styles for CarList Variants */
+.modal-title {
+    margin-bottom: 20px;
+}
+
+.form-col.full-width {
+    width: 100%;
+}
+
+.variant-group-label {
+    margin: 0;
+}
+
+.variant-col-name {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.variant-label {
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: #333;
+    font-weight: 600;
+}
+
+.variant-col-color {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+}
+
+.variant-color-input {
+    width: 50px;
+    height: 43px;
+    padding: 0;
+    border: none;
+}
+
+.variant-col-number {
+    display: flex;
+    flex-direction: column;
+    width: 80px;
+}
+
+.variant-col-action {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.delete-btn.variant-action-btn {
+    margin-bottom: 5px;
+}
+
+.variant-upload-inline {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    border: 1px dashed #ccc;
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+.file-name-display {
+    font-size: 13px;
+    color: #666;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.current-image-display {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.current-image-label {
+    font-size: 12px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.action-buttons-wrapper {
+    display: flex;
+    gap: 5px;
+}
+
+.toast-container-custom {
+    z-index: 9999;
+}
+
+.variant-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-end;
+}
+
+.variant-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.variant-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.variant-image-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.variant-color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
 }

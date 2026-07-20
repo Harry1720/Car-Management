@@ -113,14 +113,16 @@ const Products = () => {
           name: car.name,
           model: car.model,
           image:
-            car.images && car.images.length > 0
-              ? car.images[0]
+            car.variants && car.variants.length > 0 && car.variants[0].image
+              ? car.variants[0].image
               : "/images/car-pics/vf3/vf3yl.png",
           origin: car.origin_of_car || "Việt Nam",
           year: car.year || 2024,
           batteryKwh: carSpecs.batteryCapacity || fallbackSpecs.batteryKwh,
           rangeKm: carSpecs.range || fallbackSpecs.rangeKm,
           acceleration: carSpecs.acceleration || fallbackSpecs.acceleration,
+          motorPower: carSpecs.motorPower || 'N/A',
+          energyConsumption: carSpecs.energyConsumption || 'N/A',
           priceLabel: formatVnd(car.price),
           link: `../deposit?model=${(car.model || "").toLowerCase()}`,
         };
@@ -164,19 +166,24 @@ const Products = () => {
                 <span className="car-detail-value">{car.origin}</span>
               </li> */}
               <li>
-                <i className="fas fa-calendar"></i>
+                {/* <i className="fas fa-calendar"></i> */}
                 <span className="car-detail-label">Năm sản xuất</span>
                 <span className="car-detail-value">{car.year}</span>
               </li>
               <li>
-                <i className="fas fa-battery-three-quarters"></i>
+                {/* <i className="fas fa-battery-three-quarters"></i> */}
                 <span className="car-detail-label">Dung lượng pin</span>
                 <span className="car-detail-value">{car.batteryKwh} kWh</span>
               </li>
               <li>
-                <i className="fas fa-bolt"></i>
+                {/* <i className="fas fa-bolt"></i> */}
                 <span className="car-detail-label">Quãng đường</span>
                 <span className="car-detail-value">{car.rangeKm} km</span>
+              </li>
+              <li>
+                {/* <i className="fas fa-cogs"></i> */}
+                <span className="car-detail-label">Công suất tối đa</span>
+                <span className="car-detail-value">{car.motorPower}</span>
               </li>
               {/* <li>
                 <i className="fas fa-rocket"></i>
@@ -184,7 +191,7 @@ const Products = () => {
                 <span className="car-detail-value">{car.acceleration}</span>
               </li> */}
             </ul>
-            <div className="car-price">Từ {car.priceLabel}</div>
+            <div className="car-price">{car.priceLabel}</div>
           </div>
           <button
             className="car-button"

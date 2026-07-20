@@ -139,6 +139,14 @@ const CustomerManage = () => {
 
     useEffect(() => {
         document.title = "Quản lý khách hàng | VinFast";
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                setShowAddForm(false);
+                setEditingCustomer(null);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);
 
     return(
@@ -176,75 +184,82 @@ const CustomerManage = () => {
                 {/* Add new customer form */}
                 {showAddForm && (
                     <div className="modal-overlay" onClick={() => setShowAddForm(false)}>
-                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <div className="modal-content wide-modal-content" onClick={e => e.stopPropagation()}>
+                            <button type="button" onClick={() => setShowAddForm(false)} className="modal-close-btn"><ion-icon name="close-outline"></ion-icon></button>
                             <h3>Thêm khách hàng mới</h3>
                             <form onSubmit={handleCreate}>
-                            <div className="form-group">
-                                <label>Số CCCD:</label>
-                                <input
-                                    type="text"
-                                    name="identityNumber"
-                                    value={newCustomer.identityNumber}
-                                    onChange={handleNewCustomerChange}
-                                    className="form-control"
-                                    required
-                                />
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Số CCCD:</label>
+                                    <input
+                                        type="text"
+                                        name="identityNumber"
+                                        value={newCustomer.identityNumber}
+                                        onChange={handleNewCustomerChange}
+                                        className="form-control"
+                                        required
+                                    />
+                                </div>
+                                <div className="form-col">
+                                    <label>Họ và Tên:</label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={newCustomer.name}
+                                        onChange={handleNewCustomerChange}
+                                        className="form-control"
+                                        required
+                                    />
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label>Họ và Tên:</label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={newCustomer.name}
-                                    onChange={handleNewCustomerChange}
-                                    className="form-control"
-                                    required
-                                />
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Số điện thoại:</label>
+                                    <input
+                                        type="text"
+                                        name="phone"
+                                        value={newCustomer.phone}
+                                        onChange={handleNewCustomerChange}
+                                        className="form-control"
+                                        required
+                                    />
+                                </div>
+                                <div className="form-col">
+                                    <label>Email:</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={newCustomer.email}
+                                        onChange={handleNewCustomerChange}
+                                        className="form-control"
+                                        required
+                                    />
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label>Địa chỉ:</label>
-                                <input
-                                    type="text"
-                                    name="address"
-                                    value={newCustomer.address}
-                                    onChange={handleNewCustomerChange}
-                                    className="form-control"
-                                    placeholder="Số nhà, đường, quận/huyện, thành phố"
-                                    required
-                                />
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Địa chỉ:</label>
+                                    <input
+                                        type="text"
+                                        name="address"
+                                        value={newCustomer.address}
+                                        onChange={handleNewCustomerChange}
+                                        className="form-control"
+                                        placeholder="Số nhà, đường, quận/huyện, thành phố"
+                                        required
+                                    />
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label>Số điện thoại:</label>
-                                <input
-                                    type="text"
-                                    name="phone"
-                                    value={newCustomer.phone}
-                                    onChange={handleNewCustomerChange}
-                                    className="form-control"
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Email:</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={newCustomer.email}
-                                    onChange={handleNewCustomerChange}
-                                    className="form-control"
-                                    required
-                                />
-                            </div>
-                            <div className="button-group">
-                                <button type="submit" className="btn-save">
-                                    Thêm khách hàng
-                                </button>
+                            <div className="button-group" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '20px' }}>
                                 <button 
                                     type="button" 
                                     className="btn-cancel"
                                     onClick={() => setShowAddForm(false)}
                                 >
                                     Hủy
+                                </button>
+                                <button type="submit" className="btn-save">
+                                    Thêm khách hàng
                                 </button>
                             </div>
                         </form>
@@ -255,62 +270,80 @@ const CustomerManage = () => {
                 {/* Edit customer form */}
                 {editingCustomer && (
                     <div className="modal-overlay" onClick={() => setEditingCustomer(null)}>
-                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <div className="modal-content wide-modal-content" onClick={e => e.stopPropagation()}>
+                            <button type="button" onClick={() => setEditingCustomer(null)} className="modal-close-btn"><ion-icon name="close-outline"></ion-icon></button>
                             <h3>Chỉnh sửa thông tin khách hàng</h3>
                             <form onSubmit={handleUpdate}>
-                            <div className="form-group">
-                                <label>Họ và Tên:</label>
-                                <input
-                                    type="text"
-                                    name="customer_name"
-                                    value={editingCustomer.customer_name}
-                                    onChange={handleChange}
-                                    className="form-control"
-                                />
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Số CCCD:</label>
+                                    <input
+                                        type="text"
+                                        name="identityNumber"
+                                        value={editingCustomer.identityNumber || ''}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                        required
+                                    />
+                                </div>
+                                <div className="form-col">
+                                    <label>Họ và Tên:</label>
+                                    <input
+                                        type="text"
+                                        name="customer_name"
+                                        value={editingCustomer.customer_name}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label>Địa chỉ:</label>
-                                <input
-                                    type="text"
-                                    name="address"
-                                    value={editingCustomer.address}
-                                    onChange={handleChange}
-                                    className="form-control"
-                                />
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Số điện thoại:</label>
+                                    <input
+                                        type="text"
+                                        name="phone_no"
+                                        value={editingCustomer.phone_no}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="form-col">
+                                    <label>Email:</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={editingCustomer.email}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label>Số điện thoại:</label>
-                                <input
-                                    type="text"
-                                    name="phone_no"
-                                    value={editingCustomer.phone_no}
-                                    onChange={handleChange}
-                                    className="form-control"
-                                />
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Địa chỉ:</label>
+                                    <input
+                                        type="text"
+                                        name="address"
+                                        value={editingCustomer.address}
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label>Email:</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={editingCustomer.email}
-                                    onChange={handleChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div className="button-group">
-                                <button 
-                                    type="submit" 
-                                    className="btn-save"
-                                >
-                                    Lưu thay đổi
-                                </button>
+                            <div className="button-group" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '20px' }}>
                                 <button 
                                     type="button" 
                                     className="btn-cancel"
                                     onClick={() => setEditingCustomer(null)}
                                 >
                                     Hủy
+                                </button>
+                                <button 
+                                    type="submit" 
+                                    className="btn-save"
+                                >
+                                    Lưu thay đổi
                                 </button>
                             </div>
                         </form>

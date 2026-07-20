@@ -46,6 +46,14 @@ const HRPage = () => {
 
     useEffect(() => {
         document.title = "Quản lý nhân sự | VinFast";
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                setShowAddForm(false);
+                setEditingEmployee(null);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);
 
     const handleAddEmployee = async (e) => {
@@ -229,7 +237,8 @@ const HRPage = () => {
                 {/* Add new employee form */}
                 {showAddForm && (
                     <div className="modal-overlay" onClick={() => setShowAddForm(false)}>
-                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <div className="modal-content wide-modal-content" onClick={e => e.stopPropagation()}>
+                            <button type="button" onClick={() => setShowAddForm(false)} className="modal-close-btn"><ion-icon name="close-outline"></ion-icon></button>
                             <h3>Thêm nhân viên mới</h3>
                             <form onSubmit={handleAddEmployee}>
                             <div className="form-row">
@@ -253,12 +262,24 @@ const HRPage = () => {
                                         required
                                     />
                                 </div>
+                            </div>
+                            <div className="form-row">
                                 <div className="form-col">
                                     <label>Ngày sinh</label>
                                     <input 
                                         type="date" 
                                         id="new-birthdate" 
                                         value={newEmployee.employee_birthday}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-col">
+                                    <label>Số điện thoại</label>
+                                    <input 
+                                        type="text" 
+                                        id="new-phoneNo" 
+                                        value={newEmployee.employee_phone_no}
                                         onChange={handleInputChange}
                                         required
                                     />
@@ -276,16 +297,6 @@ const HRPage = () => {
                                     />
                                 </div>
                                 <div className="form-col">
-                                    <label>Số điện thoại</label>
-                                    <input 
-                                        type="text" 
-                                        id="new-phoneNo" 
-                                        value={newEmployee.employee_phone_no}
-                                        onChange={handleInputChange}
-                                        required
-                                    />
-                                </div>
-                                <div className="form-col">
                                     <label>Địa chỉ</label>
                                     <input 
                                         type="text" 
@@ -295,6 +306,8 @@ const HRPage = () => {
                                         required
                                     />
                                 </div>
+                            </div>
+                            <div className="form-row">
                                 <div className="form-col">
                                     <label>Chức vụ</label>
                                     <input 
@@ -306,7 +319,7 @@ const HRPage = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="form-actions">
+                            <div className="button-group" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '20px' }}>
                                 <button 
                                     type="button" 
                                     className="btn-cancel"
@@ -317,7 +330,7 @@ const HRPage = () => {
                                 <button type="submit" className="btn-save">
                                     Thêm mới
                                 </button>
-                                </div>
+                            </div>
                             </form>
                         </div>
                     </div>
@@ -326,12 +339,13 @@ const HRPage = () => {
                 {/* Add edit form */}
                 {editingEmployee && (
                     <div className="modal-overlay" onClick={() => setEditingEmployee(null)}>
-                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <div className="modal-content wide-modal-content" onClick={e => e.stopPropagation()}>
+                            <button type="button" onClick={() => setEditingEmployee(null)} className="modal-close-btn"><ion-icon name="close-outline"></ion-icon></button>
                             <h3>Chỉnh sửa thông tin nhân viên</h3>
                             <form onSubmit={handleUpdate}>
-                            <div className="row">
-                                <div className="col">
-                                    <p>Mã nhân viên</p>
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Mã nhân viên</label>
                                     <input 
                                         type="text"
                                         name="employee_citizenid"
@@ -340,8 +354,8 @@ const HRPage = () => {
                                         required
                                     />
                                 </div>
-                                <div className="col">
-                                    <p>Họ và tên nhân viên</p>
+                                <div className="form-col">
+                                    <label>Họ và tên nhân viên</label>
                                     <input 
                                         type="text"
                                         name="employee_name"
@@ -350,8 +364,10 @@ const HRPage = () => {
                                         required
                                     />
                                 </div>
-                                <div className="col">
-                                    <p>Ngày tháng năm sinh</p>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Ngày tháng năm sinh</label>
                                     <input 
                                         type="date"
                                         name="employee_birthday"
@@ -360,10 +376,8 @@ const HRPage = () => {
                                         required
                                     />
                                 </div>
-                            </div>
-                            <div className="row">
-                                <div className="col">
-                                    <p>Số điện thoại</p>
+                                <div className="form-col">
+                                    <label>Số điện thoại</label>
                                     <input 
                                         type="text"
                                         name="employee_phone_no"
@@ -372,8 +386,10 @@ const HRPage = () => {
                                         required
                                     />
                                 </div>
-                                <div className="col">
-                                    <p>Email</p>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Email</label>
                                     <input 
                                         type="email"
                                         name="employee_email"
@@ -382,8 +398,8 @@ const HRPage = () => {
                                         required
                                     />
                                 </div>
-                                <div className="col">
-                                    <p>Địa chỉ</p>
+                                <div className="form-col">
+                                    <label>Địa chỉ</label>
                                     <input 
                                         type="text"
                                         name="employee_address"
@@ -393,9 +409,9 @@ const HRPage = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="row">
-                                <div className="col">
-                                    <p>Chức vụ</p>
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Chức vụ</label>
                                     <input 
                                         type="text"
                                         name="role_title"
@@ -405,8 +421,7 @@ const HRPage = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="button-group">
-                                <button type="submit" className="btn-save">Lưu thay đổi</button>
+                            <div className="button-group" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '20px' }}>
                                 <button 
                                     type="button" 
                                     className="btn-cancel"
@@ -414,6 +429,7 @@ const HRPage = () => {
                                 >
                                     Hủy
                                 </button>
+                                <button type="submit" className="btn-save">Lưu thay đổi</button>
                             </div>
                         </form>
                     </div>

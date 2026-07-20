@@ -9,7 +9,6 @@ const CarNumber = () => {
     const [loading, setLoading] = useState(true);
 
     const [searchTerm, setSearchTerm] = useState('');
-    const [editingCarNumber, setEditingCarNumber] = useState(null);
 
     useEffect(() => {
         document.title = "Quản lý số lượng xe | VinFast";
@@ -22,14 +21,39 @@ const CarNumber = () => {
             const response = await carService.getAllCars(1, 100);
             const carsArray = Array.isArray(response) ? response : (response?.cars || []);
             
-            // Map API cars to carNumbers format
-            const apiCarNumbers = carsArray.map(car => ({
-                model_car_id: car.model,
-                date_import: car.date_of_import || new Date().toISOString().split('T')[0],
-                remaining: (car.stock || 0) - (car.car_sold || 0),
-                imported: car.stock || 0,
-                sold: car.car_sold || 0
-            }));
+            const apiCarNumbers = carsArray.flatMap(car => {
+                let dateImportStr = '';
+                if (car.date_of_import) {
+                    const d = new Date(car.date_of_import);
+                    if (!isNaN(d)) {
+                        dateImportStr = d.toLocaleDateString('vi-VN');
+                    } else {
+                        dateImportStr = car.date_of_import;
+                    }
+                }
+                
+                if (!car.variants || car.variants.length === 0) {
+                    return [{
+                        model_car_id: car.model,
+                        colorName: 'Mặc định',
+                        colorHex: '#ccc',
+                        date_import: dateImportStr || new Date().toLocaleDateString('vi-VN'),
+                        remaining: 0,
+                        imported: 0,
+                        sold: 0
+                    }];
+                }
+
+                return car.variants.map(v => ({
+                    model_car_id: `${car.model} (${v.colorName})`,
+                    colorName: v.colorName,
+                    colorHex: v.colorHex,
+                    date_import: dateImportStr || new Date().toLocaleDateString('vi-VN'),
+                    remaining: (v.stock || 0) - (v.sold || 0),
+                    imported: v.stock || 0,
+                    sold: v.sold || 0
+                }));
+            });
             
             setCarNumbers(apiCarNumbers);
             setLoading(false);
@@ -62,129 +86,41 @@ const CarNumber = () => {
                     </div>
                 </div>
 
-                {editingCarNumber && (
-                    <div className="modal-overlay" onClick={() => setEditingCarNumber(null)}>
-                        <div className="modal-content" onClick={e => e.stopPropagation()}>
-                            <h3>Chỉnh sửa thông tin số lượng xe</h3>
-                            <form onSubmit={(e) => {
-                            e.preventDefault();
-                            setCarNumbers(carNumbers.map(car => 
-                                car.model_car_id === editingCarNumber.model_car_id ? editingCarNumber : car
-                            ));
-                            setEditingCarNumber(null);
-                        }}>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Mã xe</label>
-                                    <input 
-                                        type="text" 
-                                        value={editingCarNumber.model_car_id}
-                                        disabled
-                                    />
-                                </div>
-                                <div className="form-col">
-                                    <label>Ngày nhập</label>
-                                    <input 
-                                        type="date"
-                                        value={editingCarNumber.date_import}
-                                        onChange={(e) => setEditingCarNumber({
-                                            ...editingCarNumber, 
-                                            date_import: e.target.value
-                                        })}
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Số lượng tồn</label>
-                                    <input 
-                                        type="number"
-                                        value={editingCarNumber.remaining}
-                                        onChange={(e) => setEditingCarNumber({
-                                            ...editingCarNumber, 
-                                            remaining: e.target.value
-                                        })}
-                                    />
-                                </div>
-                                <div className="form-col">
-                                    <label>Số lượng nhập</label>
-                                    <input 
-                                        type="number"
-                                        value={editingCarNumber.imported}
-                                        onChange={(e) => setEditingCarNumber({
-                                            ...editingCarNumber, 
-                                            imported: e.target.value
-                                        })}
-                                    />
-                                </div>
-                                <div className="form-col">
-                                    <label>Số lượng đã bán</label>
-                                    <input 
-                                        type="number"
-                                        value={editingCarNumber.sold}
-                                        onChange={(e) => setEditingCarNumber({
-                                            ...editingCarNumber, 
-                                            sold: e.target.value
-                                        })}
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-actions">
-                                <button type="button" className="btn-cancel" onClick={() => setEditingCarNumber(null)}>
-                                    Hủy
-                                </button>
-                                <button type="submit" className="btn-save">
-                                    Lưu thay đổi
-                                </button>
-                            </div>
-                            </form>
-                        </div>
-                    </div>
-                )}
+                {/* Read-only Table */}
 
                 <div className="table-wrapper">
                     <table className="table table-hover table-sortable table-bordered">
                         <thead>
                             <tr>
-                                <th>Mã xe</th>
+                                <th>Mã xe - Biến thể</th>
+                                <th>Màu sắc</th>
                                 <th>Ngày nhập</th>
                                 <th>Số lượng tồn</th>
                                 <th>Số lượng nhập</th>
                                 <th>Số lượng xe đã bán</th>
-                                <th colSpan="2">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
                             {loading ? (
-                                <tr><td colSpan="7" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                                <tr><td colSpan="6" style={{textAlign: 'center'}}>Đang tải...</td></tr>
                             ) : carNumbers.length === 0 ? (
-                                <tr><td colSpan="7" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                                <tr><td colSpan="6" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
                             ) : (
                             carNumbers
                                 .filter(car => car.model_car_id.toLowerCase().includes(searchTerm.toLowerCase()))
                                 .map((car, index) => (
                                     <tr key={index}>
                                         <td>{car.model_car_id}</td>
+                                        <td>
+                                            <div style={{display: 'flex', alignItems: 'center', gap: '5px'}}>
+                                                <div style={{width: '20px', height: '20px', borderRadius: '50%', backgroundColor: car.colorHex, border: '1px solid #ccc'}}></div>
+                                                {car.colorName}
+                                            </div>
+                                        </td>
                                         <td>{car.date_import}</td>
                                         <td>{car.remaining}</td>
                                         <td>{car.imported}</td>
                                         <td>{car.sold}</td>
-                                        <td>
-                                            <button 
-                                                className="delete-btn"
-                                                onClick={() => setCarNumbers(carNumbers.filter((_, i) => i !== index))}
-                                            >
-                                                <ion-icon name="trash-outline"></ion-icon>
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button 
-                                                className="edit-btn"
-                                                onClick={() => setEditingCarNumber(car)}
-                                            >
-                                                <ion-icon name="create-outline"></ion-icon>
-                                            </button>
-                                        </td>
                                     </tr>
                                 ))
                             )}

@@ -1,5 +1,13 @@
 const mongoose = require('mongoose');
 
+const colorVariantSchema = new mongoose.Schema({
+  colorName: { type: String, required: true },
+  colorHex: { type: String, required: true },
+  image: { type: String },
+  stock: { type: Number, default: 0, min: [0, 'Số lượng tồn kho không thể âm'] },
+  sold: { type: Number, default: 0, min: [0, 'Số lượng đã bán không thể âm'] }
+});
+
 const carSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -19,41 +27,27 @@ const carSchema = new mongoose.Schema({
     min: [2000, 'Năm sản xuất phải từ 2000 trở lên'],
     max: [new Date().getFullYear() + 1, 'Năm sản xuất không hợp lệ'],
   },
-  color: {
-    type: String,
-  },
   // Thêm các trường mới cho FE
   origin_of_car: {
     type: String,
     default: '',
   },
   date_of_import: {
-    type: String,
-    default: '',
+    type: Date,
   },
-  car_sold: {
-    type: Number,
-    default: 0,
-  },
+
   description: {
     type: String,
   },
   specifications: {
-    engine: String,
-    fuelType: String,
-    transmission: String,
+    motorPower: String,
+    energyConsumption: String,
     seats: Number,
-    fuelConsumption: String,
     range: String,
     batteryCapacity: String,
     acceleration: String,
   },
-  images: [String],
-  stock: {
-    type: Number,
-    default: 0,
-    min: [0, 'Số lượng tồn kho không thể âm'],
-  },
+  variants: [colorVariantSchema],
   category: {
     type: String,
     enum: ['sedan', 'suv', 'coupe', 'hatchback', 'van'],

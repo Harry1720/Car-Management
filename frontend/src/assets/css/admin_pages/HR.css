@@ -171,12 +171,12 @@
 }
 
 .hr-page .btn-save {
-    background-color: #28a745;
+    background-color: #1E3A8A;
     color: white;
 }
 
 .hr-page .btn-save:hover {
-    background-color: #218838;
+    background-color: #1e40af;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
 }
@@ -386,13 +386,13 @@
 
 .add-employee-form .btn-save,
 .btn-save {
-    background-color: #28a745;
+    background-color: #1E3A8A;
     color: white;
 }
 
 .add-employee-form .btn-save:hover,
 .btn-save:hover {
-    background-color: #218838;
+    background-color: #1e40af;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
 }
@@ -498,4 +498,28 @@
     gap: 15px;
     margin-top: 25px;
     flex-wrap: wrap;
+}
+
+/* --- Modal Layout Refactor --- */
+.wide-modal-content {
+    max-width: 1200px !important;
+    width: 90vw !important;
+    position: relative;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+    color: #333;
+    transition: color 0.2s;
+}
+
+.modal-close-btn:hover {
+    color: #ff4d4f;
 }

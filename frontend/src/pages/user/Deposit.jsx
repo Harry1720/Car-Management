@@ -42,26 +42,32 @@ const Deposit = () => {
       
       if (foundCar) {
         // Convert API car to display format
-        const displayCar = {
-          id: foundCar.model,
-          name: foundCar.name || 'Xe VinFast',
-          version: foundCar.name,
-          specs: {
-            power: foundCar.specifications?.engine || 'N/A',
-            acceleration: foundCar.specifications?.transmission || 'N/A',
-            range: foundCar.specifications?.fuelConsumption || 'N/A'
-          },
-          price: `${(foundCar.price / 1000000).toFixed(0)}.000.000 VNĐ`,
-          deposit: `${Math.round(foundCar.price / 1000000 * 0.1)}.000.000 VNĐ`,
-          defaultImage: foundCar.images?.[0] || '/images/car-pics/vf3/vf3yl.png',
-          colors: [
-            {
-              name: foundCar.color || 'Mặc định',
-              color: foundCar.color || 'gray',
-              image: foundCar.images?.[0] || '/images/car-pics/vf3/vf3yl.png'
-            }
-          ]
-        };
+          const mappedColors = (foundCar.variants && foundCar.variants.length > 0) 
+            ? foundCar.variants.map(v => ({
+                name: v.colorName || 'Mặc định',
+                color: v.colorHex || 'gray',
+                image: v.image ? v.image : '/images/car-pics/vf3/vf3yl.png'
+              }))
+            : [{
+                name: 'Mặc định',
+                color: 'gray',
+                image: (foundCar.variants && foundCar.variants.length > 0 && foundCar.variants[0].image) ? foundCar.variants[0].image : '/images/car-pics/vf3/vf3yl.png'
+              }];
+
+          const displayCar = {
+            id: foundCar._id,
+            name: foundCar.name || 'Xe VinFast',
+            version: foundCar.name,
+            specs: {
+              power: foundCar.specifications?.motorPower || 'N/A',
+              acceleration: foundCar.specifications?.acceleration || 'N/A',
+              range: foundCar.specifications?.range || 'N/A'
+            },
+            price: `${(foundCar.price / 1000000).toFixed(0)}.000.000 VNĐ`,
+            deposit: `${Math.round(foundCar.price / 1000000 * 0.1)}.000.000 VNĐ`,
+            defaultImage: mappedColors[0]?.image || '/images/car-pics/vf3/vf3yl.png',
+            colors: mappedColors
+          };
         setSelectedCar(displayCar);
         setSelectedColor(displayCar.colors[0]);
       }

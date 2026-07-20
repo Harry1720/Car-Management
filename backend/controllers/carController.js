@@ -51,15 +51,13 @@ exports.createCar = async (req, res) => {
       model,
       price,
       year,
-      color,
       description,
       specifications,
-      stock,
+      variants,
       category,
       status,
       origin_of_car,
       date_of_import,
-      car_sold,
     } = req.body;
 
     // Lấy ảnh từ Cloudinary nếu có upload
@@ -78,21 +76,40 @@ exports.createCar = async (req, res) => {
       }
     }
 
+    // Parse variants nếu là string JSON
+    let parsedVariants = variants;
+    if (typeof variants === 'string') {
+      try {
+        parsedVariants = JSON.parse(variants);
+      } catch (e) {
+        parsedVariants = [];
+      }
+    }
+    
+    // Map uploaded files to variants based on fileIndex
+    if (Array.isArray(parsedVariants)) {
+      parsedVariants.forEach(v => {
+        if (v.fileIndex !== undefined && v.fileIndex !== null) {
+          const fileIndex = parseInt(v.fileIndex);
+          if (req.files && req.files[fileIndex]) {
+            v.image = req.files[fileIndex].path;
+          }
+        }
+      });
+    }
+
     const car = new Car({
       name,
       model,
       price,
       year,
-      color,
       description,
       specifications: parsedSpecifications,
-      stock,
+      variants: parsedVariants,
       category,
       status,
       origin_of_car,
       date_of_import,
-      car_sold,
-      images,
     });
 
     await car.save();
@@ -121,13 +138,31 @@ exports.updateCar = async (req, res) => {
       }
     }
     
-    // Nếu có upload ảnh mới, thêm vào
-    if (req.files && req.files.length > 0) {
-      const newImages = req.files.map(file => file.path);
-      // Lấy ảnh cũ nếu có
-      const oldCar = await Car.findById(req.params.id);
-      updates.images = [...(oldCar.images || []), ...newImages];
+    // Parse variants nếu là string JSON
+    if (updates.variants && typeof updates.variants === 'string') {
+      try {
+        updates.variants = JSON.parse(updates.variants);
+        // Map uploaded files to variants based on fileIndex
+        if (Array.isArray(updates.variants)) {
+          updates.variants.forEach(v => {
+            if (v.fileIndex !== undefined && v.fileIndex !== null) {
+              const fileIndex = parseInt(v.fileIndex);
+              if (req.files && req.files[fileIndex]) {
+                v.image = req.files[fileIndex].path;
+              }
+            }
+          });
+        }
+      } catch (e) {
+        console.log('Error parsing variants:', e);
+      }
     }
+    
+    // Bỏ qua xử lý ảnh các field cấp root
+    delete updates.images;
+    delete updates.color;
+    delete updates.stock;
+    delete updates.car_sold;
     
     const car = await Car.findByIdAndUpdate(req.params.id, updates, {
       new: true,
