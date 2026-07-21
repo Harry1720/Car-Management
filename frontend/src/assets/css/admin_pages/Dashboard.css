@@ -159,3 +159,27 @@
         margin: 0 8px;
     }
 }
+
+.admin-text-center {
+    text-align: center;
+}
+
+.dashboard-table-header {
+    background-color: rgb(26, 144, 255);
+    color: #ffffff;
+}
+
+.dashboard-link-none {
+    text-decoration: none;
+}
+
+.dashboard-btn-margin {
+    margin-top: 20px;
+}
+
+.dashboard-btn-borderless {
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 5px 10px;
+}

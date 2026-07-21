@@ -319,7 +319,7 @@ const HRPage = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="button-group" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '20px' }}>
+                            <div className="button-group admin-flex-end-group">
                                 <button 
                                     type="button" 
                                     className="btn-cancel"
@@ -421,7 +421,7 @@ const HRPage = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="button-group" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '20px' }}>
+                            <div className="button-group admin-flex-end-group">
                                 <button 
                                     type="button" 
                                     className="btn-cancel"
@@ -450,11 +450,11 @@ const HRPage = () => {
                                 <th colSpan="2">Thao tác</th>
                             </tr>
                         </thead>
-                        <tbody style={{backgroundColor: 'rgb(245, 252, 255)'}}>
+                        <tbody className="admin-table-body">
                             {loading ? (
-                                <tr><td colSpan="9" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                                <tr><td colSpan="9" className="admin-text-center">Đang tải...</td></tr>
                             ) : employees.length === 0 ? (
-                                <tr><td colSpan="9" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                                <tr><td colSpan="9" className="admin-text-center">Không có dữ liệu</td></tr>
                             ) : (
                                 filteredEmployees.map((employee) => {
                                     // Format date

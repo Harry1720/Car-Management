@@ -320,3 +320,12 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+.required-asterisk {
+    color: red;
+}
+
+.deposit-qr-size {
+    width: 200px;
+    height: 200px;
+}

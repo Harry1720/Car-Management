@@ -41,3 +41,10 @@
         margin: 15px 10px;
     }
 }
+.admin-table-body {
+    background-color: rgb(245, 252, 255);
+}
+
+.admin-text-center {
+    text-align: center;
+}

@@ -611,6 +611,9 @@ footer i {
   color: var(--primary-color);
 }
 
+.charging-table-minwidth {
+  min-width: 720px;
+}
 /* Responsive Design */
 @media (max-width: 1024px) {
   /* .container_charging {
@@ -742,7 +745,7 @@ footer i {
 
   .policy-intro {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: unset;
   }
 
   .policy-tab-buttons {

@@ -270,7 +270,7 @@ const Deposit = () => {
                 ].map(({ id, label }) => (
                   <div key={id} className="form-group mb-3">
                     <label>
-                      {label} <span style={{ color: "red" }}>*</span>
+                      {label} <span className="required-asterisk">*</span>
                     </label>
                     <input
                       type="text"
@@ -315,10 +315,9 @@ const Deposit = () => {
 
               <p>Vui lòng quét mã QR để thanh toán:</p>
               <img
-              className='qr_img'
+              className='qr_img deposit-qr-size'
                 src="/images/Deposit.png"
                 alt="QR Thanh toán"
-                style={{ width: "200px", height: "200px" }}
               />
 
               <div className="mt-3">

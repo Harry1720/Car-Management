@@ -145,7 +145,7 @@ const Policy = () => {
                   <thead className="thead-light">
                     <tr>
                       <th rowspan="2">Dòng xe</th>
-                      <th colspan="3" style={{ textAlign: "center" }}>
+                      <th colspan="3" className="policy-table-header">
                         Phí dịch vụ hàng tháng (đã bao gồm VAT)
                       </th>
                     </tr>

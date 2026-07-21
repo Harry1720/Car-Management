@@ -342,3 +342,33 @@
     font-family: 'Roboto', sans-serif;
   }
 }
+
+.login-header-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 36px;
+}
+
+.login-alert-danger {
+  font-size: 14px;
+  padding: 10px;
+}
+
+.login-name-group {
+  display: flex;
+  gap: 10px;
+}
+
+.login-input-flex {
+  flex: 1;
+}
+
+.login-forgot-container {
+  margin-top: -5px;
+  margin-bottom: 20px;
+}
+
+.login-forgot-link {
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+  text-decoration: none;
+}

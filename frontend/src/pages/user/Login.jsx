@@ -101,15 +101,15 @@ const Login = () => {
           
           {/* Form Đăng ký */}
           <div className="form-container sign-up-container">
-            <h3 className="text-center mb-4" style={{fontFamily:'Roboto, sans-serif', fontSize:'36px'}}>Tạo tài khoản mới</h3>
-            {registerError && <div className="alert alert-danger" style={{fontSize: '14px', padding: '10px'}}>{registerError}</div>}
+            <h3 className="text-center mb-4 login-header-title">Tạo tài khoản mới</h3>
+            {registerError && <div className="alert alert-danger login-alert-danger">{registerError}</div>}
             <form onSubmit={handleRegisterSubmit}>
-              <div style={{display: 'flex', gap: '10px'}}>
-                <div className="input-group-custom" style={{flex: 1}}>
+              <div className="login-name-group">
+                <div className="input-group-custom login-input-flex">
                   <i className="fas fa-user"></i>
                   <input type="text" name="firstName" value={registerData.firstName} onChange={handleRegisterChange} placeholder="Họ" required />
                 </div>
-                <div className="input-group-custom" style={{flex: 1}}>
+                <div className="input-group-custom login-input-flex">
                   <input type="text" name="lastName" value={registerData.lastName} onChange={handleRegisterChange} placeholder="Tên" required />
                 </div>
               </div>
@@ -151,9 +151,9 @@ const Login = () => {
 
           {/* Form Đăng nhập */}
           <div className="form-container sign-in-container">
-            <h3 className="text-center mb-4" style={{fontFamily:'Roboto, sans-serif', fontSize:'36px'}}>Chào mừng trở lại!</h3>
+            <h3 className="text-center mb-4 login-header-title">Chào mừng trở lại!</h3>
             {/* <p className="text-center mb-4" style={{color: 'rgba(255,255,255,0.7)', fontSize: '14px'}}>Truy cập workspace và dự án của bạn</p> */}
-            {loginError && <div className="alert alert-danger" style={{fontSize: '14px', padding: '10px'}}>{loginError}</div>}
+            {loginError && <div className="alert alert-danger login-alert-danger">{loginError}</div>}
             <form onSubmit={handleLoginSubmit}>
               <div className="input-group-custom">
                 <i className="fas fa-envelope"></i>
@@ -168,8 +168,8 @@ const Login = () => {
                 </button>
               </div>
 
-              <div className="text-right w-100" style={{marginTop: '-5px', marginBottom: '20px'}}>
-                <a href="#" style={{color: 'rgba(255,255,255,0.7)', fontSize: '13px', textDecoration: 'none'}}>Quên mật khẩu?</a>
+              <div className="text-right w-100 login-forgot-container">
+                <a href="#" className="login-forgot-link">Quên mật khẩu?</a>
               </div>
 
               <button type="submit" className="btn-primary-auth" disabled={loginLoading}>

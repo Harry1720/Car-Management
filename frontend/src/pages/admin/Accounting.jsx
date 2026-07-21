@@ -69,11 +69,11 @@ const AccountingPage = () => {
                                 <th>Trạng thái</th>
                             </tr>
                         </thead>
-                        <tbody style={{backgroundColor: "rgb(245, 252, 255)"}}>
+                        <tbody className="admin-table-body">
                             {loading ? (
-                                <tr><td colSpan="8" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                                <tr><td colSpan="8" className="admin-text-center">Đang tải...</td></tr>
                             ) : depositData.length === 0 ? (
-                                <tr><td colSpan="8" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                                <tr><td colSpan="8" className="admin-text-center">Không có dữ liệu</td></tr>
                             ) : (
                             depositData
                                 .filter(deposit => {

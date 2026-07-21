@@ -446,3 +446,18 @@
 .modal-close-btn:hover {
     color: #ff4d4f;
 }
+
+.admin-table-body {
+    background-color: rgb(245, 252, 255);
+}
+
+.admin-text-center {
+    text-align: center;
+}
+
+.admin-flex-end-group {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}

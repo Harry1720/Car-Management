@@ -302,6 +302,10 @@
         max-height: 70vh;
     }
     
+    .page-subtitle {
+        font-size: 1rem;
+    }
+    
     .edit-form h3 {
         font-size: 18px;
     }
@@ -416,4 +420,12 @@
 
 .delete-transaction:hover {
     color: #ef4444;
+}
+
+.admin-table-body {
+    background-color: rgb(245, 252, 255);
+}
+
+.admin-text-center {
+    text-align: center;
 }

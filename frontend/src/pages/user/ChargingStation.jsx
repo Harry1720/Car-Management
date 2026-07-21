@@ -231,8 +231,7 @@ const ChargingStation = () => {
                   </h4>
                   <div className="table-responsive overflow-x-auto">
                     <table
-                      className="policy-table"
-                      style={{ minWidth: "720px" }}
+                      className="policy-table charging-table-minwidth"
                     >
                       <thead>
                         <tr>
@@ -272,8 +271,7 @@ const ChargingStation = () => {
                   </h4>
                   <div className="table-responsive overflow-x-auto">
                     <table
-                      className="policy-table"
-                      style={{ minWidth: "720px" }}
+                      className="policy-table charging-table-minwidth"
                     >
                       <thead>
                         <tr>
@@ -313,8 +311,7 @@ const ChargingStation = () => {
                   </p>
                   <div className="table-responsive overflow-x-auto">
                     <table
-                      className="policy-table"
-                      style={{ minWidth: "720px" }}
+                      className="policy-table charging-table-minwidth"
                     >
                       <thead>
                         <tr>
@@ -369,8 +366,7 @@ const ChargingStation = () => {
                   </h4>
                   <div className="table-responsive overflow-x-auto">
                     <table
-                      className="policy-table"
-                      style={{ minWidth: "720px" }}
+                      className="policy-table charging-table-minwidth"
                     >
                       <thead>
                         <tr>

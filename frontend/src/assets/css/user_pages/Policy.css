@@ -323,8 +323,15 @@
 @media (max-width: 480px) {
   .policy_page__banner {
     padding-top: 22px;
+    content: url("/images/banner_chinh_sach_mobile.png");
   }
+}
 
+.policy-table-header {
+  text-align: center;
+}
+
+@media (max-width: 480px) {
   .policy_page-container {
     width: min(1200px, calc(100% - 20px));
   }

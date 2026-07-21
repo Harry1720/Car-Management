@@ -23,6 +23,18 @@ const Slideshow = () => {
     return () => clearTimeout(autoSlideInterval);
   }, [slideIndex, manualChange]);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        closeModal("modal1");
+        closeModal("modal2");
+        closeModal("modal3");
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const plusSlides = (n) => {
     setManualChange(true);
     setSlideIndex((prev) => {
@@ -52,7 +64,7 @@ const Slideshow = () => {
   };
 
   const handleModalClick = (event) => {
-    if (event.target.classList.contains("modal")) {
+    if (event.target.classList.contains("slideshow-modal")) {
       event.target.style.display = "none";
     }
   };
@@ -65,7 +77,7 @@ const Slideshow = () => {
       >
         <img
           src="/images/banner/banner_st.png"
-          style={{ width: "100%" }}
+          className="slideshow-img-width"
           onClick={() => openModal("modal1")}
           alt="Slide 1"
         />
@@ -76,7 +88,7 @@ const Slideshow = () => {
       >
         <img
           src="/images/banner/banner_bp.png"
-          style={{ width: "100%" }}
+          className="slideshow-img-width"
           onClick={() => openModal("modal2")}
           alt="Slide 2"
         />
@@ -87,36 +99,34 @@ const Slideshow = () => {
       >
         <img
           src="/images/banner/banner_wedding.png"
-          style={{ width: "100%" }}
+          className="slideshow-img-width"
           onClick={() => openModal("modal3")}
           alt="Slide 3"
         />
       </div>
 
       <a
-        className="prev"
+        className="prev slideshow-nav-btn"
         href="#"
         onClick={(e) => {
           e.preventDefault();
           plusSlides(1);
         }}
-        style={{ cursor: "pointer" }}
       >
         &#10094;
       </a>
       <a
-        className="next"
+        className="next slideshow-nav-btn"
         href="#"
         onClick={(e) => {
           e.preventDefault();
           plusSlides(0);
         }}
-        style={{ cursor: "pointer" }}
       >
         &#10095;
       </a>
 
-      <div style={{ textAlign: "center", marginTop: "15px" }}>
+      <div className="slideshow-dots-container">
         <span
           className={`dot ${slideIndex === 0 ? "dot_active" : ""}`}
           onClick={() => currentSlide(1)}
@@ -131,13 +141,13 @@ const Slideshow = () => {
         ></span>
       </div>
 
-      <div id="modal1" className="modal" onClick={handleModalClick}>
-        <div className="modal-content">
-          <span className="close" onClick={() => closeModal("modal1")}>
+      <div id="modal1" className="slideshow-modal" onClick={handleModalClick}>
+        <div className="slideshow-modal__content">
+          <span className="slideshow-modal__close" onClick={() => closeModal("modal1")}>
             &times;
           </span>
-          <h2 className="modal-title">Nhận ngay 01 vé VIP Sky Tour</h2>
-          <ul className="modal-list">
+          <h2 className="slideshow-modal__title">Nhận ngay 01 vé VIP Sky Tour</h2>
+          <ul className="slideshow-modal__list">
             <li>
               <span>01 vé VIP</span> xem Sky Tour dành cho khách đặt cọc xe{" "}
               <strong>VinFast VF Wild</strong>.
@@ -147,7 +157,7 @@ const Slideshow = () => {
             </li>
           </ul>
           <button
-            className="modal-cta"
+            className="slideshow-modal__cta"
             type="button"
             onClick={() =>
               handleRegisterPromo(
@@ -164,13 +174,13 @@ const Slideshow = () => {
           </button>
         </div>
       </div>
-      <div id="modal2" className="modal" onClick={handleModalClick}>
-        <div className="modal-content">
-          <span className="close" onClick={() => closeModal("modal2")}>
+      <div id="modal2" className="slideshow-modal" onClick={handleModalClick}>
+        <div className="slideshow-modal__content">
+          <span className="slideshow-modal__close" onClick={() => closeModal("modal2")}>
             &times;
           </span>
-          <h2 className="modal-title">Nhận ngay 01 cặp vé concert PINK BORN</h2>
-          <ul className="modal-list">
+          <h2 className="slideshow-modal__title">Nhận ngay 01 cặp vé concert PINK BORN</h2>
+          <ul className="slideshow-modal__list">
             <li>
               <span>01 cặp vé</span> PINK BORN dành cho{" "}
               <strong>20 khách hàng đầu tiên</strong> mua xe.
@@ -180,7 +190,7 @@ const Slideshow = () => {
             </li>
           </ul>
           <button
-            className="modal-cta"
+            className="slideshow-modal__cta"
             type="button"
             onClick={() =>
               handleRegisterPromo(
@@ -197,13 +207,13 @@ const Slideshow = () => {
           </button>
         </div>
       </div>
-      <div id="modal3" className="modal" onClick={handleModalClick}>
-        <div className="modal-content">
-          <span className="close" onClick={() => closeModal("modal3")}>
+      <div id="modal3" className="slideshow-modal" onClick={handleModalClick}>
+        <div className="slideshow-modal__content">
+          <span className="slideshow-modal__close" onClick={() => closeModal("modal3")}>
             &times;
           </span>
-          <h2 className="modal-title">Giảm ngay 10% tiền phí trước bạ</h2>
-          <ul className="modal-list">
+          <h2 className="slideshow-modal__title">Giảm ngay 10% tiền phí trước bạ</h2>
+          <ul className="slideshow-modal__list">
             <li>
               <strong>Tặng ngay 10% lệ phí trước bạ</strong> khi nhận xe tại đại
               lý.
@@ -218,7 +228,7 @@ const Slideshow = () => {
             </li>
           </ul>
           <button
-            className="modal-cta"
+            className="slideshow-modal__cta"
             type="button"
             onClick={() =>
               handleRegisterPromo(

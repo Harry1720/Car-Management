@@ -608,3 +608,7 @@
     transform: translateY(0);
   }
 }
+
+.product-loading-text {
+  padding: 0 40px;
+}

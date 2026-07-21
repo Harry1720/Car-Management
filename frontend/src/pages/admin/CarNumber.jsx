@@ -92,7 +92,7 @@ const CarNumber = () => {
                     <table className="table table-hover table-sortable table-bordered">
                         <thead>
                             <tr>
-                                <th>Mã xe - Biến thể</th>
+                                <th>Mã xe</th>
                                 <th>Màu sắc</th>
                                 <th>Ngày nhập</th>
                                 <th>Số lượng tồn</th>
@@ -102,9 +102,9 @@ const CarNumber = () => {
                         </thead>
                         <tbody>
                             {loading ? (
-                                <tr><td colSpan="6" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                                <tr><td colSpan="6" className="admin-text-center">Đang tải...</td></tr>
                             ) : carNumbers.length === 0 ? (
-                                <tr><td colSpan="6" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                                <tr><td colSpan="6" className="admin-text-center">Không có dữ liệu</td></tr>
                             ) : (
                             carNumbers
                                 .filter(car => car.model_car_id.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -112,8 +112,8 @@ const CarNumber = () => {
                                     <tr key={index}>
                                         <td>{car.model_car_id}</td>
                                         <td>
-                                            <div style={{display: 'flex', alignItems: 'center', gap: '5px'}}>
-                                                <div style={{width: '20px', height: '20px', borderRadius: '50%', backgroundColor: car.colorHex, border: '1px solid #ccc'}}></div>
+                                            <div className="car-color-wrapper">
+                                                <div className="car-color-swatch" style={{backgroundColor: car.colorHex}}></div>
                                                 {car.colorName}
                                             </div>
                                         </td>

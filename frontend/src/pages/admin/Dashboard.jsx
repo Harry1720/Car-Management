@@ -128,7 +128,7 @@ const Dashboard = () => {
             
             <div className="content dashboard_container">
                 <div className="card1">
-                    <h2 style={{textAlign: 'center'}}>Thống kê số lượng xe bán được theo ngày</h2>
+                    <h2 className="admin-text-center">Thống kê số lượng xe bán được theo ngày</h2>
                     <fieldset>
                         <label>
                             Vui lòng chọn ngày: 
@@ -140,14 +140,8 @@ const Dashboard = () => {
                             />
                         </label>
                         <button 
-                            className='button graph_btn'
+                            className='button graph_btn dashboard-btn-borderless'
                             onClick={handleDateChange}
-                            style={{
-                                border: 'none',
-                                color: 'white',
-                                fontWeight: 600,
-                                padding: '5px 10px'
-                            }}
                         >
                             Chọn
                         </button>
@@ -158,10 +152,10 @@ const Dashboard = () => {
                 </div>
 
                 <div className="card table_of_dashboard">
-                    <h2 style={{textAlign: 'center'}}>Các giao dịch gần nhất</h2>
+                    <h2 className="admin-text-center">Các giao dịch gần nhất</h2>
                     <div className="table-wrapper">
                         <table className="table table-striped table-hover">
-                            <thead style={{backgroundColor: 'rgb(26, 144, 255)', color: '#ffffff'}}>
+                            <thead className="dashboard-table-header">
                                 <tr>
                                     <th>Mã giao dịch</th>
                                     <th>Khách hàng</th>
@@ -174,9 +168,9 @@ const Dashboard = () => {
                             </thead>
                             <tbody id="dashboard">
                                 {loading ? (
-                                    <tr><td colSpan="7" style={{textAlign: 'center'}}>Đang tải...</td></tr>
+                                    <tr><td colSpan="7" className="admin-text-center">Đang tải...</td></tr>
                                 ) : recentTransactions.length === 0 ? (
-                                    <tr><td colSpan="7" style={{textAlign: 'center'}}>Không có dữ liệu</td></tr>
+                                    <tr><td colSpan="7" className="admin-text-center">Không có dữ liệu</td></tr>
                                 ) : (
                                 recentTransactions.map((transaction, index) => (
                                     <tr key={transaction._id || index}>
@@ -193,8 +187,8 @@ const Dashboard = () => {
                             </tbody>
                         </table>
                     </div>
-                    <a href="/admin/transaction" style={{textDecoration: 'none'}}>
-                        <button className="button" style={{marginTop: '20px'}}>Xem thêm giao dịch</button>
+                    <a href="/admin/transaction" className="dashboard-link-none">
+                        <button className="button dashboard-btn-margin">Xem thêm giao dịch</button>
                     </a>
                 </div>
             </div>

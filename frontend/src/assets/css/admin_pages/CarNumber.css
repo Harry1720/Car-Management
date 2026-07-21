@@ -232,3 +232,21 @@
         margin-bottom: 15px;
     }
 }
+
+.admin-text-center {
+    text-align: center;
+}
+
+.car-color-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+}
+
+.car-color-swatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
