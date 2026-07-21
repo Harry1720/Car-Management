@@ -3,6 +3,8 @@ import "../../assets/css/admin_pages/CarList.css";
 import Navbar from "../../components/NavbarAdmin";
 import Footer from "../../components/FooterAdmin";
 import { carService } from "../../services/carService";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const CarList = () => {
   const [cars, setCars] = useState([]);
@@ -111,23 +113,30 @@ const CarList = () => {
   const [previewImage, setPreviewImage] = useState(null);
 
   const handleDelete = async (carId) => {
-    if (!window.confirm("Bạn chắc chắn muốn xóa xe này?")) return;
+    const result = await Swal.fire({
+      title: 'Xác nhận xóa',
+      text: 'Bạn chắc chắn muốn xóa xe này?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'Xóa',
+      cancelButtonText: 'Hủy'
+    });
+    if (!result.isConfirmed) return;
     try {
       await carService.deleteCar(carId);
       await fetchCars();
-      alert("Xóa xe thành công!");
+      toast.success("Xóa xe thành công!");
     } catch (error) {
       console.error("Error deleting car:", error);
-      alert(
-        "Lỗi khi xóa xe: " + (error.response?.data?.message || error.message),
-      );
+      toast.error("Lỗi khi xóa xe: " + (error.response?.data?.message || error.message));
     }
   };
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 5) {
-      alert("Chỉ được chọn tối đa 5 ảnh!");
+      toast.warning("Chỉ được chọn tối đa 5 ảnh!");
       return;
     }
     setNewCar((prev) => ({ ...prev, images: files }));
@@ -136,7 +145,7 @@ const CarList = () => {
   const handleEditImageChange = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 5) {
-      alert("Chỉ được chọn tối đa 5 ảnh!");
+      toast.warning("Chỉ được chọn tối đa 5 ảnh!");
       return;
     }
     setEditingCar((prev) => ({ ...prev, newImages: files }));
@@ -166,8 +175,15 @@ const CarList = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    if (!window.confirm("Bạn có chắc chắn muốn cập nhật thông tin xe này?"))
-      return;
+    const result = await Swal.fire({
+      title: 'Xác nhận',
+      text: 'Bạn có chắc chắn muốn cập nhật thông tin xe này?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Đồng ý',
+      cancelButtonText: 'Hủy'
+    });
+    if (!result.isConfirmed) return;
     try {
       const carId = editingCar._id;
       const formData = new FormData();
@@ -220,20 +236,25 @@ const CarList = () => {
       await carService.updateCar(carId, formData);
       await fetchCars();
       setEditingCar(null);
-      alert("Cập nhật xe thành công!");
+      toast.success("Cập nhật xe thành công!");
     } catch (error) {
       console.error("Error updating car:", error);
-      alert(
-        "Lỗi khi cập nhật xe: " +
-          (error.response?.data?.message || error.message),
-      );
+      toast.error("Lỗi khi cập nhật xe: " + (error.response?.data?.message || error.message));
     }
   };
 
   const handleCreate = async (e) => {
     e.preventDefault();
 
-    if (!window.confirm("Bạn có chắc chắn muốn thêm xe mới này?")) return;
+    const result = await Swal.fire({
+      title: 'Xác nhận',
+      text: 'Bạn có chắc chắn muốn thêm xe mới này?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Đồng ý',
+      cancelButtonText: 'Hủy'
+    });
+    if (!result.isConfirmed) return;
 
     // Validate all required fields - properly check strings and numbers
     const hasErrors =
@@ -249,9 +270,7 @@ const CarList = () => {
     console.log("hasErrors:", hasErrors);
 
     if (hasErrors) {
-      alert(
-        "Vui lòng điền đầy đủ tất cả các trường!\n\nBắt buộc:\n- Mã xe\n- Tên xe\n- Giá tiền\n- Nguồn gốc\n- Ngày nhập\n- Năm ra mắt",
-      );
+      toast.warning("Vui lòng điền đầy đủ tất cả các trường!\n\nBắt buộc:\n- Mã xe\n- Tên xe\n- Giá tiền\n- Nguồn gốc\n- Ngày nhập\n- Năm ra mắt");
       return;
     }
 
@@ -317,13 +336,11 @@ const CarList = () => {
         images: [],
       });
       setShowAddForm(false);
-      alert("Thêm xe thành công!");
+      toast.success("Thêm xe thành công!");
     } catch (error) {
       console.error("Error creating car:", error);
       console.error("Error response:", error.response?.data);
-      alert(
-        "Lỗi khi thêm xe: " + (error.response?.data?.message || error.message),
-      );
+      toast.error("Lỗi khi thêm xe: " + (error.response?.data?.message || error.message));
     }
   };
 
@@ -485,7 +502,7 @@ const CarList = () => {
                     </div>
                     <div className="form-row">
                       <div className="form-col">
-                        <label>Công suất động cơ (motorPower)</label>
+                        <label>Công suất động cơ</label>
                         <input
                           type="text"
                           id="new-motorPower"
@@ -506,7 +523,7 @@ const CarList = () => {
                       </div>
                       <div className="form-col">
                         <label>
-                          Mức tiêu thụ điện năng (energyConsumption)
+                          Mức tiêu thụ điện năng
                         </label>
                         <input
                           type="text"
@@ -780,7 +797,7 @@ const CarList = () => {
                     </div>
                     <div className="form-row">
                       <div className="form-col">
-                        <label>Công suất động cơ (motorPower)</label>
+                        <label>Công suất động cơ</label>
                         <input
                           type="text"
                           name="motorPower"
@@ -811,7 +828,7 @@ const CarList = () => {
                       </div>
                       <div className="form-col">
                         <label>
-                          Mức tiêu thụ điện năng (energyConsumption)
+                          Mức tiêu thụ điện năng
                         </label>
                         <input
                           type="text"

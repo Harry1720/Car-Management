@@ -1,4 +1,5 @@
 import "../../assets/css/user_pages/Product.css";
+import { toast } from 'react-toastify';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { useEffect, useState } from "react";
@@ -96,7 +97,7 @@ const Products = () => {
 
   const handleLeadSubmit = (event) => {
     event.preventDefault();
-    window.alert("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
+    toast.success("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
     setLeadForm({ fullName: "", phone: "", model: "VF 8" });
   };
 

@@ -3,6 +3,8 @@ import '../../assets/css/admin_pages/HR.css';
 import Navbar from '../../components/NavbarAdmin';
 import Footer from '../../components/FooterAdmin';
 import { employeeService } from '../../services/employeeService';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const HRPage = () => {
 
@@ -59,14 +61,22 @@ const HRPage = () => {
     const handleAddEmployee = async (e) => {
         e.preventDefault();
         
-        if (!window.confirm('Bạn có chắc chắn muốn thêm nhân viên mới này?')) return;
+        const result = await Swal.fire({
+            title: 'Xác nhận',
+            text: 'Bạn có chắc chắn muốn thêm nhân viên mới này?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy'
+        });
+        if (!result.isConfirmed) return;
         
         // Validate required fields
         if (!newEmployee.employee_citizenid?.trim() || !newEmployee.employee_name?.trim() || 
             !newEmployee.employee_birthday?.trim() || !newEmployee.employee_phone_no?.trim() || 
             !newEmployee.employee_email?.trim() || !newEmployee.employee_address?.trim() || 
             !newEmployee.role_title?.trim()) {
-            alert('Vui lòng điền đầy đủ tất cả các trường!');
+            toast.warning('Vui lòng điền đầy đủ tất cả các trường!');
             return;
         }
         
@@ -83,10 +93,10 @@ const HRPage = () => {
                 role_title: ''
             });
             setShowAddForm(false);
-            alert('Thêm nhân viên thành công!');
+            toast.success('Thêm nhân viên thành công!');
         } catch (error) {
             console.error('Error creating employee:', error);
-            alert('Lỗi khi thêm nhân viên: ' + (error.response?.data?.message || error.message));
+            toast.error('Lỗi khi thêm nhân viên: ' + (error.response?.data?.message || error.message));
         }
     };
 
@@ -110,7 +120,16 @@ const HRPage = () => {
     };
 
     const handleDelete = async (citizenId) => {
-        if (!window.confirm('Bạn có chắc chắn muốn xóa nhân viên này?')) return;
+        const result = await Swal.fire({
+            title: 'Xác nhận xóa',
+            text: 'Bạn có chắc chắn muốn xóa nhân viên này?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy'
+        });
+        if (!result.isConfirmed) return;
         try {
             // Only delete from API if it's a MongoDB ID (starts with numbers or has _id)
             const employee = employees.find(emp => emp._id === citizenId || emp.employee_citizenid === citizenId);
@@ -122,10 +141,10 @@ const HRPage = () => {
             
             // Remove from UI regardless
             setEmployees(employees.filter(emp => emp._id !== citizenId && emp.employee_citizenid !== citizenId));
-            alert('Xóa nhân viên thành công!');
+            toast.success('Xóa nhân viên thành công!');
         } catch (error) {
             console.error('Error deleting employee:', error);
-            alert('Lỗi khi xóa nhân viên');
+            toast.error('Lỗi khi xóa nhân viên');
         }
     };
 
@@ -173,7 +192,15 @@ const HRPage = () => {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        if (!window.confirm('Bạn có chắc chắn muốn cập nhật thông tin nhân viên này?')) return;
+        const result = await Swal.fire({
+            title: 'Xác nhận',
+            text: 'Bạn có chắc chắn muốn cập nhật thông tin nhân viên này?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy'
+        });
+        if (!result.isConfirmed) return;
         try {
             const employeeId = editingEmployee._id || editingEmployee.employee_citizenid;
             
@@ -191,10 +218,10 @@ const HRPage = () => {
             await employeeService.updateEmployee(employeeId, updateData);
             await fetchEmployees(); // Refresh data from server
             setEditingEmployee(null);
-            alert('Cập nhật nhân viên thành công!');
+            toast.success('Cập nhật nhân viên thành công!');
         } catch (error) {
             console.error('Error updating employee:', error);
-            alert('Lỗi khi cập nhật nhân viên: ' + (error.response?.data?.message || error.message));
+            toast.error('Lỗi khi cập nhật nhân viên: ' + (error.response?.data?.message || error.message));
         }
     };
 

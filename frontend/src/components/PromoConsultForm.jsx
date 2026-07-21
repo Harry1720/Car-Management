@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const modelOptions = ["VF Wild", "VF 9", "VF 8", "VF 7", "VF 6", "VF 5"];
 
@@ -61,7 +62,7 @@ const PromoConsultForm = ({
       onSubmit(formData);
     }
 
-    window.alert("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
+    toast.success("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
 
     if (variant === "modal" && onClose) {
       onClose();

@@ -2,6 +2,7 @@ import "../../assets/css/user_pages/Login.css";
 import { useEffect, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { authService } from "../../services/authService";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const Login = () => {
   useEffect(() => {
     document.title = "Đăng nhập / Đăng ký | VinFast";
     if (authService.isAuthenticated()) {
-      navigate("/admin/dashboard");
+      navigate("/admin");
     }
     if (location.state?.isRegister) {
       setIsRightPanelActive(true);
@@ -55,10 +56,10 @@ const Login = () => {
     setLoginError("");
     try {
       await authService.login(loginData.email, loginData.password);
-      alert("Đăng nhập thành công!");
-      navigate("/admin/dashboard");
+      toast.success("Đăng nhập thành công!");
+      navigate("/admin");
     } catch (err) {
-      setLoginError(err.message || "Tên đăng nhập hoặc mật khẩu không đúng!");
+      toast.error(err.message || "Tên đăng nhập hoặc mật khẩu không đúng!");
     } finally {
       setLoginLoading(false);
     }
@@ -67,7 +68,7 @@ const Login = () => {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     if (registerData.password !== registerData.confirmPassword) {
-      setRegisterError("Mật khẩu xác nhận không khớp!");
+      toast.error("Mật khẩu xác nhận không khớp!");
       return;
     }
     setRegisterLoading(true);
@@ -79,12 +80,12 @@ const Login = () => {
         phone: registerData.phone,
         password: registerData.password
       });
-      alert("Đăng ký thành công! Vui lòng đăng nhập.");
+      toast.success("Đăng ký thành công! Vui lòng đăng nhập.");
       setIsRightPanelActive(false); // Switch back to login
       // clear register data
       setRegisterData({ firstName: "", lastName: "", email: "", phone: "", password: "", confirmPassword: "" });
     } catch (err) {
-      setRegisterError(err.message || "Đăng ký thất bại!");
+      toast.error(err.message || "Đăng ký thất bại!");
     } finally {
       setRegisterLoading(false);
     }
@@ -102,7 +103,6 @@ const Login = () => {
           {/* Form Đăng ký */}
           <div className="form-container sign-up-container">
             <h3 className="text-center mb-4 login-header-title">Tạo tài khoản mới</h3>
-            {registerError && <div className="alert alert-danger login-alert-danger">{registerError}</div>}
             <form onSubmit={handleRegisterSubmit}>
               <div className="login-name-group">
                 <div className="input-group-custom login-input-flex">
@@ -153,7 +153,6 @@ const Login = () => {
           <div className="form-container sign-in-container">
             <h3 className="text-center mb-4 login-header-title">Chào mừng trở lại!</h3>
             {/* <p className="text-center mb-4" style={{color: 'rgba(255,255,255,0.7)', fontSize: '14px'}}>Truy cập workspace và dự án của bạn</p> */}
-            {loginError && <div className="alert alert-danger login-alert-danger">{loginError}</div>}
             <form onSubmit={handleLoginSubmit}>
               <div className="input-group-custom">
                 <i className="fas fa-envelope"></i>

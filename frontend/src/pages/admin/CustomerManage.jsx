@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import '../../assets/css/admin_pages/CusManage.css';
 import Navbar from '../../components/NavbarAdmin';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 import Footer from '../../components/FooterAdmin';
 import { customerService } from '../../services/customerService';
 
@@ -44,13 +46,22 @@ const CustomerManage = () => {
     );
 
     const handleDelete = async (citizenId) => {
-        if (!window.confirm('Bạn có chắc chắn muốn xóa khách hàng này?')) return;
+        const result = await Swal.fire({
+            title: 'Xác nhận xóa',
+            text: 'Bạn có chắc chắn muốn xóa khách hàng này?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy'
+        });
+        if (!result.isConfirmed) return;
         try {
             await customerService.deleteCustomer(citizenId);
             setCustomers(customers.filter(customer => customer._id !== citizenId && customer.citizen_id !== citizenId));
         } catch (error) {
             console.error('Error deleting customer:', error);
-            alert('Lỗi khi xóa khách hàng');
+            toast.error('Lỗi khi xóa khách hàng');
         }
     };
 
@@ -74,7 +85,15 @@ const CustomerManage = () => {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        if (!window.confirm('Bạn có chắc chắn muốn cập nhật thông tin khách hàng này?')) return;
+        const result = await Swal.fire({
+            title: 'Xác nhận',
+            text: 'Bạn có chắc chắn muốn cập nhật thông tin khách hàng này?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy'
+        });
+        if (!result.isConfirmed) return;
         try {
             const customerId = editingCustomer._id || editingCustomer.citizen_id;
             
@@ -90,10 +109,10 @@ const CustomerManage = () => {
             await customerService.updateCustomer(customerId, updateData);
             await fetchCustomers(); // Refresh data from server
             setEditingCustomer(null);
-            alert('Cập nhật khách hàng thành công!');
+            toast.success('Cập nhật khách hàng thành công!');
         } catch (error) {
             console.error('Error updating customer:', error);
-            alert('Lỗi khi cập nhật khách hàng: ' + (error.response?.data?.message || error.message));
+            toast.error('Lỗi khi cập nhật khách hàng: ' + (error.response?.data?.message || error.message));
         }
     };
 
@@ -108,7 +127,15 @@ const CustomerManage = () => {
     // Add new handler for creating customer
     const handleCreate = async (e) => {
         e.preventDefault();
-        if (!window.confirm('Bạn có chắc chắn muốn thêm khách hàng mới này?')) return;
+        const result = await Swal.fire({
+            title: 'Xác nhận',
+            text: 'Bạn có chắc chắn muốn thêm khách hàng mới này?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy'
+        });
+        if (!result.isConfirmed) return;
         try {
             const response = await customerService.createCustomer(newCustomer);
             setCustomers([...customers, response]);
@@ -120,11 +147,11 @@ const CustomerManage = () => {
                 email: ''
             });
             setShowAddForm(false);
-            alert('Thêm khách hàng thành công!');
+            toast.success('Thêm khách hàng thành công!');
             fetchCustomers();
         } catch (error) {
             console.error('Error creating customer:', error);
-            alert('Lỗi khi thêm khách hàng: ' + (error.message || 'Vui lòng thử lại'));
+            toast.error('Lỗi khi thêm khách hàng: ' + (error.message || 'Vui lòng thử lại'));
         }
     };
 

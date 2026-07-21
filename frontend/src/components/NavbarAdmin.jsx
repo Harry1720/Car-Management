@@ -2,6 +2,7 @@ import '../assets/css/components/navbar_admin.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { authService } from '../services/authService';
+import Swal from 'sweetalert2';
 
 const NavbarAdmin = () => {
     const location = useLocation();
@@ -18,8 +19,17 @@ const NavbarAdmin = () => {
         setIsMobileMenuOpen(false);
     };
     
-    const handleLogout = () => {
-        if (window.confirm('Đăng xuất khỏi hệ thống?')) {
+    const handleLogout = async () => {
+        const result = await Swal.fire({
+            title: 'Đăng xuất khỏi hệ thống?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy'
+        });
+        if (result.isConfirmed) {
             authService.logout();
             navigate('/login', { replace: true });
         }
@@ -31,7 +41,7 @@ const NavbarAdmin = () => {
                  onMouseEnter={() => window.innerWidth > 768 && setIsCollapsed(false)}
                  onMouseLeave={() => window.innerWidth > 768 && setIsCollapsed(true)}>
                 <div className = 'brand'>
-                    <Link to="/admin/dashboard" onClick={closeMobileMenu} className='logo_navbar'>
+                    <Link to="/admin" onClick={closeMobileMenu} className='logo_navbar'>
                         <img className="logo logo-full" src="https://vinfastauto.com/themes/porto/img/new-home-page/VinFast-logo.svg" alt="VINFAST" />
                         <img className="logo logo-icon" src="/images/tab_logo.png" alt="VINFAST" />
                     </Link>
@@ -47,8 +57,8 @@ const NavbarAdmin = () => {
 
                 <ul className={`main-menu ${isMobileMenuOpen ? 'mobile-menu-open' : ''} ${isCollapsed ? 'collapsed' : ''}`}>
                     <li>
-                        <Link to="/admin/dashboard" 
-                              className={currentPath === '/admin/dashboard' ? 'active' : ''}
+                        <Link to="/admin" 
+                              className={currentPath === '/admin' ? 'active' : ''}
                               onClick={closeMobileMenu}>
                             <ion-icon name="home-outline"></ion-icon> 
                             <span className="label text-label">Trang chủ</span>

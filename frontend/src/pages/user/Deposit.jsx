@@ -6,6 +6,7 @@ import { carService } from '../../services/carService';
 import { customerService } from '../../services/customerService';
 import { depositService } from '../../services/depositService';
 import { transactionService } from '../../services/transactionService';
+import { toast } from 'react-toastify';
 
 const Deposit = () => {
   const [step, setStep] = useState(1);
@@ -73,7 +74,7 @@ const Deposit = () => {
       }
     } catch (error) {
       console.error('Error fetching car:', error);
-      alert('Không thể tải thông tin xe. Vui lòng thử lại.');
+      toast.error('Không thể tải thông tin xe. Vui lòng thử lại.');
     }
   };
 
@@ -97,7 +98,7 @@ const Deposit = () => {
   const handleSubmit = async () => {
     const { agree1, agree2, agree3 } = agreements;
     if (!agree1 || !agree2 || !agree3) {
-      alert("Vui lòng đồng ý với các điều khoản và điều kiện.");
+      toast.warning("Vui lòng đồng ý với các điều khoản và điều kiện.");
       return;
     }
 
@@ -108,7 +109,7 @@ const Deposit = () => {
       const carInDb = carsArray.find(c => c.model === selectedCar?.id || c.model_car_id === selectedCar?.id);
       
       if (!carInDb) {
-        alert("Không tìm thấy xe trong hệ thống. Vui lòng thử lại.");
+        toast.error("Không tìm thấy xe trong hệ thống. Vui lòng thử lại.");
         return;
       }
 
@@ -128,7 +129,7 @@ const Deposit = () => {
       } catch (error) {
         // Nếu customer đã tồn tại, backend sẽ trả về customerId trong error response
         console.error('Error creating customer:', error);
-        alert("Có lỗi khi tạo thông tin khách hàng: " + (error.message || "Vui lòng thử lại."));
+        toast.error("Có lỗi khi tạo thông tin khách hàng: " + (error.message || "Vui lòng thử lại."));
         return;
       }
 
@@ -164,11 +165,11 @@ const Deposit = () => {
 
       await transactionService.createTransaction(transactionData);
 
-      alert("Đặt cọc thành công! Cảm ơn quý khách đã lựa chọn VinFast.\nGiao dịch đã được ghi nhận vào hệ thống.");
-      window.location.href = "/products";
+      toast.success("Đặt cọc thành công! Cảm ơn quý khách đã lựa chọn VinFast.\nGiao dịch đã được ghi nhận vào hệ thống.");
+      setTimeout(() => { window.location.href = "/products"; }, 2000);
     } catch (error) {
       console.error("Error:", error);
-      alert("Có lỗi xảy ra khi đặt cọc: " + (error.message || "Vui lòng thử lại."));
+      toast.error("Có lỗi xảy ra khi đặt cọc: " + (error.message || "Vui lòng thử lại."));
     }
   };
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../../assets/css/user_pages/Home.module.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { toast } from "react-toastify";
 
 const uspItems = [
   {
@@ -98,7 +99,7 @@ const Home = () => {
 
   const handleLeadSubmit = (event) => {
     event.preventDefault();
-    window.alert("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
+    toast.success("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
     setLeadForm({ fullName: "", phone: "", model: "VF 8" });
   };
 
