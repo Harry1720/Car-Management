@@ -168,7 +168,7 @@ const Login = () => {
               </div>
 
               <div className="text-right w-100 login-forgot-container">
-                <a href="#" className="login-forgot-link">Quên mật khẩu?</a>
+                <Link to="/forgot-password" className="login-forgot-link">Quên mật khẩu?</Link>
               </div>
 
               <button type="submit" className="btn-primary-auth" disabled={loginLoading}>

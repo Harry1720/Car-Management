@@ -75,4 +75,24 @@ export const authService = {
   getToken: () => {
     return localStorage.getItem('token');
   },
+  
+  // Quên mật khẩu
+  forgotPassword: async (email) => {
+    try {
+      const response = await apiClient.post('/auth/forgot-password', { email });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
+
+  // Đặt lại mật khẩu
+  resetPassword: async (token, newPassword) => {
+    try {
+      const response = await apiClient.post('/auth/reset-password', { token, newPassword });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
 };

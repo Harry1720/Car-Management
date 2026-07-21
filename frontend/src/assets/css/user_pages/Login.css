@@ -21,7 +21,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  filter: blur(2.5px);
+  filter: blur(1px);
   transform: scale(1.05);
   z-index: 0;
 }
@@ -272,11 +272,13 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none !important;
 }
 
 .btn-primary-auth:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) !important;
   box-shadow: 0 5px 15px rgba(214, 179, 106, 0.4);
+  color: #000000;
 }
 
 .btn-primary-auth:disabled {
@@ -346,6 +348,9 @@
 .login-header-title {
   font-family: 'Roboto', sans-serif;
   font-size: 36px;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  font-weight: 900;
 }
 
 .login-alert-danger {
@@ -363,12 +368,17 @@
 }
 
 .login-forgot-container {
-  margin-top: -5px;
+  margin-top: 25px;
   margin-bottom: 20px;
 }
 
 .login-forgot-link {
   color: rgba(255,255,255,0.7);
-  font-size: 13px;
-  text-decoration: none;
+  font-size: 14px;
+  text-decoration: none !important;
+}
+
+.login-forgot-link:hover {
+  color: rgba(255,255,255);
+  font-weight: 500;
 }

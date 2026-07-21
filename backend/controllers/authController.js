@@ -1,5 +1,7 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const sendEmail = require('../utils/sendEmail');
 
 // Tạo JWT token
 const generateToken = (id, role) => {
@@ -124,6 +126,88 @@ exports.changePassword = async (req, res) => {
     await user.save();
 
     res.json({ message: 'Đổi password thành công' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi server', error: err.message });
+  }
+};
+
+// Quên mật khẩu
+exports.forgotPassword = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(404).json({ message: 'Không tìm thấy người dùng với email này' });
+    }
+
+    // Tạo token reset
+    const resetToken = crypto.randomBytes(20).toString('hex');
+
+    // Hash token và set vào user
+    user.resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+
+    // Set thời gian hết hạn (15 phút)
+    user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
+
+    await user.save();
+
+    // Tạo url reset
+    const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password?token=${resetToken}`;
+
+    const message = `Bạn nhận được email này vì bạn (hoặc ai đó) đã yêu cầu khôi phục mật khẩu.\n\nVui lòng click vào đường link bên dưới để đặt lại mật khẩu:\n\n${resetUrl}\n\nLưu ý: Link chỉ có hiệu lực trong 15 phút. Nếu bạn không yêu cầu, vui lòng bỏ qua email này.`;
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'Khôi phục mật khẩu - VinFast Car Management',
+        message,
+      });
+
+      res.status(200).json({ message: 'Email đã được gửi thành công' });
+    } catch (err) {
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+      await user.save();
+
+      console.error('Error sending email:', err);
+      return res.status(500).json({ message: 'Không thể gửi email. Vui lòng thử lại sau.' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi server', error: err.message });
+  }
+};
+
+// Đặt lại mật khẩu
+exports.resetPassword = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    // Hash token từ param để so sánh
+    const resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(token)
+      .digest('hex');
+
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Token không hợp lệ hoặc đã hết hạn' });
+    }
+
+    // Cập nhật mật khẩu mới (pre-save hook sẽ tự hash)
+    user.password = newPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    user.updatedAt = Date.now();
+
+    await user.save();
+
+    res.status(200).json({ message: 'Đổi mật khẩu thành công. Bạn có thể đăng nhập bằng mật khẩu mới.' });
   } catch (err) {
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }

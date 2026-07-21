@@ -14,6 +14,8 @@ import Deposit from './pages/user/Deposit';
 import Promotion from './pages/user/Promotion';
 import Policy from './pages/user/Policy';
 import Login from './pages/user/Login';
+import ForgotPassword from './pages/user/ForgotPassword';
+import ResetPassword from './pages/user/ResetPassword';
 import Charging from './pages/user/ChargingStation';
 import NotFound from './pages/user/NotFound';
 
@@ -45,12 +47,14 @@ function App() {
         {/* User routes */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About/>} />
-        <Route path="/charging" element={<Charging />} />
-        <Route path="/products" element={<Products />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/product" element={<Products />} />
         <Route path="/deposit" element={<Deposit />} />
-        <Route path="/promotions" element={<Promotion />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/charging" element={<Charging />} />
         
         {/* Admin routes - Protected */}
          <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
