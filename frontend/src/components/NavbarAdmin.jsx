@@ -120,6 +120,17 @@ const NavbarAdmin = () => {
                         </Link>
                     </li>
 
+                    <li className="menu-group-label">
+                        <span className="label text-label">Cá nhân</span>
+                    </li>
+                    <li>
+                        <Link to="/profile" 
+                              className={currentPath === '/profile' ? 'active' : ''}
+                              onClick={closeMobileMenu}>
+                            <ion-icon name="person-circle-outline"></ion-icon> 
+                            <span className="label text-label">Trang cá nhân</span>
+                        </Link>
+                    </li>
                     <li className="logout-item">
                         <a onClick={handleLogout} className="logout-btn-red" style={{cursor: 'pointer'}}>
                             <ion-icon name="log-out-outline"></ion-icon> <span className="label text-label">Đăng xuất</span></a>

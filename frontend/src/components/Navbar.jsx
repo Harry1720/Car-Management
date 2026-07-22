@@ -1,6 +1,7 @@
 import styles from '../assets/css/components/Navbar.module.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { authService } from '../services/authService';
 
 const Navbar = ({ activePage }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -103,29 +104,43 @@ const Navbar = ({ activePage }) => {
           </Link>
         </li>
         <li className={`${styles['mobile-only']} ${styles.divider}`}></li>
-        <li className={styles['mobile-only']}>
-          <Link
-            to="/login"
-            className={activePage === 'login' ? styles.active : ''}
-            onClick={closeMobileMenu}
-          >
-           Đăng nhập
-          </Link>
-        </li>
-        <li className={styles['mobile-only']}>
-          <Link
-            to="/login"
-            state={{ isRegister: true }}
-            className={activePage === 'register' ? styles.active : ''}
-            onClick={closeMobileMenu}
-          >
-           Đăng ký
-          </Link>
-        </li>
+        {!authService.isAuthenticated() ? (
+          <>
+            <li className={styles['mobile-only']}>
+              <Link
+                to="/login"
+                className={activePage === 'login' ? styles.active : ''}
+                onClick={closeMobileMenu}
+              >
+               Đăng nhập
+              </Link>
+            </li>
+            <li className={styles['mobile-only']}>
+              <Link
+                to="/login"
+                state={{ isRegister: true }}
+                className={activePage === 'register' ? styles.active : ''}
+                onClick={closeMobileMenu}
+              >
+               Đăng ký
+              </Link>
+            </li>
+          </>
+        ) : (
+          <li className={styles['mobile-only']}>
+            <Link
+              to="/profile"
+              className={activePage === 'profile' ? styles.active : ''}
+              onClick={closeMobileMenu}
+            >
+             Trang cá nhân
+            </Link>
+          </li>
+        )}
       </ul>
 
       <div className={`${styles.icons} ${styles['desktop-only']}`}>
-        <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }} onClick={closeMobileMenu}>
+        <Link to={authService.isAuthenticated() ? "/profile" : "/login"} style={{ textDecoration: 'none', color: 'inherit' }} onClick={closeMobileMenu}>
           <i className="bx bx-user-circle"></i>
         </Link>
       </div>

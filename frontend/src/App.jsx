@@ -18,6 +18,7 @@ import ForgotPassword from './pages/user/ForgotPassword';
 import ResetPassword from './pages/user/ResetPassword';
 import Charging from './pages/user/ChargingStation';
 import NotFound from './pages/user/NotFound';
+import Profile from './pages/shared/Profile';
 
 // // Admin pages
 import Dashboard from './pages/admin/Dashboard';
@@ -56,6 +57,9 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/charging" element={<Charging />} />
+        
+        {/* Shared Protected route */}
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         
         {/* Admin routes - Protected */}
          <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

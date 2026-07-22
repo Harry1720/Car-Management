@@ -40,7 +40,10 @@ export const authService = {
   // Cập nhật thông tin user
   updateUser: async (userData) => {
     try {
-      const response = await apiClient.put('/auth/update', userData);
+      const isFormData = userData instanceof FormData;
+      const headers = isFormData ? { 'Content-Type': 'multipart/form-data' } : undefined;
+      
+      const response = await apiClient.put('/auth/update', userData, { headers });
       return response.data;
     } catch (error) {
       throw error.response?.data || error;

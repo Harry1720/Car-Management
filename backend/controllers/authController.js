@@ -98,10 +98,19 @@ exports.getCurrentUser = async (req, res) => {
 // Update user
 exports.updateUser = async (req, res) => {
   try {
-    const { name, phone } = req.body;
+    const { name, phone, address } = req.body;
+    
+    // Khởi tạo object update
+    const updateData = { name, phone, address, updatedAt: Date.now() };
+    
+    // Nếu có file ảnh được upload, thêm đường dẫn ảnh vào updateData
+    if (req.file) {
+      updateData.avatar = req.file.path;
+    }
+
     const user = await User.findByIdAndUpdate(
       req.user.id,
-      { name, phone, updatedAt: Date.now() },
+      updateData,
       { new: true, runValidators: true }
     );
     res.json(user);
