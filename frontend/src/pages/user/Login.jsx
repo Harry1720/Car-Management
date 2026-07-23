@@ -33,7 +33,12 @@ const Login = () => {
   useEffect(() => {
     document.title = "Đăng nhập / Đăng ký | VinFast";
     if (authService.isAuthenticated()) {
-      navigate("/admin");
+      const role = localStorage.getItem('role');
+      if (role === 'admin' || role === 'employee') {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     }
     if (location.state?.isRegister) {
       setIsRightPanelActive(true);
@@ -55,9 +60,9 @@ const Login = () => {
     setLoginLoading(true);
     setLoginError("");
     try {
-      await authService.login(loginData.email, loginData.password);
+      await authService.login(loginData.email, loginData.password, 'user');
       toast.success("Đăng nhập thành công!");
-      navigate("/admin");
+      navigate("/");
     } catch (err) {
       toast.error(err.message || "Tên đăng nhập hoặc mật khẩu không đúng!");
     } finally {

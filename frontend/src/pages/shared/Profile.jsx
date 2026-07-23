@@ -8,6 +8,7 @@ import ProfileForm from '../../components/Profile/ProfileForm';
 import UserTabs from '../../components/Profile/UserTabs';
 import AdminTabs from '../../components/Profile/AdminTabs';
 import styles from '../../assets/css/components/Profile.module.css';
+import Swal from 'sweetalert2';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -37,9 +38,20 @@ const Profile = () => {
     fetchUser();
   }, [navigate]);
 
-  const handleLogout = () => {
-     authService.logout();
-     navigate('/login');
+  const handleLogout = async () => {
+     const result = await Swal.fire({
+         title: 'Đăng xuất khỏi hệ thống?',
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'Đồng ý',
+         cancelButtonText: 'Hủy'
+     });
+     if (result.isConfirmed) {
+         authService.logout();
+         navigate('/login');
+     }
   };
 
   if (loading) {

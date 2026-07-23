@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from '../../assets/css/components/Profile.module.css';
 import { toast } from 'react-toastify';
 import { authService } from '../../services/authService';
+import Swal from 'sweetalert2';
 
 const UserTabs = ({ activeTab }) => {
   // Change Password State
@@ -22,6 +23,18 @@ const UserTabs = ({ activeTab }) => {
       toast.error('Mật khẩu mới không khớp!');
       return;
     }
+    
+    const result = await Swal.fire({
+      title: 'Xác nhận đổi mật khẩu?',
+      text: 'Bạn có chắc chắn muốn thay đổi mật khẩu?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Đổi mật khẩu',
+      cancelButtonText: 'Hủy'
+    });
+    
+    if (!result.isConfirmed) return;
+
     setLoading(true);
     try {
       await authService.changePassword(passwords.oldPassword, passwords.newPassword);

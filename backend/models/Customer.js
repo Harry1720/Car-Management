@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
 
 const customerSchema = new mongoose.Schema({
+  accountId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+  },
+  avatar: {
+    type: String,
+    default: '',
+  },
   name: {
     type: String,
     required: true,

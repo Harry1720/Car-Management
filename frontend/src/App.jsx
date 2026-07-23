@@ -28,6 +28,8 @@ import CustomerManage from './pages/admin/CustomerManage';
 import Transaction from './pages/admin/TransacManage';
 import Accounting from './pages/admin/Accounting';
 import CarNumber from './pages/admin/CarNumber';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminProfile from './pages/admin/AdminProfile';
 
 function App() {
   return (
@@ -43,6 +45,7 @@ function App() {
         draggable 
         pauseOnHover 
         theme="colored" 
+        style={{ zIndex: 999999 }}
       />
       <Routes>
         {/* User routes */}
@@ -62,13 +65,15 @@ function App() {
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         
         {/* Admin routes - Protected */}
-         <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-         <Route path="/admin/customermanagement" element={<ProtectedRoute><CustomerManage /></ProtectedRoute>} />
-        <Route path="/admin/carlist" element={<ProtectedRoute><CarList /></ProtectedRoute>} />
-        <Route path="/admin/humanresources" element={<ProtectedRoute><HRPage /></ProtectedRoute>} />
-        <Route path="/admin/transaction" element={<ProtectedRoute><Transaction /></ProtectedRoute>} /> 
-        <Route path="/admin/accounting" element={<ProtectedRoute><Accounting /></ProtectedRoute>} /> 
-        <Route path="/admin/carnumber" element={<ProtectedRoute><CarNumber /></ProtectedRoute>} /> 
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<ProtectedRoute requireAdmin={true}><Dashboard /></ProtectedRoute>} />
+        <Route path="/admin/customermanagement" element={<ProtectedRoute requireAdmin={true}><CustomerManage /></ProtectedRoute>} />
+        <Route path="/admin/carlist" element={<ProtectedRoute requireAdmin={true}><CarList /></ProtectedRoute>} />
+        <Route path="/admin/humanresources" element={<ProtectedRoute requireAdmin={true}><HRPage /></ProtectedRoute>} />
+        <Route path="/admin/transaction" element={<ProtectedRoute requireAdmin={true}><Transaction /></ProtectedRoute>} /> 
+        <Route path="/admin/accounting" element={<ProtectedRoute requireAdmin={true}><Accounting /></ProtectedRoute>} /> 
+        <Route path="/admin/carnumber" element={<ProtectedRoute requireAdmin={true}><CarNumber /></ProtectedRoute>} /> 
+        <Route path="/admin/profile" element={<ProtectedRoute requireAdmin={true}><AdminProfile /></ProtectedRoute>} />
         
         {/* Fallback route */}
         <Route path="*" element={<NotFound />} />

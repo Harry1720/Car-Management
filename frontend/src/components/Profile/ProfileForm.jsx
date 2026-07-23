@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from '../../assets/css/components/Profile.module.css';
 import { toast } from 'react-toastify';
 import { authService } from '../../services/authService';
+import Swal from 'sweetalert2';
 
 const ProfileForm = ({ user, setUser }) => {
   const [formData, setFormData] = useState({
@@ -40,11 +41,24 @@ const ProfileForm = ({ user, setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    const result = await Swal.fire({
+      title: 'Xác nhận lưu thay đổi?',
+      text: 'Bạn có chắc chắn muốn cập nhật thông tin cá nhân?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Lưu thay đổi',
+      cancelButtonText: 'Hủy'
+    });
+    
+    if (!result.isConfirmed) return;
+
     setLoading(true);
 
     try {
       const data = new FormData();
       data.append('name', formData.name);
+      data.append('email', formData.email);
       data.append('phone', formData.phone);
       data.append('address', formData.address);
       if (avatarFile) {
@@ -104,8 +118,9 @@ const ProfileForm = ({ user, setUser }) => {
           type="email"
           name="email"
           value={formData.email}
+          onChange={handleChange}
           className={styles.formControl}
-          disabled
+          required
         />
       </div>
 

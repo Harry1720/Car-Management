@@ -31,7 +31,7 @@ const NavbarAdmin = () => {
         });
         if (result.isConfirmed) {
             authService.logout();
-            navigate('/login', { replace: true });
+            navigate('/admin/login', { replace: true });
         }
     };
     
@@ -124,8 +124,8 @@ const NavbarAdmin = () => {
                         <span className="label text-label">Cá nhân</span>
                     </li>
                     <li>
-                        <Link to="/profile" 
-                              className={currentPath === '/profile' ? 'active' : ''}
+                        <Link to="/admin/profile" 
+                              className={currentPath === '/admin/profile' ? 'active' : ''}
                               onClick={closeMobileMenu}>
                             <ion-icon name="person-circle-outline"></ion-icon> 
                             <span className="label text-label">Trang cá nhân</span>

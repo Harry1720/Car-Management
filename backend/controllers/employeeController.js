@@ -1,4 +1,6 @@
 const Employee = require('../models/Employee');
+const User = require('../models/User');
+const crypto = require('crypto');
 
 // Get all employees
 exports.getAllEmployees = async (req, res) => {
@@ -12,7 +14,7 @@ exports.getAllEmployees = async (req, res) => {
     if (position) query.position = position;
 
     const employees = await Employee.find(query)
-      .populate('userId')
+      .populate('accountId')
       .skip(skip)
       .limit(parseInt(limit));
 
@@ -35,7 +37,7 @@ exports.getAllEmployees = async (req, res) => {
 // Get employee by ID
 exports.getEmployeeById = async (req, res) => {
   try {
-    const employee = await Employee.findById(req.params.id).populate('userId');
+    const employee = await Employee.findById(req.params.id).populate('accountId');
     if (!employee) {
       return res.status(404).json({ message: 'Nhân viên không tồn tại' });
     }
@@ -49,7 +51,6 @@ exports.getEmployeeById = async (req, res) => {
 exports.createEmployee = async (req, res) => {
   try {
     const {
-      userId,
       name,
       email,
       phone,
@@ -87,8 +88,24 @@ exports.createEmployee = async (req, res) => {
       return res.status(400).json({ message: 'Email là bắt buộc' });
     }
 
-    // If userId is not provided, create employee without it (no userId requirement will be enforced by checking if it's in required)
+    // Check if user already exists
+    let user = await User.findOne({ email: finalEmail });
+    if (user) {
+       return res.status(400).json({ message: 'Email đã được sử dụng cho tài khoản khác' });
+    }
+
+    // Generate unique password
+    const rawPassword = crypto.randomBytes(4).toString('hex');
+    
+    user = new User({
+      email: finalEmail,
+      password: rawPassword,
+      role: 'employee'
+    });
+    await user.save();
+
     const employeeData = {
+      accountId: user._id,
       name: finalName,
       email: finalEmail,
       phone: finalPhone,
@@ -101,14 +118,10 @@ exports.createEmployee = async (req, res) => {
       identityNumber: finalIdentityNumber,
     };
 
-    // Check if user exists (if userId is provided)
-    if (userId) {
-      employeeData.userId = userId;
-    }
-
     const employee = new Employee(employeeData);
     await employee.save();
-    res.status(201).json(employee);
+    
+    res.status(201).json({ ...employee.toObject(), defaultPassword: rawPassword });
   } catch (err) {
     console.error('Employee creation error:', err);
     res.status(500).json({ message: 'Lỗi server', error: err.message });
@@ -131,14 +144,14 @@ exports.updateEmployee = async (req, res) => {
       department: req.body.department,
       hireDate: req.body.hireDate,
       salary: req.body.salary,
-      userId: req.body.userId,
+      accountId: req.body.accountId,
       updatedAt: Date.now()
     };
 
     const employee = await Employee.findByIdAndUpdate(req.params.id, mappedUpdates, {
       new: true,
       runValidators: true,
-    }).populate('userId');
+    }).populate('accountId');
 
     if (!employee) {
       return res.status(404).json({ message: 'Nhân viên không tồn tại' });
@@ -167,7 +180,7 @@ exports.deleteEmployee = async (req, res) => {
 exports.getEmployeesByDepartment = async (req, res) => {
   try {
     const { department } = req.params;
-    const employees = await Employee.find({ department }).populate('userId');
+    const employees = await Employee.find({ department }).populate('accountId');
     res.json(employees);
   } catch (err) {
     res.status(500).json({ message: 'Lỗi server', error: err.message });
@@ -178,7 +191,7 @@ exports.getEmployeesByDepartment = async (req, res) => {
 exports.getEmployeesByPosition = async (req, res) => {
   try {
     const { position } = req.params;
-    const employees = await Employee.find({ position }).populate('userId');
+    const employees = await Employee.find({ position }).populate('accountId');
     res.json(employees);
   } catch (err) {
     res.status(500).json({ message: 'Lỗi server', error: err.message });

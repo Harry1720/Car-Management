@@ -8,7 +8,8 @@ body {
 .hr-page,
 .dashboard_page,
 .car-number-page,
-.accounting-page {
+.accounting-page,
+.admin_profile_page {
     min-height: calc(100vh - 104px);
     margin: 30px 50px 30px 130px !important;
     max-width: calc(100vw - 180px) !important;

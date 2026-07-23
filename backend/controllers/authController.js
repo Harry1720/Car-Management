@@ -1,4 +1,6 @@
 const User = require('../models/User');
+const Customer = require('../models/Customer');
+const Employee = require('../models/Employee');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const sendEmail = require('../utils/sendEmail');
@@ -23,14 +25,29 @@ exports.register = async (req, res) => {
 
     // Tạo user mới
     user = new User({
-      name,
       email,
       password,
-      phone,
       role: role || 'user',
     });
-
     await user.save();
+
+    if (user.role === 'user') {
+      let customer = await Customer.findOne({ email });
+      if (customer) {
+        customer.accountId = user._id;
+        if (!customer.name && name) customer.name = name;
+        if (!customer.phone && phone) customer.phone = phone;
+        await customer.save();
+      } else {
+        customer = new Customer({
+          accountId: user._id,
+          email,
+          name: name || 'Khách hàng mới',
+          phone: phone || '',
+        });
+        await customer.save();
+      }
+    }
 
     const token = generateToken(user._id, user.role);
 
@@ -38,7 +55,7 @@ exports.register = async (req, res) => {
       token,
       user: {
         id: user._id,
-        name: user.name,
+        name: name,
         email: user.email,
         role: user.role,
       },
@@ -69,15 +86,31 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: 'Email hoặc password không đúng' });
     }
 
+    const { portal } = req.body;
+    if (portal === 'user' && user.role !== 'user') {
+      return res.status(403).json({ message: 'Tài khoản quản trị không thể đăng nhập vào trang khách hàng' });
+    }
+    if (portal === 'admin' && user.role === 'user') {
+      return res.status(403).json({ message: 'Khách hàng không thể đăng nhập vào hệ thống quản trị' });
+    }
+
     const token = generateToken(user._id, user.role);
+
+    let profile = null;
+    if (user.role === 'user') {
+      profile = await Customer.findOne({ accountId: user._id });
+    } else {
+      profile = await Employee.findOne({ accountId: user._id });
+    }
 
     res.json({
       token,
       user: {
         id: user._id,
-        name: user.name,
+        name: profile ? profile.name : '',
         email: user.email,
         role: user.role,
+        avatar: profile ? profile.avatar : '',
       },
     });
   } catch (err) {
@@ -89,7 +122,24 @@ exports.login = async (req, res) => {
 exports.getCurrentUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    res.json(user);
+    if (!user) return res.status(404).json({ message: 'Người dùng không tồn tại' });
+    
+    let profile = null;
+    if (user.role === 'user') {
+      profile = await Customer.findOne({ accountId: user._id });
+    } else {
+      profile = await Employee.findOne({ accountId: user._id });
+    }
+
+    const userData = {
+      ...user.toObject(),
+      ...(profile ? profile.toObject() : {}),
+      id: user._id,
+      _id: user._id,
+    };
+    delete userData.password;
+
+    res.json(userData);
   } catch (err) {
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
@@ -99,21 +149,39 @@ exports.getCurrentUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const { name, phone, address } = req.body;
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: 'Người dùng không tồn tại' });
     
-    // Khởi tạo object update
-    const updateData = { name, phone, address, updatedAt: Date.now() };
-    
-    // Nếu có file ảnh được upload, thêm đường dẫn ảnh vào updateData
-    if (req.file) {
-      updateData.avatar = req.file.path;
+    const updateData = { updatedAt: Date.now() };
+    if (name) updateData.name = name;
+    if (phone) updateData.phone = phone;
+    if (address) updateData.address = address;
+    if (req.file) updateData.avatar = req.file.path;
+
+    let updatedProfile;
+    if (user.role === 'user') {
+      updatedProfile = await Customer.findOneAndUpdate(
+        { accountId: user._id },
+        updateData,
+        { new: true, runValidators: true }
+      );
+    } else {
+      updatedProfile = await Employee.findOneAndUpdate(
+        { accountId: user._id },
+        updateData,
+        { new: true, runValidators: true }
+      );
     }
 
-    const user = await User.findByIdAndUpdate(
-      req.user.id,
-      updateData,
-      { new: true, runValidators: true }
-    );
-    res.json(user);
+    const userData = {
+      ...user.toObject(),
+      ...(updatedProfile ? updatedProfile.toObject() : {}),
+      id: user._id,
+      _id: user._id,
+    };
+    delete userData.password;
+
+    res.json(userData);
   } catch (err) {
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }

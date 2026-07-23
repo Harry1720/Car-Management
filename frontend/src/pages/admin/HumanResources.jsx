@@ -81,7 +81,7 @@ const HRPage = () => {
         }
         
         try {
-            await employeeService.createEmployee(newEmployee);
+            const createdEmployee = await employeeService.createEmployee(newEmployee);
             await fetchEmployees();
             setNewEmployee({
                 employee_citizenid: '',
@@ -93,7 +93,16 @@ const HRPage = () => {
                 role_title: ''
             });
             setShowAddForm(false);
-            toast.success('Thêm nhân viên thành công!');
+            
+            if (createdEmployee.defaultPassword) {
+                Swal.fire({
+                    title: 'Thêm nhân viên thành công!',
+                    html: `Tài khoản đã được tạo thành công.<br/><br/>Mật khẩu đăng nhập mặc định:<br/><b style="font-size: 20px;">${createdEmployee.defaultPassword}</b><br/><br/><i>Vui lòng báo cho nhân viên đổi mật khẩu sau khi đăng nhập.</i>`,
+                    icon: 'success',
+                });
+            } else {
+                toast.success('Thêm nhân viên thành công!');
+            }
         } catch (error) {
             console.error('Error creating employee:', error);
             toast.error('Lỗi khi thêm nhân viên: ' + (error.response?.data?.message || error.message));

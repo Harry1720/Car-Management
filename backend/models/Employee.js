@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 
 const employeeSchema = new mongoose.Schema({
-  userId: {
+  accountId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+  },
+  avatar: {
+    type: String,
+    default: '',
   },
   name: {
     type: String,

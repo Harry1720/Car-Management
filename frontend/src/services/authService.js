@@ -7,6 +7,7 @@ export const authService = {
       const response = await apiClient.post('/auth/register', userData);
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('role', response.data.user.role);
       }
       return response.data;
     } catch (error) {
@@ -15,11 +16,12 @@ export const authService = {
   },
 
   // Đăng nhập
-  login: async (email, password) => {
+  login: async (email, password, portal = 'user') => {
     try {
-      const response = await apiClient.post('/auth/login', { email, password });
+      const response = await apiClient.post('/auth/login', { email, password, portal });
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('role', response.data.user.role);
       }
       return response.data;
     } catch (error) {
@@ -51,12 +53,9 @@ export const authService = {
   },
 
   // Đổi mật khẩu
-  changePassword: async (oldPassword, newPassword) => {
+  changePassword: async (passwordData) => {
     try {
-      const response = await apiClient.put('/auth/change-password', {
-        oldPassword,
-        newPassword,
-      });
+      const response = await apiClient.put('/auth/change-password', passwordData);
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
@@ -66,6 +65,7 @@ export const authService = {
   // Đăng xuất
   logout: () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
   },
   
   // Kiểm tra token còn hạn
