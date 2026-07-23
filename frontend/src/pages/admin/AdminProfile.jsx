@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { authService } from '../../services/authService';
 import NavbarAdmin from '../../components/NavbarAdmin';
+import Footer from '../../components/FooterAdmin';
 import styles from '../../assets/css/admin_pages/AdminProfile.module.css';
 
 const AdminProfile = () => {
@@ -143,8 +144,8 @@ const AdminProfile = () => {
     return (
       <div className="admin-container">
         <NavbarAdmin />
-        <div className="admin_profile_page" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff', width: '100%' }}>
-          <div style={{ color: '#1e3a8a' }}>Đang tải...</div>
+        <div className={`admin_profile_page ${styles.loadingContainer}`}>
+          <div className={styles.loadingText}>Đang tải...</div>
         </div>
       </div>
     );
@@ -153,7 +154,12 @@ const AdminProfile = () => {
   return (
     <div className="admin-container">
       <NavbarAdmin />
-      <div className="admin_profile_page" style={{ backgroundColor: '#fff', width: '100%' }}>
+      <div className="admin_profile_page">
+        <div className={`page-header-block ${styles.profileHeaderBlock}`}>
+          <span className="page-overline">ADMIN PROFILE</span>
+          <h1 className="page-main-title">HỒ SƠ QUẢN TRỊ VIÊN</h1>
+          <p className="page-subtitle">Quản lý thông tin cá nhân và thiết lập bảo mật tài khoản.</p>
+        </div>
         <div className={styles.profileContainer}>
           <div className={styles.profileContent}>
             {/* Cột Trái - Giống trang Profile User */}
@@ -204,7 +210,7 @@ const AdminProfile = () => {
                       type="file"
                       accept="image/*"
                       onChange={handleAvatarChange}
-                      style={{ display: 'none' }}
+                      className={styles.hiddenInput}
                     />
                   </div>
 
@@ -319,6 +325,7 @@ const AdminProfile = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

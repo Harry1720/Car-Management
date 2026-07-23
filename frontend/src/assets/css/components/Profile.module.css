@@ -311,3 +311,20 @@
   border-radius: 8px;
   border: 1px dashed rgba(255, 255, 255, 0.1);
 }
+
+@media (max-width: 768px) {
+  .leftColumn {
+    width: 100%;
+  }
+}
+
+/* Custom SweetAlert Button Style */
+:global(.custom-confirm-btn) {
+  background-color: #ffc467 !important;
+  color: #1c1f26 !important;
+  font-weight: 600 !important;
+}
+:global(.custom-cancel-btn) {
+  background-color: #6c757d !important;
+  color: #fff !important;
+}

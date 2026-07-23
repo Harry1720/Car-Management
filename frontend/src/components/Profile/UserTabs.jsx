@@ -30,7 +30,13 @@ const UserTabs = ({ activeTab }) => {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Đổi mật khẩu',
-      cancelButtonText: 'Hủy'
+      cancelButtonText: 'Hủy',
+      background: '#1c1f26',
+      color: '#fff',
+      customClass: {
+        confirmButton: 'custom-confirm-btn',
+        cancelButton: 'custom-cancel-btn'
+      }
     });
     
     if (!result.isConfirmed) return;

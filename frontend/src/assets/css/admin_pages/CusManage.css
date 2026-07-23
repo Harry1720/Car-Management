@@ -461,3 +461,12 @@
     justify-content: flex-end;
     margin-top: 20px;
 }
+
+.customer_page .btn-primary {
+    transition: all 0.2s ease;
+}
+
+.customer_page .btn-primary:hover {
+    background-color: #172554;
+    color: #fff;
+}

@@ -538,3 +538,12 @@
     justify-content: flex-end;
     margin-top: 20px;
 }
+
+.hr-page .btn-primary {
+    transition: all 0.2s ease;
+}
+
+.hr-page .btn-primary:hover {
+    background-color: #172554;
+    color: #fff;
+}

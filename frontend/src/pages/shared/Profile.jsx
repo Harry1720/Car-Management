@@ -43,10 +43,14 @@ const Profile = () => {
          title: 'Đăng xuất khỏi hệ thống?',
          icon: 'warning',
          showCancelButton: true,
-         confirmButtonColor: '#3085d6',
-         cancelButtonColor: '#d33',
          confirmButtonText: 'Đồng ý',
-         cancelButtonText: 'Hủy'
+         cancelButtonText: 'Hủy',
+         background: '#1c1f26',
+         color: '#fff',
+         customClass: {
+             confirmButton: 'custom-confirm-btn',
+             cancelButton: 'custom-cancel-btn'
+         }
      });
      if (result.isConfirmed) {
          authService.logout();

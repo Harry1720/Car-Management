@@ -232,6 +232,10 @@ body {
     gap: 8px !important;
 }
 
+.table-wrapper{
+    overflow-x: auto !important;
+}
+
 /* Center Table Action Buttons */
 .table-wrapper table th,
 .table-wrapper table td {
@@ -537,7 +541,8 @@ body {
     .hr-page,
     .car-number-page,
     .dashboard_page,
-    .accounting-page {
+    .accounting-page,
+    .admin_profile_page {
         margin: 20px 20px 30px 20px !important;
         max-width: calc(100vw - 40px) !important;
     }
