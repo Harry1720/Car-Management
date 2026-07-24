@@ -62,6 +62,16 @@ export const authService = {
     }
   },
 
+  // Toggle theo dõi xe (Thả tim)
+  toggleCarInterest: async (carId) => {
+    try {
+      const response = await apiClient.post(`/auth/interest/toggle/${carId}`);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
+
   // Đăng xuất
   logout: () => {
     localStorage.removeItem('token');

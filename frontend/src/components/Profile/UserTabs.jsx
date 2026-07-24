@@ -4,7 +4,9 @@ import { toast } from 'react-toastify';
 import { authService } from '../../services/authService';
 import Swal from 'sweetalert2';
 
-const UserTabs = ({ activeTab }) => {
+import { Link } from 'react-router-dom';
+
+const UserTabs = ({ activeTab, user, setUser }) => {
   // Change Password State
   const [passwords, setPasswords] = useState({
     oldPassword: '',
@@ -12,6 +14,23 @@ const UserTabs = ({ activeTab }) => {
     confirmPassword: '',
   });
   const [loading, setLoading] = useState(false);
+
+  const formatVnd = (value) => {
+    const amount = Number(value || 0);
+    return `${new Intl.NumberFormat("vi-VN").format(amount)} VNĐ`;
+  };
+
+  const handleUnfollow = async (carId) => {
+    try {
+      const response = await authService.toggleCarInterest(carId);
+      if (setUser) {
+         setUser(prev => ({ ...prev, carsInterested: response.carsInterested }));
+      }
+      toast.success(response.message);
+    } catch (error) {
+      toast.error(error.message || "Lỗi khi bỏ theo dõi");
+    }
+  };
 
   const handlePasswordChange = (e) => {
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
@@ -71,7 +90,32 @@ const UserTabs = ({ activeTab }) => {
         )}
         
         {activeTab === 'following' && (
-          <div className={styles.emptyState}>Bạn chưa theo dõi chiếc xe nào.</div>
+          <div className={styles.followingContainer}>
+            {!user?.carsInterested || user.carsInterested.length === 0 ? (
+              <div className={styles.emptyState}>
+                <p>Bạn chưa theo dõi chiếc xe nào.</p>
+                <Link to="/products" className={styles.browseCarsBtn}>Khám phá ngay</Link>
+              </div>
+            ) : (
+              <div className={styles.carGrid}>
+                {user.carsInterested.map(car => (
+                  <div key={car._id} className={styles.miniCarCard}>
+                    <div className={styles.miniCarImage}>
+                      <img src={car.variants?.[0]?.image || "/images/vf8.png"} alt={car.name} />
+                    </div>
+                    <div className={styles.miniCarInfo}>
+                      <h4>{car.name}</h4>
+                      <p className={styles.miniCarPrice}>{formatVnd(car.price)}</p>
+                      <div className={styles.miniCarActions}>
+                        <Link to={`/landing/${(car.model || "").toLowerCase()}`} className={styles.detailBtn}>Chi tiết</Link>
+                        <button onClick={() => handleUnfollow(car._id)} className={styles.unfollowBtn}>Bỏ theo dõi</button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         )}
         
         {activeTab === 'orders' && (

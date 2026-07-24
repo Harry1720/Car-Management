@@ -5,6 +5,7 @@ import Footer from "../../components/Footer";
 import { useEffect, useState } from "react";
 import Slideshow from "../../components/Slideshow";
 import { carService } from "../../services/carService";
+import { authService } from "../../services/authService";
 
 const formatVnd = (value) => {
   const amount = Number(value || 0);
@@ -74,6 +75,8 @@ const Products = () => {
     phone: "",
     model: "VF 8",
   });
+  const [interestedCars, setInterestedCars] = useState([]);
+  const [togglingCars, setTogglingCars] = useState({});
 
   // Display logic
   const INITIAL_DISPLAY = 9; // 3 rows x 3 cols on desktop
@@ -81,10 +84,53 @@ const Products = () => {
   const [displayedCount, setDisplayedCount] = useState(INITIAL_DISPLAY);
   const [prevDisplayedCount, setPrevDisplayedCount] = useState(0);
 
+  const fetchUserInterest = async () => {
+    if (authService.isAuthenticated()) {
+      try {
+        const user = await authService.getCurrentUser();
+        if (user && user.carsInterested) {
+          const ids = user.carsInterested.map(c => c._id || c);
+          setInterestedCars(ids);
+        }
+      } catch (err) {
+        console.error("Lỗi tải danh sách yêu thích", err);
+      }
+    }
+  };
+
   useEffect(() => {
     document.title = "Sản phẩm | VinFast";
     fetchCars();
+    fetchUserInterest();
   }, []);
+
+  const handleToggleInterest = async (e, carId) => {
+    e.stopPropagation();
+    
+    if (!authService.isAuthenticated()) {
+      toast.info("Vui lòng đăng nhập để lưu xe vào danh sách yêu thích");
+      window.location.href = "/login";
+      return;
+    }
+
+    try {
+      setTogglingCars(prev => ({ ...prev, [carId]: true }));
+      
+      // Optimistic update
+      const wasInterested = interestedCars.includes(carId);
+      setInterestedCars(prev => 
+        wasInterested ? prev.filter(id => id !== carId) : [...prev, carId]
+      );
+
+      const res = await authService.toggleCarInterest(carId);
+      setInterestedCars(res.carsInterested.map(c => c._id || c));
+    } catch (err) {
+      toast.error(err.message || "Lỗi khi thả tim");
+      fetchUserInterest(); 
+    } finally {
+      setTogglingCars(prev => ({ ...prev, [carId]: false }));
+    }
+  };
 
   const handleLeadChange = (event) => {
     const { name, value } = event.target;
@@ -152,9 +198,21 @@ const Products = () => {
 
       return (
         <div
+          key={car._id || index}
           className={`car-card ${isNew ? "new-item" : ""}`}
           style={animationDelay ? { animationDelay } : undefined}
         >
+          {/* Nút Thả tim */}
+          <button 
+            onClick={(e) => handleToggleInterest(e, car._id)}
+            disabled={togglingCars[car._id]}
+            className="heart-btn"
+            style={{ color: interestedCars.includes(car._id) ? '#ff4757' : '#95a5a6' }}
+            title={interestedCars.includes(car._id) ? "Bỏ theo dõi" : "Theo dõi xe này"}
+          >
+            <i className={interestedCars.includes(car._id) ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i>
+          </button>
+
           <div className="car-image">
             <img src={car.image} alt={car.name} />
           </div>

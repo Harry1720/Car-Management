@@ -174,7 +174,7 @@ const Profile = () => {
             )}
             
             {user.role !== 'admin' && activeTab !== 'profile' && (
-              <UserTabs activeTab={activeTab} />
+              <UserTabs activeTab={activeTab} user={user} setUser={setUser} />
             )}
           </div>
         </div>

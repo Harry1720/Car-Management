@@ -13,5 +13,6 @@ router.post('/reset-password', authController.resetPassword);
 router.get('/me', protect, authController.getCurrentUser);
 router.put('/update', protect, upload.single('avatar'), authController.updateUser);
 router.put('/change-password', protect, authController.changePassword);
+router.post('/interest/toggle/:carId', protect, authController.toggleCarInterest);
 
 module.exports = router;

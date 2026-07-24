@@ -126,7 +126,7 @@ exports.getCurrentUser = async (req, res) => {
     
     let profile = null;
     if (user.role === 'user') {
-      profile = await Customer.findOne({ accountId: user._id });
+      profile = await Customer.findOne({ accountId: user._id }).populate('carsInterested');
     } else {
       profile = await Employee.findOne({ accountId: user._id });
     }
@@ -303,6 +303,50 @@ exports.resetPassword = async (req, res) => {
     await user.save();
 
     res.status(200).json({ message: 'Đổi mật khẩu thành công. Bạn có thể đăng nhập bằng mật khẩu mới.' });
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi server', error: err.message });
+  }
+};
+
+// Toggle Car Interest
+exports.toggleCarInterest = async (req, res) => {
+  try {
+    const { carId } = req.params;
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+    if (!user || user.role !== 'user') {
+      return res.status(403).json({ message: 'Chỉ khách hàng mới có thể theo dõi xe' });
+    }
+
+    const customer = await Customer.findOne({ accountId: userId });
+    if (!customer) {
+      return res.status(404).json({ message: 'Không tìm thấy hồ sơ khách hàng' });
+    }
+
+    // Check if carId is already in carsInterested
+    const index = customer.carsInterested.indexOf(carId);
+    let isInterested = false;
+
+    if (index > -1) {
+      // Remove it
+      customer.carsInterested.splice(index, 1);
+    } else {
+      // Add it
+      customer.carsInterested.push(carId);
+      isInterested = true;
+    }
+
+    await customer.save();
+    
+    // Populate before returning
+    await customer.populate('carsInterested');
+
+    res.json({
+      message: isInterested ? 'Đã thêm vào danh sách theo dõi' : 'Đã bỏ theo dõi',
+      carsInterested: customer.carsInterested,
+      isInterested
+    });
   } catch (err) {
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
