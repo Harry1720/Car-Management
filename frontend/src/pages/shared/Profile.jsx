@@ -17,6 +17,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = "Tài khoản khách hàng | VinFast";
     const fetchUser = async () => {
       try {
         if (!authService.isAuthenticated()) {
@@ -58,6 +59,27 @@ const Profile = () => {
      }
   };
 
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Immediate local preview
+      const previewUrl = URL.createObjectURL(file);
+      setUser(prev => ({ ...prev, avatar: previewUrl }));
+
+      try {
+        const toastId = toast.loading("Đang tải ảnh lên...");
+        const data = new FormData();
+        data.append('avatar', file);
+        
+        const updatedUser = await authService.updateUser(data);
+        setUser(updatedUser);
+        toast.update(toastId, { render: "Cập nhật ảnh đại diện thành công!", type: "success", isLoading: false, autoClose: 3000 });
+      } catch (error) {
+        toast.error(error.message || 'Lỗi khi cập nhật ảnh đại diện');
+      }
+    }
+  };
+
   if (loading) {
     return (
       <div className={styles.profilePage}>
@@ -79,13 +101,25 @@ const Profile = () => {
         <div className={styles.profileContent}>
           <div className={styles.leftColumn}>
             <div className={styles.sidebarUserInfo}>
-              {user.avatar ? (
-                <img src={user.avatar} className={styles.sidebarAvatar} alt="Avatar" />
-              ) : (
-                <div className={styles.sidebarAvatarPlaceholder}>
-                  {user?.name?.charAt(0).toUpperCase()}
-                </div>
-              )}
+              <div className={styles.sidebarAvatarWrapper}>
+                {user.avatar ? (
+                  <img src={user.avatar} className={styles.sidebarAvatar} alt="Avatar" />
+                ) : (
+                  <div className={styles.sidebarAvatarPlaceholder}>
+                    {user?.name?.charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <label htmlFor="user-avatar-upload" className={styles.cameraIcon}>
+                  <ion-icon name="camera"></ion-icon>
+                </label>
+                <input
+                  id="user-avatar-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAvatarChange}
+                  style={{ display: 'none' }}
+                />
+              </div>
               <h3 className={styles.sidebarName}>{user.name}</h3>
               <p className={styles.sidebarRole}>{user.role === 'admin' ? 'ADMINISTRATOR' : 'THÀNH VIÊN'}</p>
             </div>

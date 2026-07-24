@@ -21,7 +21,6 @@ const AdminProfile = () => {
     role: ''
   });
   const [avatarPreview, setAvatarPreview] = useState(null);
-  const [avatarFile, setAvatarFile] = useState(null);
   const [savingProfile, setSavingProfile] = useState(false);
 
   // Password form state
@@ -35,7 +34,7 @@ const AdminProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Tài khoản của tôi | Quản trị viên";
+    document.title = "Tài khoản quản trị | VinFast";
     const fetchUser = async () => {
       try {
         const data = await authService.getCurrentUser();
@@ -45,7 +44,8 @@ const AdminProfile = () => {
           email: data.email || '',
           phone: data.phone || '',
           address: data.address || '',
-          role: data.role === 'admin' ? 'Admin' : (data.role === 'employee' ? 'Nhân viên' : data.role)
+          position: data.position || (data.role === 'admin' ? 'Admin' : (data.role === 'employee' ? 'Nhân viên' : data.role)),
+          roleSystem: data.role === 'admin' ? 'Admin' : (data.role === 'employee' ? 'Nhân viên' : data.role)
         });
         setAvatarPreview(data.avatar || null);
       } catch (error) {
@@ -61,11 +61,25 @@ const AdminProfile = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleAvatarChange = (e) => {
+  const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setAvatarFile(file);
-      setAvatarPreview(URL.createObjectURL(file));
+      // Immediate local preview
+      const previewUrl = URL.createObjectURL(file);
+      setAvatarPreview(previewUrl);
+
+      try {
+        const toastId = toast.loading("Đang tải ảnh lên...");
+        const data = new FormData();
+        data.append('avatar', file);
+        
+        const updatedUser = await authService.updateUser(data);
+        setUser(updatedUser);
+        setAvatarPreview(updatedUser.avatar);
+        toast.update(toastId, { render: "Cập nhật ảnh đại diện thành công!", type: "success", isLoading: false, autoClose: 3000 });
+      } catch (error) {
+        toast.error(error.message || 'Lỗi khi cập nhật ảnh đại diện');
+      }
     }
   };
 
@@ -93,9 +107,6 @@ const AdminProfile = () => {
       data.append('name', formData.name);
       data.append('phone', formData.phone);
       data.append('address', formData.address);
-      if (avatarFile) {
-        data.append('avatar', avatarFile);
-      }
       
       const updatedUser = await authService.updateUser(data);
       setUser(updatedUser);
@@ -165,13 +176,25 @@ const AdminProfile = () => {
             {/* Cột Trái - Giống trang Profile User */}
             <div className={styles.leftColumn}>
               <div className={styles.sidebarUserInfo}>
-                {user?.avatar ? (
-                  <img src={user.avatar} className={styles.sidebarAvatar} alt="Avatar" />
-                ) : (
-                  <div className={styles.sidebarAvatarPlaceholder}>
-                    {user?.name?.charAt(0).toUpperCase()}
-                  </div>
-                )}
+                <div className={styles.sidebarAvatarWrapper}>
+                  {avatarPreview ? (
+                    <img src={avatarPreview} className={styles.sidebarAvatar} alt="Avatar" />
+                  ) : (
+                    <div className={styles.sidebarAvatarPlaceholder}>
+                      {user?.name?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                  <label htmlFor="admin-avatar-upload" className={styles.cameraIcon}>
+                    <ion-icon name="camera"></ion-icon>
+                  </label>
+                  <input
+                    id="admin-avatar-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAvatarChange}
+                    className={styles.hiddenInput}
+                  />
+                </div>
                 <h3 className={styles.sidebarName}>{user?.name}</h3>
                 <p className={styles.sidebarRole}>{user?.role === 'admin' ? 'ADMINISTRATOR' : 'NHÂN VIÊN'}</p>
               </div>
@@ -194,80 +217,78 @@ const AdminProfile = () => {
                   <h2 className={styles.contentTitle}>HỒ SƠ CÁ NHÂN</h2>
                   <p className={styles.contentSubtitle}>Các thông tin cá nhân của bạn phục vụ công việc.</p>
 
-                  <div className={styles.avatarSection}>
-                    {avatarPreview ? (
-                      <img src={avatarPreview} alt="Avatar" className={styles.avatarPreview} />
-                    ) : (
-                      <div className={styles.avatarPlaceholder}>
-                        {user?.name?.charAt(0).toUpperCase() || 'U'}
+
+                  <div className={styles.formGrid}>
+                    <div className={styles.formCol}>
+                      <div className={styles.formGroup}>
+                        <label>Họ và Tên</label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleFormChange}
+                          className={styles.formControl}
+                          required
+                        />
                       </div>
-                    )}
-                    <label htmlFor="admin-avatar-upload" className={styles.uploadBtn}>
-                      Đổi ảnh đại diện
-                    </label>
-                    <input
-                      id="admin-avatar-upload"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleAvatarChange}
-                      className={styles.hiddenInput}
-                    />
-                  </div>
 
-                  <div className={styles.formGroup}>
-                    <label>Họ và Tên</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleFormChange}
-                      className={styles.formControl}
-                      required
-                    />
-                  </div>
+                      <div className={styles.formGroup}>
+                        <label>Chức vụ</label>
+                        <input
+                          type="text"
+                          name="position"
+                          value={formData.position}
+                          className={styles.formControl}
+                          disabled
+                        />
+                      </div>
 
-                  <div className={styles.formGroup}>
-                    <label>Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      className={styles.formControl}
-                      disabled
-                    />
-                  </div>
+                      <div className={styles.formGroup}>
+                        <label>Số điện thoại</label>
+                        <input
+                          type="text"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleFormChange}
+                          className={styles.formControl}
+                        />
+                      </div>
+                    </div>
 
-                  <div className={styles.formGroup}>
-                    <label>Chức vụ</label>
-                    <input
-                      type="text"
-                      name="role"
-                      value={formData.role}
-                      className={styles.formControl}
-                      disabled
-                    />
-                  </div>
+                    <div className={styles.formCol}>
+                      <div className={styles.formGroup}>
+                        <label>Email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          className={styles.formControl}
+                          disabled
+                        />
+                      </div>
 
-                  <div className={styles.formGroup}>
-                    <label>Số điện thoại</label>
-                    <input
-                      type="text"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleFormChange}
-                      className={styles.formControl}
-                    />
-                  </div>
+                      <div className={styles.formGroup}>
+                        <label>Phân quyền hệ thống</label>
+                        <input
+                          type="text"
+                          name="roleSystem"
+                          value={formData.roleSystem}
+                          className={styles.formControl}
+                          disabled
+                        />
+                      </div>
 
-                  <div className={styles.formGroup}>
-                    <label>Địa chỉ</label>
-                    <input
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleFormChange}
-                      className={styles.formControl}
-                    />
+                      <div className={styles.formGroup}>
+                        <label>Địa chỉ</label>
+                        <input
+                          type="text"
+                          name="address"
+                          value={formData.address}
+                          onChange={handleFormChange}
+                          className={styles.formControl}
+                        />
+                      </div>
+                    </div>
                   </div>
 
                   <button type="submit" className={styles.submitBtn} disabled={savingProfile}>

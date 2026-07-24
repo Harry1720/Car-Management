@@ -65,6 +65,30 @@
     font-size: 35px;
     gap: 20px;
     cursor: pointer;
+    align-items: center;
+}
+
+.greetingBadge {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 4px 15px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    margin-right: 5px;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+    letter-spacing: 0.5px;
+    height: 32px;
+}
+
+.greetingBadge:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+    color: #fff;
 }
 
 .nav-container .icons i {
@@ -112,7 +136,7 @@
 
 .nav-container ul li a.active {
     position: relative;
-    color: #ffffff; /* Màu xanh cho mục đang được chọn */
+    color: #ffffff;
     font-weight: 600;
 }
 
@@ -221,9 +245,10 @@
     }
     
     .nav-container ul li {
-        padding: 4px 10px;
+        padding: 0;
         width: 100%;
         text-align: left;
+        border-radius: 8px;
     }
     
     .nav-container ul li a {
@@ -233,8 +258,9 @@
         display: flex;
         align-items: center;
         font-size: 14px;
-        padding: 4px 10px;
+        padding: 9px 16px;
         font-weight: 500;
+        width: 100%;
     }
     
     .nav-container ul li a.active {

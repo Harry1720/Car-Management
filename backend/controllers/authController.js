@@ -155,27 +155,45 @@ exports.updateUser = async (req, res) => {
     const updateData = { updatedAt: Date.now() };
     if (name) updateData.name = name;
     if (phone) updateData.phone = phone;
-    if (address) updateData.address = address;
-    if (req.file) updateData.avatar = req.file.path;
+    
+    if (address) {
+      if (user.role === 'user') {
+        updateData.address = address;
+      } else {
+        if (typeof address === 'string') {
+           updateData.address = { street: address };
+        } else {
+           updateData.address = address;
+        }
+      }
+    }
 
+    if (req.file) {
+      updateData.avatar = req.file.path;
+    }
+    
     let updatedProfile;
+    const filter = { accountId: user._id };
+
     if (user.role === 'user') {
+      const setOnInsert = { email: user.email, name: name || 'Khách hàng', phone: '0000000000' };
       updatedProfile = await Customer.findOneAndUpdate(
-        { accountId: user._id },
-        updateData,
-        { new: true, runValidators: true }
+        filter,
+        { $set: updateData, $setOnInsert: setOnInsert },
+        { new: true, upsert: true, runValidators: true }
       );
     } else {
+      const setOnInsert = { email: user.email, name: name || 'Quản trị viên' };
       updatedProfile = await Employee.findOneAndUpdate(
-        { accountId: user._id },
-        updateData,
-        { new: true, runValidators: true }
+        filter,
+        { $set: updateData, $setOnInsert: setOnInsert },
+        { new: true, upsert: true, runValidators: true }
       );
     }
 
     const userData = {
       ...user.toObject(),
-      ...(updatedProfile ? updatedProfile.toObject() : {}),
+      ...updatedProfile.toObject(),
       id: user._id,
       _id: user._id,
     };

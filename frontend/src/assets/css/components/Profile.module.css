@@ -84,13 +84,18 @@
   margin-bottom: 10px;
 }
 
+.sidebarAvatarWrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
 .sidebarAvatar {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid rgba(255, 255, 255, 0.2);
-  margin-bottom: 12px;
 }
 
 .sidebarAvatarPlaceholder {
@@ -104,7 +109,29 @@
   font-size: 2.5rem;
   color: #fff;
   border: 2px solid rgba(255, 255, 255, 0.2);
-  margin-bottom: 12px;
+}
+
+.cameraIcon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 1.1rem;
+}
+
+.cameraIcon:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: rgb(255, 196, 103);
 }
 
 .sidebarName {
@@ -315,6 +342,38 @@
 @media (max-width: 768px) {
   .leftColumn {
     width: 100%;
+  }
+  .sidebarMenu {
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+  .sidebarMenu::-webkit-scrollbar {
+    height: 4px;
+  }
+  .sidebarMenu::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .sidebarMenu::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
+  .sidebarMenu::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  .menuItem {
+    flex-shrink: 0;
+    padding: 10px 15px;
+  }
+  .logoutItem {
+    margin-top: 0;
+    border-top: none;
+    margin-left: 8px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
   }
 }
 

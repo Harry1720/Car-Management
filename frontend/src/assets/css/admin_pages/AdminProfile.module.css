@@ -79,13 +79,18 @@
   margin-bottom: 10px;
 }
 
+.sidebarAvatarWrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
 .sidebarAvatar {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #1e3a8a;
-  margin-bottom: 12px;
 }
 
 .sidebarAvatarPlaceholder {
@@ -99,7 +104,28 @@
   font-size: 2.5rem;
   color: #1e3a8a;
   border: 2px solid #1e3a8a;
-  margin-bottom: 12px;
+}
+
+.cameraIcon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #1e3a8a;
+  color: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid #fff;
+  font-size: 1.1rem;
+}
+
+.cameraIcon:hover {
+  background-color: #172554;
 }
 
 .sidebarName {
@@ -173,6 +199,23 @@
 }
 
 /* Form Styles */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 24px;
+}
+
+@media (max-width: 768px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formCol {
+  display: flex;
+  flex-direction: column;
+}
+
 .formGroup {
   margin-bottom: 24px;
 }
@@ -283,5 +326,30 @@
 @media (max-width: 768px) {
   .leftColumn {
     width: 100%;
+  }
+  .sidebarMenu {
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(30, 58, 138, 0.2) transparent;
+    margin: 0 auto;
+  }
+  .sidebarMenu::-webkit-scrollbar {
+    height: 4px;
+  }
+  .sidebarMenu::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .sidebarMenu::-webkit-scrollbar-thumb {
+    background-color: rgba(30, 58, 138, 0.2);
+    border-radius: 4px;
+  }
+  .sidebarMenu::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(30, 58, 138, 0.4);
+  }
+  .menuItem {
+    flex-shrink: 0;
+    padding: 10px 15px;
   }
 }

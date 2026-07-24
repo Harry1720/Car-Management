@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "../../assets/css/user_pages/Home.module.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -131,15 +132,18 @@ const Home = () => {
           </div>
           <div className={styles.home_page__hero_section__actions}>
             <button
-              className={styles.home_page__button_primary}
+              className={`${styles.home_page__button_primary} ${styles.home_page__button_large}`}
               type="button"
               onClick={handleSmoothScroll}
             >
               Khám phá dòng xe
             </button>
-            {/* <button className={styles.home_page__button_secondary} type="button" onClick={() => setIsVideoModalOpen(true)}>
-              Xem video trải nghiệm
-            </button> */}
+            <Link 
+              to="/about"
+              className={`${styles.home_page__button_secondary} ${styles.home_page__button_large}`}
+            >
+              Tìm hiểu chúng tôi
+            </Link>
           </div>
         </div>
       </div>

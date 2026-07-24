@@ -11,8 +11,6 @@ const ProfileForm = ({ user, setUser }) => {
     phone: '',
     address: '',
   });
-  const [avatarPreview, setAvatarPreview] = useState(null);
-  const [avatarFile, setAvatarFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -23,7 +21,6 @@ const ProfileForm = ({ user, setUser }) => {
         phone: user.phone || '',
         address: user.address || '',
       });
-      setAvatarPreview(user.avatar || null);
     }
   }, [user]);
 
@@ -31,13 +28,7 @@ const ProfileForm = ({ user, setUser }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setAvatarFile(file);
-      setAvatarPreview(URL.createObjectURL(file));
-    }
-  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,9 +58,6 @@ const ProfileForm = ({ user, setUser }) => {
       data.append('email', formData.email);
       data.append('phone', formData.phone);
       data.append('address', formData.address);
-      if (avatarFile) {
-        data.append('avatar', avatarFile);
-      }
 
       const updatedUser = await authService.updateUser(data);
       setUser(updatedUser);
@@ -86,25 +74,6 @@ const ProfileForm = ({ user, setUser }) => {
       <h2 className={styles.contentTitle}>HỒ SƠ THÀNH VIÊN</h2>
       <p className={styles.contentSubtitle}>Các thông tin cá nhân của bạn phục vụ liên hệ và giao hàng.</p>
 
-      <div className={styles.avatarSection}>
-        {avatarPreview ? (
-          <img src={avatarPreview} alt="Avatar" className={styles.avatarPreview} />
-        ) : (
-          <div className={styles.avatarPlaceholder}>
-            {user?.name?.charAt(0).toUpperCase() || 'U'}
-          </div>
-        )}
-        <label htmlFor="avatar-upload" className={styles.uploadBtn}>
-          Đổi ảnh đại diện
-        </label>
-        <input
-          id="avatar-upload"
-          type="file"
-          accept="image/*"
-          onChange={handleAvatarChange}
-          style={{ display: 'none' }}
-        />
-      </div>
 
       <div className={styles.formGroup}>
         <label>Họ và Tên</label>

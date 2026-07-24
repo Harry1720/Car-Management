@@ -6,6 +6,7 @@ import { authService } from '../services/authService';
 const Navbar = ({ activePage }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +18,14 @@ const Navbar = ({ activePage }) => {
     };
 
     window.addEventListener('scroll', handleScroll);
+    
+    // Fetch user details for greeting badge
+    if (authService.isAuthenticated()) {
+      authService.getCurrentUser()
+        .then(data => setUser(data))
+        .catch(console.error);
+    }
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -140,6 +149,11 @@ const Navbar = ({ activePage }) => {
       </ul>
 
       <div className={`${styles.icons} ${styles['desktop-only']}`}>
+        {authService.isAuthenticated() && (
+          <Link to="/profile" className={styles.greetingBadge} onClick={closeMobileMenu}>
+            CHÀO, {user?.name ? user.name.toUpperCase() : ""}
+          </Link>
+        )}
         <Link to={authService.isAuthenticated() ? "/profile" : "/login"} style={{ textDecoration: 'none', color: 'inherit' }} onClick={closeMobileMenu}>
           <i className="bx bx-user-circle"></i>
         </Link>
