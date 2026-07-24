@@ -19,6 +19,7 @@ import ResetPassword from './pages/user/ResetPassword';
 import Charging from './pages/user/ChargingStation';
 import NotFound from './pages/user/NotFound';
 import Profile from './pages/shared/Profile';
+import CarLanding from './pages/user/CarLanding';
 
 // // Admin pages
 import Dashboard from './pages/admin/Dashboard';
@@ -53,6 +54,7 @@ function App() {
         <Route path="/about" element={<About/>} />
         <Route path="/home" element={<Home />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/landing/:modelId" element={<CarLanding />} />
         <Route path="/deposit" element={<Deposit />} />
         <Route path="/promotions" element={<Promotion />} />
         <Route path="/policy" element={<Policy />} />

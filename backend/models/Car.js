@@ -61,6 +61,10 @@ const carSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  articleContent: {
+    type: String,
+    default: '',
+  },
   deletedAt: {
     type: Date,
   },

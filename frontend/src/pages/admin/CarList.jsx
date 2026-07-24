@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 import "../../assets/css/admin_pages/CarList.css";
 import Navbar from "../../components/NavbarAdmin";
 import Footer from "../../components/FooterAdmin";
@@ -107,6 +109,7 @@ const CarList = () => {
     energyConsumption: "",
     range: "",
     images: [],
+    articleContent: "",
   });
   const [editingCar, setEditingCar] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -169,6 +172,7 @@ const CarList = () => {
       motorPower: carToEdit.specifications?.motorPower || "",
       range: carToEdit.specifications?.range || "",
       energyConsumption: carToEdit.specifications?.energyConsumption || "",
+      articleContent: carToEdit.articleContent || "",
     });
     setShowAddForm(false);
   };
@@ -230,6 +234,8 @@ const CarList = () => {
           }),
         );
       }
+
+      formData.append("articleContent", editingCar.articleContent || "");
 
       // Ảnh mới xử lý riêng hoặc upload ngoài, tạm bỏ qua (hoặc dùng URL trong variants)
 
@@ -311,6 +317,8 @@ const CarList = () => {
           }),
         );
       }
+
+      formData.append("articleContent", newCar.articleContent || "");
 
       // Ảnh nằm trong variants (Base64 hoặc URL)
 
@@ -665,6 +673,18 @@ const CarList = () => {
                   </div>
                 </div>
 
+                <div className="form-row">
+                  <div className="form-col full-width">
+                    <label>Bài viết mô tả (Landing Page)</label>
+                    <ReactQuill 
+                      theme="snow" 
+                      value={newCar.articleContent || ""} 
+                      onChange={(content) => setNewCar(prev => ({...prev, articleContent: content}))} 
+                      style={{ height: '400px', marginBottom: '50px', backgroundColor: 'white', color: 'black' }}
+                    />
+                  </div>
+                </div>
+
                 <div className="form-actions form-actions-right">
                   <button
                     type="button"
@@ -986,6 +1006,18 @@ const CarList = () => {
                         ))}
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="form-col full-width">
+                    <label>Bài viết mô tả (Landing Page)</label>
+                    <ReactQuill 
+                      theme="snow" 
+                      value={editingCar.articleContent || ""} 
+                      onChange={(content) => setEditingCar(prev => ({...prev, articleContent: content}))} 
+                      style={{ height: '500px', marginBottom: '50px', backgroundColor: 'white', color: 'black' }}
+                    />
                   </div>
                 </div>
 

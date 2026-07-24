@@ -5,29 +5,48 @@ import Footer from '../../components/FooterAdmin';
 import Chart from 'chart.js/auto';
 import { dashboardService } from '../../services/dashboardService';
 
+const formatVnd = (value) => {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value || 0);
+};
+
 const Dashboard = () => {
-    const chartRef = useRef(null);
-    const chartInstance = useRef(null);
+    const lineChartRef = useRef(null);
+    const lineChartInstance = useRef(null);
+    const pieChartRef = useRef(null);
+    const pieChartInstance = useRef(null);
+    
+    const [stats, setStats] = useState(null);
     const [recentTransactions, setRecentTransactions] = useState([]);
-    const [agencyInfo, setAgencyInfo] = useState([]);
+    const [lowStockAlerts, setLowStockAlerts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
-    const [chartData, setChartData] = useState(null);
     
     useEffect(() => {
+        document.title = "Trang tổng quan | VinFast";
         fetchDashboardData();
-        fetchTransactionStats(selectedDate);
+        
+        return () => {
+            if (lineChartInstance.current) lineChartInstance.current.destroy();
+            if (pieChartInstance.current) pieChartInstance.current.destroy();
+        };
     }, []);
     
     const fetchDashboardData = async () => {
         try {
             setLoading(true);
-            const [transactionsRes, statsRes] = await Promise.all([
+            const [statsRes, transactionsRes, monthlyRes, topSellingRes, lowStockRes] = await Promise.all([
+                dashboardService.getDashboardStats(),
                 dashboardService.getRecentTransactions(10),
-                dashboardService.getDashboardStats()
+                dashboardService.getMonthlyRevenue(),
+                dashboardService.getTopSellingCars(),
+                dashboardService.getLowStockAlerts()
             ]);
             
+            setStats(statsRes);
             setRecentTransactions(transactionsRes || []);
+            setLowStockAlerts(lowStockRes || []);
+            
+            updateCharts(monthlyRes, topSellingRes);
+            
             setLoading(false);
         } catch (error) {
             console.error('Error fetching dashboard data:', error);
@@ -35,90 +54,91 @@ const Dashboard = () => {
         }
     };
     
-    const fetchTransactionStats = async (date) => {
-        try {
-            const response = await dashboardService.getTransactionStatistics(date);
-            updateChart(response);
-        } catch (error) {
-            console.error('Error fetching transaction stats:', error);
-            // Show empty chart on error
-            updateChart({ hourlyData: Array(9).fill(0) });
-        }
-    };
-    
-    const updateChart = (data) => {
-        if (chartInstance.current) {
-            chartInstance.current.destroy();
-        }
+    const updateCharts = (monthlyData, topSellingData) => {
+        if (lineChartInstance.current) lineChartInstance.current.destroy();
+        if (pieChartInstance.current) pieChartInstance.current.destroy();
         
-        const lineChartData = {
-            labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00', '24:00'],
-            datasets: [{
-                label: 'Số lượng giao dịch',
-                data: data?.hourlyData || [],
-                borderColor: "#1a90ff",
-                backgroundColor: 'rgba(33, 150, 243, 0.2)',
-                borderWidth: 3,
-                fill: true
-            }]
-        };
+        // Line Chart - Revenue over 12 months
+        const months = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+        const currentMonth = new Date().getMonth();
+        const labels = [];
+        const dataValues = [];
+        for(let i = 11; i >= 0; i--) {
+            let m = currentMonth - i;
+            let yearOffset = 0;
+            if(m < 0) {
+                m += 12;
+                yearOffset = -1;
+            }
+            labels.push(months[m]);
+            const formattedMonthStr = `${new Date().getFullYear() + yearOffset}-${(m+1).toString().padStart(2, '0')}`;
+            const found = monthlyData.find(d => d._id === formattedMonthStr);
+            dataValues.push(found ? found.total : 0);
+        }
 
-        const lineChartOptions = {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        stepSize: 5,
-                        color: '#7c7c7c'
-                    },
-                    grid: {
-                        color: '#ababab',
-                        borderColor: '#ababab'
-                    }
+        if(lineChartRef.current) {
+            lineChartInstance.current = new Chart(lineChartRef.current.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Doanh thu (VNĐ)',
+                        data: dataValues,
+                        borderColor: "#1E3A8A",
+                        backgroundColor: 'rgba(30, 58, 138, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
                 },
-                x: {
-                    ticks: {
-                        color: '#7c7c7c'
-                    },
-                    grid: {
-                        color: '#ababab',
-                        borderColor: '#ababab'
-                    }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
                 }
-            },
-            plugins: {
-                legend: {
-                    labels: {
-                        color: '#ffffff',
-                    }
-                }
-            }
-        };
+            });
+        }
+
+        // Pie Chart - Top selling cars
+        const pieLabels = topSellingData.map(item => item.carDetails[0]?.name || 'Unknown');
+        const pieValues = topSellingData.map(item => item.count);
+        const pieColors = ['#1E3A8A', '#3B82F6', '#60A5FA', '#93C5FD', '#DBEAFE'];
         
-        chartInstance.current = new Chart(chartRef.current.getContext('2d'), {
-            type: 'line',
-            data: lineChartData,
-            options: lineChartOptions
-        });
+        if(pieChartRef.current && pieLabels.length > 0) {
+            pieChartInstance.current = new Chart(pieChartRef.current.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: pieLabels,
+                    datasets: [{
+                        data: pieValues,
+                        backgroundColor: pieColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
     };
     
-    const handleDateChange = () => {
-        fetchTransactionStats(selectedDate);
+    const renderTrend = (value) => {
+        const num = parseFloat(value || 0);
+        if (num > 0) return <span className="kpi-trend positive">↑ {num}% so với tháng trước</span>;
+        if (num < 0) return <span className="kpi-trend negative">↓ {Math.abs(num)}% so với tháng trước</span>;
+        return <span className="kpi-trend neutral">- Không đổi</span>;
     };
 
-    useEffect(() => {
-        document.title = "Trang tổng quan | VinFast";
-        updateChart({});
-        
-        return () => {
-            if (chartInstance.current) {
-                chartInstance.current.destroy();
-            }
-        };
-    }, []);
+    const getStatusBadge = (status) => {
+        const cls = status?.toLowerCase() || '';
+        return <span className={`badge badge-${cls}`}>{status}</span>;
+    };
 
     return (
-        <><Navbar />
+        <>
+        <Navbar />
         <div className='dashboard_page'>
             <div className="page-header-block">
                 <span className="page-overline">DASHBOARD OVERVIEW</span>
@@ -127,69 +147,129 @@ const Dashboard = () => {
             </div>
             
             <div className="content dashboard_container">
-                <div className="card1">
-                    <h2 className="admin-text-center">Thống kê số lượng xe bán được theo ngày</h2>
-                    <fieldset>
-                        <label>
-                            Vui lòng chọn ngày: 
-                            <input 
-                                type="date" 
-                                min="2023-01-01"
-                                value={selectedDate}
-                                onChange={(e) => setSelectedDate(e.target.value)}
-                            />
-                        </label>
-                        <button 
-                            className='button graph_btn dashboard-btn-borderless'
-                            onClick={handleDateChange}
-                        >
-                            Chọn
-                        </button>
-                    </fieldset>
-                    <div className="chart-container">
-                        <canvas ref={chartRef} id="lineChart"></canvas>
+                {/* Tầng 1: KPI Cards */}
+                <div className="kpi-cards">
+                    <div className="kpi-card">
+                        <div className="kpi-card-content">
+                            <h3>Tổng doanh thu</h3>
+                            <p className="kpi-value">{formatVnd(stats?.totalRevenue)}</p>
+                            {renderTrend(stats?.revenueTrend)}
+                        </div>
+                        <div className="kpi-icon"><ion-icon name="wallet-outline"></ion-icon></div>
+                    </div>
+                    <div className="kpi-card">
+                        <div className="kpi-card-content">
+                            <h3>Tổng số đơn hàng</h3>
+                            <p className="kpi-value">{stats?.totalOrders || 0}</p>
+                            {renderTrend(stats?.ordersTrend)}
+                        </div>
+                        <div className="kpi-icon"><ion-icon name="cart-outline"></ion-icon></div>
+                    </div>
+                    <div className="kpi-card">
+                        <div className="kpi-card-content">
+                            <h3>Tổng khách hàng</h3>
+                            <p className="kpi-value">{stats?.totalCustomers || 0}</p>
+                            {renderTrend(stats?.customersTrend)}
+                        </div>
+                        <div className="kpi-icon"><ion-icon name="people-outline"></ion-icon></div>
+                    </div>
+                    <div className="kpi-card">
+                        <div className="kpi-card-content">
+                            <h3>Tổng xe tồn kho</h3>
+                            <p className="kpi-value">{stats?.totalStock || 0}</p>
+                            <span className="kpi-trend neutral">Sẵn sàng giao ngay</span>
+                        </div>
+                        <div className="kpi-icon"><ion-icon name="car-sport-outline"></ion-icon></div>
                     </div>
                 </div>
 
-                <div className="card table_of_dashboard">
-                    <h2 className="admin-text-center">Các giao dịch gần nhất</h2>
-                    <div className="table-wrapper">
-                        <table className="table table-striped table-hover">
-                            <thead className="dashboard-table-header">
-                                <tr>
-                                    <th>Mã giao dịch</th>
-                                    <th>Khách hàng</th>
-                                    <th>Mã đặt cọc</th>
-                                    <th>Ngày giao dịch</th>
-                                    <th>Ngày thanh toán</th>
-                                    <th>Thời hạn bảo hành</th>
-                                    <th>Trạng thái</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dashboard">
-                                {loading ? (
-                                    <tr><td colSpan="7" className="admin-text-center">Đang tải...</td></tr>
-                                ) : recentTransactions.length === 0 ? (
-                                    <tr><td colSpan="7" className="admin-text-center">Không có dữ liệu</td></tr>
-                                ) : (
-                                recentTransactions.map((transaction, index) => (
-                                    <tr key={transaction._id || index}>
-                                        <td>{transaction._id || 'N/A'}</td>
-                                        <td>{transaction.customerId?.name || 'N/A'}</td>
-                                        <td>{transaction.depositId?._id || 'N/A'}</td>
-                                        <td>{transaction.transactionDate ? new Date(transaction.transactionDate).toLocaleDateString('vi-VN') : 'N/A'}</td>
-                                        <td>{transaction.paymentDate ? new Date(transaction.paymentDate).toLocaleDateString('vi-VN') : 'Chưa thanh toán'}</td>
-                                        <td>{transaction.warrantyDate ? new Date(transaction.warrantyDate).toLocaleDateString('vi-VN') : 'Không có'}</td>
-                                        <td>{transaction.status || 'N/A'}</td>
-                                    </tr>
-                                ))
-                                )}
-                            </tbody>
-                        </table>
+                {/* Tầng 2: Charts */}
+                <div className="dashboard-grid">
+                    <div className="col-2-3 dashboard-card">
+                        <h2 className="dashboard-card-header">Doanh thu 12 tháng qua</h2>
+                        <div className="chart-container" style={{ height: '350px', margin: 0 }}>
+                            <canvas ref={lineChartRef}></canvas>
+                        </div>
                     </div>
-                    <a href="/admin/transaction" className="dashboard-link-none">
-                        <button className="button dashboard-btn-margin">Xem thêm giao dịch</button>
-                    </a>
+                    <div className="col-1-3 dashboard-card">
+                        <h2 className="dashboard-card-header">Tỷ trọng xe bán chạy</h2>
+                        <div className="chart-container" style={{ height: '320px', margin: 0 }}>
+                            <canvas ref={pieChartRef}></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Tầng 3: Data Tables */}
+                <div className="dashboard-grid">
+                    <div className="col-2-3 dashboard-card table_of_dashboard">
+                        <h2 className="dashboard-card-header">Các giao dịch gần nhất</h2>
+                        <div className="table-wrapper">
+                            <table className="table table-striped table-hover">
+                                <thead className="dashboard-table-header">
+                                    <tr>
+                                        <th>Mã GD</th>
+                                        <th>Khách hàng</th>
+                                        <th>Ngày GD</th>
+                                        <th>Ngày thanh toán</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loading ? (
+                                        <tr><td colSpan="5" className="admin-text-center">Đang tải...</td></tr>
+                                    ) : recentTransactions.length === 0 ? (
+                                        <tr><td colSpan="5" className="admin-text-center">Không có dữ liệu</td></tr>
+                                    ) : (
+                                        recentTransactions.map((tx, idx) => (
+                                            <tr key={tx._id || idx}>
+                                                <td>{tx._id ? tx._id.substring(0,8) + '...' : 'N/A'}</td>
+                                                <td>{tx.customerId?.name || 'N/A'}</td>
+                                                <td>{tx.transactionDate ? new Date(tx.transactionDate).toLocaleDateString('vi-VN') : 'N/A'}</td>
+                                                <td>{tx.paymentDate ? new Date(tx.paymentDate).toLocaleDateString('vi-VN') : 'Chưa'}</td>
+                                                <td>{getStatusBadge(tx.status)}</td>
+                                            </tr>
+                                        ))
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="/admin/transaction" className="dashboard-link-none">
+                            <button className="button dashboard-btn-margin">Xem tất cả giao dịch</button>
+                        </a>
+                    </div>
+                    
+                    <div className="col-1-3 dashboard-card table_of_dashboard">
+                        <h2 className="dashboard-card-header">Cảnh báo tồn kho</h2>
+                        <div className="table-wrapper">
+                            <table className="table table-striped table-hover">
+                                <thead className="dashboard-table-header">
+                                    <tr>
+                                        <th>Mẫu xe</th>
+                                        <th>Màu sắc</th>
+                                        <th>Tồn kho</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {loading ? (
+                                        <tr><td colSpan="3" className="admin-text-center">Đang tải...</td></tr>
+                                    ) : lowStockAlerts.length === 0 ? (
+                                        <tr><td colSpan="3" className="admin-text-center">Kho hàng an toàn</td></tr>
+                                    ) : (
+                                        lowStockAlerts.map((car, idx) => (
+                                            <tr key={idx}>
+                                                <td>{car.name}</td>
+                                                <td>{car.colorName}</td>
+                                                <td><span className="badge badge-cancelled">{car.stock}</span></td>
+                                            </tr>
+                                        ))
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="/admin/carlist" className="dashboard-link-none">
+                            <button className="button dashboard-btn-margin">Quản lý kho xe</button>
+                        </a>
+                    </div>
                 </div>
             </div>
             

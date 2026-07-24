@@ -125,7 +125,7 @@ const Products = () => {
           motorPower: carSpecs.motorPower || 'N/A',
           energyConsumption: carSpecs.energyConsumption || 'N/A',
           priceLabel: formatVnd(car.price),
-          link: `../deposit?model=${(car.model || "").toLowerCase()}`,
+          link: `/landing/${(car.model || "").toLowerCase()}`,
         };
       });
       setCars(carsData);

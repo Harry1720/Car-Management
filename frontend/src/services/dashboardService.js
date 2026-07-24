@@ -73,4 +73,14 @@ export const dashboardService = {
       throw error.response?.data || error;
     }
   },
+
+  // Lấy cảnh báo tồn kho thấp
+  getLowStockAlerts: async () => {
+    try {
+      const response = await apiClient.get('/dashboard/inventory/low-stock');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
 };

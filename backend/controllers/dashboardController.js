@@ -8,38 +8,58 @@ const Employee = require('../models/Employee');
 // Get dashboard statistics
 exports.getDashboardStats = async (req, res) => {
   try {
+    const now = new Date();
+    const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const prevMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
     // Total cars
     const totalCars = await Car.countDocuments();
 
-    // Total customers
+    // Total customers & trend
     const totalCustomers = await Customer.countDocuments();
+    const currMonthCustomers = await Customer.countDocuments({ createdAt: { $gte: currentMonthStart } });
+    const prevMonthCustomers = await Customer.countDocuments({ createdAt: { $gte: prevMonthStart, $lt: currentMonthStart } });
+    const customersTrend = prevMonthCustomers === 0 ? (currMonthCustomers > 0 ? 100 : 0) : ((currMonthCustomers - prevMonthCustomers) / prevMonthCustomers) * 100;
 
     // Total employees
     const totalEmployees = await Employee.countDocuments();
 
-    // Total deposits
-    const totalDeposits = await Deposit.countDocuments();
+    // Total orders (transactions) & trend
+    const totalOrders = await Transaction.countDocuments({ status: 'completed' });
+    const currMonthOrders = await Transaction.countDocuments({ status: 'completed', transactionDate: { $gte: currentMonthStart } });
+    const prevMonthOrders = await Transaction.countDocuments({ status: 'completed', transactionDate: { $gte: prevMonthStart, $lt: currentMonthStart } });
+    const ordersTrend = prevMonthOrders === 0 ? (currMonthOrders > 0 ? 100 : 0) : ((currMonthOrders - prevMonthOrders) / prevMonthOrders) * 100;
 
-    // Total revenue (income from transactions)
-    const totalRevenue = await Accounting.aggregate([
+    // Total revenue & trend
+    const totalRevenueAgg = await Accounting.aggregate([
       { $match: { type: 'income', isDeleted: false } },
-      {
-        $group: {
-          _id: null,
-          total: { $sum: '$amount' },
-        },
-      },
+      { $group: { _id: null, total: { $sum: '$amount' } } },
     ]);
+    const totalRevenue = totalRevenueAgg[0]?.total || 0;
 
-    // Total expenses
+    const currMonthRevAgg = await Accounting.aggregate([
+      { $match: { type: 'income', isDeleted: false, accountingDate: { $gte: currentMonthStart } } },
+      { $group: { _id: null, total: { $sum: '$amount' } } }
+    ]);
+    const prevMonthRevAgg = await Accounting.aggregate([
+      { $match: { type: 'income', isDeleted: false, accountingDate: { $gte: prevMonthStart, $lt: currentMonthStart } } },
+      { $group: { _id: null, total: { $sum: '$amount' } } }
+    ]);
+    const currRev = currMonthRevAgg[0]?.total || 0;
+    const prevRev = prevMonthRevAgg[0]?.total || 0;
+    const revenueTrend = prevRev === 0 ? (currRev > 0 ? 100 : 0) : ((currRev - prevRev) / prevRev) * 100;
+
+    // Total Stock
+    const stockAgg = await Car.aggregate([
+      { $unwind: { path: "$variants", preserveNullAndEmptyArrays: true } },
+      { $group: { _id: null, totalStock: { $sum: { $ifNull: ["$variants.stock", 0] } } } }
+    ]);
+    const totalStock = stockAgg[0]?.totalStock || 0;
+
+    // Total expenses (for net profit if needed later)
     const totalExpenses = await Accounting.aggregate([
       { $match: { type: 'expense', isDeleted: false } },
-      {
-        $group: {
-          _id: null,
-          total: { $sum: '$amount' },
-        },
-      },
+      { $group: { _id: null, total: { $sum: '$amount' } } },
     ]);
 
     // Pending deposits
@@ -48,14 +68,19 @@ exports.getDashboardStats = async (req, res) => {
     res.json({
       totalCars,
       totalCustomers,
+      customersTrend: customersTrend.toFixed(1),
       totalEmployees,
-      totalDeposits,
+      totalOrders,
+      ordersTrend: ordersTrend.toFixed(1),
+      totalStock,
       pendingDeposits,
-      totalRevenue: totalRevenue[0]?.total || 0,
+      totalRevenue,
+      revenueTrend: revenueTrend.toFixed(1),
       totalExpenses: totalExpenses[0]?.total || 0,
-      netProfit: (totalRevenue[0]?.total || 0) - (totalExpenses[0]?.total || 0),
+      netProfit: (totalRevenue) - (totalExpenses[0]?.total || 0),
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
 };
@@ -230,6 +255,28 @@ exports.getCarInventoryStatus = async (req, res) => {
     ]);
 
     res.json(inventory);
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi server', error: err.message });
+  }
+};
+
+// Get cars with low stock
+exports.getLowStockCars = async (req, res) => {
+  try {
+    const lowStockCars = await Car.aggregate([
+      { $match: { isDeleted: false } },
+      { $unwind: "$variants" },
+      { $match: { "variants.stock": { $lt: 2 } } },
+      { $project: {
+          name: 1,
+          model: 1,
+          colorName: "$variants.colorName",
+          stock: "$variants.stock",
+          image: { $arrayElemAt: ["$variants.images", 0] }
+        }
+      }
+    ]);
+    res.json(lowStockCars);
   } catch (err) {
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }

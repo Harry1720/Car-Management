@@ -11,5 +11,6 @@ router.get('/deposits/statistics', protect, authorize('admin', 'employee'), dash
 router.get('/transactions/statistics', protect, authorize('admin', 'employee'), dashboardController.getTransactionStatistics);
 router.get('/transactions/recent', protect, authorize('admin', 'employee'), dashboardController.getRecentTransactions);
 router.get('/inventory/status', protect, authorize('admin', 'employee'), dashboardController.getCarInventoryStatus);
+router.get('/inventory/low-stock', protect, authorize('admin', 'employee'), dashboardController.getLowStockCars);
 
 module.exports = router;

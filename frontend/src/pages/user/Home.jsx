@@ -41,7 +41,7 @@ const featuredCars = [
     range: "Lên đến 550 km/lần sạc",
     acceleration: "0-100 km/h: 7.2 giây",
     image: "/images/vf_wild.png",
-    cta: "/deposit?model=vfwild",
+    cta: "/landing/vfwild",
   },
   {
     model: "VF 9",
@@ -51,7 +51,7 @@ const featuredCars = [
     range: "Lên đến 680 km/lần sạc",
     acceleration: "0-100 km/h: 6.5 giây",
     image: "/images/vf9_silver.png",
-    cta: "/deposit?model=vf9",
+    cta: "/landing/vf9",
   },
   {
     model: "VF 8",
@@ -61,7 +61,7 @@ const featuredCars = [
     range: "Lên đến 471 km/lần sạc",
     acceleration: "0-100 km/h: 5.5 giây",
     image: "/images/vf8.png",
-    cta: "/deposit?model=vf8",
+    cta: "/landing/vf8",
   },
   {
     model: "VF 7",
@@ -71,7 +71,7 @@ const featuredCars = [
     range: "Lên đến 431 km/lần sạc",
     acceleration: "0-100 km/h: 6.8 giây",
     image: "/images/vf7.png",
-    cta: "/deposit?model=vf7",
+    cta: "/landing/vf7",
   },
 ];
 
