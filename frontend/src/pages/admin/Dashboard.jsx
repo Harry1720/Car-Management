@@ -136,6 +136,91 @@ const Dashboard = () => {
         return <span className={`badge badge-${cls}`}>{status}</span>;
     };
 
+    const userRole = localStorage.getItem('role');
+
+    const renderPieChart = () => (
+        <div className={`${userRole === 'admin' ? 'col-1-3' : 'col-1-3'} dashboard-card`}>
+            <h2 className="dashboard-card-header">Tỷ trọng xe bán chạy</h2>
+            <div className="chart-container" style={{ height: userRole === 'admin' ? '320px' : '280px', margin: 0 }}>
+                <canvas ref={pieChartRef}></canvas>
+            </div>
+        </div>
+    );
+
+    const renderInventory = () => (
+        <div className={`${userRole === 'admin' ? 'col-1-3' : 'col-2-3'} dashboard-card table_of_dashboard`}>
+            <h2 className="dashboard-card-header">Cảnh báo tồn kho</h2>
+            <div className="table-wrapper">
+                <table className="table table-striped table-hover">
+                    <thead className="dashboard-table-header">
+                        <tr>
+                            <th>Mẫu xe</th>
+                            <th>Màu sắc</th>
+                            <th>Tồn kho</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {loading ? (
+                            <tr><td colSpan="3" className="admin-text-center">Đang tải...</td></tr>
+                        ) : lowStockAlerts.length === 0 ? (
+                            <tr><td colSpan="3" className="admin-text-center">Kho hàng an toàn</td></tr>
+                        ) : (
+                            lowStockAlerts.map((car, idx) => (
+                                <tr key={idx}>
+                                    <td>{car.name}</td>
+                                    <td>{car.colorName}</td>
+                                    <td><span className="badge badge-cancelled">{car.stock}</span></td>
+                                </tr>
+                            ))
+                        )}
+                    </tbody>
+                </table>
+            </div>
+            <a href="/admin/carlist" className="dashboard-link-none">
+                <button className="button dashboard-btn-margin">Quản lý kho xe</button>
+            </a>
+        </div>
+    );
+
+    const renderTransactions = () => (
+        <div className={`${userRole === 'admin' ? 'col-2-3' : 'col-3-3'} dashboard-card table_of_dashboard`}>
+            <h2 className="dashboard-card-header">Các giao dịch gần nhất</h2>
+            <div className="table-wrapper">
+                <table className="table table-striped table-hover">
+                    <thead className="dashboard-table-header">
+                        <tr>
+                            <th>Mã GD</th>
+                            <th>Khách hàng</th>
+                            <th>Ngày GD</th>
+                            <th>Ngày thanh toán</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {loading ? (
+                            <tr><td colSpan="5" className="admin-text-center">Đang tải...</td></tr>
+                        ) : recentTransactions.length === 0 ? (
+                            <tr><td colSpan="5" className="admin-text-center">Không có dữ liệu</td></tr>
+                        ) : (
+                            recentTransactions.map((tx, idx) => (
+                                <tr key={tx._id || idx}>
+                                    <td>{tx._id ? tx._id.substring(0,8) + '...' : 'N/A'}</td>
+                                    <td>{tx.customerId?.name || 'N/A'}</td>
+                                    <td>{tx.transactionDate ? new Date(tx.transactionDate).toLocaleDateString('vi-VN') : 'N/A'}</td>
+                                    <td>{tx.paymentDate ? new Date(tx.paymentDate).toLocaleDateString('vi-VN') : 'Chưa'}</td>
+                                    <td>{getStatusBadge(tx.status)}</td>
+                                </tr>
+                            ))
+                        )}
+                    </tbody>
+                </table>
+            </div>
+            <a href="/admin/transaction" className="dashboard-link-none">
+                <button className="button dashboard-btn-margin">Xem tất cả giao dịch</button>
+            </a>
+        </div>
+    );
+
     return (
         <>
         <Navbar />
@@ -148,15 +233,17 @@ const Dashboard = () => {
             
             <div className="content dashboard_container">
                 {/* Tầng 1: KPI Cards */}
-                <div className="kpi-cards">
-                    <div className="kpi-card">
-                        <div className="kpi-card-content">
-                            <h3>Tổng doanh thu</h3>
-                            <p className="kpi-value">{formatVnd(stats?.totalRevenue)}</p>
-                            {renderTrend(stats?.revenueTrend)}
+                <div className={`kpi-cards ${userRole !== 'admin' ? 'kpi-cards-employee' : ''}`}>
+                    {userRole === 'admin' && (
+                        <div className="kpi-card">
+                            <div className="kpi-card-content">
+                                <h3>Tổng doanh thu</h3>
+                                <p className="kpi-value">{formatVnd(stats?.totalRevenue)}</p>
+                                {renderTrend(stats?.revenueTrend)}
+                            </div>
+                            <div className="kpi-icon"><ion-icon name="wallet-outline"></ion-icon></div>
                         </div>
-                        <div className="kpi-icon"><ion-icon name="wallet-outline"></ion-icon></div>
-                    </div>
+                    )}
                     <div className="kpi-card">
                         <div className="kpi-card-content">
                             <h3>Tổng số đơn hàng</h3>
@@ -183,94 +270,39 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                {/* Tầng 2: Charts */}
-                <div className="dashboard-grid">
-                    <div className="col-2-3 dashboard-card">
-                        <h2 className="dashboard-card-header">Doanh thu 12 tháng qua</h2>
-                        <div className="chart-container" style={{ height: '350px', margin: 0 }}>
-                            <canvas ref={lineChartRef}></canvas>
+                {userRole === 'admin' ? (
+                    <>
+                        {/* Tầng 2: Charts Admin */}
+                        <div className="dashboard-grid">
+                            <div className="col-2-3 dashboard-card">
+                                <h2 className="dashboard-card-header">Doanh thu 12 tháng qua</h2>
+                                <div className="chart-container" style={{ height: '350px', margin: 0 }}>
+                                    <canvas ref={lineChartRef}></canvas>
+                                </div>
+                            </div>
+                            {renderPieChart()}
                         </div>
-                    </div>
-                    <div className="col-1-3 dashboard-card">
-                        <h2 className="dashboard-card-header">Tỷ trọng xe bán chạy</h2>
-                        <div className="chart-container" style={{ height: '320px', margin: 0 }}>
-                            <canvas ref={pieChartRef}></canvas>
-                        </div>
-                    </div>
-                </div>
 
-                {/* Tầng 3: Data Tables */}
-                <div className="dashboard-grid">
-                    <div className="col-2-3 dashboard-card table_of_dashboard">
-                        <h2 className="dashboard-card-header">Các giao dịch gần nhất</h2>
-                        <div className="table-wrapper">
-                            <table className="table table-striped table-hover">
-                                <thead className="dashboard-table-header">
-                                    <tr>
-                                        <th>Mã GD</th>
-                                        <th>Khách hàng</th>
-                                        <th>Ngày GD</th>
-                                        <th>Ngày thanh toán</th>
-                                        <th>Trạng thái</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {loading ? (
-                                        <tr><td colSpan="5" className="admin-text-center">Đang tải...</td></tr>
-                                    ) : recentTransactions.length === 0 ? (
-                                        <tr><td colSpan="5" className="admin-text-center">Không có dữ liệu</td></tr>
-                                    ) : (
-                                        recentTransactions.map((tx, idx) => (
-                                            <tr key={tx._id || idx}>
-                                                <td>{tx._id ? tx._id.substring(0,8) + '...' : 'N/A'}</td>
-                                                <td>{tx.customerId?.name || 'N/A'}</td>
-                                                <td>{tx.transactionDate ? new Date(tx.transactionDate).toLocaleDateString('vi-VN') : 'N/A'}</td>
-                                                <td>{tx.paymentDate ? new Date(tx.paymentDate).toLocaleDateString('vi-VN') : 'Chưa'}</td>
-                                                <td>{getStatusBadge(tx.status)}</td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
+                        {/* Tầng 3: Data Tables Admin */}
+                        <div className="dashboard-grid">
+                            {renderTransactions()}
+                            {renderInventory()}
                         </div>
-                        <a href="/admin/transaction" className="dashboard-link-none">
-                            <button className="button dashboard-btn-margin">Xem tất cả giao dịch</button>
-                        </a>
-                    </div>
-                    
-                    <div className="col-1-3 dashboard-card table_of_dashboard">
-                        <h2 className="dashboard-card-header">Cảnh báo tồn kho</h2>
-                        <div className="table-wrapper">
-                            <table className="table table-striped table-hover">
-                                <thead className="dashboard-table-header">
-                                    <tr>
-                                        <th>Mẫu xe</th>
-                                        <th>Màu sắc</th>
-                                        <th>Tồn kho</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {loading ? (
-                                        <tr><td colSpan="3" className="admin-text-center">Đang tải...</td></tr>
-                                    ) : lowStockAlerts.length === 0 ? (
-                                        <tr><td colSpan="3" className="admin-text-center">Kho hàng an toàn</td></tr>
-                                    ) : (
-                                        lowStockAlerts.map((car, idx) => (
-                                            <tr key={idx}>
-                                                <td>{car.name}</td>
-                                                <td>{car.colorName}</td>
-                                                <td><span className="badge badge-cancelled">{car.stock}</span></td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
+                    </>
+                ) : (
+                    <>
+                        {/* Tầng 2: Chart & Inventory Employee */}
+                        <div className="dashboard-grid dashboard-grid-employee-row2">
+                            {renderPieChart()}
+                            {renderInventory()}
                         </div>
-                        <a href="/admin/carlist" className="dashboard-link-none">
-                            <button className="button dashboard-btn-margin">Quản lý kho xe</button>
-                        </a>
-                    </div>
-                </div>
+
+                        {/* Tầng 3: Transactions Employee */}
+                        <div className="dashboard-grid-employee-row3">
+                            {renderTransactions()}
+                        </div>
+                    </>
+                )}
             </div>
             
         </div>

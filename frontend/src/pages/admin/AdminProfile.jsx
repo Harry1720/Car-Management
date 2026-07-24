@@ -43,7 +43,9 @@ const AdminProfile = () => {
           name: data.name || '',
           email: data.email || '',
           phone: data.phone || '',
-          address: data.address || '',
+          address: typeof data.address === 'object' && data.address !== null 
+                     ? (data.address.street || Object.values(data.address).filter(Boolean).join(', ')) 
+                     : (data.address || ''),
           position: data.position || (data.role === 'admin' ? 'Admin' : (data.role === 'employee' ? 'Nhân viên' : data.role)),
           roleSystem: data.role === 'admin' ? 'Admin' : (data.role === 'employee' ? 'Nhân viên' : data.role)
         });

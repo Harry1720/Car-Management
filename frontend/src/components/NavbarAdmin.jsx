@@ -11,6 +11,8 @@ const NavbarAdmin = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(true); // sidebar collapsed state by default
 
+    const userRole = localStorage.getItem('role');
+
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
@@ -72,14 +74,16 @@ const NavbarAdmin = () => {
                             <span className="label text-label">Quản lý thông tin khách hàng</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link to="/admin/humanresources" 
-                              className={currentPath === '/admin/humanresources' ? 'active' : ''}
-                              onClick={closeMobileMenu}>
-                            <ion-icon name="man-outline"></ion-icon> 
-                            <span className="label text-label">Quản lý nhân sự</span>
-                        </Link>
-                    </li>
+                    {userRole === 'admin' && (
+                        <li>
+                            <Link to="/admin/humanresources" 
+                                  className={currentPath === '/admin/humanresources' ? 'active' : ''}
+                                  onClick={closeMobileMenu}>
+                                <ion-icon name="man-outline"></ion-icon> 
+                                <span className="label text-label">Quản lý nhân sự</span>
+                            </Link>
+                        </li>
+                    )}
                     <li className="menu-group-label">
                         <span className="label text-label">Doanh thu & Giao dịch</span>
                     </li>
@@ -91,14 +95,16 @@ const NavbarAdmin = () => {
                             <span className="label text-label">Thông tin giao dịch</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link to="/admin/accounting" 
-                              className={currentPath === '/admin/accounting' ? 'active' : ''}
-                              onClick={closeMobileMenu}>
-                            <ion-icon name="stats-chart-outline"></ion-icon> 
-                            <span className="label text-label">Thống kê doanh thu</span>
-                        </Link>
-                    </li>
+                    {userRole === 'admin' && (
+                        <li>
+                            <Link to="/admin/accounting" 
+                                  className={currentPath === '/admin/accounting' ? 'active' : ''}
+                                  onClick={closeMobileMenu}>
+                                <ion-icon name="stats-chart-outline"></ion-icon> 
+                                <span className="label text-label">Thống kê doanh thu</span>
+                            </Link>
+                        </li>
+                    )}
 
                     <li className="menu-group-label">
                         <span className="label text-label">Quản lý Xe</span>

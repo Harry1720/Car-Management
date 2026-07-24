@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 const CarList = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const userRole = localStorage.getItem("role");
 
   useEffect(() => {
     fetchCars();
@@ -403,23 +404,25 @@ const CarList = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                setShowAddForm(!showAddForm);
-                setEditingCar(null); // Close edit form when adding
-              }}
-            >
-              {showAddForm ? (
-                <>
-                  <ion-icon name="close-outline"></ion-icon> Hủy thêm
-                </>
-              ) : (
-                <>
-                  <ion-icon name="add-outline"></ion-icon> Thêm xe mới
-                </>
-              )}
-            </button>
+            {userRole === 'admin' && (
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  setShowAddForm(!showAddForm);
+                  setEditingCar(null); // Close edit form when adding
+                }}
+              >
+                {showAddForm ? (
+                  <>
+                    <ion-icon name="close-outline"></ion-icon> Hủy thêm
+                  </>
+                ) : (
+                  <>
+                    <ion-icon name="add-outline"></ion-icon> Thêm xe mới
+                  </>
+                )}
+              </button>
+            )}
           </div>
         </div>
 
@@ -1054,7 +1057,7 @@ const CarList = () => {
                 <th>Công suất</th>
                 <th>Mức tiêu thụ</th>
                 <th>Quãng đường</th>
-                <th colSpan="2">Thao tác</th>
+                {userRole === 'admin' && <th colSpan="2">Thao tác</th>}
               </tr>
             </thead>
             <tbody>
@@ -1118,24 +1121,28 @@ const CarList = () => {
                       <td>{car.specifications?.motorPower || "N/A"}</td>
                       <td>{car.specifications?.energyConsumption || "N/A"}</td>
                       <td>{car.specifications?.range || "N/A"}</td>
-                      <td>
-                        <button
-                          className="delete-btn"
-                          onClick={() => handleDelete(car._id)}
-                          title="Xóa"
-                        >
-                          <ion-icon name="trash-outline"></ion-icon>
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          className="edit-btn"
-                          onClick={() => handleEdit(car._id)}
-                          title="Sửa"
-                        >
-                          <ion-icon name="create-outline"></ion-icon>
-                        </button>
-                      </td>
+                      {userRole === 'admin' && (
+                        <>
+                          <td>
+                            <button
+                              className="delete-btn"
+                              onClick={() => handleDelete(car._id)}
+                              title="Xóa"
+                            >
+                              <ion-icon name="trash-outline"></ion-icon>
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              className="edit-btn"
+                              onClick={() => handleEdit(car._id)}
+                              title="Sửa"
+                            >
+                              <ion-icon name="create-outline"></ion-icon>
+                            </button>
+                          </td>
+                        </>
+                      )}
                     </tr>
                   ))
               )}
