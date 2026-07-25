@@ -6,6 +6,7 @@ import { useEffect, useState, useMemo, useRef } from "react";
 import Slideshow from "../../components/Slideshow";
 import { carService } from "../../services/carService";
 import { authService } from "../../services/authService";
+import { consultationService } from "../../services/consultationService";
 
 const formatVnd = (value) => {
   const amount = Number(value || 0);
@@ -92,6 +93,7 @@ const Products = () => {
   const [seatsFilter, setSeatsFilter] = useState("all");
   const [rangeFilter, setRangeFilter] = useState("all");
   const [originFilter, setOriginFilter] = useState("all");
+  const [categoryFilter, setCategoryFilter] = useState("all");
   const [activeDropdown, setActiveDropdown] = useState(null);
   const filterRef = useRef(null);
 
@@ -134,6 +136,12 @@ const Products = () => {
       return;
     }
 
+    const role = localStorage.getItem('role');
+    if (role === 'admin' || role === 'employee') {
+      toast.warning('Chỉ khách hàng mới có thể theo dõi xe!');
+      return;
+    }
+
     try {
       setTogglingCars(prev => ({ ...prev, [carId]: true }));
       
@@ -162,10 +170,20 @@ const Products = () => {
     }));
   };
 
-  const handleLeadSubmit = (event) => {
+  const handleLeadSubmit = async (event) => {
     event.preventDefault();
-    toast.success("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
-    setLeadForm({ fullName: "", phone: "", model: "VF 8" });
+    try {
+      await consultationService.createConsultation({
+        fullName: leadForm.fullName,
+        phone: leadForm.phone,
+        carModel: leadForm.model,
+        requestType: 'test_drive'
+      });
+      toast.success("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
+      setLeadForm({ fullName: "", phone: "", model: "VF 8" });
+    } catch (error) {
+      toast.error(error.message || "Lỗi khi gửi yêu cầu tư vấn");
+    }
   };
 
   const fetchCars = async () => {
@@ -180,6 +198,7 @@ const Products = () => {
           _id: car._id,
           name: car.name,
           model: car.model,
+          category: car.category,
           image:
             car.variants && car.variants.length > 0 && car.variants[0].image
               ? car.variants[0].image
@@ -234,6 +253,9 @@ const Products = () => {
       if (originFilter === "ckd" && !origin.includes("lắp ráp")) return false;
       if (originFilter === "cbu" && !origin.includes("nhập khẩu")) return false;
 
+      // Category Filter
+      if (categoryFilter !== "all" && car.category !== categoryFilter) return false;
+
       return true;
     });
 
@@ -244,7 +266,7 @@ const Products = () => {
     }
 
     return result;
-  }, [cars, searchQuery, priceFilter, seatsFilter, rangeFilter, originFilter, sortOrder]);
+  }, [cars, searchQuery, priceFilter, seatsFilter, rangeFilter, originFilter, categoryFilter, sortOrder]);
 
   // Reset pagination when filter changes
   useEffect(() => {
@@ -386,10 +408,10 @@ const Products = () => {
                   </button>
                   {activeDropdown === 'price' && (
                     <div className="dropdown-menu">
-                      <button className={priceFilter === 'all' ? 'active' : ''} onClick={() => {setPriceFilter('all'); setActiveDropdown(null);}}>○ Tất cả</button>
-                      <button className={priceFilter === 'under_500' ? 'active' : ''} onClick={() => {setPriceFilter('under_500'); setActiveDropdown(null);}}>○ Dưới 500 triệu</button>
-                      <button className={priceFilter === '500_to_1b' ? 'active' : ''} onClick={() => {setPriceFilter('500_to_1b'); setActiveDropdown(null);}}>○ 500 triệu - 1 tỷ</button>
-                      <button className={priceFilter === 'over_1b' ? 'active' : ''} onClick={() => {setPriceFilter('over_1b'); setActiveDropdown(null);}}>○ Trên 1 tỷ</button>
+                      <button className={priceFilter === 'all' ? 'active' : ''} onClick={() => {setPriceFilter('all'); setActiveDropdown(null);}}>Tất cả</button>
+                      <button className={priceFilter === 'under_500' ? 'active' : ''} onClick={() => {setPriceFilter('under_500'); setActiveDropdown(null);}}>Dưới 500 triệu</button>
+                      <button className={priceFilter === '500_to_1b' ? 'active' : ''} onClick={() => {setPriceFilter('500_to_1b'); setActiveDropdown(null);}}>500 triệu - 1 tỷ</button>
+                      <button className={priceFilter === 'over_1b' ? 'active' : ''} onClick={() => {setPriceFilter('over_1b'); setActiveDropdown(null);}}>Trên 1 tỷ</button>
                     </div>
                   )}
                 </div>
@@ -401,9 +423,9 @@ const Products = () => {
                   </button>
                   {activeDropdown === 'seats' && (
                     <div className="dropdown-menu">
-                      <button className={seatsFilter === 'all' ? 'active' : ''} onClick={() => {setSeatsFilter('all'); setActiveDropdown(null);}}>○ Tất cả</button>
-                      <button className={seatsFilter === '5' ? 'active' : ''} onClick={() => {setSeatsFilter('5'); setActiveDropdown(null);}}>○ Xe 5 chỗ</button>
-                      <button className={seatsFilter === '7' ? 'active' : ''} onClick={() => {setSeatsFilter('7'); setActiveDropdown(null);}}>○ Xe 7 chỗ</button>
+                      <button className={seatsFilter === 'all' ? 'active' : ''} onClick={() => {setSeatsFilter('all'); setActiveDropdown(null);}}>Tất cả</button>
+                      <button className={seatsFilter === '5' ? 'active' : ''} onClick={() => {setSeatsFilter('5'); setActiveDropdown(null);}}>Xe 5 chỗ</button>
+                      <button className={seatsFilter === '7' ? 'active' : ''} onClick={() => {setSeatsFilter('7'); setActiveDropdown(null);}}>Xe 7 chỗ</button>
                     </div>
                   )}
                 </div>
@@ -415,10 +437,10 @@ const Products = () => {
                   </button>
                   {activeDropdown === 'range' && (
                     <div className="dropdown-menu">
-                      <button className={rangeFilter === 'all' ? 'active' : ''} onClick={() => {setRangeFilter('all'); setActiveDropdown(null);}}>○ Tất cả</button>
-                      <button className={rangeFilter === 'under_300' ? 'active' : ''} onClick={() => {setRangeFilter('under_300'); setActiveDropdown(null);}}>○ Dưới 300 km</button>
-                      <button className={rangeFilter === '300_to_400' ? 'active' : ''} onClick={() => {setRangeFilter('300_to_400'); setActiveDropdown(null);}}>○ 300 - 400 km</button>
-                      <button className={rangeFilter === 'over_400' ? 'active' : ''} onClick={() => {setRangeFilter('over_400'); setActiveDropdown(null);}}>○ Trên 400 km</button>
+                      <button className={rangeFilter === 'all' ? 'active' : ''} onClick={() => {setRangeFilter('all'); setActiveDropdown(null);}}>Tất cả</button>
+                      <button className={rangeFilter === 'under_300' ? 'active' : ''} onClick={() => {setRangeFilter('under_300'); setActiveDropdown(null);}}>Dưới 300 km</button>
+                      <button className={rangeFilter === '300_to_400' ? 'active' : ''} onClick={() => {setRangeFilter('300_to_400'); setActiveDropdown(null);}}>300 - 400 km</button>
+                      <button className={rangeFilter === 'over_400' ? 'active' : ''} onClick={() => {setRangeFilter('over_400'); setActiveDropdown(null);}}>Trên 400 km</button>
                     </div>
                   )}
                 </div>
@@ -430,35 +452,54 @@ const Products = () => {
                   </button>
                   {activeDropdown === 'origin' && (
                     <div className="dropdown-menu">
-                      <button className={originFilter === 'all' ? 'active' : ''} onClick={() => {setOriginFilter('all'); setActiveDropdown(null);}}>○ Tất cả</button>
-                      <button className={originFilter === 'ckd' ? 'active' : ''} onClick={() => {setOriginFilter('ckd'); setActiveDropdown(null);}}>○ Lắp ráp trong nước</button>
-                      <button className={originFilter === 'cbu' ? 'active' : ''} onClick={() => {setOriginFilter('cbu'); setActiveDropdown(null);}}>○ Nhập khẩu</button>
+                      <button className={originFilter === 'all' ? 'active' : ''} onClick={() => {setOriginFilter('all'); setActiveDropdown(null);}}>Tất cả</button>
+                      <button className={originFilter === 'ckd' ? 'active' : ''} onClick={() => {setOriginFilter('ckd'); setActiveDropdown(null);}}>Lắp ráp trong nước</button>
+                      <button className={originFilter === 'cbu' ? 'active' : ''} onClick={() => {setOriginFilter('cbu'); setActiveDropdown(null);}}>Nhập khẩu</button>
                     </div>
                   )}
                 </div>
 
                 <div className="filter-dropdown">
-                  <button className={`filter-btn ${sortOrder !== 'default' ? 'active-filter' : ''}`} onClick={() => setActiveDropdown(activeDropdown === 'sort' ? null : 'sort')}>
+                  <button className={`filter-btn ${categoryFilter !== 'all' ? 'active-filter' : ''}`} onClick={() => setActiveDropdown(activeDropdown === 'category' ? null : 'category')}>
+                    <span className="btn-text">Kiểu dáng xe</span>
+                    <span className="btn-icon">{categoryFilter !== 'all' ? '●' : '▼'}</span>
+                  </button>
+                  {activeDropdown === 'category' && (
+                    <div className="dropdown-menu">
+                      <button className={categoryFilter === 'all' ? 'active' : ''} onClick={() => {setCategoryFilter('all'); setActiveDropdown(null);}}>Tất cả</button>
+                      <button className={categoryFilter === 'sedan' ? 'active' : ''} onClick={() => {setCategoryFilter('sedan'); setActiveDropdown(null);}}>Sedan</button>
+                      <button className={categoryFilter === 'suv' ? 'active' : ''} onClick={() => {setCategoryFilter('suv'); setActiveDropdown(null);}}>SUV</button>
+                      <button className={categoryFilter === 'coupe' ? 'active' : ''} onClick={() => {setCategoryFilter('coupe'); setActiveDropdown(null);}}>Coupe</button>
+                      <button className={categoryFilter === 'hatchback' ? 'active' : ''} onClick={() => {setCategoryFilter('hatchback'); setActiveDropdown(null);}}>Hatchback</button>
+                      <button className={categoryFilter === 'van' ? 'active' : ''} onClick={() => {setCategoryFilter('van'); setActiveDropdown(null);}}>Van</button>
+                      <button className={categoryFilter === 'pickup' ? 'active' : ''} onClick={() => {setCategoryFilter('pickup'); setActiveDropdown(null);}}>Pickup</button>
+                    </div>
+                  )}
+                </div>
+
+                <div className="filter-dropdown">
+                  <button className={`filter-btn sort-btn ${sortOrder !== 'default' ? 'active-filter' : ''}`} onClick={() => setActiveDropdown(activeDropdown === 'sort' ? null : 'sort')}>
                     <span className="btn-text">Sắp xếp</span>
                     <span className="btn-icon">⇅</span>
                   </button>
                   {activeDropdown === 'sort' && (
                     <div className="dropdown-menu">
-                      <button className={sortOrder === 'default' ? 'active' : ''} onClick={() => {setSortOrder('default'); setActiveDropdown(null);}}>○ Mặc định</button>
-                      <button className={sortOrder === 'price_asc' ? 'active' : ''} onClick={() => {setSortOrder('price_asc'); setActiveDropdown(null);}}>○ Giá: Thấp đến Cao</button>
-                      <button className={sortOrder === 'price_desc' ? 'active' : ''} onClick={() => {setSortOrder('price_desc'); setActiveDropdown(null);}}>○ Giá: Cao đến Thấp</button>
+                      <button className={sortOrder === 'default' ? 'active' : ''} onClick={() => {setSortOrder('default'); setActiveDropdown(null);}}>Mặc định</button>
+                      <button className={sortOrder === 'price_asc' ? 'active' : ''} onClick={() => {setSortOrder('price_asc'); setActiveDropdown(null);}}>Giá: Thấp đến Cao</button>
+                      <button className={sortOrder === 'price_desc' ? 'active' : ''} onClick={() => {setSortOrder('price_desc'); setActiveDropdown(null);}}>Giá: Cao đến Thấp</button>
                     </div>
                   )}
                 </div>
               </div>
 
-              {(priceFilter !== 'all' || seatsFilter !== 'all' || rangeFilter !== 'all' || originFilter !== 'all' || sortOrder !== 'default') && (
+              {(priceFilter !== 'all' || seatsFilter !== 'all' || rangeFilter !== 'all' || originFilter !== 'all' || categoryFilter !== 'all' || sortOrder !== 'default') && (
                 <div className="reset-container">
                   <button className="reset-filter-text-btn" onClick={() => {
                     setPriceFilter('all');
                     setSeatsFilter('all');
                     setRangeFilter('all');
                     setOriginFilter('all');
+                    setCategoryFilter('all');
                     setSortOrder('default');
                     setActiveDropdown(null);
                   }}>

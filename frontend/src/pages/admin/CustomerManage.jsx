@@ -408,7 +408,7 @@ const CustomerManage = () => {
                                     <td>
                                         {customer.carsInterested && customer.carsInterested.length > 0
                                             ? customer.carsInterested.map(car => car.name).join(', ')
-                                            : <span style={{ color: '#999', fontStyle: 'italic' }}>Không có</span>}
+                                            : <span className="text-muted-italic">Không có</span>}
                                     </td>
                                     <td>{customer.number_transaction || 0}</td>
                                     <td>

@@ -154,7 +154,7 @@ const Navbar = ({ activePage }) => {
             CHÀO, {user?.name ? user.name.toUpperCase() : ""}
           </Link>
         )}
-        <Link to={authService.isAuthenticated() ? "/profile" : "/login"} style={{ textDecoration: 'none', color: 'inherit' }} onClick={closeMobileMenu}>
+        <Link to={authService.isAuthenticated() ? "/profile" : "/login"} className={styles.navProfileLink} onClick={closeMobileMenu}>
           <i className="bx bx-user-circle"></i>
         </Link>
       </div>

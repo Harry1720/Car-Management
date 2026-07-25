@@ -157,7 +157,6 @@ const Login = () => {
           {/* Form Đăng nhập */}
           <div className="form-container sign-in-container">
             <h3 className="text-center mb-4 login-header-title">Chào mừng trở lại!</h3>
-            {/* <p className="text-center mb-4" style={{color: 'rgba(255,255,255,0.7)', fontSize: '14px'}}>Truy cập workspace và dự án của bạn</p> */}
             <form onSubmit={handleLoginSubmit}>
               <div className="input-group-custom">
                 <i className="fas fa-envelope"></i>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { consultationService } from "../services/consultationService";
 
 const modelOptions = ["VF Wild", "VF 9", "VF 8", "VF 7", "VF 6", "VF 5"];
 
@@ -55,23 +56,39 @@ const PromoConsultForm = ({
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (onSubmit) {
-      onSubmit(formData);
+    try {
+      const noteParts = [];
+      if (formData.promotionInterest) noteParts.push(formData.promotionInterest);
+      if (formData.notes) noteParts.push(formData.notes);
+
+      await consultationService.createConsultation({
+        fullName: formData.fullName,
+        phone: formData.phone,
+        carModel: formData.model,
+        requestType: 'promotion',
+        note: noteParts.join(' - ')
+      });
+
+      if (onSubmit) {
+        onSubmit(formData);
+      }
+
+      toast.success("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
+
+      if (variant === "modal" && onClose) {
+        onClose();
+        return;
+      }
+
+      setFormData(
+        createInitialForm(defaultModel, interestNote, defaultPromotionInterest),
+      );
+    } catch (error) {
+      toast.error(error.message || "Lỗi khi gửi yêu cầu tư vấn");
     }
-
-    toast.success("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
-
-    if (variant === "modal" && onClose) {
-      onClose();
-      return;
-    }
-
-    setFormData(
-      createInitialForm(defaultModel, interestNote, defaultPromotionInterest),
-    );
   };
 
   const content = (

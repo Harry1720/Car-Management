@@ -109,6 +109,10 @@ const CarList = () => {
     motorPower: "",
     energyConsumption: "",
     range: "",
+    seats: "",
+    batteryCapacity: "",
+    acceleration: "",
+    category: "",
     images: [],
     articleContent: "",
   });
@@ -173,6 +177,10 @@ const CarList = () => {
       motorPower: carToEdit.specifications?.motorPower || "",
       range: carToEdit.specifications?.range || "",
       energyConsumption: carToEdit.specifications?.energyConsumption || "",
+      seats: carToEdit.specifications?.seats || "",
+      batteryCapacity: carToEdit.specifications?.batteryCapacity || "",
+      acceleration: carToEdit.specifications?.acceleration || "",
+      category: carToEdit.category || "",
       articleContent: carToEdit.articleContent || "",
     });
     setShowAddForm(false);
@@ -224,7 +232,10 @@ const CarList = () => {
       if (
         editingCar.motorPower ||
         editingCar.energyConsumption ||
-        editingCar.range
+        editingCar.range ||
+        editingCar.seats ||
+        editingCar.batteryCapacity ||
+        editingCar.acceleration
       ) {
         formData.append(
           "specifications",
@@ -232,9 +243,13 @@ const CarList = () => {
             motorPower: editingCar.motorPower,
             energyConsumption: editingCar.energyConsumption,
             range: editingCar.range,
+            seats: editingCar.seats,
+            batteryCapacity: editingCar.batteryCapacity,
+            acceleration: editingCar.acceleration,
           }),
         );
       }
+      formData.append("category", editingCar.category || "");
 
       formData.append("articleContent", editingCar.articleContent || "");
 
@@ -308,16 +323,20 @@ const CarList = () => {
       formData.append("date_of_import", newCar.date_of_import);
 
       // Thêm specifications
-      if (newCar.motorPower || newCar.energyConsumption || newCar.range) {
+      if (newCar.motorPower || newCar.energyConsumption || newCar.range || newCar.seats || newCar.batteryCapacity || newCar.acceleration) {
         formData.append(
           "specifications",
           JSON.stringify({
             motorPower: newCar.motorPower,
             energyConsumption: newCar.energyConsumption,
             range: newCar.range,
+            seats: newCar.seats,
+            batteryCapacity: newCar.batteryCapacity,
+            acceleration: newCar.acceleration,
           }),
         );
       }
+      formData.append("category", newCar.category || "");
 
       formData.append("articleContent", newCar.articleContent || "");
 
@@ -342,6 +361,10 @@ const CarList = () => {
         motorPower: "",
         energyConsumption: "",
         range: "",
+        seats: "",
+        batteryCapacity: "",
+        acceleration: "",
+        category: "",
         images: [],
       });
       setShowAddForm(false);
@@ -480,13 +503,16 @@ const CarList = () => {
                     <div className="form-row">
                       <div className="form-col">
                         <label>Nguồn gốc</label>
-                        <input
-                          type="text"
+                        <select
                           id="new-origin_of_car"
                           value={newCar.origin_of_car || ""}
                           onChange={handleInputChange}
                           required
-                        />
+                        >
+                          <option value="">Chọn nguồn gốc</option>
+                          <option value="Lắp ráp trong nước">Lắp ráp trong nước</option>
+                          <option value="Nhập khẩu">Nhập khẩu</option>
+                        </select>
                       </div>
                       <div className="form-col">
                         <label>Ngày nhập</label>
@@ -543,6 +569,57 @@ const CarList = () => {
                           onChange={handleInputChange}
                           required
                         />
+                      </div>
+                    </div>
+                    <div className="form-row">
+                      <div className="form-col">
+                        <label>Số chỗ ngồi</label>
+                        <input
+                          type="number"
+                          id="new-seats"
+                          value={newCar.seats || ""}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                      <div className="form-col">
+                        <label>Dung lượng pin (kWh)</label>
+                        <input
+                          type="text"
+                          id="new-batteryCapacity"
+                          value={newCar.batteryCapacity || ""}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                      <div className="form-col">
+                        <label>Tăng tốc 0-100km/h (giây)</label>
+                        <input
+                          type="text"
+                          id="new-acceleration"
+                          value={newCar.acceleration || ""}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="form-row">
+                      <div className="form-col">
+                        <label>Kiểu dáng xe (Category)</label>
+                        <select
+                          id="new-category"
+                          value={newCar.category || ""}
+                          onChange={handleInputChange}
+                          required
+                        >
+                          <option value="">Chọn kiểu dáng</option>
+                          <option value="sedan">Sedan</option>
+                          <option value="suv">SUV</option>
+                          <option value="coupe">Coupe</option>
+                          <option value="hatchback">Hatchback</option>
+                          <option value="van">Van</option>
+                          <option value="pickup">Pickup</option>
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -683,7 +760,7 @@ const CarList = () => {
                       theme="snow" 
                       value={newCar.articleContent || ""} 
                       onChange={(content) => setNewCar(prev => ({...prev, articleContent: content}))} 
-                      style={{ height: '400px', marginBottom: '50px', backgroundColor: 'white', color: 'black' }}
+                      className="quill-editor"
                     />
                   </div>
                 </div>
@@ -775,8 +852,7 @@ const CarList = () => {
                     <div className="form-row">
                       <div className="form-col">
                         <label>Nguồn gốc</label>
-                        <input
-                          type="text"
+                        <select
                           name="origin_of_car"
                           value={editingCar.origin_of_car || ""}
                           onChange={(e) =>
@@ -785,7 +861,12 @@ const CarList = () => {
                               origin_of_car: e.target.value,
                             })
                           }
-                        />
+                          required
+                        >
+                          <option value="">Chọn nguồn gốc</option>
+                          <option value="Lắp ráp trong nước">Lắp ráp trong nước</option>
+                          <option value="Nhập khẩu">Nhập khẩu</option>
+                        </select>
                       </div>
                       <div className="form-col">
                         <label>Ngày nhập</label>
@@ -865,6 +946,77 @@ const CarList = () => {
                           }
                           required
                         />
+                      </div>
+                    </div>
+                    <div className="form-row">
+                      <div className="form-col">
+                        <label>Số chỗ ngồi</label>
+                        <input
+                          type="number"
+                          name="seats"
+                          value={editingCar.seats || ""}
+                          onChange={(e) =>
+                            setEditingCar({
+                              ...editingCar,
+                              seats: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </div>
+                      <div className="form-col">
+                        <label>Dung lượng pin (kWh)</label>
+                        <input
+                          type="text"
+                          name="batteryCapacity"
+                          value={editingCar.batteryCapacity || ""}
+                          onChange={(e) =>
+                            setEditingCar({
+                              ...editingCar,
+                              batteryCapacity: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </div>
+                      <div className="form-col">
+                        <label>Tăng tốc 0-100km/h (giây)</label>
+                        <input
+                          type="text"
+                          name="acceleration"
+                          value={editingCar.acceleration || ""}
+                          onChange={(e) =>
+                            setEditingCar({
+                              ...editingCar,
+                              acceleration: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="form-row">
+                      <div className="form-col">
+                        <label>Kiểu dáng xe (Category)</label>
+                        <select
+                          name="category"
+                          value={editingCar.category || ""}
+                          onChange={(e) =>
+                            setEditingCar({
+                              ...editingCar,
+                              category: e.target.value,
+                            })
+                          }
+                          required
+                        >
+                          <option value="">Chọn kiểu dáng</option>
+                          <option value="sedan">Sedan</option>
+                          <option value="suv">SUV</option>
+                          <option value="coupe">Coupe</option>
+                          <option value="hatchback">Hatchback</option>
+                          <option value="van">Van</option>
+                          <option value="pickup">Pickup</option>
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -1019,7 +1171,7 @@ const CarList = () => {
                       theme="snow" 
                       value={editingCar.articleContent || ""} 
                       onChange={(content) => setEditingCar(prev => ({...prev, articleContent: content}))} 
-                      style={{ height: '500px', marginBottom: '50px', backgroundColor: 'white', color: 'black' }}
+                      className="quill-editor-lg"
                     />
                   </div>
                 </div>

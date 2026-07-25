@@ -395,6 +395,15 @@
     background-color: #ffffff;
 }
 
+.status-badge.contacted { background: #d4edda; color: #155724; }
+.status-badge.completed { background: #cce5ff; color: #004085; }
+.status-badge.canceled { background: #f8d7da; color: #721c24; }
+
+.text-muted-italic {
+    color: #999;
+    font-style: italic;
+}
+
 .table th {
     background-color: #f4f6f8;
     color: #333333;

@@ -28,6 +28,7 @@ import HRPage from './pages/admin/HumanResources';
 import CustomerManage from './pages/admin/CustomerManage';
 import Transaction from './pages/admin/TransacManage';
 import Accounting from './pages/admin/Accounting';
+import ConsultationManage from './pages/admin/ConsultationManage';
 import CarNumber from './pages/admin/CarNumber';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminProfile from './pages/admin/AdminProfile';
@@ -55,7 +56,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/landing/:modelId" element={<CarLanding />} />
-        <Route path="/deposit" element={<Deposit />} />
+        <Route path="/deposit" element={<ProtectedRoute><Deposit /></ProtectedRoute>} />
         <Route path="/promotions" element={<Promotion />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/login" element={<Login />} />
@@ -71,9 +72,10 @@ function App() {
         <Route path="/admin" element={<ProtectedRoute requireAdmin={true}><Dashboard /></ProtectedRoute>} />
         <Route path="/admin/customermanagement" element={<ProtectedRoute requireAdmin={true}><CustomerManage /></ProtectedRoute>} />
         <Route path="/admin/carlist" element={<ProtectedRoute requireAdmin={true}><CarList /></ProtectedRoute>} />
-        <Route path="/admin/humanresources" element={<ProtectedRoute requireAdmin={true}><HRPage /></ProtectedRoute>} />
-        <Route path="/admin/transaction" element={<ProtectedRoute requireAdmin={true}><Transaction /></ProtectedRoute>} /> 
+        <Route path="/admin/humanresources" element={<ProtectedRoute requireAdmin={true} strictAdmin={true}><HRPage /></ProtectedRoute>} />
+        <Route path="/admin/transaction" element={<ProtectedRoute requireAdmin={true} strictAdmin={true}><Transaction /></ProtectedRoute>} /> 
         <Route path="/admin/accounting" element={<ProtectedRoute requireAdmin={true}><Accounting /></ProtectedRoute>} /> 
+        <Route path="/admin/consultations" element={<ProtectedRoute requireAdmin={true}><ConsultationManage /></ProtectedRoute>} /> 
         <Route path="/admin/carnumber" element={<ProtectedRoute requireAdmin={true}><CarNumber /></ProtectedRoute>} /> 
         <Route path="/admin/profile" element={<ProtectedRoute requireAdmin={true}><AdminProfile /></ProtectedRoute>} />
         

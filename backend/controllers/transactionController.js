@@ -49,6 +49,19 @@ exports.getTransactionById = async (req, res) => {
   }
 };
 
+// Get transactions by deposit ID
+exports.getTransactionsByDeposit = async (req, res) => {
+  try {
+    const { depositId } = req.params;
+    const transactions = await Transaction.find({ depositId })
+      .populate('customerId')
+      .populate('createdBy');
+    res.json(transactions);
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi server', error: err.message });
+  }
+};
+
 // Create transaction
 exports.createTransaction = async (req, res) => {
   try {
@@ -61,6 +74,8 @@ exports.createTransaction = async (req, res) => {
       description,
       reference,
       carId,
+      discountAmount,
+      discountName,
     } = req.body;
 
     // Kiểm tra deposit
@@ -101,13 +116,24 @@ exports.createTransaction = async (req, res) => {
 
     await transaction.save();
 
+    // Xử lý khuyến mãi nếu có
+    if (discountAmount && Number(discountAmount) > 0) {
+      deposit.discountAmount = Number(discountAmount);
+      deposit.discountNote = discountName || '';
+      deposit.totalPrice -= Number(discountAmount);
+    }
+    
     // Giảm số lượng xe trong kho
     car.stock -= 1;
     car.car_sold = (car.car_sold || 0) + 1;
     await car.save();
 
-    // Cập nhật trạng thái deposit
-    deposit.status = 'completed';
+    // Cập nhật trạng thái và số tiền còn lại của deposit
+    const remaining = Math.max(0, deposit.totalPrice - deposit.depositAmount - amount);
+    deposit.remainingBalance = remaining;
+    if (remaining === 0) {
+      deposit.status = 'completed';
+    }
     await deposit.save();
 
     // Cập nhật doanh thu vào Accounting

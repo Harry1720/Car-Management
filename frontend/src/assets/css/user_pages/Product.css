@@ -645,7 +645,7 @@
 /* Search & Filter Container */
 .search-filter-container {
   margin: 0 auto 120px;
-  width: min(1200px, calc(100% - 32px));
+  width: min(1350px, calc(100% - 32px));
   position: relative;
   z-index: 10;
 }
@@ -727,10 +727,9 @@
 .advanced-filter-panel {
   /* background: rgba(255, 255, 255, 0.02); */
   background:
-    radial-gradient(circle at left, rgba(255, 196, 103, 0.19), transparent 32%),
+    radial-gradient(circle at 20% 50%, rgba(255, 196, 103, 0.19), transparent 32%),
     radial-gradient(
-      circle at right,
-      rgba(255, 196, 103, 0.19),
+      circle at 80% 50%, rgba(255, 196, 103, 0.19),
       transparent 32%
     ),
     linear-gradient(180deg, #111111 0%, #1a1a1a 32%, #121212 100%);
@@ -770,13 +769,35 @@
 
 .filter-btn:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: var(--text-primary);
 }
 
 .filter-btn.active-filter {
-  background: rgba(214, 179, 106, 0.15);
+  border-color: var(--secondary-gold);
   color: var(--secondary-gold);
-  border-color: rgba(214, 179, 106, 0.3);
+}
+
+/* Distinct style for the Sort button */
+.sort-btn {
+  background: rgba(255, 196, 103, 0.08);
+  border-color: rgba(255, 196, 103, 0.2);
+  color: var(--secondary-gold);
+}
+
+.sort-btn:hover {
+  background: rgba(255, 196, 103, 0.15);
+}
+
+.sort-btn.active-filter {
+  background: rgba(255, 196, 103, 0.25);
+  border-color: var(--secondary-gold);
+}
+
+.sort-btn .btn-icon{
+  font-size: 1rem;
+}
+.btn-icon {
+  font-size: 0.7rem;
+  opacity: 0.7;
 }
 
 .dropdown-menu {

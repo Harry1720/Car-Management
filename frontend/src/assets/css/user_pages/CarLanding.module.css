@@ -14,6 +14,13 @@
   background: rgba(18, 18, 18, 0.8);
 }
 
+.loadingContainer {
+  min-height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .hero {
   position: relative;
   height: 80vh;

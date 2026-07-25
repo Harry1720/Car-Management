@@ -26,6 +26,12 @@ const depositSchema = new mongoose.Schema({
     required: [true, 'Số tiền còn lại là bắt buộc'],
     min: [0, 'Số tiền còn lại không thể âm'],
   },
+  discountAmount: {
+    type: Number,
+    default: 0,
+    min: [0, 'Số tiền giảm không thể âm'],
+  },
+  discountNote: String,
   depositDate: {
     type: Date,
     default: Date.now,

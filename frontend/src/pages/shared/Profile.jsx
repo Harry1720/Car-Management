@@ -84,7 +84,7 @@ const Profile = () => {
     return (
       <div className={styles.profilePage}>
         <Navbar activePage="profile" />
-        <div style={{ padding: '100px', textAlign: 'center', color: 'white' }}>Đang tải...</div>
+        <div className={styles.loadingContainer}>Đang tải...</div>
         <Footer />
       </div>
     );
@@ -117,7 +117,7 @@ const Profile = () => {
                   type="file"
                   accept="image/*"
                   onChange={handleAvatarChange}
-                  style={{ display: 'none' }}
+                  className={styles.hiddenInput}
                 />
               </div>
               <h3 className={styles.sidebarName}>{user.name}</h3>

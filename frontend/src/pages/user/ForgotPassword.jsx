@@ -41,7 +41,7 @@ const ForgotPassword = () => {
           
           {isSuccess ? (
             <div className="pw-reset-card__success">
-              <i className="fas fa-check-circle pw-reset-card__success-icon" style={{ color: 'white' }}></i>
+              <i className="fas fa-check-circle pw-reset-card__success-icon text-white"></i>
               <p className="pw-reset-card__success-text">
                 Chúng tôi đã gửi một đường link khôi phục mật khẩu đến email <b>{email}</b>. 
                 Vui lòng kiểm tra hộp thư đến (hoặc thư rác) và làm theo hướng dẫn.

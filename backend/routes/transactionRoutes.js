@@ -15,6 +15,9 @@ router.delete('/:id', protect, authorize('admin'), transactionController.deleteT
 // Customer transactions
 router.get('/customer/:customerId', protect, transactionController.getTransactionsByCustomer);
 
+// Transactions by deposit
+router.get('/deposit/:depositId', protect, authorize('admin', 'employee'), transactionController.getTransactionsByDeposit);
+
 // Update transaction status
 router.patch('/:id/status', protect, authorize('admin'), transactionController.updateTransactionStatus);
 

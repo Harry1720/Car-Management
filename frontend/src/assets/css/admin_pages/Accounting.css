@@ -41,6 +41,7 @@
         margin: 15px 10px;
     }
 }
+
 .admin-table-body {
     background-color: rgb(245, 252, 255);
 }
@@ -48,3 +49,76 @@
 .admin-text-center {
     text-align: center;
 }
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Extracted Utility Classes */
+.cursor-pointer { cursor: pointer; }
+.modal-content-lg { max-width: 800px; max-height: 90vh; overflow-y: auto; }
+.grid-2-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.hr-divider { margin: 20px 0; border-color: #eee; border-style: solid; border-width: 1px 0 0 0; }
+.list-unstyled { list-style: none; padding: 0; }
+.list-lg { font-size: 1.1rem; }
+.flex-between { display: flex; justify-content: space-between; }
+.mb-10 { margin-bottom: 10px; }
+.text-success { color: #28a745; }
+.total-row { border-top: 2px solid #000; padding-top: 10px; font-size: 1.2rem; }
+.text-danger { color: #d32f2f; }
+.table-sm-text { font-size: 0.9rem; }
+.bg-light-gray { background-color: #f9f9f9; }
+.p-15 { padding: 15px; }
+.radius-8 { border-radius: 8px; }
+.col-span-2 { grid-column: 1 / span 2; }
+.promo-heading { margin: 0; font-size: 1rem; color: #0056b3; }
+.promo-subtitle { font-size: 0.85rem; color: #666; margin: 5px 0; }
+.w-100 { width: 100%; }
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: white;
+}
+.status-badge.pending { background: #f0ad4e; }
+.status-badge.confirmed { background: #5bc0de; }
+.status-badge.completed { background: #5cb85c; }
+.status-badge.cancelled { background: #d9534f; }

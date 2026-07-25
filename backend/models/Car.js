@@ -50,7 +50,7 @@ const carSchema = new mongoose.Schema({
   variants: [colorVariantSchema],
   category: {
     type: String,
-    enum: ['sedan', 'suv', 'coupe', 'hatchback', 'van'],
+    enum: ['sedan', 'suv', 'coupe', 'hatchback', 'van', 'pickup'],
   },
   status: {
     type: String,

@@ -189,15 +189,11 @@ const Deposit = () => {
             {selectedCar?.colors.map((c, i) => (
               <div
                 key={i}
-                className={`color-option ${
+                className={`color-option color-option-box ${
                   selectedColor?.color === c.color ? "active" : ""
                 }`}
                 style={{
-                  background: c.color,
-                  borderRadius: "10px",
-                  width: "50px",
-                  height: "50px",
-                  cursor: "pointer",
+                  backgroundColor: c.color,
                 }}
                 onClick={() => setSelectedColor(c)}
                 title={c.name}

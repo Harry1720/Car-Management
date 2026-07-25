@@ -237,8 +237,8 @@ const Dashboard = () => {
                     {userRole === 'admin' && (
                         <div className="kpi-card">
                             <div className="kpi-card-content">
-                                <h3>Tổng doanh thu</h3>
-                                <p className="kpi-value">{formatVnd(stats?.totalRevenue)}</p>
+                                <h3>Lợi nhuận / Tồn quỹ</h3>
+                                <p className="kpi-value">{formatVnd(stats?.netProfit)}</p>
                                 {renderTrend(stats?.revenueTrend)}
                             </div>
                             <div className="kpi-icon"><ion-icon name="wallet-outline"></ion-icon></div>
@@ -276,7 +276,7 @@ const Dashboard = () => {
                         <div className="dashboard-grid">
                             <div className="col-2-3 dashboard-card">
                                 <h2 className="dashboard-card-header">Doanh thu 12 tháng qua</h2>
-                                <div className="chart-container" style={{ height: '350px', margin: 0 }}>
+                                <div className="chart-container chart-container-350">
                                     <canvas ref={lineChartRef}></canvas>
                                 </div>
                             </div>

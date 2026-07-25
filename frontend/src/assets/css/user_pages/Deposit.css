@@ -299,7 +299,17 @@
     margin-bottom: 20px;
 }
 .color-option{
-    border: 1px solid white;
+    border: 2px solid white;
+    /* Optional: Add a highlight border when focused */
+}
+
+/* Extracted from inline styles */
+.color-option-box {
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border: 2px solid #ddd;
 }
 .color-option.active {
     border: 5px solid rgb(234, 255, 113);

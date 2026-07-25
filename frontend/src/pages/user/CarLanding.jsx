@@ -73,6 +73,12 @@ const CarLanding = () => {
       navigate("/login");
       return;
     }
+
+    const role = localStorage.getItem('role');
+    if (role === 'admin' || role === 'employee') {
+      toast.warning('Chỉ khách hàng mới có thể theo dõi xe!');
+      return;
+    }
     
     try {
       setIsToggling(true);
@@ -92,11 +98,29 @@ const CarLanding = () => {
   };
 
   const handleDepositClick = () => {
+    const role = localStorage.getItem('role');
+    if (role === 'admin' || role === 'employee') {
+      toast.warning('Tài khoản quản trị viên/nhân viên không thể thực hiện đặt cọc!');
+      return;
+    }
     navigate(`/deposit?model=${car.model}`);
   };
 
-  if (loading) return <div className={styles.loading}>Đang tải...</div>;
-  if (!car) return null;
+  if (loading) return (
+    <div className={styles.landing_page}>
+      <Navbar activePage="products" />
+      <div className={styles.loadingContainer}>Đang tải...</div>
+      <Footer />
+    </div>
+  );
+  
+  if (!car) return (
+    <div className={styles.landing_page}>
+      <Navbar activePage="products" />
+      <div className={styles.loadingContainer}>Không tìm thấy dữ liệu xe</div>
+      <Footer />
+    </div>
+  );
 
   // Lấy ảnh cover
   const getCoverImage = () => {

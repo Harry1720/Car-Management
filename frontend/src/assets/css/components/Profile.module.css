@@ -393,6 +393,16 @@
   margin-top: 20px;
 }
 
+.loadingContainer {
+  padding: 100px;
+  text-align: center;
+  color: white;
+}
+
+.hiddenInput {
+  display: none;
+}
+
 .carGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

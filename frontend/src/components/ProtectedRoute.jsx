@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { authService } from '../services/authService';
 
-const ProtectedRoute = ({ children, requireAdmin = false }) => {
+const ProtectedRoute = ({ children, requireAdmin = false, strictAdmin = false }) => {
   const isAuthenticated = authService.isAuthenticated();
   const role = localStorage.getItem('role');
   
@@ -12,6 +12,10 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   if (requireAdmin && (role !== 'admin' && role !== 'employee')) {
     // Authenticated but not an admin/employee
     return <Navigate to="/" replace />;
+  }
+
+  if (strictAdmin && role !== 'admin') {
+    return <Navigate to="/admin" replace />;
   }
 
   if (!requireAdmin && role !== 'user') {

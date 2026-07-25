@@ -53,5 +53,14 @@ export const transactionService = {
         } catch (error) {
             throw error;
         }
+    },
+
+    getTransactionsByDepositId: async (depositId) => {
+        try {
+            const response = await apiClient.get(`/transactions/deposit/${depositId}`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     }
 };

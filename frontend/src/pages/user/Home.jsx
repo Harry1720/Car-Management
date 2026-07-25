@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "../../assets/css/user_pages/Home.module.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { consultationService } from "../../services/consultationService";
 import { toast } from "react-toastify";
 
 const uspItems = [
@@ -98,10 +99,20 @@ const Home = () => {
     }));
   };
 
-  const handleLeadSubmit = (event) => {
+  const handleLeadSubmit = async (event) => {
     event.preventDefault();
-    toast.success("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
-    setLeadForm({ fullName: "", phone: "", model: "VF 8" });
+    try {
+      await consultationService.createConsultation({
+        fullName: leadForm.fullName,
+        phone: leadForm.phone,
+        carModel: leadForm.model,
+        requestType: 'test_drive'
+      });
+      toast.success("Thông tin đã được ghi nhận. Đội ngũ tư vấn sẽ liên hệ sớm.");
+      setLeadForm({ fullName: "", phone: "", model: "VF 8" });
+    } catch (error) {
+      toast.error(error.message || "Lỗi khi gửi yêu cầu tư vấn");
+    }
   };
 
   // Cấu hình khi nhấn vào nút "Khám phá dòng xe" nó scroll mượt xuống chỗ neo

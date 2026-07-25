@@ -17,5 +17,14 @@ export const accountingService = {
         } catch (error) {
             throw error;
         }
+    },
+
+    createAccounting: async (accountingData) => {
+        try {
+            const response = await apiClient.post('/accounting', accountingData);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     }
 };
