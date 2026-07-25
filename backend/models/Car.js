@@ -43,7 +43,7 @@ const carSchema = new mongoose.Schema({
     motorPower: String,
     energyConsumption: String,
     seats: Number,
-    range: String,
+    range: Number,
     batteryCapacity: String,
     acceleration: String,
   },

@@ -2,7 +2,7 @@ import "../../assets/css/user_pages/Product.css";
 import { toast } from 'react-toastify';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import Slideshow from "../../components/Slideshow";
 import { carService } from "../../services/carService";
 import { authService } from "../../services/authService";
@@ -83,6 +83,27 @@ const Products = () => {
   const LOAD_MORE_COUNT = 6; // load 6 more on each "Xem thêm"
   const [displayedCount, setDisplayedCount] = useState(INITIAL_DISPLAY);
   const [prevDisplayedCount, setPrevDisplayedCount] = useState(0);
+
+  // Search and Filter States
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState('default');
+  const [priceFilter, setPriceFilter] = useState("all");
+  const [seatsFilter, setSeatsFilter] = useState("all");
+  const [rangeFilter, setRangeFilter] = useState("all");
+  const [originFilter, setOriginFilter] = useState("all");
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const filterRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        setActiveDropdown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const fetchUserInterest = async () => {
     if (authService.isAuthenticated()) {
@@ -167,6 +188,8 @@ const Products = () => {
           year: car.year || 2024,
           batteryKwh: carSpecs.batteryCapacity || fallbackSpecs.batteryKwh,
           rangeKm: carSpecs.range || fallbackSpecs.rangeKm,
+          seats: carSpecs.seats || 5,
+          rawPrice: car.price || 0,
           acceleration: carSpecs.acceleration || fallbackSpecs.acceleration,
           motorPower: carSpecs.motorPower || 'N/A',
           energyConsumption: carSpecs.energyConsumption || 'N/A',
@@ -186,8 +209,51 @@ const Products = () => {
     }
   };
 
+  const filteredCars = useMemo(() => {
+    let result = cars.filter((car) => {
+      // Search Query
+      if (searchQuery && !car.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+
+      // Price Filter
+      if (priceFilter === "under_500" && car.rawPrice >= 500000000) return false;
+      if (priceFilter === "500_to_1b" && (car.rawPrice < 500000000 || car.rawPrice > 1000000000)) return false;
+      if (priceFilter === "over_1b" && car.rawPrice <= 1000000000) return false;
+
+      // Seats Filter
+      if (seatsFilter === "5" && car.seats !== 5) return false;
+      if (seatsFilter === "7" && car.seats !== 7) return false;
+
+      // Range Filter
+      const r = Number(car.rangeKm);
+      if (rangeFilter === "under_300" && (isNaN(r) || r >= 300)) return false;
+      if (rangeFilter === "300_to_400" && (isNaN(r) || r < 300 || r > 400)) return false;
+      if (rangeFilter === "over_400" && (isNaN(r) || r <= 400)) return false;
+
+      // Origin Filter
+      const origin = (car.origin || "").toLowerCase();
+      if (originFilter === "ckd" && !origin.includes("lắp ráp")) return false;
+      if (originFilter === "cbu" && !origin.includes("nhập khẩu")) return false;
+
+      return true;
+    });
+
+    if (sortOrder === 'price_asc') {
+      result.sort((a, b) => a.rawPrice - b.rawPrice);
+    } else if (sortOrder === 'price_desc') {
+      result.sort((a, b) => b.rawPrice - a.rawPrice);
+    }
+
+    return result;
+  }, [cars, searchQuery, priceFilter, seatsFilter, rangeFilter, originFilter, sortOrder]);
+
+  // Reset pagination when filter changes
+  useEffect(() => {
+    setDisplayedCount(Math.min(INITIAL_DISPLAY, filteredCars.length));
+    setPrevDisplayedCount(0);
+  }, [filteredCars]);
+
   const renderCars = () => {
-    const carsToShow = cars.slice(0, displayedCount);
+    const carsToShow = filteredCars.slice(0, displayedCount);
 
     return carsToShow.map((car, index) => {
       // determine if this item is newly loaded to apply animation
@@ -265,7 +331,7 @@ const Products = () => {
 
   const handleLoadMore = () => {
     setPrevDisplayedCount(displayedCount);
-    setDisplayedCount((prev) => Math.min(prev + LOAD_MORE_COUNT, cars.length));
+    setDisplayedCount((prev) => Math.min(prev + LOAD_MORE_COUNT, filteredCars.length));
   };
 
   return (
@@ -279,13 +345,142 @@ const Products = () => {
           trường từ VinFast – Lựa chọn tối ưu cho tương lai di chuyển xanh.
         </p>
 
+        <div className="search-filter-container">
+          <div className="search-bar-wrapper">
+            <div className="search-input-box">
+              <span className="search-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </span>
+              <input 
+                type="text" 
+                placeholder="Tìm kiếm dòng xe..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <button 
+              className={`toggle-filter-btn ${isFilterOpen ? 'active' : ''}`}
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+            >
+              <span className="filter-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+              </span>
+              <span className="filter-title">
+                {isFilterOpen ? 'Đóng bộ lọc' : 'Bộ lọc nâng cao'}
+              </span>
+            </button>
+          </div>
+
+          {isFilterOpen && (
+            <div className="advanced-filter-panel" ref={filterRef}>
+              <div className="filter-dropdowns-group">
+                <div className="filter-dropdown">
+                  <button className={`filter-btn ${priceFilter !== 'all' ? 'active-filter' : ''}`} onClick={() => setActiveDropdown(activeDropdown === 'price' ? null : 'price')}>
+                    <span className="btn-text">Giá</span>
+                    <span className="btn-icon">{priceFilter !== 'all' ? '●' : '▼'}</span>
+                  </button>
+                  {activeDropdown === 'price' && (
+                    <div className="dropdown-menu">
+                      <button className={priceFilter === 'all' ? 'active' : ''} onClick={() => {setPriceFilter('all'); setActiveDropdown(null);}}>○ Tất cả</button>
+                      <button className={priceFilter === 'under_500' ? 'active' : ''} onClick={() => {setPriceFilter('under_500'); setActiveDropdown(null);}}>○ Dưới 500 triệu</button>
+                      <button className={priceFilter === '500_to_1b' ? 'active' : ''} onClick={() => {setPriceFilter('500_to_1b'); setActiveDropdown(null);}}>○ 500 triệu - 1 tỷ</button>
+                      <button className={priceFilter === 'over_1b' ? 'active' : ''} onClick={() => {setPriceFilter('over_1b'); setActiveDropdown(null);}}>○ Trên 1 tỷ</button>
+                    </div>
+                  )}
+                </div>
+
+                <div className="filter-dropdown">
+                  <button className={`filter-btn ${seatsFilter !== 'all' ? 'active-filter' : ''}`} onClick={() => setActiveDropdown(activeDropdown === 'seats' ? null : 'seats')}>
+                    <span className="btn-text">Số chỗ</span>
+                    <span className="btn-icon">{seatsFilter !== 'all' ? '●' : '▼'}</span>
+                  </button>
+                  {activeDropdown === 'seats' && (
+                    <div className="dropdown-menu">
+                      <button className={seatsFilter === 'all' ? 'active' : ''} onClick={() => {setSeatsFilter('all'); setActiveDropdown(null);}}>○ Tất cả</button>
+                      <button className={seatsFilter === '5' ? 'active' : ''} onClick={() => {setSeatsFilter('5'); setActiveDropdown(null);}}>○ Xe 5 chỗ</button>
+                      <button className={seatsFilter === '7' ? 'active' : ''} onClick={() => {setSeatsFilter('7'); setActiveDropdown(null);}}>○ Xe 7 chỗ</button>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="filter-dropdown">
+                  <button className={`filter-btn ${rangeFilter !== 'all' ? 'active-filter' : ''}`} onClick={() => setActiveDropdown(activeDropdown === 'range' ? null : 'range')}>
+                    <span className="btn-text">Quãng đường</span>
+                    <span className="btn-icon">{rangeFilter !== 'all' ? '●' : '▼'}</span>
+                  </button>
+                  {activeDropdown === 'range' && (
+                    <div className="dropdown-menu">
+                      <button className={rangeFilter === 'all' ? 'active' : ''} onClick={() => {setRangeFilter('all'); setActiveDropdown(null);}}>○ Tất cả</button>
+                      <button className={rangeFilter === 'under_300' ? 'active' : ''} onClick={() => {setRangeFilter('under_300'); setActiveDropdown(null);}}>○ Dưới 300 km</button>
+                      <button className={rangeFilter === '300_to_400' ? 'active' : ''} onClick={() => {setRangeFilter('300_to_400'); setActiveDropdown(null);}}>○ 300 - 400 km</button>
+                      <button className={rangeFilter === 'over_400' ? 'active' : ''} onClick={() => {setRangeFilter('over_400'); setActiveDropdown(null);}}>○ Trên 400 km</button>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="filter-dropdown">
+                  <button className={`filter-btn ${originFilter !== 'all' ? 'active-filter' : ''}`} onClick={() => setActiveDropdown(activeDropdown === 'origin' ? null : 'origin')}>
+                    <span className="btn-text">Xuất xứ</span>
+                    <span className="btn-icon">{originFilter !== 'all' ? '●' : '▼'}</span>
+                  </button>
+                  {activeDropdown === 'origin' && (
+                    <div className="dropdown-menu">
+                      <button className={originFilter === 'all' ? 'active' : ''} onClick={() => {setOriginFilter('all'); setActiveDropdown(null);}}>○ Tất cả</button>
+                      <button className={originFilter === 'ckd' ? 'active' : ''} onClick={() => {setOriginFilter('ckd'); setActiveDropdown(null);}}>○ Lắp ráp trong nước</button>
+                      <button className={originFilter === 'cbu' ? 'active' : ''} onClick={() => {setOriginFilter('cbu'); setActiveDropdown(null);}}>○ Nhập khẩu</button>
+                    </div>
+                  )}
+                </div>
+
+                <div className="filter-dropdown">
+                  <button className={`filter-btn ${sortOrder !== 'default' ? 'active-filter' : ''}`} onClick={() => setActiveDropdown(activeDropdown === 'sort' ? null : 'sort')}>
+                    <span className="btn-text">Sắp xếp</span>
+                    <span className="btn-icon">⇅</span>
+                  </button>
+                  {activeDropdown === 'sort' && (
+                    <div className="dropdown-menu">
+                      <button className={sortOrder === 'default' ? 'active' : ''} onClick={() => {setSortOrder('default'); setActiveDropdown(null);}}>○ Mặc định</button>
+                      <button className={sortOrder === 'price_asc' ? 'active' : ''} onClick={() => {setSortOrder('price_asc'); setActiveDropdown(null);}}>○ Giá: Thấp đến Cao</button>
+                      <button className={sortOrder === 'price_desc' ? 'active' : ''} onClick={() => {setSortOrder('price_desc'); setActiveDropdown(null);}}>○ Giá: Cao đến Thấp</button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {(priceFilter !== 'all' || seatsFilter !== 'all' || rangeFilter !== 'all' || originFilter !== 'all' || sortOrder !== 'default') && (
+                <div className="reset-container">
+                  <button className="reset-filter-text-btn" onClick={() => {
+                    setPriceFilter('all');
+                    setSeatsFilter('all');
+                    setRangeFilter('all');
+                    setOriginFilter('all');
+                    setSortOrder('default');
+                    setActiveDropdown(null);
+                  }}>
+                    Xóa bộ lọc
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
         {loading && <p className="text-center product-loading-text">Đang tải danh sách xe. Vui lòng đợi một chút.</p>}
         {error && <p className="text-center text-danger">{error}</p>}
 
         {!loading && !error && (
           <>
-            <div className="cars-grid-container">{renderCars()}</div>
-            {displayedCount < cars.length && (
+            {filteredCars.length === 0 ? (
+              <p className="text-center product-no-results">Không tìm thấy mẫu xe nào phù hợp với tiêu chí của bạn.</p>
+            ) : (
+              <div className="cars-grid-container">{renderCars()}</div>
+            )}
+            {displayedCount < filteredCars.length && (
               <div className="load-more-container">
                 <button className="load-more-btn" onClick={handleLoadMore}>
                   Xem thêm ↓
