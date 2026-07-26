@@ -79,29 +79,29 @@
 }
 
 /* Table styling */
-.table {
+.hr-page .table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.table th,
-.table td {
-    padding: 12px;
+.hr-page .table th,
+.hr-page .table td {
+    padding: 12px 16px;
     text-align: left;
     border: 1px solid #ddd;
 }
 
-.table thead th {
+.hr-page .table thead th {
     background: #a9c0ffa5 !important;
     color: #000000 !important;
     font-weight: 700 !important;
     letter-spacing: 0.5px;
-    padding: 15px 12px;
+    padding: 15px 16px;
 }
 
-.table tbody tr:hover {
+.hr-page .table tbody tr:hover {
     background-color: #f5f5f5;
 }
 

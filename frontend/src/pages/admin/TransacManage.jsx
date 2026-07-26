@@ -163,7 +163,7 @@ const LedgerPage = () => {
                                             <td className={`fw-bold ${isIncome ? 'text-success' : 'text-danger'}`}>
                                                 {isIncome ? '+' : '-'}{item.amount ? `${item.amount.toLocaleString()} ₫` : '0 ₫'}
                                             </td>
-                                            <td className="text-truncate-200" title={item.description}>
+                                            <td className="text-wrap-200" title={item.description}>
                                                 {item.description || 'Không có'}
                                             </td>
                                             <td>{item.recordedBy?.name || 'Hệ thống'}</td>
@@ -218,7 +218,7 @@ const LedgerPage = () => {
                                 <textarea className="form-control" rows="3" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Diễn giải chi tiết..."></textarea>
                             </div>
                             <button type="submit" className="btn btn-primary btn-full-padding" disabled={submitting}>
-                                {submitting ? 'Đang xử lý...' : 'Lưu Phiếu'}
+                                {submitting ? 'Đang xử lý...' : 'Lưu phiếu'}
                             </button>
                         </form>
                     </div>

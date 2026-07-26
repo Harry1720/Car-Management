@@ -1199,15 +1199,15 @@ const CarList = () => {
               <tr>
                 <th>Mã xe</th>
                 <th>Tên xe</th>
-                <th>Giá tiền</th>
-                <th>Màu sắc (Variants)</th>
+                <th>Giá</th>
+                <th>Màu sắc</th>
                 <th>Nguồn gốc</th>
                 <th>Ngày nhập</th>
-                <th>Tổng xe nhập</th>
-                <th>Số đã bán</th>
+                <th>Tổng nhập</th>
+                <th>Đã bán</th>
                 <th>Năm ra mắt</th>
                 <th>Công suất</th>
-                <th>Mức tiêu thụ</th>
+                <th>Tiêu thụ</th>
                 <th>Quãng đường</th>
                 {userRole === 'admin' && <th colSpan="2">Thao tác</th>}
               </tr>

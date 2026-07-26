@@ -7,6 +7,7 @@ import { customerService } from '../../services/customerService';
 import { depositService } from '../../services/depositService';
 import { transactionService } from '../../services/transactionService';
 import { toast } from 'react-toastify';
+import { authService } from '../../services/authService';
 
 const Deposit = () => {
   const [step, setStep] = useState(1);
@@ -33,6 +34,22 @@ const Deposit = () => {
     
     // Fetch from API by model
     fetchCarByModel(carModel);
+
+    // Auto-fill user data
+    if (authService.isAuthenticated()) {
+      authService.getCurrentUser()
+        .then(userData => {
+          if (userData) {
+            setCustomer(prev => ({
+              ...prev,
+              Customer_Name: userData.name || "",
+              Phone_No: userData.phone || "",
+              Email: userData.email || "",
+            }));
+          }
+        })
+        .catch(console.error);
+    }
   }, []);
 
   const fetchCarByModel = async (modelId) => {
@@ -60,9 +77,15 @@ const Deposit = () => {
             name: foundCar.name || 'Xe VinFast',
             version: foundCar.name,
             specs: {
+              batteryCapacity: foundCar.specifications?.batteryCapacity ? `${foundCar.specifications.batteryCapacity}` : 'N/A',
+              range: foundCar.specifications?.range ? `${foundCar.specifications.range} km` : 'N/A',
+              energyConsumption: foundCar.specifications?.energyConsumption ? `${foundCar.specifications.energyConsumption}` : 'N/A',
               power: foundCar.specifications?.motorPower || 'N/A',
               acceleration: foundCar.specifications?.acceleration || 'N/A',
-              range: foundCar.specifications?.range || 'N/A'
+              seats: foundCar.specifications?.seats ? `${foundCar.specifications.seats} chỗ` : 'N/A',
+              category: foundCar.category || 'N/A',
+              origin: foundCar.origin_of_car || 'N/A',
+              year: foundCar.year || 'N/A'
             },
             price: `${(foundCar.price / 1000000).toFixed(0)}.000.000 VNĐ`,
             deposit: `${Math.round(foundCar.price / 1000000 * 0.1)}.000.000 VNĐ`,
@@ -228,18 +251,40 @@ const Deposit = () => {
                     <span className="spec-value">{selectedColor?.name}</span>
                   </div>
                   <div className="spec-item">
-                    <span className="spec-label">Công suất tối đa</span>
-                    <span className="spec-value">{selectedCar?.specs.power}</span>
-                  </div>
-                  <div className="spec-item">
-                    <span className="spec-label">Tăng tốc 0-50 km/h</span>
-                    <span className="spec-value">
-                      {selectedCar?.specs.acceleration}
-                    </span>
+                    <span className="spec-label">Dung lượng pin</span>
+                    <span className="spec-value">{selectedCar?.specs.batteryCapacity}</span>
                   </div>
                   <div className="spec-item">
                     <span className="spec-label">Quãng đường di chuyển</span>
                     <span className="spec-value">{selectedCar?.specs.range}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Mức tiêu thụ năng lượng</span>
+                    <span className="spec-value">{selectedCar?.specs.energyConsumption}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Công suất tối đa</span>
+                    <span className="spec-value">{selectedCar?.specs.power}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Tăng tốc (0-100 km/h)</span>
+                    <span className="spec-value">{selectedCar?.specs.acceleration}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Số chỗ ngồi</span>
+                    <span className="spec-value">{selectedCar?.specs.seats}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Kiểu dáng</span>
+                    <span className="spec-value">{selectedCar?.specs.category}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Xuất xứ</span>
+                    <span className="spec-value">{selectedCar?.specs.origin}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Năm sản xuất</span>
+                    <span className="spec-value">{selectedCar?.specs.year}</span>
                   </div>
                 </div>
               </div>
@@ -257,6 +302,7 @@ const Deposit = () => {
           {step === 2 && (
             <div className="content vf_form_user">
               <h2>Nhập thông tin chủ xe</h2>
+              <p className="mt-2 text-muted" style={{ fontStyle: 'italic', fontSize: '14px' }}>* Lưu ý: Thông tin này sẽ được sử dụng để xuất hóa đơn và đăng ký xe, quý khách vui lòng nhập chính xác.</p>
               <form className="vf-form">
                 {[
                   { id: "Customer_Name", label: "Họ và tên" },
@@ -303,9 +349,9 @@ const Deposit = () => {
               <ul>
                 <li>Phiên bản: <b>{selectedCar?.version}</b></li>
                 <li>Màu sắc: <b>{selectedColor?.name}</b></li>
-                <li>Công suất: <b>{selectedCar?.specs.power}</b></li>
+                {/* <li>Công suất: <b>{selectedCar?.specs.power}</b></li>
                 <li>Hộp số: <b>{selectedCar?.specs.acceleration}</b></li>
-                <li>Quãng đường: <b>{selectedCar?.specs.range}</b></li>
+                <li>Quãng đường: <b>{selectedCar?.specs.range}</b></li> */}
                 <li>Giá xe: <b>{selectedCar?.price}</b></li>
                 <li>Số tiền đặt cọc: <b>{selectedCar?.deposit}</b></li>
               </ul>

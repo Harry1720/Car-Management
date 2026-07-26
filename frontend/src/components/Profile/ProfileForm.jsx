@@ -10,6 +10,7 @@ const ProfileForm = ({ user, setUser }) => {
     email: '',
     phone: '',
     address: '',
+    citizenId: '',
   });
   const [loading, setLoading] = useState(false);
 
@@ -20,6 +21,7 @@ const ProfileForm = ({ user, setUser }) => {
         email: user.email || '',
         phone: user.phone || '',
         address: user.address || '',
+        citizenId: user.identityNumber || '',
       });
     }
   }, [user]);
@@ -58,6 +60,7 @@ const ProfileForm = ({ user, setUser }) => {
       data.append('email', formData.email);
       data.append('phone', formData.phone);
       data.append('address', formData.address);
+      data.append('identityNumber', formData.citizenId);
 
       const updatedUser = await authService.updateUser(data);
       setUser(updatedUser);
@@ -75,39 +78,52 @@ const ProfileForm = ({ user, setUser }) => {
       <p className={styles.contentSubtitle}>Các thông tin cá nhân của bạn phục vụ liên hệ và giao hàng.</p>
 
 
-      <div className={styles.formGroup}>
-        <label>Họ và Tên</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          className={styles.formControl}
-          required
-        />
-      </div>
+      <div className={styles.formGrid}>
+        <div className={styles.formGroup}>
+          <label>Họ và Tên</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className={styles.formControl}
+            required
+          />
+        </div>
 
-      <div className={styles.formGroup}>
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className={styles.formControl}
-          required
-        />
-      </div>
+        <div className={styles.formGroup}>
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className={styles.formControl}
+            required
+          />
+        </div>
 
-      <div className={styles.formGroup}>
-        <label>Số điện thoại</label>
-        <input
-          type="tel"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          className={styles.formControl}
-        />
+        <div className={styles.formGroup}>
+          <label>Số điện thoại</label>
+          <input
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className={styles.formControl}
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label>Số CCCD</label>
+          <input
+            type="text"
+            name="citizenId"
+            value={formData.citizenId}
+            onChange={handleChange}
+            className={styles.formControl}
+          />
+        </div>
       </div>
 
       <div className={styles.formGroup}>

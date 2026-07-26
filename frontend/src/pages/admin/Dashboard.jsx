@@ -176,7 +176,7 @@ const Dashboard = () => {
                     </tbody>
                 </table>
             </div>
-            <a href="/admin/carlist" className="dashboard-link-none">
+            <a href="/admin/carnumber" className="dashboard-link-none">
                 <button className="button dashboard-btn-margin">Quản lý kho xe</button>
             </a>
         </div>

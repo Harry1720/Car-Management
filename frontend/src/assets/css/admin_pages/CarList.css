@@ -208,14 +208,17 @@
   overflow: hidden;
 }
 
-.table th,
-.table td {
-  padding: 12px;
+.car-list-page .table th,
+.car-list-page .table td,
+.consultation-manage-page .table th,
+.consultation-manage-page .table td {
+  padding: 12px 16px;
   text-align: left;
   border: 1px solid #ddd;
 }
 
-.table thead th {
+.car-list-page .table thead th,
+.consultation-manage-page .table thead th {
   background-color: #f4f6f8;
   color: #333333;
   font-weight: bold;
@@ -307,8 +310,10 @@
     margin-bottom: 15px;
   }
 
-  .table th,
-  .table td {
+  .car-list-page .table th,
+  .car-list-page .table td,
+  .consultation-manage-page .table th,
+  .consultation-manage-page .table td {
     padding: 8px;
     font-size: 13px;
   }
@@ -384,8 +389,10 @@
     font-size: 11px;
   }
 
-  .table th,
-  .table td {
+  .car-list-page .table th,
+  .car-list-page .table td,
+  .consultation-manage-page .table th,
+  .consultation-manage-page .table td {
     padding: 6px 4px;
   }
 
@@ -692,20 +699,24 @@
   border-radius: 20px;
 }
 .consultation-status-badge.pending {
-  background: #fff3cd;
+  /* background: #fff3cd; */
   color: #856404;
+  font-weight: 600;
 }
 .consultation-status-badge.contacted {
-  background: #d4edda;
+  /* background: #d4edda; */
   color: #155724;
+  font-weight: 600;
 }
 .consultation-status-badge.completed {
-  background: #cce5ff;
+  /* background: #cce5ff; */
   color: #004085;
+  font-weight: 600;
 }
 .consultation-status-badge.canceled {
-  background: #f8d7da;
+  /* background: #f8d7da; */
   color: #721c24;
+  font-weight: 600;
 }
 
 .consultation-manage-page {
@@ -773,4 +784,8 @@
 
 .text-center {
   text-align: center;
+}
+
+.car-list-page .ql-editor{
+  line-height: 1.5;
 }

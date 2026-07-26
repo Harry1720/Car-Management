@@ -97,7 +97,7 @@
     }
     
     .dashboard_page table,
-    .table {
+    .dashboard_page .table {
         min-width: 100%;
         width: 100%;
         table-layout: auto;
@@ -105,8 +105,8 @@
     
     .dashboard_page table th,
     .dashboard_page table td,
-    .table th,
-    .table td {
+    .dashboard_page .table th,
+    .dashboard_page .table td {
         white-space: nowrap;
         padding: 8px 12px;
     }
@@ -122,8 +122,8 @@
         height: 40vh;
     }
     
-    .table th,
-    .table td {
+    .dashboard_page .table th,
+    .dashboard_page .table td {
         padding: 6px;
         font-size: 14px;
     }
@@ -149,8 +149,8 @@
         height: 35vh;
     }
     
-    .table th,
-    .table td {
+    .dashboard_page .table th,
+    .dashboard_page .table td {
         padding: 4px;
         font-size: 12px;
     }
@@ -297,7 +297,7 @@
 }
 
 .dashboard-card-header {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     color: #333;
     margin-bottom: 20px;
