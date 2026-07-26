@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { carService } from '../../services/carService';
 import { customerService } from '../../services/customerService';
 import { depositService } from '../../services/depositService';
-import { transactionService } from '../../services/transactionService';
+import { paymentService } from '../../services/paymentService';
 import { toast } from 'react-toastify';
 import { authService } from '../../services/authService';
 
@@ -129,7 +129,7 @@ const Deposit = () => {
       // Bước 1: Tìm xe trong database theo model ID
       const carsResponse = await carService.getAllCars(1, 100);
       const carsArray = Array.isArray(carsResponse) ? carsResponse : (carsResponse?.cars || []);
-      const carInDb = carsArray.find(c => c.model === selectedCar?.id || c.model_car_id === selectedCar?.id);
+      const carInDb = carsArray.find(c => c._id === selectedCar?.id);
       
       if (!carInDb) {
         toast.error("Không tìm thấy xe trong hệ thống. Vui lòng thử lại.");
@@ -161,35 +161,34 @@ const Deposit = () => {
       const depositAmount = Math.round(totalPrice * 0.1); // 10% đặt cọc
       const remainingBalance = totalPrice - depositAmount;
 
-      // Bước 4: Tạo deposit
+      // Bước 4: Tạo deposit với trạng thái pending
       const depositData = {
         customerId: customerId,
         carId: carInDb._id,
         depositAmount: depositAmount,
         totalPrice: totalPrice,
         remainingBalance: remainingBalance,
-        status: 'confirmed',
+        status: 'pending',
         notes: `Đặt cọc xe ${carInDb.name || carInDb.model_car_name} màu ${selectedColor?.name || 'mặc định'}`
       };
 
       const depositResponse = await depositService.createDeposit(depositData);
       const depositId = depositResponse.deposit._id;
 
-      // Bước 5: Tạo transaction thanh toán đặt cọc
-      const transactionData = {
+      // Bước 5: Gọi API tạo link thanh toán VNPay
+      const paymentData = {
         depositId: depositId,
-        customerId: customerId,
         amount: depositAmount,
-        paymentMethod: 'bank_transfer',
-        description: `Thanh toán đặt cọc xe ${carInDb.name || carInDb.model_car_name}`,
-        reference: `DEP-${Date.now()}`,
-        carId: carInDb._id
+        language: 'vn',
       };
-
-      await transactionService.createTransaction(transactionData);
-
-      toast.success("Đặt cọc thành công! Cảm ơn quý khách đã lựa chọn VinFast.\nGiao dịch đã được ghi nhận vào hệ thống.");
-      setTimeout(() => { window.location.href = "/products"; }, 2000);
+      const paymentRes = await paymentService.createPaymentUrl(paymentData);
+      
+      if (paymentRes && paymentRes.paymentUrl) {
+        toast.info("Đang chuyển hướng đến cổng thanh toán VNPay...");
+        window.location.href = paymentRes.paymentUrl;
+      } else {
+        toast.error("Không thể tạo link thanh toán VNPay.");
+      }
     } catch (error) {
       console.error("Error:", error);
       toast.error("Có lỗi xảy ra khi đặt cọc: " + (error.message || "Vui lòng thử lại."));
@@ -356,12 +355,12 @@ const Deposit = () => {
                 <li>Số tiền đặt cọc: <b>{selectedCar?.deposit}</b></li>
               </ul>
 
-              <p>Vui lòng quét mã QR để thanh toán:</p>
+              {/* <p>Vui lòng quét mã QR để thanh toán:</p>
               <img
               className='qr_img deposit-qr-size'
                 src="/images/Deposit.png"
                 alt="QR Thanh toán"
-              />
+              /> */}
 
               <div className="mt-3">
                 {[
@@ -401,7 +400,7 @@ const Deposit = () => {
                   onClick={handleSubmit}
                   disabled={!Object.values(agreements).every(Boolean)}
                 >
-                  Đã thanh toán
+                  Thanh toán VNPay
                 </button>
               </div>
             </div>

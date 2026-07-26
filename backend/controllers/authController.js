@@ -111,6 +111,7 @@ exports.login = async (req, res) => {
         email: user.email,
         role: user.role,
         avatar: profile ? profile.avatar : '',
+        customerId: profile ? profile._id : null,
       },
     });
   } catch (err) {
@@ -136,6 +137,7 @@ exports.getCurrentUser = async (req, res) => {
       ...(profile ? profile.toObject() : {}),
       id: user._id,
       _id: user._id,
+      customerId: profile ? profile._id : null,
     };
     delete userData.password;
 
@@ -196,6 +198,7 @@ exports.updateUser = async (req, res) => {
       ...updatedProfile.toObject(),
       id: user._id,
       _id: user._id,
+      customerId: updatedProfile._id,
     };
     delete userData.password;
 

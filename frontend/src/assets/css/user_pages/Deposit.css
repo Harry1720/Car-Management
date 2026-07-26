@@ -417,6 +417,7 @@
     
     .vf_form_user .actions, .step_3 .actions {
         flex-direction: column;
+        gap: 0px;
     }
 }
 

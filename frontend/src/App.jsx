@@ -12,6 +12,7 @@ import Home from './pages/user/Home';
 import About from './pages/user/About';
 import Products from './pages/user/Product';
 import Deposit from './pages/user/Deposit';
+import PaymentResult from './pages/user/PaymentResult';
 import Promotion from './pages/user/Promotion';
 import Policy from './pages/user/Policy';
 import Login from './pages/user/Login';
@@ -58,6 +59,7 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/landing/:modelId" element={<CarLanding />} />
         <Route path="/deposit" element={<ProtectedRoute><Deposit /></ProtectedRoute>} />
+        <Route path="/payment-result" element={<PaymentResult />} />
         <Route path="/promotions" element={<Promotion />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/login" element={<Login />} />

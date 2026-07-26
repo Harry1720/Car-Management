@@ -13,6 +13,7 @@ const accountingRoutes = require("./routes/accountingRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const consultationRoutes = require("./routes/consultationRoutes");
+const vnpayRoutes = require("./routes/vnpayRoutes");
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use("/api/accounting", accountingRoutes);
 app.use("/api/employees", employeeRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/consultations", consultationRoutes);
+app.use("/api/payment", vnpayRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {

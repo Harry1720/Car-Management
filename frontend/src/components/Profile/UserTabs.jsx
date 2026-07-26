@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../../assets/css/components/Profile.module.css';
 import { toast } from 'react-toastify';
 import { authService } from '../../services/authService';
+import { depositService } from '../../services/depositService';
 import Swal from 'sweetalert2';
 
 import { Link } from 'react-router-dom';
@@ -14,6 +15,26 @@ const UserTabs = ({ activeTab, user, setUser }) => {
     confirmPassword: '',
   });
   const [loading, setLoading] = useState(false);
+  const [deposits, setDeposits] = useState([]);
+  const [loadingHistory, setLoadingHistory] = useState(false);
+
+  useEffect(() => {
+    if (activeTab === 'history' && user) {
+      fetchDeposits();
+    }
+  }, [activeTab, user]);
+
+  const fetchDeposits = async () => {
+    setLoadingHistory(true);
+    try {
+      const data = await depositService.getDepositsByCustomer(user.customerId);
+      setDeposits(data);
+    } catch (error) {
+      toast.error('Lỗi khi tải lịch sử mua/đặt xe');
+    } finally {
+      setLoadingHistory(false);
+    }
+  };
 
   const formatVnd = (value) => {
     const amount = Number(value || 0);
@@ -86,7 +107,44 @@ const UserTabs = ({ activeTab, user, setUser }) => {
 
       <div className={styles.tabContent}>
         {activeTab === 'history' && (
-          <div className={styles.emptyState}>Chưa có lịch sử mua/đặt xe nào.</div>
+          <div className={styles.historyContainer}>
+            {loadingHistory ? (
+              <div className={styles.emptyState}>Đang tải dữ liệu...</div>
+            ) : deposits.length === 0 ? (
+              <div className={styles.emptyState}>Chưa có lịch sử mua/đặt xe nào.</div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                {deposits.map(deposit => (
+                  <div key={deposit._id} style={{ backgroundColor: '#2a2d36', padding: '15px', borderRadius: '10px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #444', paddingBottom: '10px' }}>
+                      <span style={{ color: '#ccc', fontSize: '0.9rem' }}>Mã GD: {deposit._id}</span>
+                      <span style={{ 
+                        color: deposit.status === 'confirmed' ? '#28a745' : deposit.status === 'pending' ? '#ffb845' : '#dc3545',
+                        fontWeight: 'bold',
+                        fontSize: '0.9rem'
+                      }}>
+                        {deposit.status === 'pending' ? 'Chờ đặt cọc' : 
+                         deposit.status === 'confirmed' ? 'Đã cọc thành công' : 
+                         deposit.status === 'cancelled' ? 'Đã hủy' : deposit.status}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <h4 style={{ margin: 0, color: '#fff' }}>
+                        {deposit.carId ? deposit.carId.name : 'Xe không xác định'}
+                      </h4>
+                      <div style={{ fontSize: '1.1rem', color: '#fff' }}>
+                        Cọc: <strong>{formatVnd(deposit.depositAmount)}</strong>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', color: '#999', fontSize: '0.85rem' }}>
+                      <span>Ngày đặt: {new Date(deposit.createdAt).toLocaleDateString('vi-VN')} {new Date(deposit.createdAt).toLocaleTimeString('vi-VN')}</span>
+                      <span>Tổng tiền xe: {formatVnd(deposit.totalPrice)}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         )}
         
         {activeTab === 'following' && (

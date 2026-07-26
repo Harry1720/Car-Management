@@ -1,0 +1,71 @@
+.payment_result_page {
+  background-color: #000000; /* Light background as seen in standard pages or customize as needed */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.payment_result_container {
+  flex: 1; /* This will make it stretch to fill available space between navbar and footer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 50px 20px;
+  background:
+    radial-gradient(circle at left 50%, rgba(255, 196, 103, 0.24), transparent 12%),
+    radial-gradient(circle at right 70%, rgba(255, 196, 103, 0.24), transparent 12%),
+    linear-gradient(180deg, #111111 0%, #1a1a1a 32%, #121212 100%);
+  width: 100%;
+  min-height: 100vh;
+}
+
+.payment_result_icon {
+  font-size: 100px;
+}
+
+.payment_result_icon.success {
+  color: rgb(255, 196, 103);
+}
+
+.payment_result_icon.error {
+  color: rgb(255, 196, 103);
+}
+
+.payment_result_title {
+  margin-top: 20px;
+}
+
+.payment_result_title.success {
+  color: rgb(255, 196, 103);
+}
+
+.payment_result_title.error {
+  color: rgb(255, 196, 103);
+}
+
+.payment_result_message {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.payment_result_details {
+  margin-top: 15px;
+  color: #fff;
+}
+
+.payment_result_btn {
+  margin-top: 50px !important;
+  font-size: 1.1rem;
+  background: linear-gradient(90deg, #ffb845, #ffffff);
+  color: black !important;
+  padding: 15px 25px !important;
+  height: unset !important;
+}
+
+.payment_result_btn:hover {
+  color: black !important;
+  transform: translateY(-5px);
+}
