@@ -302,7 +302,7 @@ const Deposit = () => {
           {step === 2 && (
             <div className="content vf_form_user">
               <h2>Nhập thông tin chủ xe</h2>
-              <p className="mt-2 text-muted" style={{ fontStyle: 'italic', fontSize: '14px' }}>* Lưu ý: Thông tin này sẽ được sử dụng để xuất hóa đơn và đăng ký xe, quý khách vui lòng nhập chính xác.</p>
+              <p className="mt-2 text-muted deposit-note">* Lưu ý: Thông tin này sẽ được sử dụng để xuất hóa đơn và đăng ký xe, quý khách vui lòng nhập chính xác.</p>
               <form className="vf-form">
                 {[
                   { id: "Customer_Name", label: "Họ và tên" },

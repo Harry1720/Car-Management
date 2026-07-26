@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../assets/css/admin_pages/CusManage.css';
+import '../../assets/css/admin_pages/AdminModal.css';
 import Navbar from '../../components/NavbarAdmin';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
@@ -210,172 +211,112 @@ const CustomerManage = () => {
 
                 {/* Add new customer form */}
                 {showAddForm && (
-                    <div className="modal-overlay" onClick={() => setShowAddForm(false)}>
-                        <div className="modal-content wide-modal-content" onClick={e => e.stopPropagation()}>
-                            <button type="button" onClick={() => setShowAddForm(false)} className="modal-close-btn"><ion-icon name="close-outline"></ion-icon></button>
-                            <h3>Thêm khách hàng mới</h3>
-                            <form onSubmit={handleCreate}>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Số CCCD:</label>
-                                    <input
-                                        type="text"
-                                        name="identityNumber"
-                                        value={newCustomer.identityNumber}
-                                        onChange={handleNewCustomerChange}
-                                        className="form-control"
-                                        required
-                                    />
+                    <div className="admin-modal-overlay" onClick={() => setShowAddForm(false)}>
+                        <div className="admin-modal-content admin-modal-md" onClick={e => e.stopPropagation()}>
+                            <div className="admin-modal-header">
+                                <div className="admin-modal-title-wrapper">
+                                    <h3 className="admin-modal-title">Thêm khách hàng mới</h3>
+                                    <p className="admin-modal-subtitle">Thông tin sẽ được lưu ngay sau khi tạo.</p>
                                 </div>
-                                <div className="form-col">
-                                    <label>Họ và Tên:</label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={newCustomer.name}
-                                        onChange={handleNewCustomerChange}
-                                        className="form-control"
-                                        required
-                                    />
-                                </div>
+                                <button type="button" onClick={() => setShowAddForm(false)} className="admin-modal-close-btn">✕</button>
                             </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Số điện thoại:</label>
-                                    <input
-                                        type="text"
-                                        name="phone"
-                                        value={newCustomer.phone}
-                                        onChange={handleNewCustomerChange}
-                                        className="form-control"
-                                        required
-                                    />
+                            <form onSubmit={handleCreate} className="admin-modal-form">
+                                <div className="admin-modal-body">
+                                    <div className="admin-form-section">
+                                        <h4 className="admin-form-section-title">Thông tin cá nhân</h4>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Số CCCD <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" name="identityNumber" value={newCustomer.identityNumber} onChange={handleNewCustomerChange} className="admin-form-control" required />
+                                            </div>
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Họ và Tên <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" name="name" value={newCustomer.name} onChange={handleNewCustomerChange} className="admin-form-control" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="admin-form-section">
+                                        <h4 className="admin-form-section-title">Thông tin liên hệ</h4>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Số điện thoại <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" name="phone" value={newCustomer.phone} onChange={handleNewCustomerChange} className="admin-form-control" required />
+                                            </div>
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Email <span className="admin-optional-text">(không bắt buộc)</span></label>
+                                                <input type="email" name="email" value={newCustomer.email} onChange={handleNewCustomerChange} className="admin-form-control" />
+                                            </div>
+                                        </div>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Địa chỉ <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" name="address" value={newCustomer.address} onChange={handleNewCustomerChange} className="admin-form-control" placeholder="Số nhà, đường, quận/huyện, thành phố" required />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="form-col">
-                                    <label>Email:</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={newCustomer.email}
-                                        onChange={handleNewCustomerChange}
-                                        className="form-control"
-                                        required
-                                    />
+                                <div className="admin-modal-footer">
+                                    <button type="button" className="admin-btn admin-btn-cancel" onClick={() => setShowAddForm(false)}>Hủy</button>
+                                    <button type="submit" className="admin-btn admin-btn-primary">Thêm khách hàng</button>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Địa chỉ:</label>
-                                    <input
-                                        type="text"
-                                        name="address"
-                                        value={newCustomer.address}
-                                        onChange={handleNewCustomerChange}
-                                        className="form-control"
-                                        placeholder="Số nhà, đường, quận/huyện, thành phố"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="button-group admin-flex-end-group">
-                                <button 
-                                    type="button" 
-                                    className="btn-cancel"
-                                    onClick={() => setShowAddForm(false)}
-                                >
-                                    Hủy
-                                </button>
-                                <button type="submit" className="btn-save">
-                                    Thêm khách hàng
-                                </button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
                 )}
 
                 {/* Edit customer form */}
                 {editingCustomer && (
-                    <div className="modal-overlay" onClick={() => setEditingCustomer(null)}>
-                        <div className="modal-content wide-modal-content" onClick={e => e.stopPropagation()}>
-                            <button type="button" onClick={() => setEditingCustomer(null)} className="modal-close-btn"><ion-icon name="close-outline"></ion-icon></button>
-                            <h3>Chỉnh sửa thông tin khách hàng</h3>
-                            <form onSubmit={handleUpdate}>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Số CCCD:</label>
-                                    <input
-                                        type="text"
-                                        name="identityNumber"
-                                        value={editingCustomer.identityNumber || ''}
-                                        onChange={handleChange}
-                                        className="form-control"
-                                        required
-                                    />
+                    <div className="admin-modal-overlay" onClick={() => setEditingCustomer(null)}>
+                        <div className="admin-modal-content admin-modal-md" onClick={e => e.stopPropagation()}>
+                            <div className="admin-modal-header">
+                                <div className="admin-modal-title-wrapper">
+                                    <h3 className="admin-modal-title">✏️ Chỉnh sửa thông tin khách hàng</h3>
+                                    <p className="admin-modal-subtitle">Cập nhật thông tin chi tiết của khách hàng.</p>
                                 </div>
-                                <div className="form-col">
-                                    <label>Họ và Tên:</label>
-                                    <input
-                                        type="text"
-                                        name="customer_name"
-                                        value={editingCustomer.customer_name}
-                                        onChange={handleChange}
-                                        className="form-control"
-                                    />
-                                </div>
+                                <button type="button" onClick={() => setEditingCustomer(null)} className="admin-modal-close-btn">✕</button>
                             </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Số điện thoại:</label>
-                                    <input
-                                        type="text"
-                                        name="phone_no"
-                                        value={editingCustomer.phone_no}
-                                        onChange={handleChange}
-                                        className="form-control"
-                                    />
+                            <form onSubmit={handleUpdate} className="admin-modal-form">
+                                <div className="admin-modal-body">
+                                    <div className="admin-form-section">
+                                        <h4 className="admin-form-section-title">Thông tin cá nhân</h4>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Số CCCD <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" name="identityNumber" value={editingCustomer.identityNumber || ''} onChange={handleChange} className="admin-form-control" required />
+                                            </div>
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Họ và Tên</label>
+                                                <input type="text" name="customer_name" value={editingCustomer.customer_name} onChange={handleChange} className="admin-form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="admin-form-section">
+                                        <h4 className="admin-form-section-title">Thông tin liên hệ</h4>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Số điện thoại</label>
+                                                <input type="text" name="phone_no" value={editingCustomer.phone_no} onChange={handleChange} className="admin-form-control" />
+                                            </div>
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Email</label>
+                                                <input type="email" name="email" value={editingCustomer.email} onChange={handleChange} className="admin-form-control" />
+                                            </div>
+                                        </div>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Địa chỉ</label>
+                                                <input type="text" name="address" value={editingCustomer.address} onChange={handleChange} className="admin-form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="form-col">
-                                    <label>Email:</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={editingCustomer.email}
-                                        onChange={handleChange}
-                                        className="form-control"
-                                    />
+                                <div className="admin-modal-footer">
+                                    <button type="button" className="admin-btn admin-btn-cancel" onClick={() => setEditingCustomer(null)}>Hủy</button>
+                                    <button type="submit" className="admin-btn admin-btn-primary">Lưu thay đổi</button>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Địa chỉ:</label>
-                                    <input
-                                        type="text"
-                                        name="address"
-                                        value={editingCustomer.address}
-                                        onChange={handleChange}
-                                        className="form-control"
-                                    />
-                                </div>
-                            </div>
-                            <div className="button-group admin-flex-end-group">
-                                <button 
-                                    type="button" 
-                                    className="btn-cancel"
-                                    onClick={() => setEditingCustomer(null)}
-                                >
-                                    Hủy
-                                </button>
-                                <button 
-                                    type="submit" 
-                                    className="btn-save"
-                                >
-                                    Lưu thay đổi
-                                </button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
                 )}
 
                 <div className="table-wrapper">

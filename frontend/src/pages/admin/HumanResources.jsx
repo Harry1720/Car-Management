@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../assets/css/admin_pages/HR.css';
+import '../../assets/css/admin_pages/AdminModal.css';
 import Navbar from '../../components/NavbarAdmin';
 import Footer from '../../components/FooterAdmin';
 import { employeeService } from '../../services/employeeService';
@@ -272,101 +273,64 @@ const HRPage = () => {
 
                 {/* Add new employee form */}
                 {showAddForm && (
-                    <div className="modal-overlay" onClick={() => setShowAddForm(false)}>
-                        <div className="modal-content wide-modal-content" onClick={e => e.stopPropagation()}>
-                            <button type="button" onClick={() => setShowAddForm(false)} className="modal-close-btn"><ion-icon name="close-outline"></ion-icon></button>
-                            <h3>Thêm nhân viên mới</h3>
-                            <form onSubmit={handleAddEmployee}>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Mã nhân viên</label>
-                                    <input 
-                                        type="text" 
-                                        id="new-id" 
-                                        value={newEmployee.employee_citizenid}
-                                        onChange={handleInputChange}
-                                        required
-                                    />
+                    <div className="admin-modal-overlay" onClick={() => setShowAddForm(false)}>
+                        <div className="admin-modal-content admin-modal-md" onClick={e => e.stopPropagation()}>
+                            <div className="admin-modal-header">
+                                <div className="admin-modal-title-wrapper">
+                                    <h3 className="admin-modal-title">Thêm nhân viên mới</h3>
+                                    <p className="admin-modal-subtitle">Tạo tài khoản và thông tin nhân viên trên hệ thống.</p>
                                 </div>
-                                <div className="form-col">
-                                    <label>Họ và tên</label>
-                                    <input 
-                                        type="text" 
-                                        id="new-name" 
-                                        value={newEmployee.employee_name}
-                                        onChange={handleInputChange}
-                                        required
-                                    />
-                                </div>
+                                <button type="button" onClick={() => setShowAddForm(false)} className="admin-modal-close-btn">✕</button>
                             </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Ngày sinh</label>
-                                    <input 
-                                        type="date" 
-                                        id="new-birthdate" 
-                                        value={newEmployee.employee_birthday}
-                                        onChange={handleInputChange}
-                                        required
-                                    />
+                            <form onSubmit={handleAddEmployee} className="admin-modal-form">
+                                <div className="admin-modal-body">
+                                    <div className="admin-form-section">
+                                        <h4 className="admin-form-section-title">Thông tin cá nhân</h4>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Họ và tên <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" id="new-name" value={newEmployee.employee_name} onChange={handleInputChange} className="admin-form-control" required />
+                                            </div>
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Ngày sinh <span className="admin-required-asterisk">*</span></label>
+                                                <input type="date" id="new-birthdate" value={newEmployee.employee_birthday} onChange={handleInputChange} className="admin-form-control" required />
+                                            </div>
+                                        </div>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Số điện thoại <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" id="new-phoneNo" value={newEmployee.employee_phone_no} onChange={handleInputChange} className="admin-form-control" required />
+                                            </div>
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Email <span className="admin-required-asterisk">*</span></label>
+                                                <input type="email" id="new-email" value={newEmployee.employee_email} onChange={handleInputChange} className="admin-form-control" required />
+                                            </div>
+                                        </div>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Địa chỉ <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" id="new-address" value={newEmployee.employee_address} onChange={handleInputChange} className="admin-form-control" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="admin-form-section">
+                                        <h4 className="admin-form-section-title">Thông tin công việc</h4>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Mã nhân viên (CCCD) <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" id="new-id" value={newEmployee.employee_citizenid} onChange={handleInputChange} className="admin-form-control" required />
+                                            </div>
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Chức vụ <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" id="new-position" value={newEmployee.role_title} onChange={handleInputChange} className="admin-form-control" required />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="form-col">
-                                    <label>Số điện thoại</label>
-                                    <input 
-                                        type="text" 
-                                        id="new-phoneNo" 
-                                        value={newEmployee.employee_phone_no}
-                                        onChange={handleInputChange}
-                                        required
-                                    />
+                                <div className="admin-modal-footer">
+                                    <button type="button" className="admin-btn admin-btn-cancel" onClick={() => setShowAddForm(false)}>Hủy</button>
+                                    <button type="submit" className="admin-btn admin-btn-primary">Thêm mới</button>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Email</label>
-                                    <input 
-                                        type="email" 
-                                        id="new-email" 
-                                        value={newEmployee.employee_email}
-                                        onChange={handleInputChange}
-                                        required
-                                    />
-                                </div>
-                                <div className="form-col">
-                                    <label>Địa chỉ</label>
-                                    <input 
-                                        type="text" 
-                                        id="new-address"
-                                        value={newEmployee.employee_address}
-                                        onChange={handleInputChange}
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Chức vụ</label>
-                                    <input 
-                                        type="text" 
-                                        id="new-position" 
-                                        value={newEmployee.role_title}
-                                        onChange={handleInputChange}
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="button-group admin-flex-end-group">
-                                <button 
-                                    type="button" 
-                                    className="btn-cancel"
-                                    onClick={() => setShowAddForm(false)}
-                                >
-                                    Hủy
-                                </button>
-                                <button type="submit" className="btn-save">
-                                    Thêm mới
-                                </button>
-                            </div>
                             </form>
                         </div>
                     </div>
@@ -374,102 +338,67 @@ const HRPage = () => {
 
                 {/* Add edit form */}
                 {editingEmployee && (
-                    <div className="modal-overlay" onClick={() => setEditingEmployee(null)}>
-                        <div className="modal-content wide-modal-content" onClick={e => e.stopPropagation()}>
-                            <button type="button" onClick={() => setEditingEmployee(null)} className="modal-close-btn"><ion-icon name="close-outline"></ion-icon></button>
-                            <h3>Chỉnh sửa thông tin nhân viên</h3>
-                            <form onSubmit={handleUpdate}>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Mã nhân viên</label>
-                                    <input 
-                                        type="text"
-                                        name="employee_citizenid"
-                                        value={editingEmployee.employee_citizenid || ''}
-                                        onChange={handleEditChange}
-                                        required
-                                    />
+                    <div className="admin-modal-overlay" onClick={() => setEditingEmployee(null)}>
+                        <div className="admin-modal-content admin-modal-md" onClick={e => e.stopPropagation()}>
+                            <div className="admin-modal-header">
+                                <div className="admin-modal-title-wrapper">
+                                    <h3 className="admin-modal-title">✏️ Chỉnh sửa nhân viên</h3>
+                                    <p className="admin-modal-subtitle">Cập nhật thông tin chi tiết nhân sự.</p>
                                 </div>
-                                <div className="form-col">
-                                    <label>Họ và tên nhân viên</label>
-                                    <input 
-                                        type="text"
-                                        name="employee_name"
-                                        value={editingEmployee.employee_name || ''}
-                                        onChange={handleEditChange}
-                                        required
-                                    />
-                                </div>
+                                <button type="button" onClick={() => setEditingEmployee(null)} className="admin-modal-close-btn">✕</button>
                             </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Ngày tháng năm sinh</label>
-                                    <input 
-                                        type="date"
-                                        name="employee_birthday"
-                                        value={editingEmployee.employee_birthday || ''}
-                                        onChange={handleEditChange}
-                                        required
-                                    />
+                            <form onSubmit={handleUpdate} className="admin-modal-form">
+                                <div className="admin-modal-body">
+                                    <div className="admin-form-section">
+                                        <h4 className="admin-form-section-title">Thông tin cá nhân</h4>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Họ và tên nhân viên <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" name="employee_name" value={editingEmployee.employee_name || ''} onChange={handleEditChange} className="admin-form-control" required />
+                                            </div>
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Ngày tháng năm sinh <span className="admin-required-asterisk">*</span></label>
+                                                <input type="date" name="employee_birthday" value={editingEmployee.employee_birthday || ''} onChange={handleEditChange} className="admin-form-control" required />
+                                            </div>
+                                        </div>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Số điện thoại <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" name="employee_phone_no" value={editingEmployee.employee_phone_no || ''} onChange={handleEditChange} className="admin-form-control" required />
+                                            </div>
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Email <span className="admin-required-asterisk">*</span></label>
+                                                <input type="email" name="employee_email" value={editingEmployee.employee_email || ''} onChange={handleEditChange} className="admin-form-control" required />
+                                            </div>
+                                        </div>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Địa chỉ <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" name="employee_address" value={editingEmployee.employee_address || ''} onChange={handleEditChange} className="admin-form-control" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="admin-form-section">
+                                        <h4 className="admin-form-section-title">Thông tin công việc</h4>
+                                        <div className="admin-form-row">
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Mã nhân viên <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" name="employee_citizenid" value={editingEmployee.employee_citizenid || ''} onChange={handleEditChange} className="admin-form-control" required />
+                                            </div>
+                                            <div className="admin-form-col">
+                                                <label className="admin-form-label">Chức vụ <span className="admin-required-asterisk">*</span></label>
+                                                <input type="text" name="role_title" value={editingEmployee.role_title || ''} onChange={handleEditChange} className="admin-form-control" required />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="form-col">
-                                    <label>Số điện thoại</label>
-                                    <input 
-                                        type="text"
-                                        name="employee_phone_no"
-                                        value={editingEmployee.employee_phone_no || ''}
-                                        onChange={handleEditChange}
-                                        required
-                                    />
+                                <div className="admin-modal-footer">
+                                    <button type="button" className="admin-btn admin-btn-cancel" onClick={() => setEditingEmployee(null)}>Hủy</button>
+                                    <button type="submit" className="admin-btn admin-btn-primary">Lưu thay đổi</button>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Email</label>
-                                    <input 
-                                        type="email"
-                                        name="employee_email"
-                                        value={editingEmployee.employee_email || ''}
-                                        onChange={handleEditChange}
-                                        required
-                                    />
-                                </div>
-                                <div className="form-col">
-                                    <label>Địa chỉ</label>
-                                    <input 
-                                        type="text"
-                                        name="employee_address"
-                                        value={editingEmployee.employee_address || ''}
-                                        onChange={handleEditChange}
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Chức vụ</label>
-                                    <input 
-                                        type="text"
-                                        name="role_title"
-                                        value={editingEmployee.role_title || ''}
-                                        onChange={handleEditChange}
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="button-group admin-flex-end-group">
-                                <button 
-                                    type="button" 
-                                    className="btn-cancel"
-                                    onClick={() => setEditingEmployee(null)}
-                                >
-                                    Hủy
-                                </button>
-                                <button type="submit" className="btn-save">Lưu thay đổi</button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
                 )}
 
                 <div className="table-wrapper">

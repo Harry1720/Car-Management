@@ -154,13 +154,14 @@ const AccountingPage = () => {
                                 <th>Đã thanh toán</th>
                                 <th>Còn lại</th>
                                 <th>Trạng thái</th>
+                                <th>Chi tiết</th>
                             </tr>
                         </thead>
                         <tbody className="admin-table-body">
                             {loading ? (
-                                <tr><td colSpan="7" className="admin-text-center">Đang tải...</td></tr>
+                                <tr><td colSpan="8" className="admin-text-center">Đang tải...</td></tr>
                             ) : depositData.length === 0 ? (
-                                <tr><td colSpan="7" className="admin-text-center">Không có dữ liệu</td></tr>
+                                <tr><td colSpan="8" className="admin-text-center">Không có dữ liệu</td></tr>
                             ) : (
                             depositData
                                 .filter(deposit => {
@@ -171,7 +172,7 @@ const AccountingPage = () => {
                                 })
                                 .map((deposit, index) => {
                                     return (
-                                        <tr key={deposit._id || index} onClick={() => openModal(deposit)} className="cursor-pointer">
+                                        <tr key={deposit._id || index}>
                                             <td>{deposit._id?.slice(-6).toUpperCase() || 'N/A'}</td>
                                             <td>{deposit.customerId?.name || 'N/A'}</td>
                                             <td>{deposit.carId?.name || deposit.carId?.model_car_name || 'N/A'}</td>
@@ -182,6 +183,15 @@ const AccountingPage = () => {
                                                 <span className={`status-badge ${deposit.status}`}>
                                                     {statusMap[deposit.status] || deposit.status}
                                                 </span>
+                                            </td>
+                                            <td className="text-center">
+                                                <button 
+                                                    className="admin-action-icon-btn"
+                                                    onClick={() => openModal(deposit)}
+                                                    title="Xem chi tiết"
+                                                >
+                                                    <ion-icon name="eye-outline"></ion-icon>
+                                                </button>
                                             </td>
                                         </tr>
                                     );

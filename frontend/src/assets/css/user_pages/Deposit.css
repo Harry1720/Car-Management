@@ -440,3 +440,7 @@
         text-align: left;
     }
 }
+.deposit-note {
+  font-style: italic;
+  font-size: 14px;
+}

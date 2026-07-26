@@ -192,7 +192,7 @@ const Dashboard = () => {
                             <th>Mã GD</th>
                             <th>Khách hàng</th>
                             <th>Ngày GD</th>
-                            <th>Ngày thanh toán</th>
+                            {/* <th>Ngày thanh toán</th> */}
                             <th>Trạng thái</th>
                         </tr>
                     </thead>
@@ -207,7 +207,7 @@ const Dashboard = () => {
                                     <td>{tx._id ? tx._id.substring(0,8) + '...' : 'N/A'}</td>
                                     <td>{tx.customerId?.name || 'N/A'}</td>
                                     <td>{tx.transactionDate ? new Date(tx.transactionDate).toLocaleDateString('vi-VN') : 'N/A'}</td>
-                                    <td>{tx.paymentDate ? new Date(tx.paymentDate).toLocaleDateString('vi-VN') : 'Chưa'}</td>
+                                    {/* <td>{tx.paymentDate ? new Date(tx.paymentDate).toLocaleDateString('vi-VN') : 'Chưa'}</td> */}
                                     <td>{getStatusBadge(tx.status)}</td>
                                 </tr>
                             ))

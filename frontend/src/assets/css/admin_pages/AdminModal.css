@@ -1,0 +1,289 @@
+/* AdminShared.css - Shared Modal Styles for Admin Dashboard */
+
+/* --- Modal Overlay & Container --- */
+.admin-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.admin-modal-content {
+  background: #ffffff;
+  border-radius: 12px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Width Variants */
+.admin-modal-sm { width: 600px; max-width: 95%; }
+.admin-modal-md { width: 850px; max-width: 95%; }
+.admin-modal-lg { width: 1200px; max-width: 95%; }
+
+/* --- Modal Header --- */
+.admin-modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #E5E7EB;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #F8FAFC;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  flex-shrink: 0;
+}
+
+.admin-modal-title-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.admin-modal-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+.admin-modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-modal-close-btn:hover {
+  color: #0f172a;
+}
+
+/* --- Modal Body & Forms --- */
+.admin-modal-body {
+  padding: 24px;
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: #FCFCFD;
+  
+}
+
+.admin-form-section {
+  background-color: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.admin-form-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1E3A8A;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #E5E7EB;
+  padding-bottom: 12px;
+}
+
+.admin-form-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.admin-form-row:last-child {
+  margin-bottom: 0;
+}
+
+.admin-form-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Spacing between label and input */
+}
+
+.admin-form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.admin-required-asterisk {
+  color: #ef4444;
+  margin-left: 4px;
+}
+
+.admin-optional-text {
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.admin-form-control {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #334155;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.admin-form-control::placeholder {
+  color: #94a3b8;
+}
+
+.admin-form-control:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.admin-form-control:disabled {
+  background-color: #f1f5f9;
+  cursor: not-allowed;
+}
+
+/* --- Modal Footer --- */
+.admin-modal-footer {
+  padding: 20px 24px;
+  border-top: 1px solid #E5E7EB;
+  background-color: #F8FAFC;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.admin-btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-btn-cancel {
+  background-color: #ffffff;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+.admin-btn-cancel:hover {
+  background-color: #f1f5f9;
+  color: #1e293b;
+}
+
+.admin-btn-primary {
+  background-color: #1e40af;
+  color: #ffffff;
+}
+
+.admin-btn-primary:hover {
+  background-color: #1e3a8a;
+  box-shadow: 0 4px 6px -1px rgba(30, 64, 175, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-form-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .admin-modal-footer {
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+  .admin-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Apply to generic inputs missing class */
+.admin-form-col input:not([type="checkbox"]):not([type="radio"]),
+.admin-form-col select,
+.admin-form-col textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #1e293b;
+  transition: all 0.2s;
+  background-color: #f8fafc;
+}
+
+.admin-form-col input:focus,
+.admin-form-col select:focus,
+.admin-form-col textarea:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background-color: #ffffff;
+}
+
+.admin-form-col label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-modal-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.flex-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 36px;
+}
+
+.quill-row {
+  margin-bottom: 48px !important;
+}
+
+.full-width-col {
+  flex: 0 0 100% !important;
+  max-width: 100% !important;
+}
+
+.specs-title {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../../assets/css/admin_pages/Transaction.css';
+import '../../assets/css/admin_pages/AdminModal.css';
 import Navbar from '../../components/NavbarAdmin';
 import Footer from '../../components/FooterAdmin';
 import { accountingService } from '../../services/accountingService';
@@ -178,48 +179,66 @@ const LedgerPage = () => {
 
             {/* Create Voucher Modal */}
             {isModalOpen && (
-                <div className="modal-overlay modal-overlay-flex">
-                    <div className="modal-content modal-content-sm">
-                        <div className="modal-header modal-header-flex">
-                            <h2 className="m-0">Tạo Phiếu Kế Toán</h2>
-                            <button onClick={handleCloseModal} className="modal-close-btn">&times;</button>
+                <div className="admin-modal-overlay" onClick={handleCloseModal}>
+                    <div className="admin-modal-content admin-modal-md" onClick={e => e.stopPropagation()}>
+                        <div className="admin-modal-header">
+                            <div className="admin-modal-title-wrapper">
+                                <h3 className="admin-modal-title">Tạo Phiếu Kế Toán</h3>
+                                <p className="admin-modal-subtitle">Ghi nhận các khoản thu/chi vào sổ quỹ.</p>
+                            </div>
+                            <button type="button" onClick={handleCloseModal} className="admin-modal-close-btn">✕</button>
                         </div>
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-group mb-15">
-                                <label className="form-label-bold">Loại Phiếu</label>
-                                <select className="form-control" value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})}>
-                                    <option value="income">Phiếu Thu (Income)</option>
-                                    <option value="expense">Phiếu Chi (Expense)</option>
-                                </select>
+                        <form onSubmit={handleSubmit} className="admin-modal-form">
+                            <div className="admin-modal-body">
+                                <div className="admin-form-section">
+                                    <h4 className="admin-form-section-title">Thông tin giao dịch</h4>
+                                    <div className="admin-form-row">
+                                        <div className="admin-form-col">
+                                            <label className="admin-form-label">Loại Phiếu <span className="admin-required-asterisk">*</span></label>
+                                            <select className="admin-form-control" value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})}>
+                                                <option value="income">Phiếu Thu (Income)</option>
+                                                <option value="expense">Phiếu Chi (Expense)</option>
+                                            </select>
+                                        </div>
+                                        <div className="admin-form-col">
+                                            <label className="admin-form-label">Danh mục <span className="admin-required-asterisk">*</span></label>
+                                            <select className="admin-form-control" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
+                                                {formData.type === 'income' ? (
+                                                    <option value="other">Thu Khác</option>
+                                                ) : (
+                                                    <>
+                                                        <option value="salary">Trả lương</option>
+                                                        <option value="utilities">Điện nước</option>
+                                                        <option value="maintenance">Bảo dưỡng/Sửa chữa</option>
+                                                        <option value="other">Chi Khác</option>
+                                                    </>
+                                                )}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="admin-form-row">
+                                        <div className="admin-form-col">
+                                            <label className="admin-form-label">Số tiền (VNĐ) <span className="admin-required-asterisk">*</span></label>
+                                            <input type="number" className="admin-form-control" value={formData.amount} onChange={e => setFormData({...formData, amount: e.target.value})} required min="1" placeholder="Nhập số tiền..." />
+                                        </div>
+                                        <div className="admin-form-col">
+                                            {/* Placeholder for future fields */}
+                                        </div>
+                                    </div>
+                                    <div className="admin-form-row">
+                                        <div className="admin-form-col">
+                                            <label className="admin-form-label">Ghi chú</label>
+                                            <textarea className="admin-form-control" rows="3" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Diễn giải chi tiết..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="form-group mb-15">
-                                <label className="form-label-bold">Danh mục</label>
-                                <select className="form-control" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
-                                    {formData.type === 'income' ? (
-                                        <>
-                                            <option value="other">Thu Khác</option>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <option value="salary">Trả lương</option>
-                                            <option value="utilities">Điện nước</option>
-                                            <option value="maintenance">Bảo dưỡng/Sửa chữa</option>
-                                            <option value="other">Chi Khác</option>
-                                        </>
-                                    )}
-                                </select>
+                            <div className="admin-modal-footer">
+                                <button type="button" className="admin-btn admin-btn-cancel" onClick={handleCloseModal}>Hủy</button>
+                                <button type="submit" className="admin-btn admin-btn-primary" disabled={submitting}>
+                                    {submitting ? 'Đang xử lý...' : 'Lưu phiếu'}
+                                </button>
                             </div>
-                            <div className="form-group mb-15">
-                                <label className="form-label-bold">Số tiền (VNĐ)</label>
-                                <input type="number" className="form-control" value={formData.amount} onChange={e => setFormData({...formData, amount: e.target.value})} required min="1" placeholder="Nhập số tiền..." />
-                            </div>
-                            <div className="form-group mb-20">
-                                <label className="form-label-bold">Ghi chú</label>
-                                <textarea className="form-control" rows="3" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Diễn giải chi tiết..."></textarea>
-                            </div>
-                            <button type="submit" className="btn btn-primary btn-full-padding" disabled={submitting}>
-                                {submitting ? 'Đang xử lý...' : 'Lưu phiếu'}
-                            </button>
                         </form>
                     </div>
                 </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import "../../assets/css/admin_pages/CarList.css";
+import "../../assets/css/admin_pages/AdminModal.css";
 import Navbar from "../../components/NavbarAdmin";
 import Footer from "../../components/FooterAdmin";
 import { carService } from "../../services/carService";
@@ -451,25 +452,26 @@ const CarList = () => {
 
         {/* Add new car form */}
         {showAddForm && (
-          <div className="modal-overlay" onClick={() => setShowAddForm(false)}>
+          <div className="admin-modal-overlay" onClick={() => setShowAddForm(false)}>
             <div
-              className="modal-content wide-modal-content"
+              className="admin-modal-content admin-modal-lg"
               onClick={(e) => e.stopPropagation()}
             >
-              <button
-                type="button"
-                onClick={() => setShowAddForm(false)}
-                className="modal-close-btn"
-              >
-                <ion-icon name="close-outline"></ion-icon>
-              </button>
-              <h3 className="modal-title">Thêm xe mới</h3>
-              <form onSubmit={handleCreate}>
-                <div className="modal-form-layout">
+              <div className="admin-modal-header">
+                <div className="admin-modal-title-wrapper">
+                  <h3 className="admin-modal-title">Thêm xe mới</h3>
+                  <p className="admin-modal-subtitle">Thêm mới phương tiện và thiết lập cấu hình.</p>
+                </div>
+                <button type="button" onClick={() => setShowAddForm(false)} className="admin-modal-close-btn">✕</button>
+              </div>
+              <form onSubmit={handleCreate} className="admin-modal-form">
+                <div className="admin-modal-body">
+                  <div className="admin-form-row">
                   {/* Cột Trái: Thông tin chung */}
-                  <div className="modal-form-col-left">
-                    <div className="form-row">
-                      <div className="form-col">
+                  <div className="admin-form-col">
+                    <div className="admin-form-section-title flex-title">Thông tin cơ bản</div>
+                    <div className="admin-form-row">
+                      <div className="admin-form-col">
                         <label>Mã xe</label>
                         <input
                           type="text"
@@ -479,7 +481,7 @@ const CarList = () => {
                           required
                         />
                       </div>
-                      <div className="form-col">
+                      <div className="admin-form-col">
                         <label>Tên xe</label>
                         <input
                           type="text"
@@ -489,7 +491,7 @@ const CarList = () => {
                           required
                         />
                       </div>
-                      <div className="form-col">
+                      <div className="admin-form-col">
                         <label>Giá tiền</label>
                         <input
                           type="text"
@@ -500,8 +502,8 @@ const CarList = () => {
                         />
                       </div>
                     </div>
-                    <div className="form-row">
-                      <div className="form-col">
+                    <div className="admin-form-row">
+                      <div className="admin-form-col">
                         <label>Nguồn gốc</label>
                         <select
                           id="new-origin_of_car"
@@ -514,7 +516,7 @@ const CarList = () => {
                           <option value="Nhập khẩu">Nhập khẩu</option>
                         </select>
                       </div>
-                      <div className="form-col">
+                      <div className="admin-form-col">
                         <label>Ngày nhập</label>
                         <input
                           type="date"
@@ -525,8 +527,8 @@ const CarList = () => {
                         />
                       </div>
                     </div>
-                    <div className="form-row">
-                      <div className="form-col">
+                    <div className="admin-form-row">
+                      <div className="admin-form-col">
                         <label>Năm ra mắt</label>
                         <input
                           type="text"
@@ -536,76 +538,8 @@ const CarList = () => {
                           required
                         />
                       </div>
-                    </div>
-                    <div className="form-row">
-                      <div className="form-col">
-                        <label>Công suất động cơ</label>
-                        <input
-                          type="text"
-                          id="new-motorPower"
-                          value={newCar.motorPower || ""}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </div>
-                      <div className="form-col">
-                        <label>Quãng đường (km)</label>
-                        <input
-                          type="text"
-                          id="new-range"
-                          value={newCar.range || ""}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </div>
-                      <div className="form-col">
-                        <label>
-                          Mức tiêu thụ điện năng
-                        </label>
-                        <input
-                          type="text"
-                          id="new-energyConsumption"
-                          value={newCar.energyConsumption || ""}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="form-row">
-                      <div className="form-col">
-                        <label>Số chỗ ngồi</label>
-                        <input
-                          type="number"
-                          id="new-seats"
-                          value={newCar.seats || ""}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </div>
-                      <div className="form-col">
-                        <label>Dung lượng pin (kWh)</label>
-                        <input
-                          type="text"
-                          id="new-batteryCapacity"
-                          value={newCar.batteryCapacity || ""}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </div>
-                      <div className="form-col">
-                        <label>Tăng tốc 0-100km/h (giây)</label>
-                        <input
-                          type="text"
-                          id="new-acceleration"
-                          value={newCar.acceleration || ""}
-                          onChange={handleInputChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="form-row">
-                      <div className="form-col">
-                        <label>Kiểu dáng xe (Category)</label>
+                      <div className="admin-form-col">
+                        <label>Kiểu dáng xe</label>
                         <select
                           id="new-category"
                           value={newCar.category || ""}
@@ -622,16 +556,81 @@ const CarList = () => {
                         </select>
                       </div>
                     </div>
+
+                    <h4 className="admin-form-section-title">Thông số kỹ thuật</h4>
+
+                    <div className="admin-form-row">
+                      <div className="admin-form-col">
+                        <label>Công suất động cơ</label>
+                        <input
+                          type="text"
+                          id="new-motorPower"
+                          value={newCar.motorPower || ""}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                      <div className="admin-form-col">
+                        <label>Quãng đường (km)</label>
+                        <input
+                          type="text"
+                          id="new-range"
+                          value={newCar.range || ""}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                      <div className="admin-form-col">
+                        <label>
+                          Mức tiêu thụ điện năng
+                        </label>
+                        <input
+                          type="text"
+                          id="new-energyConsumption"
+                          value={newCar.energyConsumption || ""}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="admin-form-row">
+                      <div className="admin-form-col">
+                        <label>Số chỗ ngồi</label>
+                        <input
+                          type="number"
+                          id="new-seats"
+                          value={newCar.seats || ""}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                      <div className="admin-form-col">
+                        <label>Dung lượng pin (kWh)</label>
+                        <input
+                          type="text"
+                          id="new-batteryCapacity"
+                          value={newCar.batteryCapacity || ""}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                      <div className="admin-form-col">
+                        <label>Thời gian tăng tốc (s)</label>
+                        <input
+                          type="text"
+                          id="new-acceleration"
+                          value={newCar.acceleration || ""}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                    </div>
                   </div>
 
                   {/* Cột Phải: Variants */}
-                  <div className="modal-form-col-right">
-                    <div className="form-row">
-                      <div className="form-col full-width">
-                        <div className="variant-header">
-                          <label className="variant-group-label">
-                            Màu sắc và hình ảnh
-                          </label>
+                  <div className="admin-form-col">
+                        <div className="admin-form-section-title flex-title">
+                          <span>Màu sắc và hình ảnh</span>
                           <button
                             type="button"
                             onClick={() => handleAddVariant(false)}
@@ -748,14 +747,12 @@ const CarList = () => {
                             </div>
                           </div>
                         ))}
-                      </div>
-                    </div>
                   </div>
                 </div>
 
-                <div className="form-row">
-                  <div className="form-col full-width">
-                    <label>Bài viết mô tả (Landing Page)</label>
+                <div className="admin-form-row quill-row">
+                  <div className="admin-form-col full-width-col">
+                    <label className="admin-form-section-title">Bài viết mô tả (Landing Page)</label>
                     <ReactQuill 
                       theme="snow" 
                       value={newCar.articleContent || ""} 
@@ -765,15 +762,16 @@ const CarList = () => {
                   </div>
                 </div>
 
-                <div className="form-actions form-actions-right">
+                </div>
+<div className="admin-modal-footer">
                   <button
                     type="button"
-                    className="btn-cancel"
+                    className="admin-btn admin-btn-cancel"
                     onClick={() => setShowAddForm(false)}
                   >
                     Hủy
                   </button>
-                  <button type="submit" className="btn-save">
+                  <button type="submit" className="admin-btn admin-btn-primary">
                     Thêm mới
                   </button>
                 </div>
@@ -784,25 +782,26 @@ const CarList = () => {
 
         {/* Edit car form */}
         {editingCar && (
-          <div className="modal-overlay" onClick={() => setEditingCar(null)}>
+          <div className="admin-modal-overlay" onClick={() => setEditingCar(null)}>
             <div
-              className="modal-content wide-modal-content"
+              className="admin-modal-content admin-modal-lg"
               onClick={(e) => e.stopPropagation()}
             >
-              <button
-                type="button"
-                onClick={() => setEditingCar(null)}
-                className="modal-close-btn"
-              >
-                <ion-icon name="close-outline"></ion-icon>
-              </button>
-              <h3 className="modal-title">Chỉnh sửa thông tin xe</h3>
-              <form onSubmit={handleUpdate}>
-                <div className="modal-form-layout">
+              <div className="admin-modal-header">
+                <div className="admin-modal-title-wrapper">
+                  <h3 className="admin-modal-title">Chỉnh sửa thông tin xe</h3>
+                  <p className="admin-modal-subtitle">Cập nhật thông số và hình ảnh xe.</p>
+                </div>
+                <button type="button" onClick={() => setEditingCar(null)} className="admin-modal-close-btn">✕</button>
+              </div>
+              <form onSubmit={handleUpdate} className="admin-modal-form">
+                <div className="admin-modal-body">
+                  <div className="admin-form-row">
                   {/* Cột Trái: Thông tin chung */}
-                  <div className="modal-form-col-left">
-                    <div className="form-row">
-                      <div className="form-col">
+                  <div className="admin-form-col">
+                    <div className="admin-form-section-title flex-title">Thông tin cơ bản</div>
+                    <div className="admin-form-row">
+                      <div className="admin-form-col">
                         <label>Mã xe</label>
                         <input
                           type="text"
@@ -818,7 +817,7 @@ const CarList = () => {
                           }
                         />
                       </div>
-                      <div className="form-col">
+                      <div className="admin-form-col">
                         <label>Tên xe</label>
                         <input
                           type="text"
@@ -834,7 +833,7 @@ const CarList = () => {
                           }
                         />
                       </div>
-                      <div className="form-col">
+                      <div className="admin-form-col">
                         <label>Giá tiền</label>
                         <input
                           type="text"
@@ -849,8 +848,8 @@ const CarList = () => {
                         />
                       </div>
                     </div>
-                    <div className="form-row">
-                      <div className="form-col">
+                    <div className="admin-form-row">
+                      <div className="admin-form-col">
                         <label>Nguồn gốc</label>
                         <select
                           name="origin_of_car"
@@ -868,7 +867,7 @@ const CarList = () => {
                           <option value="Nhập khẩu">Nhập khẩu</option>
                         </select>
                       </div>
-                      <div className="form-col">
+                      <div className="admin-form-col">
                         <label>Ngày nhập</label>
                         <input
                           type="date"
@@ -883,8 +882,8 @@ const CarList = () => {
                         />
                       </div>
                     </div>
-                    <div className="form-row">
-                      <div className="form-col">
+                    <div className="admin-form-row">
+                      <div className="admin-form-col">
                         <label>Năm ra mắt</label>
                         <input
                           type="text"
@@ -898,106 +897,8 @@ const CarList = () => {
                           }
                         />
                       </div>
-                    </div>
-                    <div className="form-row">
-                      <div className="form-col">
-                        <label>Công suất động cơ</label>
-                        <input
-                          type="text"
-                          name="motorPower"
-                          value={editingCar.motorPower || ""}
-                          onChange={(e) =>
-                            setEditingCar({
-                              ...editingCar,
-                              motorPower: e.target.value,
-                            })
-                          }
-                          required
-                        />
-                      </div>
-                      <div className="form-col">
-                        <label>Quãng đường (km)</label>
-                        <input
-                          type="text"
-                          name="range"
-                          value={editingCar.range || ""}
-                          onChange={(e) =>
-                            setEditingCar({
-                              ...editingCar,
-                              range: e.target.value,
-                            })
-                          }
-                          required
-                        />
-                      </div>
-                      <div className="form-col">
-                        <label>
-                          Mức tiêu thụ điện năng
-                        </label>
-                        <input
-                          type="text"
-                          name="energyConsumption"
-                          value={editingCar.energyConsumption || ""}
-                          onChange={(e) =>
-                            setEditingCar({
-                              ...editingCar,
-                              energyConsumption: e.target.value,
-                            })
-                          }
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="form-row">
-                      <div className="form-col">
-                        <label>Số chỗ ngồi</label>
-                        <input
-                          type="number"
-                          name="seats"
-                          value={editingCar.seats || ""}
-                          onChange={(e) =>
-                            setEditingCar({
-                              ...editingCar,
-                              seats: e.target.value,
-                            })
-                          }
-                          required
-                        />
-                      </div>
-                      <div className="form-col">
-                        <label>Dung lượng pin (kWh)</label>
-                        <input
-                          type="text"
-                          name="batteryCapacity"
-                          value={editingCar.batteryCapacity || ""}
-                          onChange={(e) =>
-                            setEditingCar({
-                              ...editingCar,
-                              batteryCapacity: e.target.value,
-                            })
-                          }
-                          required
-                        />
-                      </div>
-                      <div className="form-col">
-                        <label>Tăng tốc 0-100km/h (giây)</label>
-                        <input
-                          type="text"
-                          name="acceleration"
-                          value={editingCar.acceleration || ""}
-                          onChange={(e) =>
-                            setEditingCar({
-                              ...editingCar,
-                              acceleration: e.target.value,
-                            })
-                          }
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="form-row">
-                      <div className="form-col">
-                        <label>Kiểu dáng xe (Category)</label>
+                      <div className="admin-form-col">
+                        <label>Kiểu dáng xe</label>
                         <select
                           name="category"
                           value={editingCar.category || ""}
@@ -1019,16 +920,111 @@ const CarList = () => {
                         </select>
                       </div>
                     </div>
+
+                    <h4 className="admin-form-section-title specs-title">Thông số kỹ thuật</h4>
+
+                    <div className="admin-form-row">
+                      <div className="admin-form-col">
+                        <label>Công suất động cơ</label>
+                        <input
+                          type="text"
+                          name="motorPower"
+                          value={editingCar.motorPower || ""}
+                          onChange={(e) =>
+                            setEditingCar({
+                              ...editingCar,
+                              motorPower: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </div>
+                      <div className="admin-form-col">
+                        <label>Quãng đường (km)</label>
+                        <input
+                          type="text"
+                          name="range"
+                          value={editingCar.range || ""}
+                          onChange={(e) =>
+                            setEditingCar({
+                              ...editingCar,
+                              range: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </div>
+                      <div className="admin-form-col">
+                        <label>
+                          Mức tiêu thụ điện năng
+                        </label>
+                        <input
+                          type="text"
+                          name="energyConsumption"
+                          value={editingCar.energyConsumption || ""}
+                          onChange={(e) =>
+                            setEditingCar({
+                              ...editingCar,
+                              energyConsumption: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="admin-form-row">
+                      <div className="admin-form-col">
+                        <label>Số chỗ ngồi</label>
+                        <input
+                          type="number"
+                          name="seats"
+                          value={editingCar.seats || ""}
+                          onChange={(e) =>
+                            setEditingCar({
+                              ...editingCar,
+                              seats: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </div>
+                      <div className="admin-form-col">
+                        <label>Dung lượng pin (kWh)</label>
+                        <input
+                          type="text"
+                          name="batteryCapacity"
+                          value={editingCar.batteryCapacity || ""}
+                          onChange={(e) =>
+                            setEditingCar({
+                              ...editingCar,
+                              batteryCapacity: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </div>
+                      <div className="admin-form-col">
+                        <label>Thời gian tăng tốc (s)</label>
+                        <input
+                          type="text"
+                          name="acceleration"
+                          value={editingCar.acceleration || ""}
+                          onChange={(e) =>
+                            setEditingCar({
+                              ...editingCar,
+                              acceleration: e.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </div>
+                    </div>
                   </div>
 
                   {/* Cột Phải: Variants */}
-                  <div className="modal-form-col-right">
-                    <div className="form-row">
-                      <div className="form-col full-width">
-                        <div className="variant-header">
-                          <label className="variant-group-label">
-                            Màu sắc và hình ảnh
-                          </label>
+                  <div className="admin-form-col">
+                        <div className="admin-form-section-title flex-title">
+                          <span>Màu sắc và hình ảnh</span>
                           <button
                             type="button"
                             onClick={() => handleAddVariant(true)}
@@ -1159,14 +1155,12 @@ const CarList = () => {
                             )}
                           </div>
                         ))}
-                      </div>
-                    </div>
                   </div>
                 </div>
 
-                <div className="form-row">
-                  <div className="form-col full-width">
-                    <label>Bài viết mô tả (Landing Page)</label>
+                <div className="admin-form-row quill-row">
+                  <div className="admin-form-col full-width-col">
+                    <label className="admin-form-section-title">Bài viết mô tả (Landing Page)</label>
                     <ReactQuill 
                       theme="snow" 
                       value={editingCar.articleContent || ""} 
@@ -1176,15 +1170,16 @@ const CarList = () => {
                   </div>
                 </div>
 
-                <div className="form-actions form-actions-right">
+                </div>
+<div className="admin-modal-footer">
                   <button
                     type="button"
-                    className="btn-cancel"
+                    className="admin-btn admin-btn-cancel"
                     onClick={() => setEditingCar(null)}
                   >
                     Hủy
                   </button>
-                  <button type="submit" className="btn-save">
+                  <button type="submit" className="admin-btn admin-btn-primary">
                     Lưu thay đổi
                   </button>
                 </div>
