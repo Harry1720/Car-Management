@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import BackToTop from './components/BackToTop';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Analytics } from '@vercel/analytics/react';
 
 // Import pages
 import Home from './pages/user/Home';
@@ -83,6 +84,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <BackToTop />
+      <Analytics />
     </Router>
   );
 }
