@@ -36,6 +36,7 @@ const uspItems = [
 const featuredCars = [
   {
     model: "VF Wild",
+    modelId: 'vfwild',
     badge: "Lifestyle pickup concept",
     description:
       "Thiết kế cá tính, không gian rộng và tinh thần đa dụng cho khách hàng thích khác biệt.",
@@ -46,6 +47,7 @@ const featuredCars = [
   },
   {
     model: "VF 9",
+    modelId: 'vf9',
     badge: "SUV cỡ lớn",
     description:
       "Khoang nội thất sang trọng, phù hợp gia đình và những chuyến đi dài đầy đủ tiện nghi.",
@@ -56,6 +58,7 @@ const featuredCars = [
   },
   {
     model: "VF 8",
+    modelId: 'vf8',
     badge: "SUV đô thị cao cấp",
     description:
       "Tối ưu cho khách hàng muốn cân bằng giữa công nghệ, hiệu năng và sự sang trọng.",
@@ -66,6 +69,7 @@ const featuredCars = [
   },
   {
     model: "VF 7",
+    modelId: 'vf7',
     badge: "Crossover linh hoạt",
     description:
       "Thiết kế trẻ trung, lái dễ dàng, rất hợp nhu cầu di chuyển hằng ngày trong thành phố.",
@@ -208,7 +212,7 @@ const Home = () => {
                   </div>
                 </div>
                 <div className={`${styles.home_page__featured_actions} ${styles.home_page__btn_desktop}`}>
-                  <Link className={styles.home_page__button_primary} to={`/deposit?model=${car.model}`}>
+                  <Link className={styles.home_page__button_primary} to={`/deposit?model=${car.modelId}`}>
                     Mua ngay
                   </Link>
                   <Link className={styles.home_page__button_secondary} to={car.cta}>
@@ -220,7 +224,7 @@ const Home = () => {
                 <img src={car.image} alt={car.model} />
               </div>
               <div className={`${styles.home_page__featured_actions} ${styles.home_page__btn_mobile}`}>
-                <Link className={styles.home_page__button_primary} to={`/deposit?model=${car.model}`}>
+                <Link className={styles.home_page__button_primary} to={`/deposit?model=${car.modelId}`}>
                   Mua ngay
                 </Link>
                 <Link className={styles.home_page__button_secondary} to={car.cta}>

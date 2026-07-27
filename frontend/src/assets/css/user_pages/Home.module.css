@@ -115,11 +115,12 @@
 }
 
 .home_page__button_primary {
-  color: #111111;
+  color: #111111 !important;
   background: linear-gradient(90deg, #ffb845, #ffffff);
   background-clip: padding-box, border-box;
   box-shadow: 0 16px 34px rgba(255, 210, 140, 0.18);
-  border:none;
+  border: none;
+  text-decoration: none !important;
 }
 
 .home_page__button_primary.home_page__button_large {
@@ -150,6 +151,7 @@
   background: transparent;
   border: 2px solid #ffffff;  
   backdrop-filter: blur(14px);
+  text-decoration: none !important;
 }
 
 .home_page__button_primary:hover,
