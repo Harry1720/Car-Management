@@ -327,14 +327,18 @@
 @media (max-width: 768px) {
   .leftColumn {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
   .sidebarMenu {
     flex-direction: row;
     overflow-x: auto;
     white-space: nowrap;
+    width: 100%;
+    justify-content: flex-start;
+    padding-bottom: 8px;
     scrollbar-width: thin;
     scrollbar-color: rgba(30, 58, 138, 0.2) transparent;
-    margin: 0 auto;
   }
   .sidebarMenu::-webkit-scrollbar {
     height: 4px;

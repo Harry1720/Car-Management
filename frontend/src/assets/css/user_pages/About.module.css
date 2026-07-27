@@ -58,7 +58,7 @@
 /* Định nghĩa lề trang */
 .about__section,
 .awards-section {
-  width: min(1200px, calc(100% - 32px));
+  width: min(1200px, calc(100% - 64px));
   margin: 0 auto;
 }
 .about__section {
@@ -85,6 +85,8 @@
 .top_head_about p {
   font-size: clamp(0.9rem, 3vw, 1.06rem);
   color: var(--subheading-color);
+  line-height: 2;
+  text-align: justify;
 }
 
 /* Định dạng hàng và cột */
@@ -395,6 +397,7 @@ img:hover {
   line-height: 1.6;
   flex-grow: 1;
   color: rgba(255, 255, 255, 0.72);
+  font-size: 0.85rem;
 }
 
 /* Điều chỉnh cho trường hợp đặc biệt - giải thưởng 2018 */
@@ -409,9 +412,9 @@ img:hover {
     margin: 0 30px;
   } */
 
-  .top_head_about {
+  /* .top_head_about {
     margin-left: 40px;
-  }
+  } */
 
   .top_about img {
     width: 85%;
@@ -447,9 +450,9 @@ img:hover {
     margin: 0 20px;
   } */
 
-  .top_head_about {
+  /* .top_head_about {
     margin-left: 20px;
-  }
+  } */
 
   .top_head_about h3 {
     margin-top: 30px;
@@ -475,7 +478,7 @@ img:hover {
 
   .row_head .col {
     min-width: 100%;
-    padding: 15px;
+    /* padding: 15px; */
   }
 
   .col h2 {
@@ -534,9 +537,9 @@ img:hover {
   .row_head {
     grid-template-columns: 1fr;
   }
-  .top_head_about {
+  /* .top_head_about {
     margin-left: 10px;
-  }
+  } */
 
   .top_head_about h3 {
     margin-top: 20px;
@@ -561,9 +564,9 @@ img:hover {
     /* margin: 20px 0; */
   }
 
-  .row_head .col {
+  /* .row_head .col {
     padding: 10px;
-  }
+  } */
 
   .col h2 {
     font-size: 1.1rem;

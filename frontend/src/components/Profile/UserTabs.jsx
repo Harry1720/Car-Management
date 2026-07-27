@@ -119,10 +119,11 @@ const UserTabs = ({ activeTab, user, setUser }) => {
                     <div className={styles.depositHeader}>
                       <span className={styles.depositId}>Mã GD: {deposit._id}</span>
                       <span className={styles.depositStatus} style={{ 
-                        color: deposit.status === 'confirmed' ? '#28a745' : deposit.status === 'pending' ? '#ffb845' : '#dc3545'
+                        color: (deposit.status === 'confirmed' || deposit.status === 'completed') ? '#28a745' : deposit.status === 'pending' ? '#ffb845' : '#dc3545'
                       }}>
                         {deposit.status === 'pending' ? 'Chờ đặt cọc' : 
-                         deposit.status === 'confirmed' ? 'Đã cọc thành công' : 
+                         deposit.status === 'confirmed' ? 'Cọc thành công' : 
+                         deposit.status === 'completed' ? 'Hoàn thành' : 
                          deposit.status === 'cancelled' ? 'Đã hủy' : deposit.status}
                       </span>
                     </div>

@@ -309,23 +309,23 @@
 .badge {
     padding: 4px 8px;
     border-radius: 12px;
-    font-size: 12px;
+    font-size: 1rem;
     font-weight: 600;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
 .badge-completed, .badge-success {
-    background-color: #d1fae5;
-    color: #065f46;
+    /* background-color: #d1fae5; */
+    color: #087930;
 }
 
 .badge-pending {
-    background-color: #fef3c7;
-    color: #92400e;
+    /* background-color: #fef3c7; */
+    color: #0e1292;
 }
 
 .badge-cancelled, .badge-failed {
-    background-color: #fee2e2;
+    /* background-color: #fee2e2; */
     color: #991b1b;
 }
 

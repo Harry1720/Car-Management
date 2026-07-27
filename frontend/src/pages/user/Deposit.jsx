@@ -8,6 +8,7 @@ import { depositService } from '../../services/depositService';
 import { paymentService } from '../../services/paymentService';
 import { toast } from 'react-toastify';
 import { authService } from '../../services/authService';
+import { Link } from 'react-router-dom';
 
 const Deposit = () => {
   const [step, setStep] = useState(1);
@@ -200,6 +201,12 @@ const Deposit = () => {
       <Navbar activePage="products" />
       <div className="container deposit-container">
         <div className="left">
+          <Link
+            className="deposit-back-link"
+            to={`/landing/${selectedCar?.model || new URLSearchParams(window.location.search).get('model') || 'vf3'}`}
+          >
+            <i className="fas fa-arrow-left"></i> Quay lại trang chi tiết
+          </Link>
           <h2>{selectedCar?.name || "VinFast"}</h2>
           <img
             className="thumb"

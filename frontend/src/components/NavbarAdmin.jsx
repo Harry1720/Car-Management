@@ -66,56 +66,9 @@ const NavbarAdmin = () => {
                             <span className="label text-label">Trang chủ</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link to="/admin/customermanagement" 
-                                className={currentPath === '/admin/customermanagement' ? 'active' : ''}
-                                onClick={closeMobileMenu}>
-                            <ion-icon name="people-outline"></ion-icon> 
-                            <span className="label text-label">Quản lý thông tin khách hàng</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/admin/consultations" 
-                                className={currentPath === '/admin/consultations' ? 'active' : ''}
-                                onClick={closeMobileMenu}>
-                            <ion-icon name="chatbubbles-outline"></ion-icon> 
-                            <span className="label text-label">Yêu cầu tư vấn (Leads)</span>
-                        </Link>
-                    </li>
-                    {userRole === 'admin' && (
-                        <li>
-                            <Link to="/admin/humanresources" 
-                                  className={currentPath === '/admin/humanresources' ? 'active' : ''}
-                                  onClick={closeMobileMenu}>
-                                <ion-icon name="man-outline"></ion-icon> 
-                                <span className="label text-label">Quản lý nhân sự</span>
-                            </Link>
-                        </li>
-                    )}
-                    <li className="menu-group-label">
-                        <span className="label text-label">Doanh thu & Giao dịch</span>
-                    </li>
-                    {userRole === 'admin' && (
-                        <li>
-                            <Link to="/admin/accounting" 
-                                  className={currentPath === '/admin/accounting' ? 'active' : ''}
-                                  onClick={closeMobileMenu}>
-                                <ion-icon name="receipt-outline"></ion-icon> 
-                                <span className="label text-label">Sổ sách Kế toán</span>
-                            </Link>
-                        </li>
-                    )}
-                    <li>
-                        <Link to="/admin/orders" 
-                              className={currentPath === '/admin/orders' ? 'active' : ''}
-                              onClick={closeMobileMenu}>
-                            <ion-icon name="stats-chart-outline"></ion-icon> 
-                            <span className="label text-label">Danh sách Đơn hàng</span>
-                        </Link>
-                    </li>
 
                     <li className="menu-group-label">
-                        <span className="label text-label">Quản lý Xe</span>
+                        <span className="label text-label">Sản phẩm & Tồn kho</span>
                     </li>
                     <li>
                         <Link to="/admin/carlist" 
@@ -130,9 +83,67 @@ const NavbarAdmin = () => {
                               className={currentPath === '/admin/carnumber' ? 'active' : ''}
                               onClick={closeMobileMenu}>
                             <ion-icon name="car-outline"></ion-icon> 
-                            <span className="label text-label">Số lượng xe</span>
+                            <span className="label text-label">Quản lý tồn kho</span>
                         </Link>
                     </li>
+
+                    <li className="menu-group-label">
+                        <span className="label text-label">Quản lý kinh doanh</span>
+                    </li>
+                    <li>
+                        <Link to="/admin/orders" 
+                              className={currentPath === '/admin/orders' ? 'active' : ''}
+                              onClick={closeMobileMenu}>
+                            <ion-icon name="stats-chart-outline"></ion-icon> 
+                            <span className="label text-label">Danh sách đơn hàng</span>
+                        </Link>
+                    </li>
+                    {userRole === 'admin' && (
+                        <li>
+                            <Link to="/admin/accounting" 
+                                  className={currentPath === '/admin/accounting' ? 'active' : ''}
+                                  onClick={closeMobileMenu}>
+                                <ion-icon name="receipt-outline"></ion-icon> 
+                                <span className="label text-label">Sổ sách kế toán</span>
+                            </Link>
+                        </li>
+                    )}
+
+                    <li className="menu-group-label">
+                        <span className="label text-label">Chăm sóc Khách hàng</span>
+                    </li>
+                    <li>
+                        <Link to="/admin/customermanagement" 
+                                className={currentPath === '/admin/customermanagement' ? 'active' : ''}
+                                onClick={closeMobileMenu}>
+                            <ion-icon name="people-outline"></ion-icon> 
+                            <span className="label text-label">Quản lý thông tin khách hàng</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/consultations" 
+                                className={currentPath === '/admin/consultations' ? 'active' : ''}
+                                onClick={closeMobileMenu}>
+                            <ion-icon name="chatbubbles-outline"></ion-icon> 
+                            <span className="label text-label">Yêu cầu tư vấn</span>
+                        </Link>
+                    </li>
+
+                    {userRole === 'admin' && (
+                        <>
+                            <li className="menu-group-label">
+                                <span className="label text-label">Quản trị nội bộ</span>
+                            </li>
+                            <li>
+                                <Link to="/admin/humanresources" 
+                                      className={currentPath === '/admin/humanresources' ? 'active' : ''}
+                                      onClick={closeMobileMenu}>
+                                    <ion-icon name="man-outline"></ion-icon> 
+                                    <span className="label text-label">Quản lý nhân sự</span>
+                                </Link>
+                            </li>
+                        </>
+                    )}
 
                     <li className="menu-group-label">
                         <span className="label text-label">Cá nhân</span>
@@ -145,9 +156,13 @@ const NavbarAdmin = () => {
                             <span className="label text-label">Trang cá nhân</span>
                         </Link>
                     </li>
+
+                    <li className="sidebar-divider"></li>
+
                     <li className="logout-item">
                         <a onClick={handleLogout} className="logout-btn-red cursor-pointer">
-                            <ion-icon name="log-out-outline"></ion-icon> <span className="label text-label">Đăng xuất</span></a>
+                            <ion-icon name="log-out-outline"></ion-icon> <span className="label text-label">Đăng xuất</span>
+                        </a>
                     </li>
                 </ul>
             </div>

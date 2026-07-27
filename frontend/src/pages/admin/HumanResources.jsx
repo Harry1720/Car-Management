@@ -266,7 +266,7 @@ const HRPage = () => {
                                 setEditingEmployee(null); // Close edit form when adding
                             }}
                         >
-                            {showAddForm ? <><ion-icon name="close-outline"></ion-icon> Hủy thêm</> : <><ion-icon name="add-outline"></ion-icon> Thêm nhân viên</>}
+                            {showAddForm ? <><ion-icon name="close-outline"></ion-icon> <span className="hide-on-mobile">Hủy thêm</span></> : <><ion-icon name="add-outline"></ion-icon> <span className="hide-on-mobile">Thêm nhân viên</span></>}
                         </button>
                     </div>
                 </div>

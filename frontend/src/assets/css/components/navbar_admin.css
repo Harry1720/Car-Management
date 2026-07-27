@@ -441,6 +441,13 @@ body {
 
     .navbar_admin_page .navbar {
         padding: 10px 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        width: 100%;
+        box-sizing: border-box;
     }
     
     .navbar_admin_page .logo {
@@ -465,8 +472,10 @@ body {
         right: 0;
         background-color: #ffffff;
         flex-direction: column;
-        padding: 20px;
+        padding: 20px 20px 30px 20px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
     }
     
     .navbar_admin_page .navbar .main-menu.mobile-menu-open {
@@ -479,11 +488,11 @@ body {
     }
     
     .navbar_admin_page .navbar .main-menu li a {
-        padding: 12px 15px;
+        /* padding: 12px 15px; */
         font-size: 15px;
         border-radius: 5px;
     }
-    
+
     /* .submenu ul {
         position: static;
         display: none;
@@ -543,7 +552,7 @@ body {
     .dashboard_page,
     .accounting-page,
     .admin_profile_page {
-        margin: 20px 20px 30px 20px !important;
+        margin: 80px 20px 30px 20px !important;
         max-width: calc(100vw - 40px) !important;
     }
 }
@@ -619,4 +628,138 @@ body {
 .logout-btn-red:hover {
     color: #b91c1c !important;
     background-color: #fee2e2 !important;
+}
+
+@media (max-width: 768px) {
+    .page-main-title{
+        font-size: 1.6rem !important;
+    }
+    .page-subtitle {
+        font-size: 0.9rem !important;
+    }
+    .page-overline{
+        font-size: 0.8rem !important;
+    }
+    .hide-on-mobile {
+        display: none !important;
+    }
+    #add-row-form3 .col {
+        gap: 10px !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: stretch !important;
+    }
+    #add-row-form3 .col input[type="text"],
+    #add-row-form3 .col input[type="text1"] {
+        flex: 1 !important;
+        width: auto !important;
+        min-width: 0 !important;
+    }
+    #add-row-form3 .col button.btn-primary {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 15% !important;
+        max-width: 50px !important;
+        flex-shrink: 0 !important;
+        height: 42px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border-radius: 8px !important;
+    }
+    
+    .desktop-filters {
+        display: none !important;
+    }
+    .mobile-filter-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 15% !important;
+        max-width: 50px;
+        flex-shrink: 0;
+        height: 42px !important;
+        padding: 0 !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        background: #fff;
+        color: #0f172a;
+        margin: unset !important;
+        transition: all 0.2s ease;
+    }
+    .mobile-filter-btn:hover {
+        background: #f1f5f9;
+        border-color: #94a3b8 !important;
+        color: #1e3a8a;
+    }
+    .filter-input-search,
+    #add-row-form3 .col input[type="text"],
+    #add-row-form3 .col input[type="text1"] {
+        width: 85% !important;
+        flex: 1 !important;
+        height: 42px !important;
+        margin: 0 !important;
+    }
+
+    /* Bottom Sheet Modal */
+    .mobile-bottom-sheet-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 1050;
+        display: flex;
+        align-items: flex-end;
+    }
+    .mobile-bottom-sheet-content {
+        background: #fff;
+        width: 100%;
+        border-radius: 16px 16px 0 0;
+        padding: 20px;
+        animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+    .bottom-sheet-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .bottom-sheet-header h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    .bottom-sheet-header .close-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    .bottom-sheet-body .filter-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+    .bottom-sheet-body .filter-group label {
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #475569;
+    }
+    .w-100 {
+        width: 100% !important;
+    }
+    .mt-3 {
+        margin-top: 1rem !important;
+    }
+}
+
+.mobile-filter-btn {
+    display: none; /* Hidden on desktop */
+}
+.desktop-filters {
+    display: flex;
+    gap: 10px;
 }

@@ -37,7 +37,7 @@
 /* Định nghĩa lề trang */
 .product_page__container {
   line-height: 1.6;
-  width: min(1500px, calc(100% - 32px));
+  width: min(1500px, calc(100% - 64px));
   margin: 0 auto;
   /* padding-bottom: 80px; */
 }
@@ -305,7 +305,7 @@
   font-family: var(--font-heading);
   font-size: clamp(2.2rem, 4vw, 3.25rem);
   font-weight: 700;
-  letter-spacing: -1px;
+  /* letter-spacing: -1px; */
 }
 
 .product_page__page-desc {
@@ -432,12 +432,12 @@
   } */
 
   .page-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 
   .product_page__page-desc {
     margin-bottom: 40px;
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 }
 

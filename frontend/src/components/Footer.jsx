@@ -46,7 +46,7 @@ const Footer = () => {
         </div>
 
         <nav className={styles.quickLinks} aria-label="Liên kết nhanh">
-          <h3 className={styles.columnTitle}>Liên kết nhanh</h3>
+          <h3 className={styles.columnTitle}>Khám phá</h3>
           <ul className={styles.linkList}>
             {quickLinks.map((item) => (
               <li key={item.to}>

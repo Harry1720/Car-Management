@@ -45,7 +45,7 @@ const AccountingPage = () => {
     };
     
     useEffect(() => {
-        document.title = "Danh sách Đơn hàng | VinFast";
+        document.title = "Danh sách đơn hàng | VinFast";
     }, []);
 
     const openModal = async (order) => {

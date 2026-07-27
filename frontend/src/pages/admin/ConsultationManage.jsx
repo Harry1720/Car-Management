@@ -12,6 +12,7 @@ const ConsultationManage = () => {
   const [filterStatus, setFilterStatus] = useState("");
   const [filterRequestType, setFilterRequestType] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [showMobileFilter, setShowMobileFilter] = useState(false);
 
   const fetchConsultations = async () => {
     try {
@@ -26,7 +27,7 @@ const ConsultationManage = () => {
   };
 
   useEffect(() => {
-    document.title = "Quản lý Yêu cầu Tư vấn | VinFast";
+    document.title = "Quản lý yêu cầu tư vấn | VinFast";
     fetchConsultations();
   }, [filterStatus]);
 
@@ -114,7 +115,7 @@ const ConsultationManage = () => {
       <Navbar />
       <div className="car-list-page consultation-manage-page">
         <div className="page-header-block">
-          <span className="page-overline">CRM MANAGEMENT</span>
+          <span className="page-overline">CONSULTATION MANAGEMENT</span>
           <h1 className="page-main-title">YÊU CẦU TƯ VẤN</h1>
           <p className="page-subtitle">Quản lý và chăm sóc khách hàng tiềm năng.</p>
         </div>
@@ -129,24 +130,31 @@ const ConsultationManage = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
               className="filter-input-search"
             />
-            <select 
-              value={filterRequestType} 
-              onChange={(e) => setFilterRequestType(e.target.value)}
-              className="filter-select custom-arrow-select"
-            >
-              <option value="">Tất cả yêu cầu</option>
-              <option value="test_drive">Lái thử</option>
-              <option value="promotion">Nhận ưu đãi</option>
-            </select>
-            <select 
-              value={filterStatus} 
-              onChange={(e) => setFilterStatus(e.target.value)}
-              className="filter-select custom-arrow-select"
-            >
-              <option value="">Tất cả trạng thái</option>
-              <option value="pending">Mới đăng ký</option>
-              <option value="contacted">Đã liên hệ</option>
-            </select>
+            
+            <button className="btn btn-outline mobile-filter-btn" onClick={() => setShowMobileFilter(true)}>
+              <ion-icon name="filter-outline"></ion-icon>
+            </button>
+
+            <div className="desktop-filters">
+              <select 
+                value={filterRequestType} 
+                onChange={(e) => setFilterRequestType(e.target.value)}
+                className="filter-select custom-arrow-select"
+              >
+                <option value="">Tất cả yêu cầu</option>
+                <option value="test_drive">Lái thử</option>
+                <option value="promotion">Nhận ưu đãi</option>
+              </select>
+              <select 
+                value={filterStatus} 
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="filter-select custom-arrow-select"
+              >
+                <option value="">Tất cả trạng thái</option>
+                <option value="pending">Mới đăng ký</option>
+                <option value="contacted">Đã liên hệ</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -189,6 +197,47 @@ const ConsultationManage = () => {
           </table>
         </div>
       </div>
+
+      {showMobileFilter && (
+        <div className="mobile-bottom-sheet-overlay" onClick={() => setShowMobileFilter(false)}>
+          <div className="mobile-bottom-sheet-content" onClick={e => e.stopPropagation()}>
+            <div className="bottom-sheet-header">
+              <h3>Lọc danh sách</h3>
+              <button className="close-btn" onClick={() => setShowMobileFilter(false)}>
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
+            </div>
+            <div className="bottom-sheet-body">
+              <div className="filter-group">
+                <label>Loại yêu cầu</label>
+                <select 
+                  value={filterRequestType} 
+                  onChange={(e) => setFilterRequestType(e.target.value)}
+                  className="filter-select custom-arrow-select w-100"
+                >
+                  <option value="">Tất cả yêu cầu</option>
+                  <option value="test_drive">Lái thử</option>
+                  <option value="promotion">Nhận ưu đãi</option>
+                </select>
+              </div>
+              <div className="filter-group">
+                <label>Trạng thái</label>
+                <select 
+                  value={filterStatus} 
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  className="filter-select custom-arrow-select w-100"
+                >
+                  <option value="">Tất cả trạng thái</option>
+                  <option value="pending">Mới đăng ký</option>
+                  <option value="contacted">Đã liên hệ</option>
+                </select>
+              </div>
+              <button className="btn btn-primary w-100 mt-3" onClick={() => setShowMobileFilter(false)}>Áp dụng</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </>
   );

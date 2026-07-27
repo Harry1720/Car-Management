@@ -133,7 +133,15 @@ const Dashboard = () => {
 
     const getStatusBadge = (status) => {
         const cls = status?.toLowerCase() || '';
-        return <span className={`badge badge-${cls}`}>{status}</span>;
+        const statusMap = {
+            'pending': 'Đang xử lý',
+            'completed': 'Hoàn thành',
+            'success': 'Thành công',
+            'cancelled': 'Đã hủy',
+            'failed': 'Thất bại'
+        };
+        const displayStatus = statusMap[cls] || status;
+        return <span className={`badge badge-${cls}`}>{displayStatus}</span>;
     };
 
     const userRole = localStorage.getItem('role');
@@ -176,9 +184,11 @@ const Dashboard = () => {
                     </tbody>
                 </table>
             </div>
-            <a href="/admin/carnumber" className="dashboard-link-none">
-                <button className="button dashboard-btn-margin">Quản lý kho xe</button>
-            </a>
+            <div style={{ textAlign: 'right', marginTop: '16px' }}>
+                <a href="/admin/carnumber" className="dashboard-link-none">
+                    <button className="button dashboard-btn-margin">Quản lý kho xe</button>
+                </a>
+            </div>
         </div>
     );
 
@@ -202,7 +212,7 @@ const Dashboard = () => {
                         ) : recentTransactions.length === 0 ? (
                             <tr><td colSpan="5" className="admin-text-center">Không có dữ liệu</td></tr>
                         ) : (
-                            recentTransactions.map((tx, idx) => (
+                            recentTransactions.slice(0, 3).map((tx, idx) => (
                                 <tr key={tx._id || idx}>
                                     <td>{tx._id ? tx._id.substring(0,8) + '...' : 'N/A'}</td>
                                     <td>{tx.customerId?.name || 'N/A'}</td>
@@ -215,9 +225,11 @@ const Dashboard = () => {
                     </tbody>
                 </table>
             </div>
-            <a href="/admin/accounting" className="dashboard-link-none">
-                <button className="button dashboard-btn-margin">Xem tất cả giao dịch</button>
-            </a>
+            <div style={{ textAlign: 'right', marginTop: '16px' }}>
+                <a href="/admin/accounting" className="dashboard-link-none">
+                    <button className="button dashboard-btn-margin">Xem tất cả giao dịch</button>
+                </a>
+            </div>
         </div>
     );
 
@@ -227,8 +239,8 @@ const Dashboard = () => {
         <div className='dashboard_page'>
             <div className="page-header-block">
                 <span className="page-overline">DASHBOARD OVERVIEW</span>
-                <h1 className="page-main-title">BẢNG TỔNG QUAN HỆ THỐNG</h1>
-                <p className="page-subtitle">Giao diện tổng quan trạng thái, cập nhật dữ liệu máy chủ thực tế tức thời.</p>
+                <h1 className="page-main-title">TỔNG QUAN HỆ THỐNG</h1>
+                <p className="page-subtitle">Giao diện tổng quan cập nhật dữ liệu máy chủ thực tế tức thời.</p>
             </div>
             
             <div className="content dashboard_container">

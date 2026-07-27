@@ -53,7 +53,7 @@ footer i {
 /* Định nghĩa lề trang */
 .container_charging {
   line-height: 1.6;
-  width: min(1200px, calc(100% - 32px));
+  width: min(1200px, calc(100% - 64px));
   margin: 0 auto;
   padding-bottom: 80px;
 }
@@ -97,13 +97,13 @@ footer i {
 } */
 
 /* Policy Section Styles (bao gồm 2 phần ở đầu và chính sách sạc pin ở gần cuối*/
-.section-highlight,
-.charge_policy {
+.section-highlight{
   padding: 30px 0;
   padding-bottom: 100px;
 }
 .charge_policy {
   padding-top: 100px;
+  align-items: center;
 }
 
 .charge_policy .policy_img {
@@ -113,7 +113,7 @@ footer i {
 
 .charge_policy .policy_img2 {
   max-width: 95%;
-  margin-top: 10% !important;
+  /* margin-top: 10% !important; */
   display: block;
   margin: 0 auto;
   border-radius: 40px;
@@ -126,6 +126,10 @@ footer i {
 }
 .charge_policy ul {
   padding-left: 30px;
+}
+
+.quy_hoach_VF .charge_policy{
+  padding-bottom: 100px;
 }
 
 .first_row {
@@ -220,6 +224,7 @@ footer i {
 .charge_solution {
   margin-bottom: 100px;
 }
+
 /* Lợi ích thuê pin */
 .bat_profit {
   margin-top: 30px;
@@ -243,7 +248,7 @@ footer i {
 }
 
 .bat_profit .located_charge p {
-  text-align: left;
+  text-align: justify;
   padding-top: 14px;
   color: var(--subheading-color);
 }
@@ -824,7 +829,7 @@ footer i {
 
   .located_charge {
     margin: 10px 0;
-    padding: 15px 10px;
+    /* padding: 15px 10px; */
   }
 
   /* .tru_sac .product-charge {
@@ -929,7 +934,7 @@ footer i {
 
   .quy_hoach_VF .located_charge p {
     font-size: 13px;
-    line-height: 1.3;
+    /* line-height: 1.3; */
   }
 
   .quy_hoach_VF .located_charge img {
@@ -939,6 +944,10 @@ footer i {
   .quy_hoach .subtitle_below,
   .quy_hoach .quy_hoach__so_lieu {
     padding-right: unset;
+  }
+
+  .first_row .col, .charge_solution .col {
+    padding: unset;
   }
 }
 
@@ -1034,12 +1043,12 @@ footer i {
     width: 100%;
   }
 
-  .bat_profit .located_charge {
+  /* .bat_profit .located_charge {
     padding: 15px 10px;
-  }
+  } */
 
   .bat_profit .located_charge p {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .tab-btn {
@@ -1173,7 +1182,7 @@ footer i {
 
   .quy_hoach_VF .located_charge p {
     font-size: 11px;
-    line-height: 1.2;
+    /* line-height: 1.2; */
   }
 
   .quy_hoach_VF .located_charge img {

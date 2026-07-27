@@ -438,11 +438,11 @@ const CarList = () => {
               >
                 {showAddForm ? (
                   <>
-                    <ion-icon name="close-outline"></ion-icon> Hủy thêm
+                    <ion-icon name="close-outline"></ion-icon> <span className="hide-on-mobile">Hủy thêm</span>
                   </>
                 ) : (
                   <>
-                    <ion-icon name="add-outline"></ion-icon> Thêm xe mới
+                    <ion-icon name="add-outline"></ion-icon> <span className="hide-on-mobile">Thêm xe mới</span>
                   </>
                 )}
               </button>

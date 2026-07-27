@@ -43,7 +43,7 @@
 }
 
 .policy_page-container {
-  width: min(1200px, calc(100% - 32px));
+  width: min(1200px, calc(100% - 64px));
   margin: 0 auto;
   line-height: 1.6;
   padding-bottom: 100px;
@@ -323,7 +323,8 @@
 @media (max-width: 480px) {
   .policy_page__banner {
     padding-top: 22px;
-    content: url("/images/banner_chinh_sach_mobile.png");
+    object-fit: cover;
+    min-height: 160px;
   }
 }
 
@@ -332,9 +333,9 @@
 }
 
 @media (max-width: 480px) {
-  .policy_page-container {
+  /* .policy_page-container {
     width: min(1200px, calc(100% - 20px));
-  }
+  } */
 
   .policy_page-container .policy-tabs {
     grid-template-columns: 1fr;

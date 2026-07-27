@@ -41,7 +41,7 @@ const LedgerPage = () => {
     };
 
     useEffect(() => {
-        document.title = "Sổ sách Kế toán | VinFast";
+        document.title = "Kế toán | VinFast";
     }, []);
 
     const handleOpenModal = () => {
@@ -118,7 +118,7 @@ const LedgerPage = () => {
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                         <button className="btn btn-primary" onClick={handleOpenModal}>
-                            <ion-icon name="add-outline"></ion-icon> Tạo phiếu Thu/Chi
+                            <ion-icon name="add-outline"></ion-icon> <span className="hide-on-mobile">Tạo phiếu Thu/Chi</span>
                         </button>
                     </div>
                 </div>

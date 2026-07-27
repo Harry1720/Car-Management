@@ -312,7 +312,7 @@
         top: 55px;
         font-size: 18px;
         padding: 15px;
-        gap: 12px;
+        gap: 0;
     }
     
     .nav-container ul li {

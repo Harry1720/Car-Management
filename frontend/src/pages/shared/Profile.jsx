@@ -159,7 +159,8 @@ const Profile = () => {
               )}
               
               <div className={`${styles.menuItem} ${styles.logoutItem}`} onClick={handleLogout}>
-                 <ion-icon name="log-out-outline"></ion-icon> ĐĂNG XUẤT
+                 <ion-icon name="log-out-outline"></ion-icon> 
+                 <span className={styles.logoutText}>ĐĂNG XUẤT</span>
               </div>
             </div>
           </div>

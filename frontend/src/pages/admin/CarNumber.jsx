@@ -70,7 +70,7 @@ const CarNumber = () => {
             <div className="car-number-page">
                 <div className="page-header-block">
                     <span className="page-overline">CAR STOCK</span>
-                    <h1 className="page-main-title">QUẢN LÝ SỐ LƯỢNG XE</h1>
+                    <h1 className="page-main-title">QUẢN LÝ TỒN KHO XE</h1>
                     <p className="page-subtitle">Quản lý và cập nhật số lượng xe tồn kho, xe đã bán.</p>
                 </div>
 

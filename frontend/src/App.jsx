@@ -1,4 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import './assets/css/global_scrollbar.css';
 import './assets/css/components/Navbar.module.css';
 import './assets/css/components/Footer.module.css';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -35,9 +37,22 @@ import CarNumber from './pages/admin/CarNumber';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminProfile from './pages/admin/AdminProfile';
 
+const RouteTracker = () => {
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname.startsWith('/admin')) {
+      document.documentElement.classList.add('admin-mode');
+    } else {
+      document.documentElement.classList.remove('admin-mode');
+    }
+  }, [location.pathname]);
+  return null;
+};
+
 function App() {
   return (
     <Router>
+      <RouteTracker />
       <ToastContainer 
         position="top-right" 
         autoClose={3000} 

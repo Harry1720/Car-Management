@@ -40,7 +40,7 @@ const featuredCars = [
     description:
       "Thiết kế cá tính, không gian rộng và tinh thần đa dụng cho khách hàng thích khác biệt.",
     range: "Lên đến 550 km/lần sạc",
-    acceleration: "0-100 km/h: 7.2 giây",
+    acceleration: "7.2 giây",
     image: "/images/vf_wild.png",
     cta: "/landing/vfwild",
   },
@@ -50,7 +50,7 @@ const featuredCars = [
     description:
       "Khoang nội thất sang trọng, phù hợp gia đình và những chuyến đi dài đầy đủ tiện nghi.",
     range: "Lên đến 680 km/lần sạc",
-    acceleration: "0-100 km/h: 6.5 giây",
+    acceleration: "6.5 giây",
     image: "/images/vf9_silver.png",
     cta: "/landing/vf9",
   },
@@ -60,7 +60,7 @@ const featuredCars = [
     description:
       "Tối ưu cho khách hàng muốn cân bằng giữa công nghệ, hiệu năng và sự sang trọng.",
     range: "Lên đến 471 km/lần sạc",
-    acceleration: "0-100 km/h: 5.5 giây",
+    acceleration: "5.5 giây",
     image: "/images/vf8.png",
     cta: "/landing/vf8",
   },
@@ -70,7 +70,7 @@ const featuredCars = [
     description:
       "Thiết kế trẻ trung, lái dễ dàng, rất hợp nhu cầu di chuyển hằng ngày trong thành phố.",
     range: "Lên đến 431 km/lần sạc",
-    acceleration: "0-100 km/h: 6.8 giây",
+    acceleration: "6.8 giây",
     image: "/images/vf7.png",
     cta: "/landing/vf7",
   },
@@ -203,16 +203,29 @@ const Home = () => {
                     <strong>{car.range}</strong>
                   </div>
                   <div>
-                    <span>0-100 km/h</span>
+                    <span>Tăng tốc (0-100 km/h)</span>
                     <strong>{car.acceleration}</strong>
                   </div>
                 </div>
-                <a className={styles.home_page__button_primary} href={car.cta}>
-                  Mua ngay
-                </a>
+                <div className={`${styles.home_page__featured_actions} ${styles.home_page__btn_desktop}`}>
+                  <Link className={styles.home_page__button_primary} to={`/deposit?model=${car.model}`}>
+                    Mua ngay
+                  </Link>
+                  <Link className={styles.home_page__button_secondary} to={car.cta}>
+                    Xem chi tiết
+                  </Link>
+                </div>
               </div>
               <div className={styles.home_page__featured_visual}>
                 <img src={car.image} alt={car.model} />
+              </div>
+              <div className={`${styles.home_page__featured_actions} ${styles.home_page__btn_mobile}`}>
+                <Link className={styles.home_page__button_primary} to={`/deposit?model=${car.model}`}>
+                  Mua ngay
+                </Link>
+                <Link className={styles.home_page__button_secondary} to={car.cta}>
+                  Xem chi tiết
+                </Link>
               </div>
             </article>
           ))}

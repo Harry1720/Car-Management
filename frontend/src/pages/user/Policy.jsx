@@ -2,7 +2,7 @@ import "../../assets/css/user_pages/Policy.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { useEffect, useState } from "react";
-import Slideshow from "../../components/Slideshow";
+// import Slideshow from "../../components/Slideshow";
 
 const Policy = () => {
   useEffect(() => {
@@ -144,8 +144,8 @@ const Policy = () => {
                 <table className="table table-bordered">
                   <thead className="thead-light">
                     <tr>
-                      <th rowspan="2">Dòng xe</th>
-                      <th colspan="3" className="policy-table-header">
+                      <th rowSpan="2">Dòng xe</th>
+                      <th colSpan="3" className="policy-table-header">
                         Phí dịch vụ hàng tháng (đã bao gồm VAT)
                       </th>
                     </tr>

@@ -1,0 +1,47 @@
+/* Custom Scrollbar for User Side */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #333232 10%, #a17c41 100%);;
+  border-radius: 4px;
+  /* border: 1px solid #f1f5f9; */
+}
+
+/* ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+} */
+
+/* Custom Scrollbar for Admin Side */
+html.admin-mode::-webkit-scrollbar,
+html.admin-mode ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+html.admin-mode::-webkit-scrollbar-track,
+html.admin-mode ::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+html.admin-mode::-webkit-scrollbar-thumb,
+html.admin-mode ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #233F8D 0%, #8dafff 100%);
+  border-radius: 4px;
+}
+
+html.admin-mode ::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #233F8D 0%, #8dafff 100%);
+  border-radius: 4px;
+}
+
+/* html.admin-mode::-webkit-scrollbar-thumb:hover,
+html.admin-mode ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+} */
