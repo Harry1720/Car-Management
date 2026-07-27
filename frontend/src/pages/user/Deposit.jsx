@@ -121,17 +121,17 @@ const Deposit = () => {
       return false;
     }
 
-    if (!/^\\d{9}(\\d{3})?$/.test(Citizen_ID)) {
+    if (!/^\d{9}(\d{3})?$/.test(Citizen_ID)) {
       toast.warning("Số CCCD/CMND phải bao gồm 9 hoặc 12 chữ số.");
       return false;
     }
 
-    if (!/^(0[3|5|7|8|9])+([0-9]{8})\\b/.test(Phone_No)) {
-      toast.warning("Số điện thoại không hợp lệ.");
+    if (!/^0\d{9}$/.test(Phone_No)) {
+      toast.warning("Số điện thoại không hợp lệ (phải gồm 10 số và bắt đầu bằng 0).");
       return false;
     }
 
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$/i.test(Email)) {
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Email)) {
       toast.warning("Email không hợp lệ.");
       return false;
     }
@@ -366,7 +366,6 @@ const Deposit = () => {
                 <button
                   className="btn btn-primary"
                   onClick={goNextStep}
-                  disabled={!validateStepTwo()}
                 >
                   Bước tiếp theo
                 </button>
