@@ -239,8 +239,9 @@ const Products = () => {
       if (priceFilter === "over_1b" && car.rawPrice <= 1000000000) return false;
 
       // Seats Filter
-      if (seatsFilter === "5" && car.seats !== 5) return false;
-      if (seatsFilter === "7" && car.seats !== 7) return false;
+      if (seatsFilter && seatsFilter !== "all") {
+        if (car.seats !== Number(seatsFilter)) return false;
+      }
 
       // Range Filter
       const r = Number(car.rangeKm);
@@ -417,17 +418,18 @@ const Products = () => {
                 </div>
 
                 <div className="filter-dropdown">
-                  <button className={`filter-btn ${seatsFilter !== 'all' ? 'active-filter' : ''}`} onClick={() => setActiveDropdown(activeDropdown === 'seats' ? null : 'seats')}>
-                    <span className="btn-text">Số chỗ</span>
-                    <span className="btn-icon">{seatsFilter !== 'all' ? '●' : '▼'}</span>
-                  </button>
-                  {activeDropdown === 'seats' && (
-                    <div className="dropdown-menu">
-                      <button className={seatsFilter === 'all' ? 'active' : ''} onClick={() => {setSeatsFilter('all'); setActiveDropdown(null);}}>Tất cả</button>
-                      <button className={seatsFilter === '5' ? 'active' : ''} onClick={() => {setSeatsFilter('5'); setActiveDropdown(null);}}>Xe 5 chỗ</button>
-                      <button className={seatsFilter === '7' ? 'active' : ''} onClick={() => {setSeatsFilter('7'); setActiveDropdown(null);}}>Xe 7 chỗ</button>
-                    </div>
-                  )}
+                  <input 
+                    type="number"
+                    min="2"
+                    max="60"
+                    placeholder="Số chỗ"
+                    className={`filter-btn filter-input ${seatsFilter !== 'all' && seatsFilter !== '' ? 'active-filter' : ''}`}
+                    value={seatsFilter === 'all' ? '' : seatsFilter}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setSeatsFilter(val === '' ? 'all' : val);
+                    }}
+                  />
                 </div>
                 
                 <div className="filter-dropdown">

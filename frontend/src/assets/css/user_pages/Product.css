@@ -771,6 +771,28 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
+input.filter-input {
+  cursor: text;
+  text-align: left;
+}
+input.filter-input::placeholder {
+  color: var(--text-primary);
+  opacity: 1;
+}
+input.filter-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--secondary-gold);
+}
+input.filter-input::-webkit-outer-spin-button,
+input.filter-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input.filter-input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .filter-btn.active-filter {
   border-color: var(--secondary-gold);
   color: var(--secondary-gold);

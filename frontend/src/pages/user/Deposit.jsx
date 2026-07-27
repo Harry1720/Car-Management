@@ -82,9 +82,9 @@ const Deposit = () => {
               range: foundCar.specifications?.range ? `${foundCar.specifications.range} km` : 'N/A',
               energyConsumption: foundCar.specifications?.energyConsumption ? `${foundCar.specifications.energyConsumption}` : 'N/A',
               power: foundCar.specifications?.motorPower || 'N/A',
-              acceleration: foundCar.specifications?.acceleration || 'N/A',
+              acceleration: foundCar.specifications?.acceleration ? `${foundCar.specifications.acceleration} giây` : 'N/A',
               seats: foundCar.specifications?.seats ? `${foundCar.specifications.seats} chỗ` : 'N/A',
-              category: foundCar.category || 'N/A',
+              category: foundCar.category ? (foundCar.category.toLowerCase() === 'suv' ? 'SUV' : foundCar.category.charAt(0).toUpperCase() + foundCar.category.slice(1).toLowerCase()) : 'N/A',
               origin: foundCar.origin_of_car || 'N/A',
               year: foundCar.year || 'N/A'
             },
@@ -115,7 +115,33 @@ const Deposit = () => {
   // Kiểm tra dữ liệu bước 2
   const validateStepTwo = () => {
     const { Customer_Name, Citizen_ID, Phone_No, Email, Address } = customer;
-    return Customer_Name && Citizen_ID && Phone_No && Email && Address;
+    
+    if (!Customer_Name || !Citizen_ID || !Phone_No || !Email || !Address) {
+      toast.warning("Vui lòng điền đầy đủ thông tin bắt buộc.");
+      return false;
+    }
+
+    if (!/^\\d{9}(\\d{3})?$/.test(Citizen_ID)) {
+      toast.warning("Số CCCD/CMND phải bao gồm 9 hoặc 12 chữ số.");
+      return false;
+    }
+
+    if (!/^(0[3|5|7|8|9])+([0-9]{8})\\b/.test(Phone_No)) {
+      toast.warning("Số điện thoại không hợp lệ.");
+      return false;
+    }
+
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$/i.test(Email)) {
+      toast.warning("Email không hợp lệ.");
+      return false;
+    }
+
+    if (Address.trim().length < 5) {
+      toast.warning("Địa chỉ quá ngắn.");
+      return false;
+    }
+
+    return true;
   };
 
   // Gửi form

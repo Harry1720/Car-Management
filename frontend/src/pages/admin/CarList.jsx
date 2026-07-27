@@ -171,7 +171,7 @@ const CarList = () => {
       lauching_year: carToEdit.year,
       // Giữ nguyên các field đã có tên giống nhau
       origin_of_car: carToEdit.origin_of_car,
-      date_of_import: carToEdit.date_of_import,
+      date_of_import: carToEdit.date_of_import ? new Date(carToEdit.date_of_import).toISOString().split('T')[0] : "",
       car_sold: carToEdit.car_sold,
       price: carToEdit.price,
       variants: carToEdit.variants || [],
@@ -1267,7 +1267,7 @@ const CarList = () => {
                       <td>{car.lauching_year || car.year}</td>
                       <td>{car.specifications?.motorPower || "N/A"}</td>
                       <td>{car.specifications?.energyConsumption || "N/A"}</td>
-                      <td>{car.specifications?.range || "N/A"}</td>
+                      <td>{car.specifications?.range || "N/A"} (km)</td>
                       {userRole === 'admin' && (
                         <>
                           <td>

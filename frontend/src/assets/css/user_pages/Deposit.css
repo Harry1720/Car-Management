@@ -204,6 +204,7 @@
 
 .vf_form_user .actions button, .step_3 .actions button {
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .vf_form_user input {
