@@ -98,6 +98,22 @@ exports.createCar = async (req, res) => {
       });
     }
 
+    let finalArticleContent = req.body.articleContent;
+    if (finalArticleContent && finalArticleContent.includes('data:image/')) {
+      const { cloudinary } = require('../config/cloudinary');
+      const matches = [...finalArticleContent.matchAll(/src="(data:image\/[^;]+;base64,[^"]+)"/g)];
+      for (const m of matches) {
+        try {
+          const uploadRes = await cloudinary.uploader.upload(m[1], {
+            folder: 'vinfast-cars-articles'
+          });
+          finalArticleContent = finalArticleContent.replace(m[1], uploadRes.secure_url);
+        } catch (err) {
+          console.error('Lỗi upload ảnh base64 trong articleContent:', err);
+        }
+      }
+    }
+
     const car = new Car({
       name,
       model,
@@ -110,6 +126,7 @@ exports.createCar = async (req, res) => {
       status,
       origin_of_car,
       date_of_import,
+      articleContent: finalArticleContent,
     });
 
     await car.save();
@@ -158,6 +175,22 @@ exports.updateCar = async (req, res) => {
       }
     }
     
+    // Xử lý ảnh base64 trong bài viết (tránh lỗi BSON > 16MB)
+    if (updates.articleContent && updates.articleContent.includes('data:image/')) {
+      const { cloudinary } = require('../config/cloudinary');
+      const matches = [...updates.articleContent.matchAll(/src="(data:image\/[^;]+;base64,[^"]+)"/g)];
+      for (const m of matches) {
+        try {
+          const uploadRes = await cloudinary.uploader.upload(m[1], {
+            folder: 'vinfast-cars-articles'
+          });
+          updates.articleContent = updates.articleContent.replace(m[1], uploadRes.secure_url);
+        } catch (err) {
+          console.error('Lỗi upload ảnh base64 trong articleContent:', err);
+        }
+      }
+    }
+
     // Bỏ qua xử lý ảnh các field cấp root
     delete updates.images;
     delete updates.color;

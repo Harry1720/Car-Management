@@ -26,6 +26,7 @@ const Deposit = () => {
     agree2: false,
     agree3: false,
   });
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // Load dữ liệu xe từ URL
   useEffect(() => {
@@ -152,6 +153,9 @@ const Deposit = () => {
       return;
     }
 
+    setIsProcessing(true);
+    let depositId = null;
+
     try {
       // Bước 1: Tìm xe trong database theo model ID
       const carsResponse = await carService.getAllCars(1, 100);
@@ -160,6 +164,7 @@ const Deposit = () => {
       
       if (!carInDb) {
         toast.error("Không tìm thấy xe trong hệ thống. Vui lòng thử lại.");
+        setIsProcessing(false);
         return;
       }
 
@@ -180,6 +185,7 @@ const Deposit = () => {
         // Nếu customer đã tồn tại, backend sẽ trả về customerId trong error response
         console.error('Error creating customer:', error);
         toast.error("Có lỗi khi tạo thông tin khách hàng: " + (error.message || "Vui lòng thử lại."));
+        setIsProcessing(false);
         return;
       }
 
@@ -200,7 +206,7 @@ const Deposit = () => {
       };
 
       const depositResponse = await depositService.createDeposit(depositData);
-      const depositId = depositResponse.deposit._id;
+      depositId = depositResponse.deposit._id;
 
       // Bước 5: Gọi API tạo link thanh toán VNPay
       const paymentData = {
@@ -214,11 +220,13 @@ const Deposit = () => {
         toast.info("Đang chuyển hướng đến cổng thanh toán VNPay...");
         window.location.href = paymentRes.paymentUrl;
       } else {
-        toast.error("Không thể tạo link thanh toán VNPay.");
+        throw new Error("Không thể tạo link thanh toán VNPay.");
       }
     } catch (error) {
       console.error("Error:", error);
       toast.error("Có lỗi xảy ra khi đặt cọc: " + (error.message || "Vui lòng thử lại."));
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -424,15 +432,15 @@ const Deposit = () => {
               </div>
 
               <div className="actions mt-4">
-                <button className="btn btn-secondary" onClick={goPrevStep}>
+                <button className="btn btn-secondary" onClick={goPrevStep} disabled={isProcessing}>
                   Quay lại
                 </button>
                 <button
                   className="btn btn-primary"
                   onClick={handleSubmit}
-                  disabled={!Object.values(agreements).every(Boolean)}
+                  disabled={!Object.values(agreements).every(Boolean) || isProcessing}
                 >
-                  Thanh toán VNPay
+                  {isProcessing ? "Đang xử lý..." : "Thanh toán VNPay"}
                 </button>
               </div>
             </div>

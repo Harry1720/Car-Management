@@ -145,6 +145,7 @@
 .article_content div {
   color: #eaeaea !important;
   text-align: justify !important;
+  line-height: 1.8;
 }
 
 .article_content h1, 
@@ -180,10 +181,22 @@
   display: block;
 }
 
-.article_content ul, 
-.article_content ol {
+.article_content ul {
+  list-style-type: disc !important;
   padding-left: 20px;
   margin-bottom: 1.5em;
+}
+
+.article_content ol {
+  list-style-type: decimal;
+  padding-left: 20px;
+  margin-bottom: 1.5em;
+}
+
+.article_content li {
+  display: list-item !important;
+  list-style-type: disc !important;
+  padding: unset !important;
 }
 
 .article_content a {
