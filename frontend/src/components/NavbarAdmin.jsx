@@ -97,8 +97,8 @@ const NavbarAdmin = () => {
                     </li>
                     {userRole === 'admin' && (
                         <li>
-                            <Link to="/admin/transaction" 
-                                  className={currentPath === '/admin/transaction' ? 'active' : ''}
+                            <Link to="/admin/accounting" 
+                                  className={currentPath === '/admin/accounting' ? 'active' : ''}
                                   onClick={closeMobileMenu}>
                                 <ion-icon name="receipt-outline"></ion-icon> 
                                 <span className="label text-label">Sổ sách Kế toán</span>
@@ -106,8 +106,8 @@ const NavbarAdmin = () => {
                         </li>
                     )}
                     <li>
-                        <Link to="/admin/accounting" 
-                              className={currentPath === '/admin/accounting' ? 'active' : ''}
+                        <Link to="/admin/orders" 
+                              className={currentPath === '/admin/orders' ? 'active' : ''}
                               onClick={closeMobileMenu}>
                             <ion-icon name="stats-chart-outline"></ion-icon> 
                             <span className="label text-label">Danh sách Đơn hàng</span>

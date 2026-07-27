@@ -222,13 +222,13 @@
     display: flex;
     align-items: flex-start;
     margin-bottom: 12px;
+    
 }
 
 .form-check-input {
     width: 18px;
     height: 18px;
-    margin-right: 12px;
-    margin-top: 4px;
+    margin-top: 2px;
     cursor: pointer;
     accent-color: #d6b36a;
 }
@@ -238,6 +238,8 @@
     font-size: 0.95rem;
     line-height: 1.5;
     cursor: pointer;
+    text-align: justify;
+    margin-left: 5px;
 }
 
 .list-color {

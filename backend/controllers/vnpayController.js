@@ -3,6 +3,7 @@ const qs = require('qs');
 const crypto = require('crypto');
 const Deposit = require('../models/Deposit');
 const Transaction = require('../models/Transaction');
+const Accounting = require('../models/Accounting');
 
 function sortObject(obj) {
     let sorted = {};
@@ -115,6 +116,18 @@ exports.vnpayReturn = async (req, res) => {
                         status: 'completed'
                     });
                     await transaction.save();
+                    
+                    const accounting = new Accounting({
+                        transactionId: transaction._id,
+                        customerId: deposit.customerId,
+                        carId: deposit.carId,
+                        type: 'income',
+                        amount: deposit.depositAmount,
+                        category: 'deposit',
+                        description: `Hệ thống ghi nhận đặt cọc qua VNPay (Mã GD: ${deposit._id})`,
+                        month: new Date().toISOString().slice(0, 7)
+                    });
+                    await accounting.save();
                 }
             }
 
@@ -189,6 +202,19 @@ exports.vnpayIpn = async (req, res) => {
                                 status: 'completed'
                             });
                             await transaction.save();
+                            
+                            // Tạo Accounting
+                            const accounting = new Accounting({
+                                transactionId: transaction._id,
+                                customerId: deposit.customerId,
+                                carId: deposit.carId,
+                                type: 'income',
+                                amount: deposit.depositAmount,
+                                category: 'deposit',
+                                description: `Hệ thống ghi nhận đặt cọc qua VNPay (Mã GD: ${deposit._id})`,
+                                month: new Date().toISOString().slice(0, 7)
+                            });
+                            await accounting.save();
 
                             res.status(200).json({RspCode: '00', Message: 'Success'})
                         }

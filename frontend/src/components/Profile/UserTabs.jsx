@@ -113,30 +113,28 @@ const UserTabs = ({ activeTab, user, setUser }) => {
             ) : deposits.length === 0 ? (
               <div className={styles.emptyState}>Chưa có lịch sử mua/đặt xe nào.</div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <div className={styles.depositList}>
                 {deposits.map(deposit => (
-                  <div key={deposit._id} style={{ backgroundColor: '#2a2d36', padding: '15px', borderRadius: '10px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #444', paddingBottom: '10px' }}>
-                      <span style={{ color: '#ccc', fontSize: '0.9rem' }}>Mã GD: {deposit._id}</span>
-                      <span style={{ 
-                        color: deposit.status === 'confirmed' ? '#28a745' : deposit.status === 'pending' ? '#ffb845' : '#dc3545',
-                        fontWeight: 'bold',
-                        fontSize: '0.9rem'
+                  <div key={deposit._id} className={styles.depositCard}>
+                    <div className={styles.depositHeader}>
+                      <span className={styles.depositId}>Mã GD: {deposit._id}</span>
+                      <span className={styles.depositStatus} style={{ 
+                        color: deposit.status === 'confirmed' ? '#28a745' : deposit.status === 'pending' ? '#ffb845' : '#dc3545'
                       }}>
                         {deposit.status === 'pending' ? 'Chờ đặt cọc' : 
                          deposit.status === 'confirmed' ? 'Đã cọc thành công' : 
                          deposit.status === 'cancelled' ? 'Đã hủy' : deposit.status}
                       </span>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <h4 style={{ margin: 0, color: '#fff' }}>
+                    <div className={styles.depositBody}>
+                      <h4 className={styles.depositCarName}>
                         {deposit.carId ? deposit.carId.name : 'Xe không xác định'}
                       </h4>
-                      <div style={{ fontSize: '1.1rem', color: '#fff' }}>
+                      <div className={styles.depositAmount}>
                         Cọc: <strong>{formatVnd(deposit.depositAmount)}</strong>
                       </div>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', color: '#999', fontSize: '0.85rem' }}>
+                    <div className={styles.depositFooter}>
                       <span>Ngày đặt: {new Date(deposit.createdAt).toLocaleDateString('vi-VN')} {new Date(deposit.createdAt).toLocaleTimeString('vi-VN')}</span>
                       <span>Tổng tiền xe: {formatVnd(deposit.totalPrice)}</span>
                     </div>

@@ -88,7 +88,7 @@
 }
 .hr-divider {
   margin: 20px 0;
-  border-color: #eee;
+  border-color: #f1f5f9;
   border-style: solid;
   border-width: 1px 0 0 0;
 }
@@ -96,9 +96,9 @@
   list-style: none;
   padding: 0;
 }
-.list-lg {
+/* .list-lg {
   font-size: 1.1rem;
-}
+} */
 .flex-between {
   display: flex;
   justify-content: space-between;
@@ -112,7 +112,7 @@
 .total-row {
   border-top: 2px solid #000;
   padding-top: 10px;
-  font-size: 1.2rem;
+  /* font-size: 1.2rem; */
 }
 .text-danger {
   color: #d32f2f;
@@ -151,13 +151,15 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
+  padding: 0 0 10px 0;
   margin-bottom: 20px;
+  color: #1e3a8a;
 }
 
 .modal-header h2 {
   margin: 0;
   font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .close-btn {
@@ -176,14 +178,36 @@
   background: none !important;
 }
 .status-badge.pending {
-  color: #f0ad4e;
+  color: #d97706;
 }
 .status-badge.confirmed {
-  color: #5bc0de;
+  color: #0284c7;
 }
 .status-badge.completed {
-  color: #5cb85c;
+  color: #15803d;
 }
 .status-badge.cancelled {
-  color: #d9534f;
+  color: #dc2626;
+}
+
+.modal-body h3 {
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #2850c1;
+}
+
+/* Minimal Table Styling */
+.table-minimal thead th {
+  background-color: #f9fafb !important;
+  color: #4b5563;
+  font-weight: 500;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: center;
+  padding: 5px 10px;
+}
+.table-minimal th, .table-minimal td {
+  border: 1px solid #f3f4f6;
+  text-align: center;
+  padding: 5px 10px;
 }

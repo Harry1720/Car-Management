@@ -215,7 +215,7 @@ const Dashboard = () => {
                     </tbody>
                 </table>
             </div>
-            <a href="/admin/transaction" className="dashboard-link-none">
+            <a href="/admin/accounting" className="dashboard-link-none">
                 <button className="button dashboard-btn-margin">Xem tất cả giao dịch</button>
             </a>
         </div>

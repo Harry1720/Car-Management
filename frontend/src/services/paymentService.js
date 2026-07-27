@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+// Nếu VITE_API_BASE_URL có đuôi /api thì bỏ đi cho các endpoint không thuộc /api hoặc tự nối lại
+const API_URL = import.meta.env.VITE_API_BASE_URL 
+  ? import.meta.env.VITE_API_BASE_URL.replace(/\/api\/?$/, '') 
+  : 'http://localhost:5000';
 
 export const paymentService = {
   createPaymentUrl: async (data) => {

@@ -62,4 +62,14 @@ export const depositService = {
       throw error.response?.data || error;
     }
   },
+
+  // Hủy đặt cọc
+  cancelDeposit: async (id, reason) => {
+    try {
+      const response = await apiClient.post(`/deposits/${id}/cancel`, { cancelReason: reason });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
 };

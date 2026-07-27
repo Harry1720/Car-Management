@@ -127,3 +127,77 @@ exports.getDepositsByCustomer = async (req, res) => {
     res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
 };
+
+// Cancel deposit
+exports.cancelDeposit = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { cancelReason } = req.body;
+
+    const deposit = await Deposit.findById(id).populate('carId');
+    if (!deposit) {
+      return res.status(404).json({ message: 'Đặt cọc không tồn tại' });
+    }
+
+    if (deposit.status === 'completed' || deposit.status === 'cancelled') {
+      return res.status(400).json({ message: `Không thể hủy đơn hàng đang ở trạng thái ${deposit.status}` });
+    }
+
+    // 1. Update deposit status
+    deposit.status = 'cancelled';
+    if (cancelReason) {
+      deposit.cancelReason = cancelReason;
+    }
+    await deposit.save();
+
+    // 2. Restore car inventory
+    const Car = require('../models/Car');
+    if (deposit.carId) {
+      await Car.findByIdAndUpdate(deposit.carId._id, {
+        $inc: { stock: 1, car_sold: -1 }
+      });
+    }
+
+    // 3. Handle offsetting transaction and accounting if paidAmount > 0
+    const Transaction = require('../models/Transaction');
+    const completedTransactions = await Transaction.find({ depositId: id, status: 'completed', isDeleted: false });
+    const totalPaid = completedTransactions.reduce((sum, tx) => sum + tx.amount, 0);
+
+    if (totalPaid > 0) {
+      // Create offsetting negative transaction
+      const refundTransaction = new Transaction({
+        depositId: id,
+        customerId: deposit.customerId,
+        amount: -totalPaid,
+        paymentMethod: 'bank_transfer', // Defaulting to bank_transfer for refund
+        description: `Hoàn tiền cọc do hủy đơn hàng #${id.toString().slice(-6)}`,
+        status: 'completed',
+        createdBy: req.user?.id
+      });
+      await refundTransaction.save();
+
+      // Create expense accounting record
+      const Accounting = require('../models/Accounting');
+      const currentDate = new Date();
+      const month = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}`;
+      
+      const refundAccounting = new Accounting({
+        type: 'expense',
+        category: 'refund',
+        amount: totalPaid, // Accounting amounts for expense are positive typically, or they are just expenses. Wait, in Accounting, type 'expense' denotes it's an outflow. The amount is usually positive.
+        description: `Chi hoàn tiền cọc cho đơn hàng #${id.toString().slice(-6)} do hủy đơn`,
+        transactionId: refundTransaction._id,
+        customerId: deposit.customerId,
+        carId: deposit.carId?._id,
+        month: month,
+        accountingDate: currentDate,
+      });
+      await refundAccounting.save();
+    }
+
+    res.json({ message: 'Hủy đơn hàng thành công' });
+  } catch (err) {
+    console.error('Error cancelling deposit:', err);
+    res.status(500).json({ message: 'Lỗi server', error: err.message });
+  }
+};

@@ -76,8 +76,8 @@ function App() {
         <Route path="/admin/customermanagement" element={<ProtectedRoute requireAdmin={true}><CustomerManage /></ProtectedRoute>} />
         <Route path="/admin/carlist" element={<ProtectedRoute requireAdmin={true}><CarList /></ProtectedRoute>} />
         <Route path="/admin/humanresources" element={<ProtectedRoute requireAdmin={true} strictAdmin={true}><HRPage /></ProtectedRoute>} />
-        <Route path="/admin/transaction" element={<ProtectedRoute requireAdmin={true} strictAdmin={true}><Transaction /></ProtectedRoute>} /> 
-        <Route path="/admin/accounting" element={<ProtectedRoute requireAdmin={true}><Accounting /></ProtectedRoute>} /> 
+        <Route path="/admin/accounting" element={<ProtectedRoute requireAdmin={true} strictAdmin={true}><Transaction /></ProtectedRoute>} /> 
+        <Route path="/admin/orders" element={<ProtectedRoute requireAdmin={true}><Accounting /></ProtectedRoute>} /> 
         <Route path="/admin/consultations" element={<ProtectedRoute requireAdmin={true}><ConsultationManage /></ProtectedRoute>} /> 
         <Route path="/admin/carnumber" element={<ProtectedRoute requireAdmin={true}><CarNumber /></ProtectedRoute>} /> 
         <Route path="/admin/profile" element={<ProtectedRoute requireAdmin={true}><AdminProfile /></ProtectedRoute>} />

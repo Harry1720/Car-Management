@@ -50,6 +50,7 @@ const depositSchema = new mongoose.Schema({
     type: Date,
   },
   notes: String,
+  cancelReason: String,
   createdAt: {
     type: Date,
     default: Date.now,

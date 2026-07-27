@@ -5,6 +5,7 @@ import Footer from '../../components/FooterAdmin';
 import { depositService } from '../../services/depositService';
 import { transactionService } from '../../services/transactionService';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const AccountingPage = () => {
     const [depositData, setDepositData] = useState([]);
@@ -73,10 +74,38 @@ const AccountingPage = () => {
         setOrderTransactions([]);
     };
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape' && isModalOpen) {
+                closeModal();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isModalOpen]);
+
+    const handleDiscountChange = (e) => {
+        const val = e.target.value;
+        setDiscountAmount(val);
+        const discountNum = Number(val) || 0;
+        if (selectedOrder) {
+            const newPayment = Math.max(0, (selectedOrder.remainingBalance || 0) - discountNum);
+            setPaymentAmount(newPayment);
+        }
+    };
+
     const handleCreatePayment = async (e) => {
         e.preventDefault();
-        if (!paymentAmount || isNaN(paymentAmount) || Number(paymentAmount) <= 0) {
-            toast.error('Vui lòng nhập số tiền hợp lệ');
+        const finalPayment = Number(paymentAmount);
+        const finalDiscount = Number(discountAmount) || 0;
+
+        if (isNaN(finalPayment) || finalPayment <= 0) {
+            toast.error('Vui lòng nhập số tiền thanh toán hợp lệ (lớn hơn 0)');
+            return;
+        }
+
+        if (finalPayment + finalDiscount > selectedOrder.remainingBalance) {
+            toast.error('Lỗi: Số tiền thanh toán + Khuyến mãi vượt quá số nợ còn lại!');
             return;
         }
 
@@ -86,11 +115,11 @@ const AccountingPage = () => {
                 depositId: selectedOrder._id,
                 customerId: selectedOrder.customerId?._id || selectedOrder.customerId,
                 carId: selectedOrder.carId?._id || selectedOrder.carId,
-                amount: Number(paymentAmount),
+                amount: finalPayment,
                 paymentMethod,
                 description: `Thanh toán phần còn lại cho đơn hàng ${selectedOrder._id.slice(-6)}`,
                 discountName: discountName || '',
-                discountAmount: Number(discountAmount) || 0
+                discountAmount: finalDiscount
             };
 
             await transactionService.createTransaction(payload);
@@ -104,6 +133,53 @@ const AccountingPage = () => {
             console.error('Payment error:', error);
             toast.error(error.response?.data?.message || 'Lỗi khi tạo thanh toán');
             setSubmittingPayment(false);
+        }
+    };
+
+    const handleCancelOrder = async () => {
+        const totalPaid = orderTransactions.reduce((sum, tx) => sum + (tx.amount || 0), 0);
+        let warningHtml = `Bạn có chắc chắn muốn hủy đơn hàng <strong>#${selectedOrder._id?.slice(-6).toUpperCase()}</strong> không? Thao tác này không thể hoàn tác.`;
+        
+        if (totalPaid > 0) {
+            warningHtml = `
+                <div style="text-align: left; font-size: 14px;">
+                    <p>Khách hàng đã thanh toán: <strong style="color: #dc2626;">${totalPaid.toLocaleString()} ₫</strong>.</p>
+                    <p>Hệ thống sẽ tự động nhả 1 xe về kho và tạo Phiếu Chi hoàn tiền tương ứng trong Sổ sách Kế toán.</p>
+                </div>
+            `;
+        }
+
+        const result = await Swal.fire({
+            title: `Xác nhận Hủy Đơn Hàng #${selectedOrder._id?.slice(-6).toUpperCase()}`,
+            html: warningHtml,
+            icon: 'warning',
+            input: 'textarea',
+            inputPlaceholder: 'Nhập lý do hủy (bắt buộc)...',
+            inputAttributes: {
+                'aria-label': 'Nhập lý do hủy'
+            },
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: totalPaid > 0 ? 'Hủy Đơn & Hoàn Tiền' : 'Hủy Đơn Hàng',
+            cancelButtonText: 'Đóng',
+            inputValidator: (value) => {
+                if (!value.trim()) {
+                    return 'Vui lòng nhập lý do hủy!';
+                }
+            }
+        });
+
+        if (result.isConfirmed) {
+            try {
+                await depositService.cancelDeposit(selectedOrder._id, result.value);
+                toast.success('Hủy đơn hàng thành công!');
+                fetchDepositData();
+                closeModal();
+            } catch (error) {
+                console.error('Cancel order error:', error);
+                toast.error(error.message || 'Lỗi khi hủy đơn hàng');
+            }
         }
     };
 
@@ -176,8 +252,8 @@ const AccountingPage = () => {
                                             <td>{deposit._id?.slice(-6).toUpperCase() || 'N/A'}</td>
                                             <td>{deposit.customerId?.name || 'N/A'}</td>
                                             <td>{deposit.carId?.name || deposit.carId?.model_car_name || 'N/A'}</td>
-                                            <td>{deposit.totalPrice ? `${deposit.totalPrice.toLocaleString()} ₫` : 'N/A'}</td>
-                                            <td>{(deposit.depositAmount || 0).toLocaleString()} ₫</td>
+                                            <td>{(deposit.totalPrice + (deposit.discountAmount || 0)) ? `${(deposit.totalPrice + (deposit.discountAmount || 0)).toLocaleString()} ₫` : 'N/A'}</td>
+                                            <td>{((deposit.totalPrice) - (deposit.remainingBalance || 0)).toLocaleString()} ₫</td>
                                             <td>{deposit.remainingBalance ? `${deposit.remainingBalance.toLocaleString()} ₫` : '0 ₫'}</td>
                                             <td>
                                                 <span className={`status-badge ${deposit.status}`}>
@@ -243,12 +319,14 @@ const AccountingPage = () => {
                                         </li>
                                     )}
                                     <li className="flex-between mb-10">
-                                        <span>Đã thanh toán (Cọc + Các đợt):</span>
-                                        <strong>{(selectedOrder.depositAmount).toLocaleString()} ₫</strong>
+                                        <span>Đã thanh toán:</span>
+                                        <strong>{(orderTransactions.reduce((sum, tx) => sum + (tx.amount || 0), 0)).toLocaleString()} ₫</strong>
                                     </li>
                                     <li className="flex-between total-row">
                                         <span>Cần thu thêm:</span>
-                                        <strong className="text-danger">{(selectedOrder.remainingBalance || 0).toLocaleString()} ₫</strong>
+                                        <strong className={(selectedOrder.totalPrice - orderTransactions.reduce((sum, tx) => sum + (tx.amount || 0), 0)) <= 0 ? "text-success" : "text-danger"}>
+                                            {Math.max(0, selectedOrder.totalPrice - orderTransactions.reduce((sum, tx) => sum + (tx.amount || 0), 0)).toLocaleString()} ₫
+                                        </strong>
                                     </li>
                                 </ul>
                             </div>
@@ -263,7 +341,7 @@ const AccountingPage = () => {
                                 ) : orderTransactions.length === 0 ? (
                                     <p>Chưa có giao dịch nào.</p>
                                 ) : (
-                                    <table className="table table-bordered table-sm table-sm-text">
+                                    <table className="table table-minimal table-sm table-sm-text">
                                         <thead>
                                             <tr>
                                                 <th>Ngày</th>
@@ -286,8 +364,8 @@ const AccountingPage = () => {
                                 )}
                             </div>
 
-                            {/* Block 4: Payment Form if remaining balance > 0 */}
-                            {selectedOrder.remainingBalance > 0 && (
+                            {/* Block 4: Payment Form if remaining balance > 0 and not cancelled */}
+                            {selectedOrder.remainingBalance > 0 && selectedOrder.status !== 'completed' && selectedOrder.status !== 'cancelled' && (
                                 <>
                                     <hr className="hr-divider" />
                                     <div className="payment-form-block">
@@ -318,15 +396,39 @@ const AccountingPage = () => {
                                                 </div>
                                                 <div>
                                                     <label>Số tiền giảm (VNĐ)</label>
-                                                    <input type="number" className="form-control" placeholder="0" value={discountAmount} onChange={(e) => setDiscountAmount(e.target.value)} min="0" />
+                                                    <input type="number" className="form-control" placeholder="0" value={discountAmount} onChange={handleDiscountChange} min="0" />
                                                 </div>
                                             </div>
-                                            <button type="submit" className="btn btn-primary w-100" disabled={submittingPayment}>
-                                                {submittingPayment ? 'Đang xử lý...' : 'Xác nhận Thanh toán'}
-                                            </button>
+                                            <div style={{ display: 'flex', gap: '15px' }}>
+                                                <button type="submit" className="btn btn-primary" style={{ flex: 1, padding: '12px', fontSize: '1rem', fontWeight: 'bold', borderRadius: '8px' }} disabled={submittingPayment}>
+                                                    {submittingPayment ? 'Đang xử lý...' : 'Xác nhận Thanh toán'}
+                                                </button>
+                                                {selectedOrder.status !== 'completed' && selectedOrder.status !== 'cancelled' && (
+                                                    <button 
+                                                        type="button"
+                                                        onClick={handleCancelOrder}
+                                                        style={{ backgroundColor: '#dc2626', color: 'white', padding: '12px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontWeight: 'bold', flex: 1, fontSize: '1rem' }}
+                                                    >
+                                                        Hủy Đơn Hàng
+                                                    </button>
+                                                )}
+                                            </div>
                                         </form>
                                     </div>
                                 </>
+                            )}
+
+                            {/* Block 5: Cancel Order Button (Standalone if form is hidden) */}
+                            {selectedOrder.remainingBalance <= 0 && selectedOrder.status !== 'completed' && selectedOrder.status !== 'cancelled' && (
+                                <div style={{ marginTop: '20px' }}>
+                                    <button 
+                                        type="button"
+                                        onClick={handleCancelOrder}
+                                        style={{ backgroundColor: '#dc2626', color: 'white', padding: '12px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontWeight: 'bold', width: '100%', fontSize: '1rem' }}
+                                    >
+                                        Hủy Đơn Hàng
+                                    </button>
+                                </div>
                             )}
                         </div>
                     </div>

@@ -11,6 +11,7 @@ router.get('/', protect, authorize('admin', 'employee'), depositController.getAl
 router.get('/:id', protect, authorize('admin', 'employee'), depositController.getDepositById);
 router.put('/:id', protect, authorize('admin'), depositController.updateDeposit);
 router.delete('/:id', protect, authorize('admin'), depositController.deleteDeposit);
+router.post('/:id/cancel', protect, authorize('admin', 'employee'), depositController.cancelDeposit);
 
 // Customer deposits
 router.get('/customer/:customerId', protect, depositController.getDepositsByCustomer);

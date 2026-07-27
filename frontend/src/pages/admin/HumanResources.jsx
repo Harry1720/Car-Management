@@ -342,7 +342,7 @@ const HRPage = () => {
                         <div className="admin-modal-content admin-modal-md" onClick={e => e.stopPropagation()}>
                             <div className="admin-modal-header">
                                 <div className="admin-modal-title-wrapper">
-                                    <h3 className="admin-modal-title">✏️ Chỉnh sửa nhân viên</h3>
+                                    <h3 className="admin-modal-title">Chỉnh sửa nhân viên</h3>
                                     <p className="admin-modal-subtitle">Cập nhật thông tin chi tiết nhân sự.</p>
                                 </div>
                                 <button type="button" onClick={() => setEditingEmployee(null)} className="admin-modal-close-btn">✕</button>
