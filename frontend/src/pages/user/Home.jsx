@@ -341,6 +341,12 @@ const Home = () => {
               ))}
             </select>
           </label>
+          <label className="custom-checkbox-wrapper">
+            <input type="checkbox" required />
+            <span>
+              Tôi cho phép hệ thống ghi nhận và bảo mật thông tin cá nhân của tôi nhằm mục đích chăm sóc khách hàng và hỗ trợ mua xe.
+            </span>
+          </label>
           <button className={styles.home_page__button_primary} type="submit">
             Nhận tư vấn ngay
           </button>

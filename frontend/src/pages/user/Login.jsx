@@ -72,6 +72,19 @@ const Login = () => {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
+    
+    const phoneRegex = /^[0-9]{10,11}$/;
+    if (!phoneRegex.test(registerData.phone)) {
+      toast.error("Số điện thoại không hợp lệ (phải từ 10-11 số)!");
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(registerData.password)) {
+      toast.error("Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số!");
+      return;
+    }
+
     if (registerData.password !== registerData.confirmPassword) {
       toast.error("Mật khẩu xác nhận không khớp!");
       return;
@@ -107,8 +120,8 @@ const Login = () => {
           
           {/* Form Đăng ký */}
           <div className="form-container sign-up-container">
-            <h3 className="text-center mb-4 login-header-title">Tạo tài khoản mới</h3>
             <form onSubmit={handleRegisterSubmit}>
+              <h3 className="text-center mt-5 mb-4 login-header-title">Tạo tài khoản mới</h3>
               <div className="login-name-group">
                 <div className="input-group-custom login-input-flex">
                   <i className="fas fa-user"></i>
@@ -145,6 +158,21 @@ const Login = () => {
                 </button>
               </div>
 
+              <div className="register-checkboxes" style={{ display: 'flex', flexDirection: 'column', fontSize: '0.85rem'}}>
+                <label className="custom-checkbox-wrapper">
+                  <input type="checkbox" required />
+                  <span>Tôi xác nhận các thông tin cung cấp là chính xác và đồng ý với các quy định chung khi tạo tài khoản.</span>
+                </label>
+                <label className="custom-checkbox-wrapper">
+                  <input type="checkbox" />
+                  <span>Đăng ký nhận thông tin chương trình khuyến mãi, dịch vụ từ VinFast.</span>
+                </label>
+                <label className="custom-checkbox-wrapper">
+                  <input type="checkbox" required />
+                  <span>Tôi đồng ý cho phép hệ thống lưu trữ và bảo mật thông tin cá nhân nhằm mục đích quản lý tài khoản.</span>
+                </label>
+              </div>
+
               <button type="submit" className="btn-primary-auth" disabled={registerLoading}>
                 {registerLoading ? "Đang xử lý..." : "TẠO TÀI KHOẢN"}
               </button>
@@ -156,8 +184,8 @@ const Login = () => {
 
           {/* Form Đăng nhập */}
           <div className="form-container sign-in-container">
-            <h3 className="text-center mb-4 login-header-title">Chào mừng trở lại!</h3>
             <form onSubmit={handleLoginSubmit}>
+              <h3 className="text-center mb-4 login-header-title">Chào mừng trở lại!</h3>
               <div className="input-group-custom">
                 <i className="fas fa-envelope"></i>
                 <input type="email" name="email" value={loginData.email} onChange={handleLoginChange} placeholder="Email hoặc số điện thoại" required />

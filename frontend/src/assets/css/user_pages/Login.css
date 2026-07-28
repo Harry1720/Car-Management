@@ -82,8 +82,16 @@
   padding: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   width: 50%;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.form-container form {
+  margin: auto 0;
+}
+.form-container::-webkit-scrollbar {
+  display: none;
 }
 
 .sign-in-container {

@@ -189,6 +189,13 @@ const PromoConsultForm = ({
           </label>
         ) : null}
 
+        <label className="custom-checkbox-wrapper">
+          <input type="checkbox" required />
+          <span>
+            Tôi đồng ý để đội ngũ chăm sóc khách hàng liên hệ tư vấn ưu đãi dựa trên thông tin đã cung cấp.
+          </span>
+        </label>
+
         <button className="promo-consult-submit" type="submit">
           {submitLabel}
         </button>

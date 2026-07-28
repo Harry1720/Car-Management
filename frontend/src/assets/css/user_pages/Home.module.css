@@ -458,6 +458,27 @@
   outline: none;
 }
 
+.home_page__lead_form select {
+  padding-right: 40px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #ffffff 50%),
+    linear-gradient(135deg, #ffffff 50%, transparent 50%);
+  background-position:
+    calc(100% - 24px) calc(50%),
+    calc(100% - 18px) calc(50%);
+  background-size:
+    6px 6px,
+    6px 6px;
+  background-repeat: no-repeat;
+}
+
+.home_page__lead_form select::-ms-expand {
+  display: none;
+}
+
 .home_page__lead_form input:focus,
 .home_page__lead_form select:focus {
   border-color: rgba(255, 210, 140, 0.65);

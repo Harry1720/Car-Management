@@ -45,3 +45,68 @@ html.admin-mode ::-webkit-scrollbar-thumb {
 html.admin-mode ::-webkit-scrollbar-thumb:hover {
   background: #64748b;
 } */
+
+/* Custom Checkbox Styles */
+label.custom-checkbox-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  font-size: 0.9rem !important;
+  font-weight: normal !important;
+  text-align: left !important;
+  margin: 6px 0 !important;
+  cursor: pointer !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+label.custom-checkbox-wrapper input[type="checkbox"] {
+  appearance: none !important;
+  background-color: transparent !important;
+  margin: 4px 0 0 0 !important;
+  font: inherit !important;
+  color: currentColor !important;
+  width: 1.15em !important;
+  height: 1.15em !important;
+  min-width: 1.15em !important;
+  min-height: 1.15em !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 0.15em !important;
+  display: grid !important;
+  place-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease-in-out !important;
+  padding: 0 !important;
+}
+
+label.custom-checkbox-wrapper input[type="checkbox"]::before {
+  content: "" !important;
+  width: 0.65em !important;
+  height: 0.65em !important;
+  transform: scale(0) !important;
+  transition: 120ms transform ease-in-out !important;
+  box-shadow: inset 1em 1em #f5e0ba !important;
+  background-color: #f5e0ba !important;
+  transform-origin: center !important;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%) !important;
+}
+
+label.custom-checkbox-wrapper input[type="checkbox"]:checked {
+  border-color: #f5e0ba !important;
+}
+
+label.custom-checkbox-wrapper input[type="checkbox"]:checked::before {
+  transform: scale(1) !important;
+}
+
+label.custom-checkbox-wrapper span {
+  flex: 1 !important;
+  font-weight: normal !important;
+  font-family: inherit !important;
+  color: inherit !important;
+}
+
+label.custom-checkbox-wrapper a {
+  color: #f5e0ba !important;
+  text-decoration: underline !important;
+}
